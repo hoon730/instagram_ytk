@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
-import SideBar from "./components/common/sidebar/SideBar";
+import SideBar from "./components/Common/Sidebar/SideBar";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
