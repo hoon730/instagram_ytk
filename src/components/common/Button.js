@@ -12,14 +12,16 @@ const ButtonItem = styled.button`
   ${({ type }) =>
     type === "positive"
       ? `background: #6228D7;`
-      : `background: #BFBFBF;`};
+      : type === "negative"
+      ? `background: #BFBFBF;`
+      : `background: transparent; color: #6228D7; font-size: var(--font-size-18); font-weight: var(--font-bold);`}
 `;
 
-const Button = ({ text, type, onClick, width }) => {
+const Button = ({ text, type, onClick }) => {
   return (
-      <ButtonItem type={type} onClick={onClick}>
-        {text || "버튼"} 
-      </ButtonItem>
+    <ButtonItem type={type} onClick={onClick}>
+      {text || "버튼"}
+    </ButtonItem>
   );
 };
 

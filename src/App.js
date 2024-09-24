@@ -1,37 +1,44 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css';
-import Signin from './pages/Signin';
-import Layout from './components/common/Layout';
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import GlobalStyles from "./styles/GlobalStyles";
+import Main from "./pages/Main";
+import Detail from "./pages/Detail";
+import Login from "./pages/Login";
+import Layout from "./components/Layout";
+import Signin from "./pages/Signin";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <Layout/>,
     children: [
-      // {
-      //   path: "",
-      //   element: <Home />,
-      // },
-      // {
-      //   path: "/profile",
-      //   element: <Profile />,
-      // },
+      {
+        path: "",
+        element: <Main/>,
+      },
+      {
+        path: "detail",
+        element: <Detail/>,
+      }
     ],
   },
   {
-    path: "/Signin",
-    element: <Signin />,
+    path: "/login",
+    element: <Login/>
   },
-  // {
-  //   path: "/login",
-  //   element: <Login />,
-  // },
-]);
-
+  {
+    path: "/signin",
+    element: <Signin/>
+  }
+])
 
 function App() {
   return (
+    <>
+    <GlobalStyles />
     <RouterProvider router={router}/>
+    </>
   );
 }
 

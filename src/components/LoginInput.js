@@ -10,7 +10,14 @@ const Input = styled.input`
 `;
 
 const LoginInput = (props) => {
-  return <Input type={props.type} placeholder={props.placeholder} value={props.value} />;
+  console.log(props);
+  return (
+    <Input
+      type={props.type}
+      placeholder={props.placeholder}
+      value={props.value}
+    />
+  );
 };
 
 export default LoginInput;
