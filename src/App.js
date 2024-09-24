@@ -1,11 +1,37 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
-import Button from './components/common/Button';
+import Signin from './pages/Signin';
+import Layout from './components/common/Layout';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      // {
+      //   path: "",
+      //   element: <Home />,
+      // },
+      // {
+      //   path: "/profile",
+      //   element: <Profile />,
+      // },
+    ],
+  },
+  {
+    path: "/Signin",
+    element: <Signin />,
+  },
+  // {
+  //   path: "/login",
+  //   element: <Login />,
+  // },
+]);
+
 
 function App() {
   return (
-    <div className="App">
-      <Button  text={"업로드"} type={"positive"}/>
-    </div>
+    <RouterProvider router={router}/>
   );
 }
 
