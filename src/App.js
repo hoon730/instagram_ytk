@@ -1,32 +1,38 @@
 import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
-import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
-import SideBar from "./components/Common/Sidebar/SideBar";
-import styled from "styled-components";
+import Layout from "./components/Layout";
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-`;
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout/>,
+    children: [
+      {
+        path: "",
+        element: <Main/>,
+      },
+      {
+        path: "detail",
+        element: <Detail/>,
+      }
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login/>
+  }
+])
 
 function App() {
   return (
     <>
-      <GlobalStyles />
-      <Wrapper>
-        <SideBar />
-        <main>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/detail" element={<Detail />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </main>
-      </Wrapper>
+    <GlobalStyles />
+    <RouterProvider router={router}/>
     </>
   );
 }
