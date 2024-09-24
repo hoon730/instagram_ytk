@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -36,18 +36,15 @@ const MenuText = styled.span`
 
 const MenuItem = ({ id, name, iconCode, path }) => {
   const navigate = useNavigate();
-  const menuRef = useRef();
+  const [isActive, setIsActive] = useState(false);
 
   const handleOnClick = () => {
+    setIsActive((isActive) => !isActive);
     if (path) navigate(`${path}`);
-  }
+  };
 
   return (
-    <Wrapper
-      className={id === 1 ? "active" : ""}
-      ref={menuRef}
-      onClick={handleOnClick}
-    >
+    <Wrapper className={id === 1 ? "active" : ""} onClick={handleOnClick}>
       <IconWrapper>{iconCode}</IconWrapper>
       <MenuText>{name}</MenuText>
     </Wrapper>
