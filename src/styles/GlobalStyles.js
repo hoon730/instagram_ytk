@@ -57,7 +57,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: "Noto Sans KR", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -2%;
+    letter-spacing: -0.5px;
   }
 
   :root {
@@ -71,6 +71,30 @@ const GlobalStyles = createGlobalStyle`
     --gray-color: #BFBFBF;
     --dark-gray-color: #7E7E7E;
     --font-black-color: #2B2B2B;
+
+    --border-radius-12: 12px;
+    --border-radius-8: 8;
+
+    --font-size-8: 8px;
+    --font-size-10: 10px;
+    --font-size-12: 12px;
+    --font-size-14: 14px;
+    --font-size-16: 16px;
+    --font-size-18: 18px;
+    --font-size-20: 20px;
+    --font-size-22: 22px;
+    --font-size-24: 24px;
+
+    --font-thin: 100;
+    --font-extralight: 200;
+    --font-light: 300;
+    --font-regular: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+    --font-black: 900;
+    
   }
 `;
 
