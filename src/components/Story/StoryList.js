@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import StoryItem from "./StoryItem";
 
 const Wrapper = styled.div`
   width: 630px;
@@ -9,7 +10,11 @@ const Wrapper = styled.div`
 `;
 
 const StoryList = () => {
-  return <Wrapper></Wrapper>;
+  return (
+    <Wrapper>
+      <StoryItem />
+    </Wrapper>
+  );
 };
 
 export default StoryList;

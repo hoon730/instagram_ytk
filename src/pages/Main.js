@@ -1,11 +1,10 @@
 import React from "react";
-
-
+import StoryList from "../components/Story/StoryList";
 
 const Main = () => {
   return (
     <div>
-      Main
+      <StoryList />
     </div>
   );
 };
