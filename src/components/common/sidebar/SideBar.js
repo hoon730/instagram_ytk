@@ -44,8 +44,6 @@ const ToolList = styled.div`
 const SideBar = () => {
   const navigate = useNavigate();
 
-  const handleOnClick= () => {};
-
   return (
     <StyledAside>
       <Wrapper>
@@ -59,11 +57,7 @@ const SideBar = () => {
         </Stlyedh1>
         <MenuList>
           {menuData.map((it) => (
-            <MenuItem 
-              key={it.id}
-              {...it}
-              onClick={handleOnClick}
-            />
+            <MenuItem key={it.id} {...it} />
           ))}
         </MenuList>
       </Wrapper>

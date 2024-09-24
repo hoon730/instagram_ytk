@@ -1,7 +1,6 @@
-import React, {useR} from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 
 const Wrapper = styled.div`
   max-width: 305px;
@@ -11,7 +10,7 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 15px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: color 0.2s;
   border-radius: var(--border-radius-12);
 
   &.active {
@@ -22,7 +21,6 @@ const Wrapper = styled.div`
 
   &:hover {
     color: var(--gray-color);
-    /* font-weight: var(--font-bold); */
   }
 `;
 const IconWrapper = styled.div`
@@ -38,13 +36,17 @@ const MenuText = styled.span`
 
 const MenuItem = ({ id, name, iconCode, path }) => {
   const navigate = useNavigate();
+  const menuRef = useRef();
+
+  const handleOnClick = () => {
+    if (path) navigate(`${path}`);
+  }
 
   return (
     <Wrapper
       className={id === 1 ? "active" : ""}
-      onClick={() => {
-        if (path) navigate(`${path}`);
-      }}
+      ref={menuRef}
+      onClick={handleOnClick}
     >
       <IconWrapper>{iconCode}</IconWrapper>
       <MenuText>{name}</MenuText>
