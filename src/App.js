@@ -1,10 +1,10 @@
-import './App.css';
-import Button from './components/common/Button';
+import "./App.css";
+import HotHashtag from "./components/HotHashtag";
 
 function App() {
   return (
     <div className="App">
-      <Button  text={"업로드"} type={"positive"}/>
+      <HotHashtag />
     </div>
   );
 }
