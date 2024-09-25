@@ -5,6 +5,7 @@ import HotHashtag from "../components/HotHashtag";
 import UserImg from "../components/User/UserImg";
 import MainHeader from "../components/Main/MainHeader";
 import FeedContent from "../components/Main/FeedContent";
+import StoryContent from "../components/Story/StoryContent";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ const Main = () => {
         <MainHeader />
         <MainContent>
           <FeedSection>
-            <div style={{ height: "214px" }}>StoryContent</div>
+            <StoryContent />
             <FeedContent />
           </FeedSection>
           <HotHashtag />
