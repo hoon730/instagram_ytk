@@ -21,13 +21,19 @@ const Optional = styled.p`
   color: var(--gray-color);
 `;
 
-const UserInfo = ({ userName, userNickname, profilePhoto, userId, location }) => {
+const UserInfo = ({
+  userName,
+  userNickname,
+  profilePhoto,
+  userId,
+  location,
+}) => {
   return (
     <Wrapper>
       <UserImg />
       <Userdesc>
-        <UserId>lotte_ria</UserId> 
-        <Optional>decent</Optional>
+        <UserId>{userId}</UserId>
+        <Optional>{userNickname}</Optional>
       </Userdesc>
     </Wrapper>
   );
