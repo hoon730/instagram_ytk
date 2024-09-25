@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import UserImg from "./UserImg";
+import ProfileImg from "../Profile/ProfileImg";
+import UserId from "./UserId";
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,29 +12,30 @@ const Userdesc = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
-const UserId = styled.span`
-  font-size: var(--font-size-16);
-  font-weight: var(--font-bold);
-`;
+
 const Optional = styled.p`
-  font-size: var(--font-size-16);
-  font-weight: var(--font-regular);
+  ${({ type }) =>
+    type === "feed"
+      ? `font-size: var(--font-14); font-weight: var(--font-regular);`
+      : type === "hover"
+      ? `font-size: var(--font-18); font-weight: var(--font-regular);`
+      : `font-size: var(--font-16); font-weight: var(--font-regular);`}
   color: var(--gray-color);
 `;
 
-const UserInfo = ({
-  userName,
-  userNickname,
-  profilePhoto,
-  userId,
-  location,
-}) => {
+
+
+const UserInfo = ({ userName, userNickname, userId, location, type }) => {
   return (
     <Wrapper>
-      <UserImg />
+      <ProfileImg
+        size={"55"}
+        type={"active"}
+        url={"/images/userImgs/user123456/profile-photo.jpg"}
+      />
       <Userdesc>
-        <UserId>{userId}</UserId>
-        <Optional>{userNickname}</Optional>
+        <UserId type={type} userNickname={userNickname}/>
+        <Optional type={type}>{userName}</Optional>
       </Userdesc>
     </Wrapper>
   );

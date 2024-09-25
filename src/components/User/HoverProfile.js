@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 const HoverProfile = () => {
   return (
     <Wrapper>
-      <UserInfo userId={"lotte_ria"} userNickname={"decent"}/>
+      <UserInfo type={"feed"} userNickname={"lotte_ria"} userName={"decent"}/>
       <UserNums/>
     </Wrapper>
   );
