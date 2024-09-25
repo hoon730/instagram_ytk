@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import HotHashtagItem from "./HotHashtagItem";
-import Footer from "./Footer/Footer";
+import Footer from "./common/Footer/Footer";
 
 const Wrapper = styled.div`
   width: 380px;
@@ -26,19 +26,46 @@ const ItemList = styled.div`
   gap: 15px;
 `;
 
+const hotTagInfo = [
+  {
+    keyword: "#여행",
+    postcount: "3.2만",
+  },
+  {
+    keyword: "#맛집투어",
+    postcount: "452만",
+  },
+  {
+    keyword: "#제주도",
+    postcount: "2만",
+  },
+  {
+    keyword: "#서귀포",
+    postcount: "3.7만",
+  },
+  {
+    keyword: "#일상생활",
+    postcount: "110만",
+  },
+  {
+    keyword: "#마라탕",
+    postcount: "8.6만",
+  },
+];
+
 const HotHashtag = () => {
   return (
     <Wrapper>
       <Title>🔥지금 뜨는 #해시태그</Title>
       <ItemList>
-        <HotHashtagItem keyword="#여행" postcount="게시물 3.2만개" />
-        <HotHashtagItem keyword="#맛집투어" postcount="게시물 452만개" />
-        <HotHashtagItem keyword="#제주도" postcount="게시물 2만개" />
-        <HotHashtagItem keyword="#서귀포" postcount="게시물 3.7만개" />
-        <HotHashtagItem keyword="#일상생활" postcount="게시물 110만개" />
-        <HotHashtagItem keyword="#마라탕" postcount="게시물 8.6만개" />
+        {hotTagInfo.map((it) => (
+          <HotHashtagItem
+            keyword={it.keyword}
+            postcount={`게시물 ${it.postcount}개`}
+          />
+        ))}
       </ItemList>
-      <Footer direction="column" />
+      <Footer direction={"column"} />
     </Wrapper>
   );
 };

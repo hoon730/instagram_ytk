@@ -7,6 +7,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
+  font-size: 14px;
+  ${({ color }) =>
+    color === "darkGray" ? `color: #7E7E7E;` : `color: #bfbfbf;`}
 `;
 
 const BtnListWrapper = styled.div`
@@ -30,6 +33,14 @@ const BtnList = styled.ul`
 
 const footerItemName1 = ["소개", "도움말", "홍보 센터", "API", "채용 정보"];
 
+const footerItemUrl1 = [
+  "https://about.instagram.com/",
+  "https://help.instagram.com/",
+  "https://about.instagram.com/blog/",
+  "https://developers.facebook.com/docs/instagram",
+  "https://about.instagram.com/about-us/careers",
+];
+
 const footerItemName2 = [
   "개인정보처리방침",
   "약관",
@@ -38,22 +49,30 @@ const footerItemName2 = [
   "Meta Verified",
 ];
 
-const Footer = ({ direction }) => {
+const footerItemUrl2 = [
+  "https://www.instagram.com/legal/privacy/",
+  "https://www.instagram.com/legal/terms/",
+  "/",
+  "/",
+  "https://www.instagram.com/accounts/meta_verified",
+];
+
+const Footer = ({ direction, color }) => {
   return (
-    <Wrapper>
+    <Wrapper color={color}>
       <BtnListWrapper direction={direction}>
         <BtnList>
-          {footerItemName1.map((it) => (
+          {footerItemName1.map((it, idx) => (
             <>
-              <FooterListItem text={it} />
+              <FooterListItem text={it} url={footerItemUrl1[idx]} />
               <FooterListText text={"·"} />
             </>
           ))}
         </BtnList>
         <BtnList className="second_row">
-          {footerItemName2.map((it) => (
+          {footerItemName2.map((it, idx) => (
             <>
-              <FooterListItem text={it} />
+              <FooterListItem text={it} url={footerItemUrl2[idx]} />
               <FooterListText text={"·"} />
             </>
           ))}
