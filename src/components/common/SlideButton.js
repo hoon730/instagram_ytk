@@ -3,20 +3,16 @@ import styled from "styled-components";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const ButtonWrapper = styled.div`
-  width: ${({ $bgsize }) => ($bgsize ? $bgsize : 26)}px;
-  height: ${({ $bgsize }) => ($bgsize ? $bgsize : 26)}px;
-  background: var(
-    ${({ $bgcolor }) => ($bgcolor ? $bgcolor : "--light-gray-color")}
-  );
+  width: ${({ $bgsize }) => `${$bgsize || 26}`}px;
+  height: ${({ $bgsize }) => `${$bgsize || 26}`}px;
+  background: var(${({ $bgcolor }) => `${$bgcolor || "--light-gray-color"}`});
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   .slideButtonIcon {
-    color: var(
-      ${({ $fontcolor }) => ($fontcolor ? $fontcolor : "--bg-white-color")}
-    );
+    color: var(${({ $fontcolor }) => `${$fontcolor || "--bg-white-color"}`});
   }
 `;
 

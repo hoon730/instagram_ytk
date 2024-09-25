@@ -8,8 +8,8 @@ const ImgSection = styled.div`
 
 const ActivationArea = styled.span`
   display: inline-block;
-  width: ${({ size }) => (size ? size : 96)}px;
-  height: ${({ size }) => (size ? size : 96)}px;
+  width: ${({ size }) => `${size || 96}`}px;
+  height: ${({ size }) => `${size || 96}`}px;
   ${({ type }) =>
     type === "active"
       ? "background: var(--main-color)"
@@ -20,8 +20,8 @@ const ActivationArea = styled.span`
 
 const BoundaryLine = styled.span`
   display: inline-block;
-  width: ${({ size }) => (size ? size - 5 : 91)}px;
-  height: ${({ size }) => (size ? size - 5 : 91)}px;
+  width: ${({ size }) => `${size - 5 || 91}`}px;
+  height: ${({ size }) => `${size - 5 || 91}`}px;
   background: #fff;
   border-radius: 50%;
   position: relative;
@@ -32,8 +32,8 @@ const BoundaryLine = styled.span`
 
 const ImgBox = styled.span`
   display: inline-block;
-  width: ${({ size }) => (size ? size - 10 : 86)}px;
-  height: ${({ size }) => (size ? size - 10 : 86)}px;
+  width: ${({ size }) => `${size - 10 || 86}`}px;
+  height: ${({ size }) => `${size - 10 || 86}`}px;
   border-radius: 50%;
   position: absolute;
   top: 50%;

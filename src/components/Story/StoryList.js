@@ -36,7 +36,7 @@ const StoryList = () => {
         <StoryItem />
         <StoryItem />
       </StoryContent>
-      <SlideButton type={"right"} {...styles} />
+      <SlideButton type={"right"} />
     </Wrapper>
   );
 };
