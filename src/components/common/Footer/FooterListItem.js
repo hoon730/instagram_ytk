@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const ListItem = styled.a`
+const ListItem = styled(Link)`
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -10,7 +11,7 @@ const ListItem = styled.a`
 
 const FooterListItem = ({ text, url }) => {
   return (
-    <ListItem href={url} target="_blank">
+    <ListItem to={url} target="_blank">
       {text}
     </ListItem>
   );

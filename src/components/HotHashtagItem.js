@@ -7,12 +7,12 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   padding-left: 24px;
-  border: 1px solid #eeeeee;
+  border: 1px solid var(--light-gray-color);
   border-radius: 12px;
   transition: background 0.3s;
   cursor: pointer;
   &:hover {
-    background: #eeeeee;
+    background: var(--light-gray-color);
   }
 `;
 
@@ -23,12 +23,12 @@ const Text = styled.div`
 const Keyword = styled.h4`
   font-size: 16px;
   font-weight: 700;
-  color: #2b2b2b;
+  color: var(--font-black-color);
 `;
 
 const PostCount = styled.p`
   font-size: 14px;
-  color: #bfbfbf;
+  color: var(--gray-color);
 `;
 
 const HotHashtagItem = ({ keyword, postcount }) => {

@@ -9,7 +9,9 @@ const Wrapper = styled.div`
   gap: 2px;
   font-size: 14px;
   ${({ color }) =>
-    color === "darkGray" ? `color: #7E7E7E;` : `color: #bfbfbf;`}
+    color === "darkGray"
+      ? `color: var(--dark-gray-color);`
+      : `color: var(--gray-color);`}
 `;
 
 const BtnListWrapper = styled.div`
@@ -31,30 +33,50 @@ const BtnList = styled.ul`
   }
 `;
 
-const footerItemName1 = ["소개", "도움말", "홍보 센터", "API", "채용 정보"];
-
-const footerItemUrl1 = [
-  "https://about.instagram.com/",
-  "https://help.instagram.com/",
-  "https://about.instagram.com/blog/",
-  "https://developers.facebook.com/docs/instagram",
-  "https://about.instagram.com/about-us/careers",
+const footerItemName1 = [
+  {
+    name: "소개",
+    url: "https://about.instagram.com/",
+  },
+  {
+    name: "도움말",
+    url: "https://help.instagram.com/",
+  },
+  {
+    name: "홍보 센터",
+    url: "https://about.instagram.com/blog/",
+  },
+  {
+    name: "API",
+    url: "https://developers.facebook.com/docs/instagram",
+  },
+  {
+    name: "채용 정보",
+    url: "https://about.instagram.com/about-us/careers",
+  },
 ];
 
 const footerItemName2 = [
-  "개인정보처리방침",
-  "약관",
-  "위치",
-  "언어",
-  "Meta Verified",
-];
-
-const footerItemUrl2 = [
-  "https://www.instagram.com/legal/privacy/",
-  "https://www.instagram.com/legal/terms/",
-  "/",
-  "/",
-  "https://www.instagram.com/accounts/meta_verified",
+  {
+    name: "개인정보처리방침",
+    url: "https://www.instagram.com/legal/privacy/",
+  },
+  {
+    name: "약관",
+    url: "https://www.instagram.com/legal/terms/",
+  },
+  {
+    name: "위치",
+    url: "/",
+  },
+  {
+    name: "언어",
+    url: "/",
+  },
+  {
+    name: "Meta Verified",
+    url: "https://www.instagram.com/accounts/meta_verified",
+  },
 ];
 
 const Footer = ({ direction, color }) => {
@@ -62,17 +84,17 @@ const Footer = ({ direction, color }) => {
     <Wrapper color={color}>
       <BtnListWrapper direction={direction}>
         <BtnList>
-          {footerItemName1.map((it, idx) => (
+          {footerItemName1.map((it) => (
             <>
-              <FooterListItem text={it} url={footerItemUrl1[idx]} />
+              <FooterListItem text={it.name} url={it.url} />
               <FooterListText text={"·"} />
             </>
           ))}
         </BtnList>
         <BtnList className="second_row">
-          {footerItemName2.map((it, idx) => (
+          {footerItemName2.map((it) => (
             <>
-              <FooterListItem text={it} url={footerItemUrl2[idx]} />
+              <FooterListItem text={it.name} url={it.url} />
               <FooterListText text={"·"} />
             </>
           ))}

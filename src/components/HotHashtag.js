@@ -1,23 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import HotHashtagItem from "./HotHashtagItem";
-import Footer from "./common/Footer/Footer";
+import Footer from "./Common/Footer/Footer";
 
 const Wrapper = styled.div`
   width: 380px;
-  height: 100vh;
+  height: 100%;
   padding: 36px;
   text-align: left;
-  border-left: 1px solid #eeeeee;
+  border-left: 1px solid var(--light-gray-color);
   /* border: 1px solid #6228d7; */
-  margin: 0 auto;
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 22px;
-  color: #2b2b2b;
+  color: var(--font-black-color);
 `;
 
 const ItemList = styled.div`
