@@ -19,7 +19,7 @@ const Detail = () => {
     <Wrapper>
       <SideBar />
       <Profile>
-        <CommentInput width={"300px"} />
+        <CommentInput width={"600px"} />
         <Button width={"300px"} type={"positive"}/>
         <HoverProfile/>
       </Profile>
