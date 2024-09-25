@@ -1,4 +1,3 @@
-import { width } from "@fortawesome/free-brands-svg-icons/fa42Group";
 import React, { useState } from "react";
 import styled from "styled-components";
 
