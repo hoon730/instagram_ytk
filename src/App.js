@@ -1,13 +1,38 @@
 import "./App.css";
-import HotHashtag from "./components/HotHashtag";
-import SearchBar from "./components/common/SearchBar";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import GlobalStyles from "./styles/GlobalStyles";
+import Main from "./pages/Main";
+import Detail from "./pages/Detail";
+import Login from "./pages/Login";
+import Layout from "./components/Layout";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: <Main />,
+      },
+      {
+        path: "detail",
+        element: <Detail />,
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+]);
 
 function App() {
   return (
-    <div className="App">
-      <SearchBar />
-      <HotHashtag />
-    </div>
+    <>
+      <GlobalStyles />
+      <RouterProvider router={router} />
+    </>
   );
 }
 

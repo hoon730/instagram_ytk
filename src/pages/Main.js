@@ -1,7 +1,14 @@
 import React from "react";
+import SideBar from "../components/Common/Sidebar/SideBar";
+import UserImg from "../components/Common/UserImg";
 
 const Main = () => {
-  return <div></div>;
+  return (
+    <>
+      <SideBar />
+      <UserImg />
+    </>
+  );
 };
 
 export default Main;
