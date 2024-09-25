@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledInput = styled.input`
-  width: ${({ width }) => `${width}px`};
+  width: ${({ width }) => `${width}` || "100%"};
   height: 50px;
   background: var(--light-gray-color);
   border-radius: var(--border-radius-8);
@@ -15,7 +15,6 @@ const StyledInput = styled.input`
 `;
 
 const CommentInput = ({ width }) => {
-    console.log(width)
   const [comment, setComment] = useState("");
 
   return (
@@ -23,6 +22,7 @@ const CommentInput = ({ width }) => {
       <StyledInput
         value={comment}
         placeholder="댓글 달기... "
+        width={width}
         onChange={(e) => setComment(e.target.value)}
       />
     </div>
