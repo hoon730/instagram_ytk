@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { menuData } from "../../../utils/utils";
 import { toolData } from "../../../utils/utils";
@@ -44,7 +44,7 @@ const ToolList = styled.div`
 const SideBar = () => {
   const navigate = useNavigate();
 
-  const handleOnClick= () => {};
+  const [activeId, setActiveId] = useState(null);
 
   return (
     <StyledAside>
@@ -59,10 +59,11 @@ const SideBar = () => {
         </Stlyedh1>
         <MenuList>
           {menuData.map((it) => (
-            <MenuItem 
+            <MenuItem
               key={it.id}
               {...it}
-              onClick={handleOnClick}
+              isActive={activeId === it.id}
+              setIsActive={() => setActiveId(it.id)}
             />
           ))}
         </MenuList>

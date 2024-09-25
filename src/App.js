@@ -6,33 +6,32 @@ import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       {
         path: "",
-        element: <Main/>,
+        element: <Main />,
       },
       {
         path: "detail",
-        element: <Detail/>,
-      }
+        element: <Detail />,
+      },
     ],
   },
   {
     path: "/login",
-    element: <Login/>
-  }
-])
+    element: <Login />,
+  },
+]);
 
 function App() {
   return (
     <>
-    <GlobalStyles />
-    <RouterProvider router={router}/>
+      <GlobalStyles />
+      <RouterProvider router={router} />
     </>
   );
 }

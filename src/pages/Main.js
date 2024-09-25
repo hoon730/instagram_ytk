@@ -1,18 +1,46 @@
 import React from "react";
 import styled from "styled-components";
-import SideBar from "../components/common/Sidebar/SideBar";
-import StoryList from "../components/Story/StoryList";
+import SideBar from "../components/Common/Sidebar/SideBar";
+import HotHashtag from "../components/HotHashtag";
+import UserImg from "../components/User/UserImg";
+import MainHeader from "../components/Main/MainHeader";
+import FeedContent from "../components/Main/FeedContent";
+import StoryContent from "../components/Story/StoryContent";
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: flex-start;
+`;
+
+const MainSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+const MainContent = styled.div`
+  display: flex;
+`;
+
+const FeedSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 `;
 
 const Main = () => {
   return (
     <Wrapper>
       <SideBar />
-      <StoryList />
+      <MainSection>
+        <MainHeader />
+        <MainContent>
+          <FeedSection>
+            <StoryContent />
+            <FeedContent />
+          </FeedSection>
+          <HotHashtag />
+        </MainContent>
+      </MainSection>
     </Wrapper>
   );
 };

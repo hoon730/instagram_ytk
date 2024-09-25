@@ -1,24 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import StoryItem from "./StoryItem";
-import SlideButton from "../common/SlideButton";
+import SlideButton from "../Common/SlideButton";
 
 const Wrapper = styled.div`
-  width: 1000px;
-  margin: 16px auto 24px;
+  width: calc(100% - 100px);
+  height: 214px;
+  margin: 0 auto;
   padding: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #f00;
 `;
 
-const StoryContent = styled.div`
+const StorySection = styled.div`
   width: 90%;
   display: flex;
   align-items: center;
   gap: 20px;
-  border: 1px solid #0f0;
+  overflow: hidden;
 `;
 
 const styles = {
@@ -27,18 +27,23 @@ const styles = {
   fontcolor: "--bg-white-color",
 };
 
-const StoryList = () => {
+const StoryContent = () => {
   return (
     <Wrapper>
       <SlideButton type={"left"} {...styles} />
-      <StoryContent>
+      <StorySection>
         <StoryItem />
         <StoryItem />
         <StoryItem />
-      </StoryContent>
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
+      </StorySection>
       <SlideButton type={"right"} />
     </Wrapper>
   );
 };
 
-export default StoryList;
+export default StoryContent;
