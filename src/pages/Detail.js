@@ -5,7 +5,7 @@ import UserInfo from "../components/User/UserInfo";
 import CommentInput from "../components/Common/CommentInput";
 import Button from "../components/Common/Button";
 import HoverProfile from "../components/User/HoverProfile";
-import MoreModal from "../components/Common/More/MoreModal";
+import More from "../components/Common/More/More";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -15,6 +15,8 @@ const Wrapper = styled.div`
 
 const Profile = styled.div``;
 
+
+
 const Detail = () => {
   return (
     <Wrapper>
@@ -23,7 +25,7 @@ const Detail = () => {
         <CommentInput width={"600px"} />
         <Button width={"300px"} type={"positive"}/>
         <HoverProfile/>
-        <MoreModal/>
+        <More/>
       </Profile>
     </Wrapper>
   );
