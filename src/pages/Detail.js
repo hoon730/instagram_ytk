@@ -3,6 +3,9 @@ import SideBar from "../components/Common/Sidebar/SideBar";
 import styled from "styled-components";
 import UserInfo from "../components/User/UserInfo";
 import CommentInput from "../components/Common/CommentInput";
+import Button from "../components/Common/Button";
+import HoverProfile from "../components/User/HoverProfile";
+import MoreModal from "../components/Common/More/MoreModal";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,8 +20,10 @@ const Detail = () => {
     <Wrapper>
       <SideBar />
       <Profile>
-        <UserInfo />
-        <CommentInput width={"500"} />
+        <CommentInput width={"600px"} />
+        <Button width={"300px"} type={"positive"}/>
+        <HoverProfile/>
+        <MoreModal/>
       </Profile>
     </Wrapper>
   );
