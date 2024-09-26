@@ -1,33 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import PostAndFollow from "./PostAndFollow";
 import Button from "../Common/Button";
-import { menuData } from "../../utils/utils";
 
 const Wrapper = styled.div`
   width: 100%;
   border-top: 1px solid var(--light-gray-color);
-`;
-
-const PostandFollow = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 25px 0;
-`;
-
-const NumberingBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  span {
-    text-align: center;
-    font-size: var(--font-16);
-    &:first-child {
-      font-weight: var(--font-bold);
-    }
-  }
 `;
 
 const PostingPics = styled.div`
@@ -37,29 +15,20 @@ const PostingPics = styled.div`
 `;
 const ImgBox = styled.div`
   width: calc(100% / 3);
+  cursor: pointer;
 `;
 const Img = styled.img``;
 
-const Btns = styled.div``;
+const Btns = styled.div`
+  display: flex;
+  gap: ${({ followed }) => (followed === "followed" ? "10px" : "0")};
+  padding: 20px 0;
+`;
 
 const UserDetail = ({ posting, follower, following, followed }) => {
-
   return (
     <Wrapper>
-      <PostandFollow>
-        <NumberingBox>
-          <span>{posting}</span>
-          <span>게시물</span>
-        </NumberingBox>
-        <NumberingBox>
-          <span>{follower}</span>
-          <span>팔로워</span>
-        </NumberingBox>
-        <NumberingBox>
-          <span>{following}</span>
-          <span>팔로잉</span>
-        </NumberingBox>
-      </PostandFollow>
+        <PostAndFollow posting={posting} follower={follower} following={following}/>
       <PostingPics>
         <ImgBox>
           <Img src={"/images/userImgs/user123456/userdetail_1.jpg"} />
@@ -71,9 +40,14 @@ const UserDetail = ({ posting, follower, following, followed }) => {
           <Img src={"/images/userImgs/user123456/userdetail_3.jpg"} />
         </ImgBox>
       </PostingPics>
-      <Btns>
-        <Button text={`${menuData[4].iconCode}`} />
-        <Button />
+      <Btns followed={"followed"}>
+        <Button
+          width={"66.66%"}
+          followed={"followed"}
+          type={"positive"}
+          text={"메시지 보내기"}
+        />
+        <Button width={"33.33%"} type={"negative"} text={"팔로우"}/>
       </Btns>
     </Wrapper>
   );

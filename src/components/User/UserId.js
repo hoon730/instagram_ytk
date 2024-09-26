@@ -13,6 +13,10 @@ const StyledSpan = styled.span`
       : `font-size: var(--font-16); font-weight: var(--font-bold);`}
 `;
 
+const IdSpan = styled.span`
+cursor: pointer;
+`;
+
 const Check = styled.img`
   ${({ type }) => (type === "active" ? `display: block;` : `display: none;`)}
 `;
@@ -35,15 +39,18 @@ const IsFollowed = styled.span`
   font-size: var(--font-14);
   font-weight: var(--font-bold);
   color: var(--sub-purple-color);
+  cursor: pointer;
 `;
 
 const UserId = ({ type, userNickname, createDate, follwed }) => {
   console.log(createDate);
   return (
     <StyledSpan type={type}>
-      {userNickname} <Check type={"active"} src="/images/check.svg" />
+      <IdSpan>{userNickname}</IdSpan>
+      <Check type={"active"} src="/images/check.svg" />
       <Date createDate={createDate}>
-        <span>&middot;</span>{createDate}
+        <span>&middot;</span>
+        {createDate}
       </Date>
       <IsFollowed follwed={follwed}>
         <span>&middot;</span>팔로우

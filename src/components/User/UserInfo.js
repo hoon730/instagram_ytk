@@ -22,6 +22,7 @@ const Optional = styled.p`
       ? `font-size: var(--font-18); font-weight: var(--font-regular);`
       : `font-size: var(--font-16); font-weight: var(--font-regular);`}
   color: var(--gray-color);
+  cursor: pointer;
 `;
 
 
