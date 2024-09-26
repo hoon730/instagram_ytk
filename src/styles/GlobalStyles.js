@@ -16,7 +16,7 @@ const GlobalStyles = createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-
+/* 
   input {
     border: none;
     padding-left: 10px;
@@ -44,7 +44,7 @@ const GlobalStyles = createGlobalStyle`
 
   input:focus::placeholder {
     opacity: 0;
-  }
+  } */
 
   button {
     background: transparent;
@@ -73,7 +73,7 @@ const GlobalStyles = createGlobalStyle`
     --font-black-color: #2B2B2B;
 
     --border-radius-12: 12px;
-    --border-radius-8: 8;
+    --border-radius-8: 8px;
 
     --font-size-8: 8px;
     --font-size-10: 10px;
@@ -84,6 +84,9 @@ const GlobalStyles = createGlobalStyle`
     --font-size-20: 20px;
     --font-size-22: 22px;
     --font-size-24: 24px;
+    --font-size-28: 28px;
+    --font-size-32: 32px;
+    --font-size-34: 34px;
 
     --font-thin: 100;
     --font-extralight: 200;
