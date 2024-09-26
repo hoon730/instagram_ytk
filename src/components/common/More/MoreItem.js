@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   text-align: center;
   font-size: var(--font-18);
   border-bottom: 1px solid var(--light-gray-color);
+  cursor: pointer;
   ${({ text }) =>
     text === "신고"
       ? `color: var(--warning-color); font-weight: var(--font-bold);`

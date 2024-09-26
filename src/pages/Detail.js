@@ -5,7 +5,7 @@ import UserInfo from "../components/User/UserInfo";
 import CommentInput from "../components/Common/CommentInput";
 import Button from "../components/Common/Button";
 import HoverProfile from "../components/User/HoverProfile";
-import More from "../components/Common/More/More";
+import UserId from "../components/User/UserId";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -15,17 +15,14 @@ const Wrapper = styled.div`
 
 const Profile = styled.div``;
 
-
-
 const Detail = () => {
   return (
     <Wrapper>
       <SideBar />
       <Profile>
         <CommentInput width={"600px"} />
-        <Button width={"300px"} type={"positive"}/>
-        <HoverProfile/>
-        <More/>
+        <Button width={"300px"} type={"positive"} />
+        <HoverProfile />
       </Profile>
     </Wrapper>
   );
