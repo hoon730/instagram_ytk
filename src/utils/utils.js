@@ -9,6 +9,8 @@ import { FaGear } from "react-icons/fa6";
 import { BsThreads } from "react-icons/bs";
 import { LuSunMedium } from "react-icons/lu";
 
+import { BsHeart } from "react-icons/bs";
+
 export const getFormattedDate = (targetDate) => {
   const year = targetDate.getFullYear();
   let month = targetDate.getMonth() + 1;
@@ -20,13 +22,12 @@ export const getFormattedDate = (targetDate) => {
   return `${year}-${month}-${date}`;
 };
 
-
 export const menuData = [
   {
     id: 1,
     name: "홈",
     iconCode: <AiOutlineHome />,
-    path: "/"
+    path: "/",
   },
   {
     id: 2,
@@ -42,7 +43,7 @@ export const menuData = [
     id: 4,
     name: "저장됨",
     iconCode: <FaRegBookmark />,
-    path: "/detail"
+    path: "/detail",
   },
   {
     id: 5,
@@ -53,9 +54,9 @@ export const menuData = [
     id: 6,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
-    path: "/new"
+    path: "/new",
   },
-]
+];
 
 export const toolData = [
   {
@@ -73,4 +74,6 @@ export const toolData = [
     name: "day",
     iconCode: <LuSunMedium />,
   },
-]
+];
+
+

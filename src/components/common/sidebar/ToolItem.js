@@ -1,31 +1,29 @@
-import React from 'react'
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const ToolBox = styled.div`
-    width: 50px;
-    height: 50px;
-    margin-bottom: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background: var(--light-gray-color);
-    cursor: pointer;
-    svg {
-        font-size: 28px;
-    }
+  width: 40px;
+  height: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: var(--light-gray-color);
+  cursor: pointer;
+  svg {
+    font-size: 24px;
+  }
 
-    &.day {
-        svg {
-            color: var(--warning-color);
-        }
+  &.day {
+    svg {
+      color: var(--warning-color);
     }
+  }
 `;
 
-const ToolItem = ({name, iconCode}) => {
-  return (
-    <ToolBox className={name}>{iconCode}</ToolBox>
-  )
-}
+const ToolItem = ({ name, iconCode }) => {
+  return <ToolBox className={name}>{iconCode}</ToolBox>;
+};
 
-export default ToolItem
+export default ToolItem;
