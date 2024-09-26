@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   max-width: 305px;
-  height: 70px;
+  height: 65px;
   padding-left: 30px;
   display: flex;
   align-items: center;
@@ -26,11 +26,11 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   svg {
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
 const MenuText = styled.span`
-  font-size: 24px;
+  font-size: 20px;
 `;
 
 const MenuItem = ({ name, iconCode, path, isActive, setIsActive }) => {
