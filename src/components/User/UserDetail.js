@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "../Common/Button";
+import { menuData } from "../../utils/utils";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -40,7 +42,8 @@ const Img = styled.img``;
 
 const Btns = styled.div``;
 
-const UserDetail = ({ posting, follower, following }) => {
+const UserDetail = ({ posting, follower, following, followed }) => {
+
   return (
     <Wrapper>
       <PostandFollow>
@@ -68,7 +71,10 @@ const UserDetail = ({ posting, follower, following }) => {
           <Img src={"/images/userImgs/user123456/userdetail_3.jpg"} />
         </ImgBox>
       </PostingPics>
-      <Btns></Btns>
+      <Btns>
+        <Button text={`${menuData[4].iconCode}`} />
+        <Button />
+      </Btns>
     </Wrapper>
   );
 };
