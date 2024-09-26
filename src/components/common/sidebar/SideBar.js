@@ -22,23 +22,25 @@ const Wrapper = styled.div`
 `;
 const Stlyedh1 = styled.h1`
   max-width: 305px;
-  height: 150px;
+  height: 148px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 `;
-const Logo = styled.img``;
+const Logo = styled.img`
+  width: 130px;
+`;
 
 const MenuList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 `;
 
 const ToolList = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 8px;
 `;
 
 const SideBar = () => {
