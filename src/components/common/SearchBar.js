@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { RxMagnifyingGlass } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Wrapper = styled.div`
   width: 100%;
-  ${({ height }) => (isNaN(height) ? `height: ${height}px;` : "")}
-  padding: 12px;
+  padding: 10px 14px;
   border-radius: 8px;
-  background: #eeeeee;
+  background: var(--light-gray-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,19 +18,19 @@ const ItemArea = styled.div`
   justify-content: center;
   align-items: center;
   & > svg {
-    color: #bfbfbf;
+    color: var(--gray-color);
   }
   &.deleteBtn {
     display: none;
-    background: #bfbfbf;
+    background: var(--gray-color);
     border-radius: 50%;
     cursor: pointer;
     & > svg {
       width: 70%;
-      color: #ffffff;
+      color: var(--bg-white-color);
     }
     &.active {
-      display: block;
+      display: flex;
     }
   }
 `;
@@ -41,17 +40,40 @@ const SearchInput = styled.input`
   height: 24px;
   font-size: 16px;
   background: none;
-  color: #2b2b2b;
+  color: var(--font-black-color);
 `;
 
-const SearchBar = ({ height }) => {
+const SearchBar = () => {
+  const [text, setText] = useState("");
+  const [isActive, setIsActive] = useState(false);
+
+  const deleteBtnActive = (e) => {
+    setText(e.target.value);
+    setIsActive(true);
+    if (e.target.value === "") setIsActive(false);
+    else setIsActive(true);
+  };
+
+  const inputReset = () => {
+    setText("");
+    setIsActive(false);
+  };
+
   return (
-    <Wrapper height={height}>
+    <Wrapper>
       <ItemArea>
         <RxMagnifyingGlass />
       </ItemArea>
-      <SearchInput type="text" placeholder="검색"></SearchInput>
-      <ItemArea className="deleteBtn">
+      <SearchInput
+        onChange={deleteBtnActive}
+        value={text}
+        type="text"
+        placeholder="검색"
+      ></SearchInput>
+      <ItemArea
+        className={`deleteBtn ${isActive ? "active" : ""}`}
+        onClick={inputReset}
+      >
         <AiOutlineClose />
       </ItemArea>
     </Wrapper>

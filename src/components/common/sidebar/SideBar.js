@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 `;
 const Stlyedh1 = styled.h1`
   max-width: 305px;
-  height: 148px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,6 +40,7 @@ const MenuList = styled.div`
 
 const ToolList = styled.div`
   display: flex;
+  margin-bottom: 40px;
   gap: 8px;
 `;
 
