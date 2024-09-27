@@ -1,11 +1,11 @@
 import React from 'react'
 
-const MoreModal = () => {
+const New = () => {
   return (
     <div>
-      
+      New
     </div>
   )
 }
 
-export default MoreModal
+export default New

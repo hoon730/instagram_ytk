@@ -7,6 +7,9 @@ import ToolItem from "./ToolItem";
 import { useNavigate } from "react-router-dom";
 
 const StyledAside = styled.aside`
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 380px;
   height: 100vh;
   padding: 0 37.5px;

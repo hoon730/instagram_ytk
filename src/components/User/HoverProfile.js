@@ -14,7 +14,7 @@ const HoverProfile = () => {
   return (
     <Wrapper>
       <UserInfo type={"feed"} userNickname={"lotte_ria"} userName={"decent"} />
-      <UserDetail posting={"73"} follower={"255"} following={"358"} />
+      <UserDetail posting={"73"} follower={"255"} following={"358"} followed={"followed"}/>
       <p></p>
     </Wrapper>
   );
