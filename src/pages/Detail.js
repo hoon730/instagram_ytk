@@ -1,24 +1,20 @@
 import React from "react";
-import SideBar from "../components/Common/Sidebar/SideBar";
 import styled from "styled-components";
-import UserInfo from "../components/User/UserInfo";
 import CommentInput from "../components/Common/CommentInput";
+import Button from "../components/Common/Button";
+import HoverProfile from "../components/User/HoverProfile";
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-`;
+const Wrapper = styled.div``;
 
 const Profile = styled.div``;
 
 const Detail = () => {
   return (
     <Wrapper>
-      <SideBar />
       <Profile>
-        <UserInfo />
-        <CommentInput width={"500"} />
+        <CommentInput width={"600px"} />
+        <Button width={"300px"} type={"positive"} />
+        <HoverProfile />
       </Profile>
     </Wrapper>
   );

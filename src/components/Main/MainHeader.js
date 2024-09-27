@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import SearchBar from "../Common/SearchBar";
 import ToolItem from "../Common/Sidebar/ToolItem";
+import ProfileImg from "../Profile/ProfileImg";
 
 const Wrapper = styled.div`
   border-bottom: 1px solid var(--light-gray-color);
@@ -17,12 +18,20 @@ const SearchBarArea = styled.div`
 `;
 
 const ProfileArea = styled.div`
-  width: 370px;
+  width: 330px;
   height: 65px;
-  border: 1px solid #f00;
   display: flex;
   align-items: center;
   gap: 12px;
+`;
+
+const Profile = styled.div`
+  width: calc(100% - 52px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--light-gray-color);
+  border-radius: 12px;
 `;
 
 const MainHeader = () => {
@@ -33,6 +42,12 @@ const MainHeader = () => {
       </SearchBarArea>
       <ProfileArea>
         <ToolItem />
+        <Profile>
+          <ProfileImg
+            url={`${process.env.PUBLIC_URL}/images/userImgs/user123456/profile-photo.jpg`}
+            size={"55"}
+          />
+        </Profile>
       </ProfileArea>
     </Wrapper>
   );
