@@ -5,6 +5,7 @@ import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
+import New from "./pages/New";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "detail",
         element: <Detail />,
+      },
+      {
+        path: "new",
+        element: <New />,
       },
     ],
   },
