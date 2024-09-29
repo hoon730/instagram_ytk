@@ -5,7 +5,7 @@ import SlideButton from "../Common/SlideButton";
 
 const Wrapper = styled.div`
   width: calc(100% - 100px);
-  height: 214px;
+  height: 180px;
   margin: 0 auto;
   padding: 8px 0;
   display: flex;
@@ -32,6 +32,8 @@ const StoryContent = () => {
     <Wrapper>
       <SlideButton type={"left"} {...styles} />
       <StorySection>
+        <StoryItem />
+        <StoryItem />
         <StoryItem />
         <StoryItem />
         <StoryItem />
