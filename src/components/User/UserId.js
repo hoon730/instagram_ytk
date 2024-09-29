@@ -73,15 +73,15 @@ const MoreBackground = styled.div`
 `;
 
 const MoreList = styled.div`
-  width: 550px;
+  width: 450px;
   background: var(--bg-white-color);
   border-radius: var(--border-radius-12);
 `;
 
 const CancelBtn = styled.button`
   width: 100%;
-  padding: 25px 0;
-  font-size: var(--font-18);
+  padding: 20px 0;
+  font-size: var(--font-14);
   text-align: center;
 `;
 
