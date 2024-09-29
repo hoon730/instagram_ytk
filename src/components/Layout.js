@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: calc(100% - 380px);
   margin-left: 380px;
 `;
 
