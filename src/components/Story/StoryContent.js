@@ -4,20 +4,21 @@ import StoryItem from "./StoryItem";
 import SlideButton from "../Common/SlideButton";
 
 const Wrapper = styled.div`
-  width: calc(100% - 100px);
+  width: 68%;
   height: 180px;
   margin: 0 auto;
   padding: 8px 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 24px;
 `;
 
 const StorySection = styled.div`
-  width: 90%;
   display: flex;
   align-items: center;
   gap: 20px;
+  flex: 1;
   overflow: hidden;
 `;
 
@@ -32,6 +33,12 @@ const StoryContent = () => {
     <Wrapper>
       <SlideButton type={"left"} {...styles} />
       <StorySection>
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
+        <StoryItem />
         <StoryItem />
         <StoryItem />
         <StoryItem />

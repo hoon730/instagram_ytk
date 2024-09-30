@@ -3,8 +3,7 @@ import styled from "styled-components";
 
 const StyledInput = styled.input`
   width: ${({ width }) => `${width}` || "auto"};
-  width: ${({ height }) => `${height}` || "auto"};
-  height: 50px;
+  height: ${({ height }) => `${height}` || "auto"};
   background: var(--light-gray-color);
   border-radius: var(--border-radius-8);
   padding-left: 10px;

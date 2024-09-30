@@ -80,7 +80,6 @@ const MainHeader = () => {
   const [heart, setHeart] = useState(false);
 
   const heartChange = () => {
-    console.log("Click");
     setHeart((prev) => !prev);
   };
 
@@ -93,6 +92,7 @@ const MainHeader = () => {
         <ToolItem
           onClick={heartChange}
           iconCode={heart ? <GoHeartFill /> : <GoHeart />}
+          name={heart ? "heartFill" : null}
         />
         <Profile>
           <UserProfile>

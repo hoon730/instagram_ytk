@@ -41,6 +41,9 @@ const SearchInput = styled.input`
   font-size: 16px;
   background: none;
   color: var(--font-black-color);
+  &::placeholder {
+    font-size: 14px;
+  }
 `;
 
 const SearchBar = () => {
@@ -62,7 +65,7 @@ const SearchBar = () => {
   return (
     <Wrapper>
       <ItemArea>
-        <RxMagnifyingGlass />
+        <RxMagnifyingGlass size="20" />
       </ItemArea>
       <SearchInput
         onChange={deleteBtnActive}

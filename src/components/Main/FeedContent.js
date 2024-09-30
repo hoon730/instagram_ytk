@@ -33,13 +33,12 @@ const ActiveBorderArea = styled.div`
 `;
 
 const ActiveBorder = styled.div`
-  width: ${tabWidth}px;
+  width: 50%;
   height: 100%;
   background: var(--font-black-color);
+  transition: transform 0.3s;
   ${({ recommend }) =>
-    recommend
-      ? `transform: translateX(0);`
-      : `transform: translateX(${tabWidth}px);`}
+    recommend ? `transform: translateX(0);` : `transform: translateX(100%);`}
 `;
 
 const FeedContent = () => {

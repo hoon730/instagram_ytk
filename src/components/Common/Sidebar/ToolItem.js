@@ -19,10 +19,20 @@ const ToolBox = styled.div`
       color: var(--warning-color);
     }
   }
+
+  &.heartFill {
+    svg {
+      color: var(--sub-pink-color);
+    }
+  }
 `;
 
-const ToolItem = ({ name, iconCode }) => {
-  return <ToolBox className={name}>{iconCode}</ToolBox>;
+const ToolItem = ({ name, iconCode, onClick }) => {
+  return (
+    <ToolBox onClick={onClick} className={name}>
+      {iconCode}
+    </ToolBox>
+  );
 };
 
 export default ToolItem;
