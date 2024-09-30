@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { ThemeContext } from "styled-components";
+import { ThemeContext } from "../../../App";
 
 const ToolBox = styled.div`
   width: 40px;
@@ -9,10 +9,12 @@ const ToolBox = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background: var(--light-gray-color);
+  background: ${({ theme }) => theme.iconBgColor};
   cursor: pointer;
+
   svg {
     font-size: 24px;
+    color: ${({ theme }) => theme.iconColor};
   }
 
   &.day {
@@ -28,8 +30,13 @@ const ToolBox = styled.div`
   }
 `;
 
-const ToolItem = ({ name, iconCode, onClick }) => {
-  const goDark = useContext(ThemeContext);
+const ToolItem = ({ name, iconCode }) => {
+  const { changeDark } = useContext(ThemeContext);
+
+  const onClick = (e) => {
+    console.log(e.target.className);
+    changeDark();
+  };
   return (
     <ToolBox onClick={onClick} className={name}>
       {iconCode}

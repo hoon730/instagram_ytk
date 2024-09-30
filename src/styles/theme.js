@@ -5,6 +5,8 @@ export const lightTheme = {
   subColor: "#6228D7", // Purple
   borderColor: "#EEEEEE", //  Light-gray
   nonActiveBtnColor: "#BFBFBF", // gray
+  iconBgColor:  "#EEEEEE",  //  Light-gray  
+  iconColor:  "#2B2B2B", // Black
 };
 
 export const darkTheme = {
@@ -14,4 +16,6 @@ export const darkTheme = {
   subColor: "#EE2A7B", // Pink
   borderColor: "#7E7E7E", //  dark-gray
   nonActiveBtnColor: "#7E7E7E", // dark-gray
+  iconBgColor:  "#7E7E7E",  // dark-gray
+  iconColor:  "#FFFFFF", // White
 };

@@ -31,9 +31,10 @@ const router = createBrowserRouter([
 ]);
 
 export const ThemeContext = React.createContext();
-
 function App() {
   const [darkMode, setDarkMode] = useState(false);
+
+  console.log(darkMode);
   const changeDark = () => {
     setDarkMode((current) => !current);
   };
@@ -41,7 +42,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <ThemeContext.Provider value={changeDark}>
+        <ThemeContext.Provider value={{ changeDark, darkMode }}>
           <GlobalStyles />
           <RouterProvider router={router} />
         </ThemeContext.Provider>

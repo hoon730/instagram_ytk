@@ -12,10 +12,9 @@ const Detail = () => {
   return (
     <Wrapper>
       {/* <ClickFeed /> */}
-      {/* <Follower/> */}
+      <Follower/>
       {/* <HoverProfile/> */}
-      {/* <UserInfo/> */}
-      <TabBarBtn width={"325"} text={"뽀!"}/>
+      <UserInfo/>
     </Wrapper>
   );
 };

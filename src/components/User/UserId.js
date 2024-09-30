@@ -1,15 +1,18 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import MoreItem from "../Common/More/MoreItem";
+import HoverProfile from "./HoverProfile";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
+import { AnimatePresence, motion } from "framer-motion";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 
 const StyledSpan = styled.span`
@@ -108,66 +111,83 @@ const UserId = ({
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
+  const [hover, setHover] = useState(false);
   const moreBgRef = useRef();
 
-  return (
-    <Wrapper>
-      <StyledSpan type={type}>
-        <IdSpan>{userNickname}</IdSpan>
-        {check === "active" ? <Check src="/images/check.svg" /> : null}
-        {comment ? <Comment>{comment}</Comment> : null}
-        {createDate ? (
-          <Date>
-            <span>&middot;</span>
-            {createDate}
-          </Date>
-        ) : null}
-        {follwed ? (
-          <IsFollowed>
-            <span>&middot;{follwed}</span>{" "}
-          </IsFollowed>
-        ) : null}
-      </StyledSpan>
-      {btn === "more" ? (
-        <MoreBtn onClick={() => setOpenMore(true)}>
-          <LuMoreHorizontal />
-        </MoreBtn>
-      ) : btn === "heart" ? (
-        <HeartBtn
-          color={switchHeart}
-          onClick={() => setSwitchHeart((switchHeart) => !switchHeart)}
-        >
-          {switchHeart ? <IoHeartSharp /> : <IoHeartOutline />}
-        </HeartBtn>
-      ) : null}
+  const showProfile = () => {
+    setHover(true);
+  };
+  const hideProfile = () => {
+    setHover(false);
+  };
 
-      {openMore && (
-        <MoreBackground
-          ref={moreBgRef}
-          onClick={(e) => {
-            if (e.target === moreBgRef.current) {
-              setOpenMore(false);
-            }
-          }}
-        >
-          <MoreList>
-            <MoreItem text={"신고"} />
-            <MoreItem text={"게시물로 이동"} />
-            <MoreItem text={"공유 대상..."} />
-            <MoreItem text={"링크 복사"} />
-            <MoreItem text={"퍼가기"} />
-            <MoreItem text={"이 계정 정보"} />
-            <CancelBtn
-              onClick={() => {
+  return (
+    <AnimatePresence>
+      <Wrapper
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onMouseEnter={showProfile}
+        onMouseLeave={hideProfile}
+      >
+        {hover ? <HoverProfile /> : null}
+        <StyledSpan type={type}>
+          <IdSpan>{userNickname}</IdSpan>
+          {check === "active" ? <Check src="/images/check.svg" /> : null}
+          {comment ? <Comment>{comment}</Comment> : null}
+          {createDate ? (
+            <Date>
+              <span>&middot;</span>
+              {createDate}
+            </Date>
+          ) : null}
+          {follwed ? (
+            <IsFollowed>
+              <span>&middot;{follwed}</span>{" "}
+            </IsFollowed>
+          ) : null}
+        </StyledSpan>
+        {btn === "more" ? (
+          <MoreBtn onClick={() => setOpenMore(true)}>
+            <LuMoreHorizontal />
+          </MoreBtn>
+        ) : btn === "heart" ? (
+          <HeartBtn
+            color={switchHeart}
+            onClick={() => setSwitchHeart((switchHeart) => !switchHeart)}
+          >
+            {switchHeart ? <IoHeartSharp /> : <IoHeartOutline />}
+          </HeartBtn>
+        ) : null}
+
+        {openMore && (
+          <MoreBackground
+            ref={moreBgRef}
+            onClick={(e) => {
+              if (e.target === moreBgRef.current) {
                 setOpenMore(false);
-              }}
-            >
-              취소
-            </CancelBtn>
-          </MoreList>
-        </MoreBackground>
-      )}
-    </Wrapper>
+              }
+            }}
+          >
+            <MoreList>
+              <MoreItem text={"신고"} />
+              <MoreItem text={"게시물로 이동"} />
+              <MoreItem text={"공유 대상..."} />
+              <MoreItem text={"링크 복사"} />
+              <MoreItem text={"퍼가기"} />
+              <MoreItem text={"이 계정 정보"} />
+              <CancelBtn
+                onClick={() => {
+                  setOpenMore(false);
+                }}
+              >
+                취소
+              </CancelBtn>
+            </MoreList>
+          </MoreBackground>
+        )}
+      </Wrapper>
+    </AnimatePresence>
   );
 };
 
