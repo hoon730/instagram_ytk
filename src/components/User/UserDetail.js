@@ -40,10 +40,10 @@ const UserDetail = ({ posting, follower, following, followed }) => {
           <Img src={"/images/userImgs/user123456/userdetail_3.jpg"} />
         </ImgBox>
       </PostingPics>
-      <Btns followed={"followed"}>
+      <Btns followed={followed}>
         <Button
           width={"66.66%"}
-          followed={"followed"}
+          followed={followed}
           type={"positive"}
           text={"메시지 보내기"}
         />

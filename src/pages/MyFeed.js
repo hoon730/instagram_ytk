@@ -3,6 +3,10 @@ import styled from "styled-components";
 import SideBar from "../components/Common/Sidebar/SideBar";
 import ProfileImg from "../components/Profile/ProfileImg";
 import PostAndFollow from "../components/User/PostAndFollow";
+import StoryContent from "../components/Story/StoryContent";
+import StoryItem from "../components/Story/StoryItem";
+import MyPost from "../components/MyFeed/MyPost";
+import MyPostItem from "../components/MyFeed/MyPostItem";
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +16,7 @@ const Wrapper = styled.div`
   width: 935px;
   height: 100vh;
   margin: 0 auto;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
 `;
 
 const MyPic = styled.div`
@@ -25,8 +29,8 @@ const MyPic = styled.div`
 const ProfileBg = styled.div`
   width: 100%;
   height: 310px;
-  background: url(https://i.pinimg.com/564x/67/f7/ef/67f7ef2b5beba28677efb2c9580290f9.jpg)
-    center -600px / cover;
+  background: url(https://www.artinsight.co.kr/data/news/1807/3414468471_3ixgpV7s_14.jpg)
+    center / cover;
 `;
 
 const ProfileImgBox = styled.div`
@@ -127,6 +131,12 @@ const MyFeed = () => {
             다 좋아
           </MyIntro>
         </MyProfile>
+        <StoryContent>
+          <StoryItem />
+        </StoryContent>
+        <MyPost>
+          <MyPostItem />
+        </MyPost>
       </Wrapper>
     </Container>
   );

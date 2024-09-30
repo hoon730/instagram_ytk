@@ -6,6 +6,7 @@ import Detail from "./pages/Detail";
 import MyFeed from "./pages/MyFeed";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
+import New from "./pages/New";
 import Setup from "./pages/Setup";
 
 const router = createBrowserRouter([
@@ -22,12 +23,16 @@ const router = createBrowserRouter([
         element: <Detail />,
       },
       {
-        path: "setup",
-        element: <Setup />,
+        path: "new",
+        element: <New />,
       },
       {
         path: "myfeed",
         element: <MyFeed />,
+      },
+      {
+        path: "setup",
+        element: <Setup />,
       },
     ],
   },
