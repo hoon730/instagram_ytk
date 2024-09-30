@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 15px;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: all 0.2s;
   border-radius: var(--border-radius-12);
 
   &.active {
@@ -33,7 +33,7 @@ const MenuText = styled.span`
   font-size: 20px;
 `;
 
-const MenuItem = ({ name, iconCode, path, isActive, setIsActive }) => {
+const MenuItem = ({ name, iconCode, path, isActive, setIsActive, onClick }) => {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
@@ -41,8 +41,18 @@ const MenuItem = ({ name, iconCode, path, isActive, setIsActive }) => {
     setIsActive(false);
   };
 
+  const showNew = () => {
+    if (name === "만들기") onClick();
+  };
+
   return (
-    <Wrapper className={isActive ? "active" : ""} onClick={handleOnClick}>
+    <Wrapper
+      className={isActive ? "active" : ""}
+      onClick={() => {
+        handleOnClick();
+        showNew();
+      }}
+    >
       <IconWrapper>{iconCode}</IconWrapper>
       <MenuText>{name}</MenuText>
     </Wrapper>

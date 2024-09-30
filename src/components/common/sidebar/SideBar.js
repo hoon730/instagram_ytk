@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { menuData } from "../../../utils/utils";
 import { toolData } from "../../../utils/utils";
 import MenuItem from "./MenuItem";
 import ToolItem from "./ToolItem";
-import { useNavigate } from "react-router-dom";
+import New from "../../../pages/New";
 
 const StyledAside = styled.aside`
   position: fixed;
@@ -46,10 +47,28 @@ const ToolList = styled.div`
   gap: 8px;
 `;
 
+const NewBg = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+`;
+
 const SideBar = () => {
   const navigate = useNavigate();
-
+  const newBgRef = useRef();
   const [activeId, setActiveId] = useState(null);
+  const [openNew, setOpenNew] = useState(false);
+
+  const onClick = () => {
+    setOpenNew(true);
+  };
 
   return (
     <StyledAside>
@@ -69,8 +88,19 @@ const SideBar = () => {
               {...it}
               isActive={activeId === it.id}
               setIsActive={() => setActiveId(it.id)}
+              onClick={onClick}
             />
           ))}
+          {openNew ? (
+            <NewBg
+              ref={newBgRef}
+              onClick={(e) => {
+                if (e.target === newBgRef.current) setOpenNew(false);
+              }}
+            >
+              <New />
+            </NewBg>
+          ) : null}
         </MenuList>
       </Wrapper>
       <ToolList>

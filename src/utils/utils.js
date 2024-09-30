@@ -54,7 +54,7 @@ export const menuData = [
     id: 6,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
-    path: "/new",
+    // path: "/new",
   },
 ];
 
