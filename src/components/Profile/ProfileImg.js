@@ -10,10 +10,12 @@ const ActivationArea = styled.span`
   display: inline-block;
   width: ${({ size }) => `${size || 96}`}px;
   height: ${({ size }) => `${size || 96}`}px;
-  ${({ type }) =>
+  background: ${({ type }) =>
     type === "active"
-      ? "background: var(--main-color)"
-      : "background: var(--light-gray-color)"};
+      ? "var(--main-color)"
+      : type === "inactive"
+      ? "var(--light-gray-color)"
+      : "transparent"};
   border-radius: 50%;
   position: relative;
 `;
