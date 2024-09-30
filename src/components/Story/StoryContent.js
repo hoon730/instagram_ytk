@@ -4,8 +4,8 @@ import StoryItem from "./StoryItem";
 import SlideButton from "../Common/SlideButton";
 
 const Wrapper = styled.div`
-  width: 87%;
-  height: 214px;
+  width: 68%;
+  height: 180px;
   margin: 0 auto;
   padding: 8px 0;
   display: flex;
