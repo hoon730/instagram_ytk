@@ -25,9 +25,15 @@ const Optional = styled.p`
   cursor: pointer;
 `;
 
-
-
-const UserInfo = ({ userName, userNickname, userId, location, type, createDate, followed }) => {
+const UserInfo = ({
+  userName,
+  userNickname,
+  userId,
+  location,
+  type,
+  createDate,
+  followed,
+}) => {
   return (
     <Wrapper>
       <ProfileImg
@@ -36,8 +42,13 @@ const UserInfo = ({ userName, userNickname, userId, location, type, createDate, 
         url={"/images/userImgs/user123456/profile-photo.jpg"}
       />
       <Userdesc>
-        <UserId type={type} userNickname={userNickname} createDate={"5일전"} follwed={true}/>
-        <Optional type={type}>{userName}</Optional>
+        <UserId
+          type={type}
+          userNickname={userNickname}
+          createDate={createDate}
+          follwed={followed}
+        />
+        <Optional type={type}>{userName || location}</Optional>
       </Userdesc>
     </Wrapper>
   );
