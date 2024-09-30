@@ -70,6 +70,10 @@ const SideBar = () => {
     setOpenNew(true);
   };
 
+  const closeNew = () => {
+    setOpenNew(false);
+  };
+
   return (
     <StyledAside>
       <Wrapper>
@@ -98,7 +102,7 @@ const SideBar = () => {
                 if (e.target === newBgRef.current) setOpenNew(false);
               }}
             >
-              <New />
+              <New closeNew={closeNew} />
             </NewBg>
           ) : null}
         </MenuList>
