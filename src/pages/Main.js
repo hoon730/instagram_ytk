@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 const MainSection = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  width: 100%;
 `;
 
 const MainContent = styled.div`
@@ -23,7 +23,7 @@ const MainContent = styled.div`
 const FeedSection = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  width: calc(100% - 380px);
 `;
 
 const Main = () => {

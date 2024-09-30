@@ -44,6 +44,7 @@ const MenuList = styled.div`
 
 const ToolList = styled.div`
   display: flex;
+  margin-bottom: 40px;
   gap: 8px;
 `;
 

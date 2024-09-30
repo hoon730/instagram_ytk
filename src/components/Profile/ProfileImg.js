@@ -10,19 +10,26 @@ const ActivationArea = styled.span`
   display: inline-block;
   width: ${({ size }) => `${size || 96}`}px;
   height: ${({ size }) => `${size || 96}`}px;
-  ${({ type }) =>
+  background: ${({ type }) =>
     type === "active"
-      ? "background: var(--main-color)"
-      : "background: var(--light-gray-color)"};
+      ? "var(--main-color)"
+      : type === "inactive"
+      ? "var(--light-gray-color)"
+      : "transparent"};
   border-radius: 50%;
   position: relative;
 `;
 
 const BoundaryLine = styled.span`
   display: inline-block;
-  width: ${({ size }) => `${size - 5 || 91}`}px;
-  height: ${({ size }) => `${size - 5 || 91}`}px;
-  background: #fff;
+  width: ${({ size }) => `${size - 4 || 91}`}px;
+  height: ${({ size }) => `${size - 4 || 91}`}px;
+  background: ${({ type }) =>
+    type === "active"
+      ? "var(--bg-white-color)"
+      : type === "inactive"
+      ? "var(--bg-white-color)"
+      : "transparent"};
   border-radius: 50%;
   position: relative;
   top: 50%;
@@ -32,8 +39,8 @@ const BoundaryLine = styled.span`
 
 const ImgBox = styled.span`
   display: inline-block;
-  width: ${({ size }) => `${size - 10 || 86}`}px;
-  height: ${({ size }) => `${size - 10 || 86}`}px;
+  width: ${({ size }) => `${size - 8 || 86}`}px;
+  height: ${({ size }) => `${size - 8 || 86}`}px;
   border-radius: 50%;
   position: absolute;
   top: 50%;
@@ -52,7 +59,7 @@ const ProfileImg = ({ url, type, size, onClick }) => {
   return (
     <ImgSection onClick={onClick}>
       <ActivationArea size={size} type={type}>
-        <BoundaryLine size={size}>
+        <BoundaryLine size={size} type={type}>
           <ImgBox size={size}>
             <Img src={url} alt="profile photo" />
           </ImgBox>
