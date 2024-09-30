@@ -24,7 +24,12 @@ const BoundaryLine = styled.span`
   display: inline-block;
   width: ${({ size }) => `${size - 4 || 91}`}px;
   height: ${({ size }) => `${size - 4 || 91}`}px;
-  background: #fff;
+  background: ${({ type }) =>
+    type === "active"
+      ? "var(--bg-white-color)"
+      : type === "inactive"
+      ? "var(--bg-white-color)"
+      : "transparent"};
   border-radius: 50%;
   position: relative;
   top: 50%;
@@ -54,7 +59,7 @@ const ProfileImg = ({ url, type, size, onClick }) => {
   return (
     <ImgSection onClick={onClick}>
       <ActivationArea size={size} type={type}>
-        <BoundaryLine size={size}>
+        <BoundaryLine size={size} type={type}>
           <ImgBox size={size}>
             <Img src={url} alt="profile photo" />
           </ImgBox>

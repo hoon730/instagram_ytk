@@ -9,7 +9,7 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Wrapper = styled.div`
   border-bottom: 1px solid var(--light-gray-color);
-  height: 120px;
+  height: 85px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,7 +22,7 @@ const SearchBarArea = styled.div`
 
 const ProfileArea = styled.div`
   width: 330px;
-  height: 65px;
+  height: 55px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -53,7 +53,7 @@ const UserProfile = styled.div`
 const ProfileText = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const UserNickname = styled.div`
   font-size: var(--font-14);
@@ -67,6 +67,7 @@ const Optional = styled.div`
 `;
 
 const AccountIcon = styled.div`
+  height: 25px;
   display: flex;
   flex-direction: column;
   margin-right: 15px;
@@ -89,21 +90,24 @@ const MainHeader = () => {
         <SearchBar />
       </SearchBarArea>
       <ProfileArea>
-        <ToolItem onClick={heartChange} iconCode={heart ? <GoHeartFill /> : <GoHeart />} />
+        <ToolItem
+          onClick={heartChange}
+          iconCode={heart ? <GoHeartFill /> : <GoHeart />}
+        />
         <Profile>
           <UserProfile>
-          <ProfileImg
-            url={`${process.env.PUBLIC_URL}/images/userImgs/user123456/profile-photo.jpg`}
-            size={"55"}
-          />
-          <ProfileText>
-            <UserNickname>lotte_ria</UserNickname>
-            <Optional>decent</Optional>
-          </ProfileText>
+            <ProfileImg
+              url={`${process.env.PUBLIC_URL}/images/userImgs/user123456/profile-photo.jpg`}
+              size={"45"}
+            />
+            <ProfileText>
+              <UserNickname>lotte_ria</UserNickname>
+              <Optional>decent</Optional>
+            </ProfileText>
           </UserProfile>
           <AccountIcon>
             <IoIosArrowUp />
-            <IoIosArrowDown/>
+            <IoIosArrowDown />
           </AccountIcon>
         </Profile>
       </ProfileArea>
