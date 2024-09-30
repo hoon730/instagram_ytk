@@ -2,14 +2,18 @@ import React from "react";
 import styled from "styled-components";
 import ClickFeed from "../components/Detail/ClickFeed"
 import Follower from "../components/Detail/Follower"
+import HoverProfile from "../components/User/HoverProfile"
+import UserInfo from "../components/User/UserInfo";
 
 const Wrapper = styled.div``;
 
 const Detail = () => {
   return (
     <Wrapper>
-      <ClickFeed />
+      {/* <ClickFeed /> */}
       <Follower/>
+      {/* <HoverProfile/> */}
+      <UserInfo/>
     </Wrapper>
   );
 };

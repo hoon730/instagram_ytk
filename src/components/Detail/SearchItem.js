@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 
 import { IoCloseOutline } from "react-icons/io5";
+import HoverProfile from "../User/HoverProfile";
 
 const UserProfile = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 15px;
+  position: relative;
 `;
 
 const UserDetail = styled.div`
@@ -54,10 +56,33 @@ const CloseBtn = styled.button`
 `;
 
 const SearchItem = ({ userName, userNickName, followed, url }) => {
+  const [profile, setProfile] = useState(false);
+
+  const showProfile = () => {
+    setProfile(true);
+  };
+
+  const hideProfile = () => {
+    setProfile(false);
+  };
+
   return (
     <UserProfile>
       <UserDetail>
-        <ProfileImg type={"active"} size={"45"} url={url} />
+        <ProfileImg
+          type={"active"}
+          size={"45"}
+          url={url}
+          onMouseEnter={showProfile}
+          onMouseLeave={hideProfile}
+        />
+        {profile ? (
+          <HoverProfile
+            userName={userName}
+            userNickname={userNickName}
+            followed={followed}
+          />
+        ) : null}
         <Userinfo>
           <UserId type={"feed"} userNickname={userNickName} />
           <UserName>{userName}</UserName>

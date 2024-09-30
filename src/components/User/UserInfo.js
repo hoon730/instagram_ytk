@@ -37,18 +37,20 @@ const UserInfo = ({
   return (
     <Wrapper>
       <ProfileImg
-        size={"55"}
+        size={"45"}
         type={"active"}
         url={"/images/userImgs/user123456/profile-photo.jpg"}
       />
       <Userdesc>
         <UserId
-          type={type}
-          userNickname={userNickname}
-          createDate={createDate}
-          follwed={followed}
+          type={"feed"}
+          userNickname={"Hoon"}
+          createDate={"24-09-30"}
+          follwed={"팔로우"}
         />
-        <Optional type={type}>{userName || location}</Optional>
+        <Optional type={type}>
+          {userName ? userName : location ? location : null}
+        </Optional>
       </Userdesc>
     </Wrapper>
   );

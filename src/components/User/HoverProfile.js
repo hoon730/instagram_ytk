@@ -10,6 +10,11 @@ const Wrapper = styled.div`
   padding: 20px;
   border-radius: var(--border-radius-12);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 60px;
+  left: 0;
+  background: var(--bg-white-color);
+  z-index: 10;
 `;
 
 const Userinfo = styled.div`
@@ -68,11 +73,7 @@ const HoverProfile = ({
           url={"/images/userImgs/user123456/profile-photo.jpg"}
         />
         <Userdesc>
-          <UserId
-            type={"feed"}
-            userNickname={"bbok"}
-            check={"active"}
-          />
+          <UserId type={"feed"} userNickname={"bbok"} check={"active"} />
           <Optional type={type}>Bank of America{location}</Optional>
         </Userdesc>
       </Userinfo>
