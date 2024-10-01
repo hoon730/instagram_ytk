@@ -17,7 +17,7 @@ const ActivationArea = styled.span`
       ? "var(--light-gray-color)"
       : "transparent"};
   border-radius: 50%;
-  position: relative;
+  z-index: 1;
 `;
 
 const BoundaryLine = styled.span`

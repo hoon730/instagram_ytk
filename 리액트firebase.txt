@@ -1,0 +1,19 @@
+바닐라 자바스크립트 기반으로 + vite 빌드도구를 사용하지 
+않았을 때에 배포
+
+npm run build : 지금까지 작업했던 결과물들을 배포용 파일
+압축 및 정리하는 작업
+
+> 기본적으로 build 폴더 생성 
+> firebase init => dist // distribute
+
+package-json => script에 
+ "predeploy": "npm run build",
+ "deploy": "firebase deploy", 추가
+
+> 현 데이터 빌드모드 : npm run build
+> 최종적으로 배포 : firebase deploy 
+
+
+
+npm run deploy

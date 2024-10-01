@@ -5,7 +5,7 @@ import Button from "../components/Common/Button";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   padding: 30px 50px;
   background: var(--bg-white-color);
   border-radius: var(--border-radius-12);
+  z-index: 1000;
 `;
 
 const H3 = styled.h3`

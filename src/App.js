@@ -34,7 +34,6 @@ export const ThemeContext = React.createContext();
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
-  console.log(darkMode);
   const changeDark = () => {
     setDarkMode((current) => !current);
   };

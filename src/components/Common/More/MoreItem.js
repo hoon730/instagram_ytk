@@ -14,7 +14,6 @@ const Wrapper = styled.div`
 `;
 
 const MoreItem = ({ text }) => {
-  console.log(text);
   return <Wrapper text={text}>{text}</Wrapper>;
 };
 

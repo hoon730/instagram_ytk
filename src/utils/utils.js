@@ -76,4 +76,35 @@ export const toolData = [
   },
 ];
 
+export const mouseon = {
+  initial: {
+    opacity: 0,
+    scale: 0.5,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+  },
+  exits: {
+    opacity: 0,
+    scale: 0.5,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
 
+export const click = {
+  initial: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+  },
+  exits: {
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};

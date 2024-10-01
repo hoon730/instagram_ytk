@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../../../App";
 
@@ -30,15 +30,30 @@ const ToolBox = styled.div`
   }
 `;
 
-const ToolItem = ({ name, iconCode }) => {
+const ToolItem = ({ name, iconCode, id }) => {
+  const [setting, setSetting] = useState(false);
   const { changeDark } = useContext(ThemeContext);
 
-  const onClick = (e) => {
-    console.log(e.target.className);
-    changeDark();
+  const onClick = () => {
+    if (id === 3) changeDark();
   };
+
+  const toggleSetting = () => {
+    console.log("클릭");
+    if (id === 1) {
+      setSetting((prev) => !prev);
+    }
+  };
+
   return (
-    <ToolBox onClick={onClick} className={name}>
+    <ToolBox
+      onClick={() => {
+        onClick();
+        toggleSetting();
+      }}
+      id={id}
+      className={name}
+    >
       {iconCode}
     </ToolBox>
   );

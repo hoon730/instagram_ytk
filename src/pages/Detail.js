@@ -12,7 +12,7 @@ const Detail = () => {
   return (
     <Wrapper>
       {/* <ClickFeed /> */}
-      <Follower/>
+      {/* <Follower/> */}
       {/* <HoverProfile/> */}
       <UserInfo/>
     </Wrapper>

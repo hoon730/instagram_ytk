@@ -1,6 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { ThemeContext } from "styled-components";
+import { ThemeContext } from "../../../App";
 import styled from "styled-components";
 import { menuData } from "../../../utils/utils";
 import { toolData } from "../../../utils/utils";
@@ -68,9 +68,9 @@ const SideBar = () => {
   const navigate = useNavigate();
   const newBgRef = useRef();
   const { darkMode } = useContext(ThemeContext);
-  console.log(darkMode);
   const [activeId, setActiveId] = useState(null);
   const [openNew, setOpenNew] = useState(false);
+
 
   const onClick = () => {
     setOpenNew(true);
@@ -85,7 +85,7 @@ const SideBar = () => {
       <Wrapper>
         <Stlyedh1>
           <Logo
-            src={"/images/logo_light.svg"}
+            src={darkMode ? "/images/logo_dark.svg" : "/images/logo_light.svg"}
             onClick={() => {
               navigate("/");
             }}
