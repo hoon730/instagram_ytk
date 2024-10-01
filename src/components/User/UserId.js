@@ -18,17 +18,25 @@ const StyledSpan = styled.span`
   gap: 8px;
   ${({ type }) =>
     type === "feed"
-      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-14); font-weight: var(--font-bold);`
       : type === "hover"
-      ? `font-size: var(--font-20); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
       : `font-size: var(--font-14); font-weight: var(--font-bold);`}
+`;
+
+const UserIdArea = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;
 
 const IdSpan = styled.span`
   cursor: pointer;
 `;
 
-const Check = styled.img``;
+const Check = styled.img`
+  width: 18px;
+`;
 
 const Comment = styled.span`
   font-size: var(--font-14);
@@ -113,8 +121,10 @@ const UserId = ({
   return (
     <Wrapper>
       <StyledSpan type={type}>
-        <IdSpan>{userNickname}</IdSpan>
-        {check === "active" ? <Check src="/images/check.svg" /> : null}
+        <UserIdArea>
+          <IdSpan>{userNickname}</IdSpan>
+          {check === "active" ? <Check src="/images/check.svg" /> : null}
+        </UserIdArea>
         {comment ? <Comment>{comment}</Comment> : null}
         {createDate ? (
           <Date>

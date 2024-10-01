@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import SearchBar from "../Common/SearchBar";
 import SearchItem from "./SearchItem";
-
 import { RxMagnifyingGlass } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
-
 import { IoCloseOutline } from "react-icons/io5";
 
 const Wrapper = styled.div`
@@ -27,7 +25,7 @@ const Title = styled.div`
 
 const H3 = styled.h3`
   font-size: var(--font-20);
-  font-weight: var(--font-regular);
+  font-weight: var(--font-bold);
   text-align: center;
 `;
 
@@ -64,16 +62,16 @@ const ItemArea = styled.div`
     color: #bfbfbf;
   }
   &.deleteBtn {
-    display: none;
+    opacity: 0;
     background: #bfbfbf;
+    padding: 2px;
     border-radius: 50%;
     cursor: pointer;
     & > svg {
-      width: 70%;
       color: #ffffff;
     }
     &.active {
-      display: block;
+      opacity: 1;
     }
   }
 `;
@@ -117,13 +115,19 @@ const itemArray = [
   },
 ];
 
-const SearchList = styled.div``;
+const SearchList = styled.div`
+  height: 320px;
+`;
 
 const Follower = () => {
+  const [isActive, setIsActive] = useState(false);
   const [getUserNickName, setGetUserNickName] = useState("");
 
   const onChange = (e) => {
     setGetUserNickName(e.target.value);
+    setIsActive(true);
+    if (e.target.value === "") setIsActive(false);
+    else setIsActive(true);
   };
 
   const showUserNickName = () => {
@@ -136,7 +140,11 @@ const Follower = () => {
         );
   };
 
-  console.log(getUserNickName);
+  const inputReset = () => {
+    setGetUserNickName("");
+    setIsActive(false);
+  };
+
   return (
     <Wrapper>
       <Title>
@@ -147,7 +155,7 @@ const Follower = () => {
       </Title>
       <SearchInputBox>
         <ItemArea>
-          <RxMagnifyingGlass />
+          <RxMagnifyingGlass size={20} />
         </ItemArea>
         <SearchInput
           type="text"
@@ -155,8 +163,11 @@ const Follower = () => {
           value={getUserNickName}
           onChange={onChange}
         ></SearchInput>
-        <ItemArea className="deleteBtn">
-          <AiOutlineClose />
+        <ItemArea
+          className={`deleteBtn ${isActive ? "active" : ""}`}
+          onClick={inputReset}
+        >
+          <AiOutlineClose size={12} />
         </ItemArea>
       </SearchInputBox>
       <SearchList>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SearchBar from "../Common/SearchBar";
 import ToolItem from "../Common/Sidebar/ToolItem";
 import ProfileImg from "../Profile/ProfileImg";
-import UserInfo from "../User/UserInfo";
+import UserId from "../User/UserId";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
@@ -55,12 +55,7 @@ const ProfileText = styled.div`
   flex-direction: column;
 `;
 
-const UserNickname = styled.div`
-  font-size: var(--font-14);
-  font-weight: var(--font-bold);
-`;
-
-const Optional = styled.div`
+const UserName = styled.div`
   font-size: var(--font-12);
   font-weight: var(--font-regular);
   color: var(--gray-color);
@@ -101,8 +96,8 @@ const MainHeader = () => {
               size={"45"}
             />
             <ProfileText>
-              <UserNickname>lotte_ria</UserNickname>
-              <Optional>decent</Optional>
+              <UserId type={"feed"} userNickname={"burxxxking"} />
+              <UserName>decent</UserName>
             </ProfileText>
           </UserProfile>
           <AccountIcon>

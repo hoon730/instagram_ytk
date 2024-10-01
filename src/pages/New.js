@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 800px;
+  width: 680px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,35 +20,27 @@ const Wrapper = styled.div`
 `;
 
 const H3 = styled.h3`
+  font-size: var(--font-20);
+  font-weight: var(--font-bold);
   padding: 20px 0;
+  margin-bottom: 20px;
 `;
 
 const Form = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const IconBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding-bottom: 20px;
-
-  svg {
-    font-size: 130px;
-    color: var(--gray-color);
-
-    &:first-child {
-      font-size: 140px;
-    }
-  }
+const IconBox = styled.img`
+  width: 150px;
+  margin-bottom: 15px;
 `;
 
 const StyledSpan = styled.span`
-  padding: 20px 0;
+  padding: 14px 0;
   font-size: var(--font-16);
   font-weight: var(--font-medium);
   color: var(--sub-purple-color);
@@ -59,32 +51,37 @@ const SearchBtn = styled.label`
   justify-content: center;
   align-items: center;
   width: 180px;
-  height: 50px;
+  height: 40px;
   background: var(--sub-purple-color);
   color: var(--bg-white-color);
   border-radius: var(--border-radius-8);
   cursor: pointer;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
+  transition: background 0.3s;
+  &:hover {
+    background: #3e1494;
+  }
 `;
 
 const SearchInput = styled.input`
   display: none;
 `;
+const TextInputArea = styled.div`
+  width: 100%;
+  position: relative;
+`;
 
 const TextArea = styled.textarea`
-  width: 700px;
-  height: 280px;
+  width: 100%;
+  height: 220px;
   padding: 20px;
-  border: 3px solid var(--light-gray-color);
+  border: 2px solid var(--light-gray-color);
   border-radius: var(--border-radius-12);
   color: var(--bg-black-color);
   font-size: var(--font-16);
   resize: none;
   &::placeholder {
     color: var(--gray-color);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-      sans-serif;
     opacity: 1;
     transition: opacity 0.3s;
   }
@@ -94,7 +91,18 @@ const TextArea = styled.textarea`
     }
     outline: none;
     border-color: var(--sub-purple-color);
+    & ~ div {
+      color: var(--sub-purple-color);
+    }
   }
+`;
+
+const TextCounter = styled.div`
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: var(--font-14);
+  color: var(--gray-color);
 `;
 
 const ButtonsBox = styled.div`
@@ -108,6 +116,7 @@ const New = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState("");
   const [file, setfile] = useState(null);
+  const [textValueLength, setTextValueLength] = useState(0);
 
   const onClick = (e) => {
     console.log(e);
@@ -117,6 +126,7 @@ const New = () => {
 
   const onChange = (e) => {
     setPost(e.target.value);
+    setTextValueLength(e.target.textLength);
   };
 
   const onSubmit = async (e) => {
@@ -142,10 +152,7 @@ const New = () => {
     <Wrapper>
       <H3>새 게시물 만들기</H3>
       <Form onSubmit={onSubmit}>
-        <IconBox>
-          <AiOutlinePicture />
-          <GoVideo />
-        </IconBox>
+        <IconBox src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`} />
         <StyledSpan>사진이나 동영상을 업로드 해주세요</StyledSpan>
         <SearchBtn htmlFor="file">
           {file ? "업로드 완료" : "사진 및 동영상 찾기"}
@@ -156,13 +163,20 @@ const New = () => {
           accept="video/*, image/*"
           onClick={onClick}
         />
-        <TextArea
-          value={post}
-          name="contents"
-          id="contents"
-          placeholder="게시글 입력..."
-          onChange={onChange}
-        />
+        <TextInputArea>
+          <TextArea
+            maxLength={2200}
+            value={post}
+            name="contents"
+            id="contents"
+            placeholder="게시글 입력..."
+            onChange={onChange}
+          />
+          <TextCounter>
+            <span>{textValueLength}</span>
+            <span> / 2200</span>
+          </TextCounter>
+        </TextInputArea>
         <ButtonsBox>
           <Button type={"negative"} text={"취소하기"} width={"50%"} />
           <Button type={"positive"} text={"게시글 업로드 하기"} width={"50%"} />

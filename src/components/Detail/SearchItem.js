@@ -21,6 +21,7 @@ const Userinfo = styled.div`
   justify-content: center;
 `;
 const UserName = styled.span`
+  font-size: var(--font-14);
   color: var(--gray-color);
 `;
 
@@ -57,7 +58,7 @@ const SearchItem = ({ userName, userNickName, followed, url }) => {
   return (
     <UserProfile>
       <UserDetail>
-        <ProfileImg type={"active"} size={"45"} url={url} />
+        <ProfileImg type={"active"} size={"44"} url={url} />
         <Userinfo>
           <UserId type={"feed"} userNickname={userNickName} />
           <UserName>{userName}</UserName>
