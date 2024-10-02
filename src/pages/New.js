@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   padding: 30px 50px;
   background: var(--bg-white-color);
   border-radius: var(--border-radius-12);
+  z-index: 1;
 `;
 
 const H3 = styled.h3`
@@ -130,7 +131,9 @@ const ButtonsBox = styled.div`
   gap: 10px;
 `;
 
-const New = () => {
+const New = ({ closeNew }) => {
+  console.log(closeNew);
+
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState("");
   const [file, setfile] = useState(null);
@@ -147,6 +150,10 @@ const New = () => {
   const onChange = (e) => {
     setPost(e.target.value);
     setTextValueLength(e.target.textLength);
+  };
+
+  const handleOnClick = () => {
+    closeNew();
   };
 
   const onSubmit = async (e) => {
@@ -208,7 +215,12 @@ const New = () => {
           </TextCounter>
         </TextInputArea>
         <ButtonsBox>
-          <Button type={"negative"} text={"취소하기"} width={"50%"} />
+          <Button
+            type={"negative"}
+            text={"취소하기"}
+            width={"50%"}
+            onClick={handleOnClick}
+          />
           <Button type={"positive"} text={"게시글 업로드 하기"} width={"50%"} />
         </ButtonsBox>
       </Form>

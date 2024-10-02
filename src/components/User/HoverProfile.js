@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { AnimatePresence, motion } from "framer-motion";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "./UserId";
 import PostAndFollow from "./PostAndFollow";
 import Button from "../Common/Button";
+import { mouseon } from "../../utils/utils";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   max-width: 450px;
   padding: 20px;
   border-radius: var(--border-radius-12);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 22px;
+  left: 0;
+  background: ${({ theme }) => theme.bgColor};
+  z-index: 10;
 `;
 
 const Userinfo = styled.div`
@@ -61,15 +68,20 @@ const HoverProfile = ({
   location,
 }) => {
   return (
-    <Wrapper>
+    <Wrapper
+      variants={mouseon}
+      initial="initial"
+      animate="visible"
+      exit="exits"
+    >
       <Userinfo>
         <ProfileImg
-          size={"54"}
+          size={"55"}
           type={"active"}
           url={"/images/userImgs/user123456/profile-photo.jpg"}
         />
         <Userdesc>
-          <UserId type={type} userNickname={"bbok"} check={"active"} />
+          <UserId type={"feed"} userNickname={"bbok"} check={"active"} />
           <Optional type={type}>Bank of America{location}</Optional>
         </Userdesc>
       </Userinfo>
