@@ -3,6 +3,7 @@ import styled from "styled-components";
 import TabBarBtn from "../Common/TabBarBtn";
 import { FaRegStar } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
+import FeedItem from "./FeedItem";
 
 const tabWidth = 340;
 
@@ -78,6 +79,7 @@ const FeedContent = () => {
             />
           </FeedTabBtn>
         </FeedTabBar>
+        <FeedItem />
       </FeedArea>
     </Wrapper>
   );
