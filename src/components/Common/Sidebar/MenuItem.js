@@ -13,8 +13,8 @@ const Wrapper = styled.div`
   border-radius: var(--border-radius-12);
 
   &.active {
-    background: var(--font-black-color);
-    color: var(--bg-white-color);
+    background: ${({ theme }) => theme.fontColor};
+    color: ${({ theme }) => theme.bgColor};
     font-weight: var(--font-bold);
   }
 
@@ -25,6 +25,7 @@ const Wrapper = styled.div`
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
+  
   svg {
     font-size: 20px;
   }

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import TabBarBtn from "../Common/TabBarBtn";
 import styled from "styled-components";
+import { BsGrid3X3Gap } from "react-icons/bs";
+import { BiMoviePlay } from "react-icons/bi";
+import { TbUserSquare } from "react-icons/tb";
 
 const Wrapper = styled.div`
   width: 936px;
@@ -70,21 +73,21 @@ const MyFeedTabBar = () => {
         <TabBarBtn
           onClick={postsActive}
           width={tabWidth}
-          // iconCode={<FaRegStar />}
+          iconCode={<BsGrid3X3Gap />}
           text={"게시물"}
           isActive={posts}
         />
         <TabBarBtn
           onClick={reelsActive}
           width={tabWidth}
-          // iconCode={<FaRegStar />}
+          iconCode={<BiMoviePlay />}
           text={"릴스"}
           isActive={reels}
         />
         <TabBarBtn
           onClick={taggedActive}
           width={tabWidth}
-          // iconCode={<FaRegStar />}
+          iconCode={<TbUserSquare />}
           text={"태그"}
           isActive={tagged}
         />

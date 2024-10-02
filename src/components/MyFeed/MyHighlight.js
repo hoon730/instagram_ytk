@@ -28,7 +28,7 @@ const MyHighlight = () => {
         <StoryItem />
         <StoryItem />
         <StoryItem />
-        <AddHighlight />
+        <AddHighlight size={80} />
       </HighlightBox>
     </Wrapper>
   );

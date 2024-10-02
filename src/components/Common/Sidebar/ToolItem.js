@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { ThemeContext } from "../../../App";
+import Setting  from "./Setting";
 
 const ToolBox = styled.div`
   width: 40px;
@@ -8,10 +10,14 @@ const ToolBox = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background: var(--light-gray-color);
+  background: ${({ theme }) => theme.iconBgColor};
   cursor: pointer;
+  position: relative;
+  z-index: 0;
+
   svg {
     font-size: 24px;
+    color: ${({ theme }) => theme.iconColor};
   }
 
   &.day {
@@ -27,10 +33,31 @@ const ToolBox = styled.div`
   }
 `;
 
-const ToolItem = ({ name, iconCode, onClick }) => {
+const ToolItem = ({ name, iconCode, id }) => {
+  const [setting, setSetting] = useState(false);
+  const { changeDark } = useContext(ThemeContext);
+
+  const onClick = () => {
+    if (id === 3) changeDark();
+  };
+
+  const toggleSetting = () => {
+    if (id === 1) {
+      setSetting((prev) => !prev);
+    }
+  };
+
   return (
-    <ToolBox onClick={onClick} className={name}>
+    <ToolBox
+      onClick={() => {
+        onClick();
+        toggleSetting();
+      }}
+      id={id}
+      className={name}
+    >
       {iconCode}
+      {setting ? <Setting /> : null}
     </ToolBox>
   );
 };

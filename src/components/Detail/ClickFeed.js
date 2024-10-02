@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import CommentItem from "./CommentItem";
+import { slide } from "../../utils/utils";
 
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -206,7 +207,7 @@ const StyledInput = styled.input`
   height: 45px;
   background: var(--light-gray-color);
   border-radius: var(--border-radius-8);
-  padding-left: 10px;
+  padding: 0 20px;
 
   &::placeholder {
     color: var(--gray-color);
@@ -215,27 +216,6 @@ const StyledInput = styled.input`
 `;
 
 const Form = styled.form``;
-
-const slide = {
-  initial: (back) => ({
-    x: back ? -800 : 800,
-  }),
-  visible: {
-    x: 0,
-    transition: {
-      type: "tween",
-      duration: 0.5,
-      ease: [0.42, 0, 0.58, 1],
-    },
-  },
-  exit: (back) => ({
-    x: back ? 800 : -800,
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
-  }),
-};
 
 const slideArray = [1, 2, 3, 4];
 
@@ -264,7 +244,7 @@ const Clickdetail = ({ location }) => {
       <Wrapper>
         <Slider>
           {/* <SlideWrapper> */}
-          <AnimatePresence mode="wait" custom={back}>
+          <AnimatePresence custom={back}>
             {slideArray.map((idx) =>
               idx === visible ? (
                 <Slide

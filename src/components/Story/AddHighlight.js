@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { HiOutlinePlus } from "react-icons/hi2";
 
 const Wrapper = styled.div`
   width: fit-content;
@@ -53,6 +54,14 @@ const AddIcon = styled.div`
   width: 100%;
   height: 100%;
   background: var(--light-gray-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    font-size: 45px;
+    color: var(--bg-white-color);
+  }
 `;
 
 const TextArea = styled.div`
@@ -77,7 +86,9 @@ const AddHighlight = ({ size }) => {
         <ActivationArea size={size}>
           <BoundaryLine size={size}>
             <AddBox size={size}>
-              <AddIcon></AddIcon>
+              <AddIcon>
+                <HiOutlinePlus />
+              </AddIcon>
             </AddBox>
           </BoundaryLine>
         </ActivationArea>

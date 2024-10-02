@@ -5,7 +5,7 @@ import { HiOutlineUserPlus } from "react-icons/hi2";
 
 const ButtonItem = styled.button`
   width: ${({ width }) => `${width}` || "auto  "};
-  height: 50px;
+  height: 45px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,12 +16,21 @@ const ButtonItem = styled.button`
   font-family: "Noto Sans KR", sans-serif;
   cursor: pointer;
   color: #fff;
+  transition: background 0.3s;
   ${({ type }) =>
     type === "positive"
       ? `background: #6228D7;`
       : type === "negative"
       ? `background: #BFBFBF;`
       : `background: transparent; color: #6228D7; font-size: var(--font-size-18); font-weight: var(--font-bold);`};
+  &:hover {
+    ${({ type }) =>
+      type === "positive"
+        ? `background: #3E1494;`
+        : type === "negative"
+        ? `background: #A4A4A4;`
+        : `background: transparent; color: #6228D7; font-size: var(--font-size-18); font-weight: var(--font-bold);`};
+  }
 `;
 
 const MesseageBtn = styled.span`

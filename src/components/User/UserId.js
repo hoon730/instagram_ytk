@@ -1,15 +1,17 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import MoreItem from "../Common/More/MoreItem";
+import HoverProfile from "./HoverProfile";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
 
-const Wrapper = styled.div`
+const Wrapper = styled.span`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 3;
 `;
 
 const StyledSpan = styled.span`
@@ -18,17 +20,26 @@ const StyledSpan = styled.span`
   gap: 8px;
   ${({ type }) =>
     type === "feed"
-      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-14); font-weight: var(--font-bold);`
       : type === "hover"
-      ? `font-size: var(--font-20); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
       : `font-size: var(--font-14); font-weight: var(--font-bold);`}
 `;
 
-const IdSpan = styled.span`
+const UserIdArea = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+const IdSpan = styled.div`
+  position: relative;
   cursor: pointer;
 `;
 
-const Check = styled.img``;
+const Check = styled.img`
+  width: 18px;
+`;
 
 const Comment = styled.span`
   font-size: var(--font-14);
@@ -61,7 +72,7 @@ const MoreBtn = styled.button`
   align-items: center;
   svg {
     font-size: var(--font-18);
-    color: var(--gray-color);
+    color: var(--dark-gray-color);
   }
 `;
 
@@ -75,6 +86,7 @@ const MoreBackground = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
 `;
 
 const MoreList = styled.div`
@@ -108,12 +120,23 @@ const UserId = ({
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
+  const [hover, setHover] = useState(false);
   const moreBgRef = useRef();
+
+  const showProfile = () => {
+    setHover(true);
+  };
+  const hideProfile = () => {
+    setHover(false);
+  };
 
   return (
     <Wrapper>
       <StyledSpan type={type}>
-        <IdSpan>{userNickname}</IdSpan>
+        <IdSpan onMouseEnter={showProfile} onMouseLeave={hideProfile}>
+          {hover ? <HoverProfile /> : null}
+          {userNickname}
+        </IdSpan>
         {check === "active" ? <Check src="/images/check.svg" /> : null}
         {comment ? <Comment>{comment}</Comment> : null}
         {createDate ? (

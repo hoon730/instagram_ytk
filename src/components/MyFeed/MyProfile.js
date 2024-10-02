@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { FaGear } from "react-icons/fa6";
 
 const Wrapper = styled.div``;
 
@@ -36,8 +37,15 @@ const MyName = styled.div`
 const EditBtn = styled.div`
   width: 40px;
   height: 40px;
-  background: gray;
+  background: var(--light-gray-color);
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    font-size: 25px;
+  }
 `;
 
 const MyIntro = styled.div`
@@ -58,7 +66,9 @@ const MyProfile = () => {
             <p>cat.h0du</p>
             <span>호두 Walnut</span>
           </MyName>
-          <EditBtn></EditBtn>
+          <EditBtn>
+            <FaGear />
+          </EditBtn>
         </NameBox>
         <MyIntro>
           ㄴㅐ ㅇㅣ름 호두 <br />

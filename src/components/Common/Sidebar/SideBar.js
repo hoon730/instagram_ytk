@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../../../App";
 import styled from "styled-components";
 import { menuData } from "../../../utils/utils";
 import { toolData } from "../../../utils/utils";
@@ -11,13 +12,16 @@ const StyledAside = styled.aside`
   position: fixed;
   top: 0;
   left: 0;
-  width: 380px;
+  width: 20%;
   height: 100vh;
   padding: 0 37.5px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid var(--light-gray-color);
+  background: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
+  border-right: 1px solid ${({ theme }) => theme.borderColor};
+  z-index: 1;
 `;
 
 const Wrapper = styled.div`
@@ -64,6 +68,7 @@ const NewBg = styled.div`
 const SideBar = () => {
   const navigate = useNavigate();
   const newBgRef = useRef();
+  const { darkMode } = useContext(ThemeContext);
   const [activeId, setActiveId] = useState(null);
   const [openNew, setOpenNew] = useState(false);
 
@@ -71,12 +76,16 @@ const SideBar = () => {
     setOpenNew(true);
   };
 
+  const closeNew = () => {
+    setOpenNew(false);
+  };
+
   return (
     <StyledAside>
       <Wrapper>
         <Stlyedh1>
           <Logo
-            src={"/images/logo.svg"}
+            src={darkMode ? "/images/logo_dark.svg" : "/images/logo_light.svg"}
             onClick={() => {
               navigate("/");
             }}
@@ -99,7 +108,7 @@ const SideBar = () => {
                 if (e.target === newBgRef.current) setOpenNew(false);
               }}
             >
-              <New />
+              <New closeNew={closeNew} />
             </NewBg>
           ) : null}
         </MenuList>
