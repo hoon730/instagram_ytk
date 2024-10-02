@@ -5,7 +5,9 @@ import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
-import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
+import { auth } from "./firebase";
+import { useEffect } from "react";
 
 
 const router = createBrowserRouter([
@@ -28,12 +30,18 @@ const router = createBrowserRouter([
     element: <Login/>
   },
   {
-    path: "/signin",
-    element: <Signin/>
+    path: "/signup",
+    element: <Signup/>
   }
 ])
 
 function App() {
+  const init = async () => {
+    await auth.authStateReady();
+  };
+  useEffect(() => {
+    init();
+  }, []);
   return (
     <>
     <GlobalStyles />

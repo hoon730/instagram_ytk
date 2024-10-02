@@ -8,10 +8,15 @@ const Submit = styled.input`
   background: var(--sub-purple-color);
   color: #fff;
   font-size: 18px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
-const LoginButton = ({value}) => {
-  return <Submit type="submit" value={value}/>;
+const LoginBtn = ({ value }) => {
+  return <Submit type="submit" value={value} />;
 };
 
-export default LoginButton;
+export default LoginBtn;
