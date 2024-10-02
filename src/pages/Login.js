@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { FirebaseError } from "firebase/app";
-import LogoImg from "../components/Common/LogoImg";
-import LoginBtn from "../components/LoginBtn";
+import LogoImg from "../components/Login/LogoImg";
+import LoginBtn from "../components/Login/LoginBtn";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
-import FbBtn from "../components/FbBtn";
+import FbBtn from "../components/Login/FbBtn";
 
 const colors = {
   sub2: "#6228D7",
@@ -110,6 +110,7 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (e) {
+      console.error(e);
       if (e instanceof FirebaseError) {
         setError(e.message);
       }
@@ -124,7 +125,7 @@ const Login = () => {
     <Wrapper>
       <Block>
         <LogoImg />
-        <Form>
+        <Form onSubmit={onSubmit}>
           <InputBox>
             <LoginInput
               onChange={onChange}

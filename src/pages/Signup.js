@@ -11,10 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { FirebaseError } from "firebase/app";
 import styled from "styled-components";
-import LogoImg from "../components/Common/LogoImg";
+import LogoImg from "../components/Login/LogoImg";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
-import LoginBtn from "../components/LoginBtn";
-import FbBtn from "../components/FbBtn";
+import LoginBtn from "../components/Login/LoginBtn";
+import FbBtn from "../components/Login/FbBtn";
 
 const colors = {
   sub2: "#6228D7",

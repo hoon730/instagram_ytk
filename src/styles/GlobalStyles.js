@@ -73,17 +73,17 @@ const GlobalStyles = createGlobalStyle`
     --font-black-color: #2B2B2B;
 
     --border-radius-12: 12px;
-    --border-radius-8: 8;
+    --border-radius-8: 8px;
 
-    --font-size-8: 8px;
-    --font-size-10: 10px;
-    --font-size-12: 12px;
-    --font-size-14: 14px;
-    --font-size-16: 16px;
-    --font-size-18: 18px;
-    --font-size-20: 20px;
-    --font-size-22: 22px;
-    --font-size-24: 24px;
+    --font-8: 8px;
+    --font-10: 10px;
+    --font-12: 12px;
+    --font-14: 14px;
+    --font-16: 16px;
+    --font-18: 18px;
+    --font-20: 20px;
+    --font-22: 22px;
+    --font-24: 24px;
 
     --font-thin: 100;
     --font-extralight: 200;

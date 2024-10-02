@@ -9,6 +9,8 @@ import { FaGear } from "react-icons/fa6";
 import { BsThreads } from "react-icons/bs";
 import { LuSunMedium } from "react-icons/lu";
 
+import { BsHeart } from "react-icons/bs";
+
 export const getFormattedDate = (targetDate) => {
   const year = targetDate.getFullYear();
   let month = targetDate.getMonth() + 1;
@@ -20,13 +22,12 @@ export const getFormattedDate = (targetDate) => {
   return `${year}-${month}-${date}`;
 };
 
-
 export const menuData = [
   {
     id: 1,
     name: "홈",
     iconCode: <AiOutlineHome />,
-    path: "/"
+    path: "/",
   },
   {
     id: 2,
@@ -42,7 +43,7 @@ export const menuData = [
     id: 4,
     name: "저장됨",
     iconCode: <FaRegBookmark />,
-    path: "/detail"
+    path: "/detail",
   },
   {
     id: 5,
@@ -53,9 +54,9 @@ export const menuData = [
     id: 6,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
-    path: "/new"
+    // path: "/new",
   },
-]
+];
 
 export const toolData = [
   {
@@ -73,4 +74,59 @@ export const toolData = [
     name: "day",
     iconCode: <LuSunMedium />,
   },
-]
+];
+
+export const mouseon = {
+  initial: {
+    opacity: 0,
+    scale: 0.5,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+  },
+  exits: {
+    opacity: 0,
+    scale: 0.5,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+
+export const click = {
+  initial: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+  },
+  exits: {
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+};
+
+
+export const slide = {
+  initial: (back) => ({
+    x: back ? -800 : 800,
+  }),
+  visible: {
+    x: 0,
+    transition: {
+      type: "tween",
+      duration: 0.5,
+      ease: [0.42, 0, 0.58, 1],
+    },
+  },
+  exit: (back) => ({
+    x: back ? 800 : -800,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+  }),
+};
