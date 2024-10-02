@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  padding: 20px 0;
+  width: 100%;
   text-align: center;
-  font-size: var(--font-14);
   border-bottom: 1px solid var(--light-gray-color);
+  padding: ${({ padding }) => (padding ? `${padding}` : "auto")};
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   cursor: pointer;
   ${({ text }) =>
     text === "신고"
@@ -13,8 +14,12 @@ const Wrapper = styled.div`
       : ""}
 `;
 
-const MoreItem = ({ text }) => {
-  return <Wrapper text={text}>{text}</Wrapper>;
+const MoreItem = ({ text, fontSize, padding }) => {
+  return (
+    <Wrapper padding={padding} fontSize={fontSize} text={text}>
+      {text}
+    </Wrapper>
+  );
 };
 
 export default MoreItem;

@@ -10,6 +10,7 @@ import { BsThreads } from "react-icons/bs";
 import { LuSunMedium } from "react-icons/lu";
 
 import { BsHeart } from "react-icons/bs";
+import { delay, easeIn, easeInOut, transform } from "framer-motion";
 
 export const getFormattedDate = (targetDate) => {
   const year = targetDate.getFullYear();
@@ -79,15 +80,16 @@ export const toolData = [
 export const mouseon = {
   initial: {
     opacity: 0,
-    scale: 0.5,
+    y: 20,
   },
   visible: {
     opacity: 1,
     scale: 1,
+    y: 0,
   },
   exits: {
     opacity: 0,
-    scale: 0.5,
+    y: 20,
     transition: {
       duration: 0.3,
     },

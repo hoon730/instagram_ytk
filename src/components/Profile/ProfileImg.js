@@ -17,7 +17,6 @@ const ActivationArea = styled.span`
       ? "var(--light-gray-color)"
       : "transparent"};
   border-radius: 50%;
-  z-index: 1;
 `;
 
 const BoundaryLine = styled.span`
@@ -35,6 +34,7 @@ const BoundaryLine = styled.span`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 0;
 `;
 
 const ImgBox = styled.span`
@@ -47,6 +47,7 @@ const ImgBox = styled.span`
   left: 50%;
   transform: translate(-50%, -50%);
   overflow: hidden;
+  z-index: 0;
 `;
 
 const Img = styled.img`
