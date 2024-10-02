@@ -12,7 +12,7 @@ const StyledAside = styled.aside`
   position: fixed;
   top: 0;
   left: 0;
-  width: 380px;
+  width: 20%;
   height: 100vh;
   padding: 0 37.5px;
   display: flex;
