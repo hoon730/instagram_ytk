@@ -37,21 +37,26 @@ const ActiveBorder = styled.div`
   height: 100%;
   background: var(--font-black-color);
   transition: transform 0.3s;
-  ${({ recommend }) =>
-    recommend ? `transform: translateX(0);` : `transform: translateX(100%);`}
+  ${({ $tabChange }) =>
+    $tabChange === "recommend"
+      ? `transform: translateX(0);`
+      : `transform: translateX(100%);`}
 `;
 
 const FeedContent = () => {
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
+  const [$tabChange, setTabChange] = useState("recommend");
 
   const recommendActive = () => {
     setRecommend(true);
     setFollow(false);
+    setTabChange("recommend");
   };
   const followActive = () => {
     setRecommend(false);
     setFollow(true);
+    setTabChange("follow");
   };
 
   return (
@@ -59,7 +64,7 @@ const FeedContent = () => {
       <FeedArea>
         <FeedTabBar>
           <ActiveBorderArea>
-            <ActiveBorder recommend={recommend} />
+            <ActiveBorder $tabChange={$tabChange} />
           </ActiveBorderArea>
           <FeedTabBtn>
             <TabBarBtn

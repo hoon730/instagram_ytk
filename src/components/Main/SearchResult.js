@@ -53,7 +53,7 @@ const SearchList = styled.div`
 `;
 
 const SearchResult = ({ text }) => {
-  const [getUserNickName, setGetUserNickName] = useState("");
+  const [getUserNickName, setGetUserNickName] = useState(`${text}`);
 
   const showUserNickName = () => {
     return getUserNickName === ""
