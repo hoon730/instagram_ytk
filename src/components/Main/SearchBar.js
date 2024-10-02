@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import SearchResult from "./SearchResult";
 import { RxMagnifyingGlass } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: none;
+`;
+
+const SearchBarr = styled.div`
   width: 100%;
   padding: 10px 14px;
   border-radius: 8px;
@@ -64,21 +72,24 @@ const SearchBar = () => {
 
   return (
     <Wrapper>
-      <ItemArea>
-        <RxMagnifyingGlass size="20" />
-      </ItemArea>
-      <SearchInput
-        onChange={deleteBtnActive}
-        value={text}
-        type="text"
-        placeholder="검색"
-      ></SearchInput>
-      <ItemArea
-        className={`deleteBtn ${isActive ? "active" : ""}`}
-        onClick={inputReset}
-      >
-        <AiOutlineClose />
-      </ItemArea>
+      <SearchBarr>
+        <ItemArea>
+          <RxMagnifyingGlass size="20" />
+        </ItemArea>
+        <SearchInput
+          onChange={deleteBtnActive}
+          value={text}
+          type="text"
+          placeholder="검색"
+        ></SearchInput>
+        <ItemArea
+          className={`deleteBtn ${isActive ? "active" : ""}`}
+          onClick={inputReset}
+        >
+          <AiOutlineClose />
+        </ItemArea>
+      </SearchBarr>
+      <SearchResult text={text} />
     </Wrapper>
   );
 };

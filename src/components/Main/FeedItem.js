@@ -686,8 +686,8 @@ const FeedItem = () => {
       </ProfileSection>
       <PhotoSection>
         <Slides visible={visible}>
-          {feed[1].imgPath.map((it) => (
-            <Slide>
+          {feed[1].imgPath.map((it, idx) => (
+            <Slide key={idx}>
               <img src={it} />
             </Slide>
           ))}

@@ -57,8 +57,9 @@ const HotHashtag = () => {
     <Wrapper>
       <Title>🔥지금 뜨는 #해시태그</Title>
       <ItemList>
-        {hotTagInfo.map((it) => (
+        {hotTagInfo.map((it, idx) => (
           <HotHashtagItem
+            key={`hotHashtag${idx}`}
             keyword={it.keyword}
             postcount={`게시물 ${it.postcount}개`}
           />
