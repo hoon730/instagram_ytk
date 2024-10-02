@@ -119,7 +119,7 @@ const itemArray = [
 
 const SearchList = styled.div``;
 
-const Follower = () => {
+const Follower = ({ onclick }) => {
   const [getUserNickName, setGetUserNickName] = useState("");
 
   const onChange = (e) => {
@@ -136,7 +136,6 @@ const Follower = () => {
         );
   };
 
-  console.log(getUserNickName);
   return (
     <Wrapper>
       <Title>

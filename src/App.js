@@ -1,12 +1,13 @@
 import "./App.css";
-import React from 'react'
+import React, { useState } from "react";
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./styles/theme";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
 import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
-import New from "./pages/New";
 
 const router = createBrowserRouter([
   {
@@ -21,10 +22,6 @@ const router = createBrowserRouter([
         path: "detail",
         element: <Detail />,
       },
-      // {
-      //   path: "new",
-      //   element: <New />,
-      // },
     ],
   },
   {
@@ -33,11 +30,22 @@ const router = createBrowserRouter([
   },
 ]);
 
+export const ThemeContext = React.createContext();
 function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const changeDark = () => {
+    setDarkMode((current) => !current);
+  };
+
   return (
     <>
-      <GlobalStyles />
-      <RouterProvider router={router} />
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+        <ThemeContext.Provider value={{ changeDark, darkMode }}>
+          <GlobalStyles />
+          <RouterProvider router={router} />
+        </ThemeContext.Provider>
+      </ThemeProvider>
     </>
   );
 }
