@@ -2,6 +2,114 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
+import { motion, AnimatePresence } from "framer-motion";
+import { style } from "framer-motion/client";
+
+const Wrapper = styled.div`
+  border: 1px solid #f00;
+`;
+
+const ProfileSection = styled.div`
+  margin-left: 39px;
+  margin-right: 36px;
+  height: 114px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const UserName = styled.p`
+  font-size: var(--font-14);
+  color: var(--gray-color);
+`;
+
+const PhotoSection = styled.div`
+  width: 652px;
+  height: 815px;
+  margin: 0 auto;
+  border-radius: 8px;
+  border: 1px solid #f00;
+  position: relative;
+  overflow: hidden;
+`;
+
+const Slides = styled(motion.ul)`
+  height: 100%;
+  display: flex;
+`;
+
+const Slide = styled.li`
+  width: 652px;
+  height: 100%;
+  img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+  }
+`;
+
+const SlideButtons = styled.div`
+  width: 100%;
+  padding: 0 22px;
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SlideButton = styled.span`
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  &.prev {
+    transform: rotate(180deg);
+  }
+  & img {
+    width: inherit;
+    height: inherit;
+  }
+`;
+
+const item = {
+  userNickName: "lotte_ria",
+  userName: "코드분쇄기",
+  url: "/images/userImgs/user123456/followed_1.jpg",
+  createDate: "2일",
+  check: "active",
+};
+
+const SlideButtonImg = () => {
+  return (
+    <>
+      <img src={"/images/slide-button.svg"} />
+    </>
+  );
+};
+
+const slideMotion = {
+  initial: (back) => ({
+    x: back ? -652 * 2 : 0,
+  }),
+  visible: {
+    x: -652,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exits: (back) => ({
+    x: back ? 0 : -652 * 2,
+    transition: {
+      duration: 0.5,
+    },
+  }),
+};
 
 const profile = [
   {
@@ -564,109 +672,17 @@ const feed = [
   },
 ];
 
-const limit = feed[1].imgPath.length - 1;
-
-const Wrapper = styled.div`
-  border: 1px solid var(--light-gray-color);
-`;
-
-const ProfileSection = styled.div`
-  margin-left: 39px;
-  margin-right: 36px;
-  height: 114px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-`;
-
-const UserInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const UserName = styled.p`
-  font-size: var(--font-14);
-  color: var(--gray-color);
-`;
-
-const PhotoSection = styled.div`
-  width: 652px;
-  height: 815px;
-  margin: 0 auto;
-  border-radius: 8px;
-  border: 1px solid #f00;
-  position: relative;
-  overflow: hidden;
-`;
-
-const Slides = styled.ul`
-  width: ${100 * (feed[1].imgPath.length || 1)}%;
-  height: 100%;
-  display: flex;
-  transform: translateX(
-    ${({ visible }) => `${-visible * (100 / feed[1].imgPath.length) || 0}%`}
-  );
-  transition: transform 0.5s;
-`;
-
-const Slide = styled.li`
-  width: 100%;
-  height: 100%;
-  img {
-    width: inherit;
-    height: inherit;
-    object-fit: cover;
-  }
-`;
-
-const SlideButtons = styled.div`
-  width: 100%;
-  padding: 0 22px;
-  position: absolute;
-  top: 50%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const SlideButton = styled.span`
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-  &.prev {
-    transform: rotate(180deg);
-    visibility: ${({ visible }) => (visible === 0 ? "hidden" : "visible")};
-  }
-  &.next {
-    visibility: ${({ visible }) => (visible === limit ? "hidden" : "visible")};
-  }
-  & img {
-    width: inherit;
-    height: inherit;
-  }
-`;
-
-const item = {
-  userNickName: "lotte_ria",
-  userName: "코드분쇄기",
-  url: "/images/userImgs/user123456/followed_1.jpg",
-  createDate: "2일",
-  check: "active",
-};
-
-const SlideButtonImg = () => {
-  return (
-    <>
-      <img src={"/images/slide-button.svg"} />
-    </>
-  );
-};
-
 const FeedItem = () => {
   const [visible, setVisible] = useState(0);
-  const moveSlide = (num) => {
-    setVisible(num + visible);
+  const [back, setBack] = useState(false);
+  const limit = feed[1].imgPath.length - 1;
+  const prevPlease = () => {
+    setBack(true);
+    setVisible((prev) => (prev === 0 ? limit : prev - 1));
+  };
+  const nextPlease = () => {
+    setBack(false);
+    setVisible((prev) => (prev === limit ? 0 : prev + 1));
   };
 
   return (
@@ -685,26 +701,37 @@ const FeedItem = () => {
         </UserInfo>
       </ProfileSection>
       <PhotoSection>
-        <Slides visible={visible}>
-          {feed[1].imgPath.map((it) => (
-            <Slide>
-              <img src={it} />
-            </Slide>
-          ))}
+        {/* <AnimatePresence mode="wait" custom={back}> */}
+        <Slides
+          custom={back}
+          variants={slideMotion}
+          initial="initial"
+          animate="visible"
+          exit="exits"
+          key={visible}
+        >
+          {feed[1].imgPath.map((it, idx) =>
+            idx === visible ? (
+              <>
+                <Slide>
+                  <img src={feed[1].imgPath[idx === 0 ? limit : idx - 1]} />
+                </Slide>
+                <Slide>
+                  <img src={it} />
+                </Slide>
+                <Slide>
+                  <img src={feed[1].imgPath[idx === limit ? 0 : idx + 1]} />
+                </Slide>
+              </>
+            ) : null
+          )}
         </Slides>
+        {/* </AnimatePresence> */}
         <SlideButtons>
-          <SlideButton
-            className="prev"
-            visible={visible}
-            onClick={() => moveSlide(-1)}
-          >
+          <SlideButton className="prev" onClick={prevPlease}>
             <SlideButtonImg />
           </SlideButton>
-          <SlideButton
-            className="next"
-            visible={visible}
-            onClick={() => moveSlide(1)}
-          >
+          <SlideButton className="next" onClick={nextPlease}>
             <SlideButtonImg />
           </SlideButton>
         </SlideButtons>
