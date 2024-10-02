@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   width: 305px;
   height: 305px;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   border-radius: 10px;
 `;
 

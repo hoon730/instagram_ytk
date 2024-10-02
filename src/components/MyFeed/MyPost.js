@@ -1,7 +1,6 @@
 import React from "react";
 import MyPostItem from "./MyPostItem";
 import styled from "styled-components";
-import MyPostBtn from "./MyPostBtn";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -22,7 +21,6 @@ const MyPostBox = styled.div`
   height: 305px;
   display: flex;
   gap: 10px;
-  /* border: 1px solid lightgray; */
 `;
 
 // const imgArr = [
@@ -63,7 +61,6 @@ const MyPostBox = styled.div`
 const MyPost = () => {
   return (
     <Wrapper>
-      <MyPostBtn />
       <MyPostContainer>
         <MyPostBox>
           <MyPostItem url={"/images/postImgs/user1/post1.jpg"} />

@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import reset from "styled-reset";
 import styled from "styled-components";
 import SlideBtn from "./SlideBtn";
 

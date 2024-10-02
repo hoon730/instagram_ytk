@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import reset from "styled-reset";
 import styled from "styled-components";
 
 const BtnBox = styled.div`
@@ -9,7 +11,7 @@ const BtnBox = styled.div`
   cursor: pointer;
 `;
 
-const BtnBg = styled.div`
+const BoxBg = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50px;
@@ -32,9 +34,12 @@ const Btn = styled.div`
 `;
 
 const SlideBtn = ({ type }) => {
+  const [clicked, setClicked] = useState(false);
+  const positiveBtn = () => {};
+
   return (
-    <BtnBox>
-      <BtnBg type={type}></BtnBg>
+    <BtnBox onClick={positiveBtn}>
+      <BoxBg type={type}></BoxBg>
       <Btn move={type}></Btn>
     </BtnBox>
   );
