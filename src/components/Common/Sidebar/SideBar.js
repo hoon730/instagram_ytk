@@ -21,6 +21,7 @@ const StyledAside = styled.aside`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   border-right: 1px solid ${({ theme }) => theme.borderColor};
+  z-index: 1;
 `;
 
 const Wrapper = styled.div`

@@ -78,6 +78,7 @@ const MoreBackground = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
 `;
 
 const MoreList = styled.div`

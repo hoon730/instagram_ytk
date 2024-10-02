@@ -11,10 +11,10 @@ const Wrapper = styled.div``;
 const Detail = () => {
   return (
     <Wrapper>
-      {/* <ClickFeed /> */}
+      <ClickFeed />
       {/* <Follower/> */}
       {/* <HoverProfile/> */}
-      <UserInfo/>
+      {/* <UserInfo/> */}
     </Wrapper>
   );
 };

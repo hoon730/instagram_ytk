@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../../../App";
+import Setting  from "./Setting";
 
 const ToolBox = styled.div`
   width: 40px;
@@ -11,6 +12,8 @@ const ToolBox = styled.div`
   border-radius: 50%;
   background: ${({ theme }) => theme.iconBgColor};
   cursor: pointer;
+  position: relative;
+  z-index: 0;
 
   svg {
     font-size: 24px;
@@ -39,7 +42,6 @@ const ToolItem = ({ name, iconCode, id }) => {
   };
 
   const toggleSetting = () => {
-    console.log("클릭");
     if (id === 1) {
       setSetting((prev) => !prev);
     }
@@ -55,6 +57,7 @@ const ToolItem = ({ name, iconCode, id }) => {
       className={name}
     >
       {iconCode}
+      {setting ? <Setting /> : null}
     </ToolBox>
   );
 };
