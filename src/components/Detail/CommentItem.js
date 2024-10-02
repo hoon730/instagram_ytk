@@ -49,7 +49,7 @@ const CommentItem = ({ onClick }) => {
             btn={"heart"}
           />
           <DateAndReply>
-            <Date>대관령 목장</Date>
+            <Date>2023년 12월 25일</Date>
             <ReplyBtn onClick={focusingInput}>답글 달기</ReplyBtn>
           </DateAndReply>
         </Userinfo>

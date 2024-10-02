@@ -11,9 +11,9 @@ const Wrapper = styled.div``;
 const Detail = () => {
   return (
     <Wrapper>
-      <ClickFeed />
-      {/* <Follower/> */}
-      {/* <HoverProfile/> */}
+      {/* <ClickFeed /> */}
+      <Follower/>
+      <HoverProfile/>
       {/* <UserInfo/> */}
     </Wrapper>
   );

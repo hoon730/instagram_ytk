@@ -207,7 +207,7 @@ const StyledInput = styled.input`
   height: 45px;
   background: var(--light-gray-color);
   border-radius: var(--border-radius-8);
-  padding-left: 10px;
+  padding: 0 20px;
 
   &::placeholder {
     color: var(--gray-color);
