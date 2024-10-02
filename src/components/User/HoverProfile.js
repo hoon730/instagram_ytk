@@ -8,10 +8,10 @@ import Button from "../Common/Button";
 import { mouseon } from "../../utils/utils";
 
 const Wrapper = styled(motion.div)`
-  max-width: 550px;
+  max-width: 450px;
   padding: 20px;
   border-radius: var(--border-radius-12);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   position: absolute;
   top: 22px;
   left: 0;
@@ -22,7 +22,6 @@ const Wrapper = styled(motion.div)`
 const Userinfo = styled.div`
   display: flex;
   gap: 15px;
-  padding-bottom: 20px;
 `;
 
 const Userdesc = styled.div`
@@ -36,27 +35,29 @@ const Optional = styled.p`
     type === "feed"
       ? `font-size: var(--font-14); font-weight: var(--font-regular);`
       : type === "hover"
-      ? `font-size: var(--font-18); font-weight: var(--font-regular);`
+      ? `font-size: var(--font-14); font-weight: var(--font-regular);`
       : `font-size: var(--font-16); font-weight: var(--font-regular);`}
   color: var(--gray-color);
-  cursor: pointer;
 `;
 
 const PostingPics = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 `;
 const ImgBox = styled.div`
   width: calc(100% / 3);
   cursor: pointer;
 `;
-const Img = styled.img``;
+const Img = styled.img`
+  width: 100%;
+  object-fit: cover;
+`;
 
 const Btns = styled.div`
   display: flex;
-  gap: ${({ followed }) => (followed === "followed" ? "10px" : "0")};
-  padding: 20px 0;
+  gap: ${({ followed }) => (followed === "followed" ? "4px" : "0")};
+  padding-top: 10px;
 `;
 
 const HoverProfile = ({
@@ -67,47 +68,47 @@ const HoverProfile = ({
   location,
 }) => {
   return (
-      <Wrapper
-        variants={mouseon}
-        initial="initial"
-        animate="visible"
-        exit="exits"
-      >
-        <Userinfo>
-          <ProfileImg
-            size={"55"}
-            type={"active"}
-            url={"/images/userImgs/user123456/profile-photo.jpg"}
+    <Wrapper
+      variants={mouseon}
+      initial="initial"
+      animate="visible"
+      exit="exits"
+    >
+      <Userinfo>
+        <ProfileImg
+          size={"55"}
+          type={"active"}
+          url={"/images/userImgs/user123456/profile-photo.jpg"}
+        />
+        <Userdesc>
+          <UserId type={"feed"} userNickname={"bbok"} check={"active"} />
+          <Optional type={type}>Bank of America{location}</Optional>
+        </Userdesc>
+      </Userinfo>
+      <div>
+        <PostAndFollow posting={"73"} follower={"255"} following={"358"} />
+        <PostingPics>
+          <ImgBox>
+            <Img src={"/images/userImgs/user123456/userdetail_1.jpg"} />
+          </ImgBox>
+          <ImgBox>
+            <Img src={"/images/userImgs/user123456/userdetail_2.jpg"} />
+          </ImgBox>
+          <ImgBox>
+            <Img src={"/images/userImgs/user123456/userdetail_3.jpg"} />
+          </ImgBox>
+        </PostingPics>
+        <Btns followed={"followed"}>
+          <Button
+            width={"66.66%"}
+            followed={"followed"}
+            type={"positive"}
+            text={"메시지 보내기"}
           />
-          <Userdesc>
-            <UserId type={"feed"} userNickname={"bbok"} check={"active"} />
-            <Optional type={type}>Bank of America{location}</Optional>
-          </Userdesc>
-        </Userinfo>
-        <div>
-          <PostAndFollow posting={"73"} follower={"255"} following={"358"} />
-          <PostingPics>
-            <ImgBox>
-              <Img src={"/images/userImgs/user123456/userdetail_1.jpg"} />
-            </ImgBox>
-            <ImgBox>
-              <Img src={"/images/userImgs/user123456/userdetail_2.jpg"} />
-            </ImgBox>
-            <ImgBox>
-              <Img src={"/images/userImgs/user123456/userdetail_3.jpg"} />
-            </ImgBox>
-          </PostingPics>
-          <Btns followed={"followed"}>
-            <Button
-              width={"66.66%"}
-              followed={"followed"}
-              type={"positive"}
-              text={"메시지 보내기"}
-            />
-            <Button width={"33.33%"} type={"negative"} text={"팔로우"} />
-          </Btns>
-        </div>
-      </Wrapper>
+          <Button width={"33.33%"} type={"negative"} text={"팔로우"} />
+        </Btns>
+      </div>
+    </Wrapper>
   );
 };
 
