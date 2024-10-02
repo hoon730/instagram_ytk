@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { AiOutlinePicture } from "react-icons/ai";
-import { GoVideo } from "react-icons/go";
 import Button from "../components/Common/Button";
 import styled from "styled-components";
 
@@ -34,9 +32,29 @@ const Form = styled.form`
   align-items: center;
 `;
 
-const IconBox = styled.img`
-  width: 150px;
+const MediaBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 15px;
+`;
+
+const Icon = styled.img`
+  width: 150px;
+`;
+
+const ImgMedia = styled.img`
+  width: 150px;
+  height: 150px;
+  background: #eee;
+  object-fit: cover;
+`;
+const VidMedia = styled.video`
+  width: 150px;
+  height: 150px;
+  background: #eee;
+  object-fit: cover;
 `;
 
 const StyledSpan = styled.span`
@@ -118,7 +136,9 @@ const New = () => {
   const [file, setfile] = useState(null);
   const [textValueLength, setTextValueLength] = useState(0);
 
-  const onClick = (e) => {
+  console.log(file);
+
+  const fileAdd = (e) => {
     console.log(e);
     const { files } = e.target;
     if (files && files.length === 1) setfile(files[0]);
@@ -152,7 +172,17 @@ const New = () => {
     <Wrapper>
       <H3>새 게시물 만들기</H3>
       <Form onSubmit={onSubmit}>
-        <IconBox src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`} />
+        <MediaBox>
+          {file !== null ? (
+            file.type.startsWith("image/") ? (
+              <ImgMedia />
+            ) : (
+              <VidMedia />
+            )
+          ) : (
+            <Icon src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`} />
+          )}
+        </MediaBox>
         <StyledSpan>사진이나 동영상을 업로드 해주세요</StyledSpan>
         <SearchBtn htmlFor="file">
           {file ? "업로드 완료" : "사진 및 동영상 찾기"}
@@ -161,7 +191,7 @@ const New = () => {
           type="file"
           id="file"
           accept="video/*, image/*"
-          onClick={onClick}
+          onChange={fileAdd}
         />
         <TextInputArea>
           <TextArea

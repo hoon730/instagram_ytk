@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import SearchBar from "../Common/SearchBar";
+import SearchBar from "./SearchBar";
 import ToolItem from "../Common/Sidebar/ToolItem";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 `;
 
 const SearchBarArea = styled.div`
-  width: 585px;
+  width: 500px;
 `;
 
 const ProfileArea = styled.div`

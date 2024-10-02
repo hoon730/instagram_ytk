@@ -8,12 +8,12 @@ import { IoCloseOutline } from "react-icons/io5";
 const UserProfile = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-top: 15px;
+  ${({ type }) => (type === "mainSearch" ? "" : "padding-top: 15px;")}
 `;
 
 const UserDetail = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 8px;
 `;
 const Userinfo = styled.div`
   display: flex;
@@ -54,22 +54,28 @@ const CloseBtn = styled.button`
   }
 `;
 
-const SearchItem = ({ userName, userNickName, followed, url }) => {
+const SearchItem = ({ type, userName, userNickName, followed, url }) => {
   return (
-    <UserProfile>
+    <UserProfile type={type}>
       <UserDetail>
-        <ProfileImg type={"active"} size={"44"} url={url} />
+        <ProfileImg
+          type={type === "mainSearch" ? null : "active"}
+          size={type === "mainSearch" ? "60" : "44"}
+          url={url}
+        />
         <Userinfo>
           <UserId type={"feed"} userNickname={userNickName} />
           <UserName>{userName}</UserName>
         </Userinfo>
       </UserDetail>
-      <Btns>
-        <FollowBtn>{followed ? "팔로우" : null}</FollowBtn>
-        <CloseBtn>
-          <IoCloseOutline />
-        </CloseBtn>
-      </Btns>
+      {type === "mainSearch" ? null : (
+        <Btns>
+          <FollowBtn>{followed ? "팔로우" : null}</FollowBtn>
+          <CloseBtn>
+            <IoCloseOutline />
+          </CloseBtn>
+        </Btns>
+      )}
     </UserProfile>
   );
 };

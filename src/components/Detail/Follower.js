@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import SearchBar from "../Common/SearchBar";
 import SearchItem from "./SearchItem";
 import { RxMagnifyingGlass } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
