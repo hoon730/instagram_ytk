@@ -9,13 +9,13 @@ import HoverProfile from "../User/HoverProfile";
 const UserProfile = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-top: 15px;
+  ${({ type }) => (type === "mainSearch" ? "" : "padding-top: 15px;")}
   position: relative;
 `;
 
 const UserDetail = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 8px;
 `;
 const Userinfo = styled.div`
   display: flex;
@@ -23,6 +23,7 @@ const Userinfo = styled.div`
   justify-content: center;
 `;
 const UserName = styled.span`
+  font-size: var(--font-14);
   color: var(--gray-color);
 `;
 
@@ -55,7 +56,7 @@ const CloseBtn = styled.button`
   }
 `;
 
-const SearchItem = ({ userName, userNickName, followed, url }) => {
+const SearchItem = ({ type, userName, userNickName, followed, url }) => {
   const [profile, setProfile] = useState(false);
 
   const showProfile = () => {
@@ -67,11 +68,11 @@ const SearchItem = ({ userName, userNickName, followed, url }) => {
   };
 
   return (
-    <UserProfile>
+    <UserProfile type={type}>
       <UserDetail>
         <ProfileImg
-          type={"active"}
-          size={"45"}
+          type={type === "mainSearch" ? null : "active"}
+          size={type === "mainSearch" ? "60" : "44"}
           url={url}
           onMouseEnter={showProfile}
           onMouseLeave={hideProfile}
@@ -88,12 +89,14 @@ const SearchItem = ({ userName, userNickName, followed, url }) => {
           <UserName>{userName}</UserName>
         </Userinfo>
       </UserDetail>
-      <Btns>
-        <FollowBtn>{followed ? "팔로우" : null}</FollowBtn>
-        <CloseBtn>
-          <IoCloseOutline />
-        </CloseBtn>
-      </Btns>
+      {type === "mainSearch" ? null : (
+        <Btns>
+          <FollowBtn>{followed ? "팔로우" : null}</FollowBtn>
+          <CloseBtn>
+            <IoCloseOutline />
+          </CloseBtn>
+        </Btns>
+      )}
     </UserProfile>
   );
 };

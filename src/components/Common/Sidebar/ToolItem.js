@@ -13,6 +13,8 @@ const ToolBox = styled.div`
   background: ${({ theme }) => theme.iconBgColor};
   position: relative;
   cursor: pointer;
+  position: relative;
+  z-index: 0;
 
   svg {
     font-size: 24px;
@@ -29,6 +31,12 @@ const ToolBox = styled.div`
     svg {
       color: var(--sub-pink-color);
     }
+  }
+
+  @media screen and (max-width: 1024px) {
+    &:nth-child(2) {
+      display: none;
+    }    
   }
 `;
 
@@ -57,6 +65,7 @@ const ToolItem = ({ name, iconCode, id }) => {
     >
       {setting ? <Setting /> : null}
       {iconCode}
+      {setting ? <Setting /> : null}
     </ToolBox>
   );
 };

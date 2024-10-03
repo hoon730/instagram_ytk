@@ -11,7 +11,6 @@ const Wrapper = styled.span`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 3;
 `;
 
 const StyledSpan = styled.span`
@@ -20,9 +19,9 @@ const StyledSpan = styled.span`
   gap: 8px;
   ${({ type }) =>
     type === "feed"
-      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-14); font-weight: var(--font-bold);`
       : type === "hover"
-      ? `font-size: var(--font-20); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
       : `font-size: var(--font-14); font-weight: var(--font-bold);`}
 `;
 
@@ -31,10 +30,12 @@ const IdSpan = styled.div`
   cursor: pointer;
 `;
 
-const Check = styled.img``;
+const Check = styled.img`
+  width: 18px;
+`;
 
 const Comment = styled.span`
-  font-size: var(--font-14);
+  font-size: 13px;
   font-weight: var(--font-medium);
 `;
 
@@ -78,17 +79,19 @@ const MoreBackground = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
 `;
 
 const MoreList = styled.div`
-  width: 450px;
-  background: var(--bg-white-color);
+  width: 380px;
+  background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
+  overflow: hidden;
 `;
 
 const CancelBtn = styled.button`
   width: 100%;
-  padding: 20px 0;
+  padding: 12px;
   font-size: var(--font-14);
   text-align: center;
 `;
@@ -108,24 +111,26 @@ const UserId = ({
   createDate,
   follwed,
   btn,
+  hover,
+  top,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
-  const [hover, setHover] = useState(false);
+  const [hoverId, setHoverId] = useState(false);
   const moreBgRef = useRef();
 
   const showProfile = () => {
-    setHover(true);
+    setHoverId(true);
   };
   const hideProfile = () => {
-    setHover(false);
+    setHoverId(false);
   };
 
   return (
     <Wrapper>
       <StyledSpan type={type}>
         <IdSpan onMouseEnter={showProfile} onMouseLeave={hideProfile}>
-          {hover ? <HoverProfile /> : null}
+          {!hover && hoverId ? <HoverProfile target={"id"} top={"22"} /> : null}
           {userNickname}
         </IdSpan>
         {check === "active" ? <Check src="/images/check.svg" /> : null}
@@ -165,12 +170,12 @@ const UserId = ({
           }}
         >
           <MoreList>
-            <MoreItem text={"신고"} />
-            <MoreItem text={"게시물로 이동"} />
-            <MoreItem text={"공유 대상..."} />
-            <MoreItem text={"링크 복사"} />
-            <MoreItem text={"퍼가기"} />
-            <MoreItem text={"이 계정 정보"} />
+            <MoreItem text={"신고"} padding={"12px"} fontSize={"14"} />
+            <MoreItem text={"게시물로 이동"} padding={"12px"} fontSize={"14"} />
+            <MoreItem text={"공유 대상..."} padding={"12px"} fontSize={"14"} />
+            <MoreItem text={"링크 복사"} padding={"12px"} fontSize={"14"} />
+            <MoreItem text={"퍼가기"} padding={"12px"} fontSize={"14"} />
+            <MoreItem text={"이 계정 정보"} padding={"12px"} fontSize={"14"} />
             <CancelBtn
               onClick={() => {
                 setOpenMore(false);

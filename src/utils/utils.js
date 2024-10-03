@@ -10,7 +10,8 @@ import { BsThreads } from "react-icons/bs";
 import { LuSunMedium } from "react-icons/lu";
 
 import { BsHeart } from "react-icons/bs";
-import { delay, easeIn, easeInOut, transform } from "framer-motion";
+import { RxMagnifyingGlass } from "react-icons/rx";
+import ProfileImg from "../components/Profile/ProfileImg";
 
 export const getFormattedDate = (targetDate) => {
   const year = targetDate.getFullYear();
@@ -25,15 +26,57 @@ export const getFormattedDate = (targetDate) => {
 
 export const menuData = [
   {
-    id: 1,
+    id: 0,
     name: "홈",
     iconCode: <AiOutlineHome />,
     path: "/",
   },
   {
-    id: 2,
+    id: 1,
     name: "탐색",
     iconCode: <FaRegCompass />,
+  },
+  {
+    id: 2,
+    name: "릴스",
+    iconCode: <BiMoviePlay />,
+  },
+  {
+    id: 3,
+    name: "저장됨",
+    iconCode: <FaRegBookmark />,
+    path: "/detail",
+  },
+  {
+    id: 4,
+    name: "메시지",
+    iconCode: <IoPaperPlaneOutline />,
+  },
+  {
+    id: 5,
+    name: "만들기",
+    iconCode: <FaRegSquarePlus />,
+    // path: "/new",
+  },
+];
+
+export const mbMenuData = [
+  {
+    id: 0,
+    name: "홈",
+    iconCode: <AiOutlineHome />,
+    path: "/",
+  },
+  {
+    id: 1,
+    name: "검색",
+    iconCode: <RxMagnifyingGlass />,
+  },
+  {
+    id: 2,
+    name: "만들기",
+    iconCode: <FaRegSquarePlus />,
+    path: "/new",
   },
   {
     id: 3,
@@ -42,20 +85,14 @@ export const menuData = [
   },
   {
     id: 4,
-    name: "저장됨",
-    iconCode: <FaRegBookmark />,
+    name: "마이 프로필",
+    iconCode: (
+      <ProfileImg
+        size={"38"}
+        url={"/images/userImgs/user123456/feedDetail.jpg"}
+      />
+    ),
     path: "/detail",
-  },
-  {
-    id: 5,
-    name: "메시지",
-    iconCode: <IoPaperPlaneOutline />,
-  },
-  {
-    id: 6,
-    name: "만들기",
-    iconCode: <FaRegSquarePlus />,
-    // path: "/new",
   },
 ];
 
@@ -109,4 +146,25 @@ export const click = {
       duration: 0.3,
     },
   },
+};
+
+export const slide = {
+  initial: (back) => ({
+    x: back ? -800 : 800,
+  }),
+  visible: {
+    x: 0,
+    transition: {
+      type: "tween",
+      duration: 0.5,
+      ease: [0.42, 0, 0.58, 1],
+    },
+  },
+  exit: (back) => ({
+    x: back ? 800 : -800,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+  }),
 };

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import HoverProfile from "../User/HoverProfile";
 
 const ImgSection = styled.div`
   width: fit-content;
   cursor: pointer;
+  position: relative;
 `;
 
 const ActivationArea = styled.span`
@@ -56,9 +58,24 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const ProfileImg = ({ url, type, size, onClick }) => {
+const ProfileImg = ({ url, type, size, onClick, hover, top }) => {
+  const [hoverImg, setHoverImg] = useState(false);
+
+  const showProfile = () => {
+    setHoverImg(true);
+  };
+
+  const hideProfile = () => {
+    setHoverImg(false);
+  };
+
   return (
-    <ImgSection onClick={onClick}>
+    <ImgSection
+      onClick={onClick}
+      onMouseEnter={showProfile}
+      onMouseLeave={hideProfile}
+    >
+      {!hover && hoverImg ? <HoverProfile target={"img"} top={"45"}/> : null}
       <ActivationArea size={size} type={type}>
         <BoundaryLine size={size} type={type}>
           <ImgBox size={size}>
