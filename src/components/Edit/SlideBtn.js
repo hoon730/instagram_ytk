@@ -4,9 +4,11 @@ import reset from "styled-reset";
 import styled from "styled-components";
 
 const BtnBox = styled.div`
-  width: 65px;
-  height: 38px;
-  /* border: 1px solid red; */
+  width: 70px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: relative;
   cursor: pointer;
 `;
@@ -15,32 +17,40 @@ const BoxBg = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50px;
-  ${({ type }) =>
-    type === "positive"
-      ? `background: var(--sub-purple-color);`
-      : `background: var(--light-gray-color);`};
+  background: var(--light-gray-color);
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &.active {
+    background: var(--sub-purple-color);
+  }
 `;
 
-const Btn = styled.div`
+const BtnPoint = styled.div`
   width: 30px;
   height: 30px;
-  /* border: 1px solid red; */
   border-radius: 50%;
   background: var(--bg-white-color);
   position: absolute;
-  top: 4px;
-  left: 4px;
-  ${({ move }) => (move === "positive" ? `left: 30px;` : `left: 4px;`)};
+  right: 24px;
+  margin: 0 8px;
+  transition: all 0.3s;
+
+  &.active {
+    right: -2px;
+  }
 `;
 
-const SlideBtn = ({ type }) => {
-  const [clicked, setClicked] = useState(false);
-  const positiveBtn = () => {};
+const SlideBtn = () => {
+  const [isToggle, setIsToggle] = useState(false);
 
+  const onClick = () => {
+    setIsToggle((positive) => !positive);
+  };
   return (
-    <BtnBox onClick={positiveBtn}>
-      <BoxBg type={type}></BoxBg>
-      <Btn move={type}></Btn>
+    <BtnBox onClick={onClick}>
+      <BoxBg className={isToggle ? "active" : ""}></BoxBg>
+      <BtnPoint className={isToggle ? "active" : ""}></BtnPoint>
     </BtnBox>
   );
 };

@@ -38,6 +38,10 @@ const router = createBrowserRouter([
         path: "myfeed",
         element: <MyFeed />,
       },
+      {
+        path: "setup",
+        element: <Setup />,
+      },
     ],
   },
   {

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaGear } from "react-icons/fa6";
+import Setup from "../../pages/Setup";
 
 const Wrapper = styled.div``;
 
@@ -42,6 +43,7 @@ const EditBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   svg {
     font-size: 25px;
@@ -58,6 +60,14 @@ const MyIntro = styled.div`
 `;
 
 const MyProfile = () => {
+  const [isOn, setIsOn] = useState(false);
+
+  const onClick = () => {
+    setIsOn(true);
+  };
+  const offClick = () => {
+    setIsOn(false);
+  };
   return (
     <Wrapper>
       <MyProfileBox>
@@ -66,7 +76,8 @@ const MyProfile = () => {
             <p>cat.h0du</p>
             <span>호두 Walnut</span>
           </MyName>
-          <EditBtn>
+          <EditBtn onClick={onClick}>
+            {isOn ? <Setup /> : null}
             <FaGear />
           </EditBtn>
         </NameBox>
@@ -76,7 +87,7 @@ const MyProfile = () => {
           <br />
           <br />
           구ㅣ여운 날 봐, ㄷㅐ박임 <br />
-          ㅇㅑ옹 🐱💛
+          ㅇㅑ옹 🐱💛 더보기에 넣기
           <br />
         </MyIntro>
       </MyProfileBox>
