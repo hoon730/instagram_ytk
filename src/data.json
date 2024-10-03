@@ -207,7 +207,8 @@
         "0kW30ovXTfTAwBRyTzHKGvqG398",
         "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
         "1JaMETkLKPzcOLuDpbmRoTpKbgt"
-      ]
+      ],
+      "badge": true
     },
     {
       "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -217,7 +218,7 @@
       "website": "",
       "recommendation": false,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/KWUUuqMImhcKDZ822gc2InH4vSN",
+      "profilePhoto": "/images/userImgs/KWUUuqMImhcKDZ822gc2InH4vSN/profile.jpg",
       "bgPhoto": "/images/userImgs/KWUUuqMImhcKDZ822gc2InH4vSN",
       "follower": [
         "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
@@ -3602,7 +3603,7 @@
             "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed4.jpg",
             "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed5.jpg"
           ],
-          "content": "#갤러리 다녀왔어요. 오랜만에 작품들 보니까 기분이 너무 좋아요 #힐링 ",
+          "content": "지인이 전시회를 한다고 초대해서 #갤러리 다녀왔어요.\n오랜만에 작품들 보니까 기분이 너무 좋아요 #힐링 \n너무 소중했던 시간...",
           "hashtag": ["#갤러리", "#힐링"],
           "location": "더페이지 갤러리",
           "like": [
