@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileImg from "../components/Profile/ProfileImg";
 import PostAndFollow from "../components/User/PostAndFollow";
 import Button from "../components/Common/Button";
+import MbMenu from "../components/Common/MbMenu/MbMenu";
+import MbRecommend from "../components/Detail/MbRecommend";
 
 import { IoChevronDown } from "react-icons/io5";
 import { BsThreads } from "react-icons/bs";
 import { LuMenu } from "react-icons/lu";
-import MbMenu from "../components/Common/MbMenu/MbMenu";
-import MbRecommend from "../components/Detail/MbRecommend";
+import { GoPlus } from "react-icons/go";
 
 const Wrapper = styled.div`
   margin: 0 auto;
   width: 430px;
+  background-color: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
 `;
 const Header = styled.div`
   width: 100%;
@@ -28,11 +31,13 @@ const IdBox = styled.div`
 const Id = styled.span`
   font-size: var(--font-20);
   font-weight: var(--font-bold);
+  cursor: pointer;
 `;
 const IdBtn = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 const HeaderBtn = styled.div`
   display: flex;
@@ -42,6 +47,8 @@ const Threads = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+
   svg {
     font-size: var(--font-22);
   }
@@ -50,6 +57,8 @@ const Menu = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+
   svg {
     font-size: var(--font-24);
   }
@@ -66,6 +75,32 @@ const UserDetail = styled.div`
   align-items: center;
   gap: 20px;
   padding: 0 16px;
+`;
+
+const UserImg = styled.div`
+  position: relative;
+  z-index: 1;
+`;
+
+const ImgEditBtn = styled.label`
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.subColor};
+
+  svg {
+    color: var(--bg-white-color);
+  }
+`;
+
+const ImgEditInput = styled.input`
+  display: none;
 `;
 
 const UserDesc = styled.div`
@@ -89,6 +124,8 @@ const Buttons = styled.div`
 `;
 
 const MbDetail = () => {
+  const [isRecommend, setIsRecommend] = useState(false);
+
   return (
     <Wrapper>
       <Header>
@@ -109,17 +146,22 @@ const MbDetail = () => {
       </Header>
       <ProfileBg src="/images/mb_profile_bg.jpg" />
       <UserDetail>
-        <ProfileImg
-          size={"78"}
-          url={"/images/userImgs/user123456/feedDetail.jpg"}
-        ></ProfileImg>
+        <UserImg>
+          <ProfileImg
+            size={"78"}
+            url={"/images/userImgs/user123456/feedDetail.jpg"}
+          />
+          <ImgEditBtn htmlFor="file">
+            <GoPlus />
+          </ImgEditBtn>
+          <ImgEditInput type="file" id="file" accept="video/*, image/*" />
+        </UserImg>
         <PostAndFollow posting={"73"} follower={"255"} following={"358"} />
       </UserDetail>
       <UserDesc>
         <UserName>bbo</UserName>
         <UserIntro>마라탕 좋아해요</UserIntro>
       </UserDesc>
-      <MbRecommend/>
       <Buttons>
         <Button
           type={"negative"}
@@ -140,8 +182,10 @@ const MbDetail = () => {
           width={"10%"}
           followed={"unfollowed"}
           height={"40px"}
+          onClick={() => setIsRecommend((current) => !current)}
         />
       </Buttons>
+      {isRecommend ? <MbRecommend /> : null}
       <MbMenu />
     </Wrapper>
   );

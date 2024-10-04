@@ -123,12 +123,17 @@ export const mouseon = {
     opacity: 1,
     scale: 1,
     y: 0,
+    transition: {
+      type: "tween",
+      duration: 0.3,
+    },
   },
   exits: {
     opacity: 0,
-    y: 20,
+    y: -20,
     transition: {
       duration: 0.3,
+      ease: "easeInOut",
     },
   },
 };

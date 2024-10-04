@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import Button from "../Common/Button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { mouseon } from "../../utils/utils";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   padding: 16px;
   overflow: hidden;
+  padding-top: 0;
 `;
 const Title = styled.h3`
   font-size: var(--font-14);
@@ -72,25 +74,32 @@ const userData = [
 
 const MbRecommend = () => {
   return (
-    <Wrapper>
-      <Title>회원님을 위한 추천</Title>
-      <RecommendList drag="x" dragSnapToOrigin>
-        {userData.map((it) => (
-          <RecommendItem>
-            <ProfileImg size={"75"} url={it.imgPath} />
-            <Id>{it.userNickName}</Id>
-            <Desc>{it.desc}님이 팔로우 합니다</Desc>
-            <Button
-              width={"80px"}
-              height={"30px"}
-              fontSize={"14"}
-              type={"positive"}
-              text={"팔로우"}
-            />
-          </RecommendItem>
-        ))}
-      </RecommendList>
-    </Wrapper>
+    <AnimatePresence>
+      <Wrapper
+        variants={mouseon}
+        initial="initial"
+        animate="visible"
+        exit="exits"
+      >
+        <Title>회원님을 위한 추천</Title>
+        <RecommendList drag="x" dragSnapToOrigin>
+          {userData.map((it, idx) => (
+            <RecommendItem key={idx}>
+              <ProfileImg size={"75"} url={it.imgPath} />
+              <Id>{it.userNickName}</Id>
+              <Desc>{it.desc}님이 팔로우 합니다</Desc>
+              <Button
+                width={"80px"}
+                height={"30px"}
+                fontSize={"14"}
+                type={"positive"}
+                text={"팔로우"}
+              />
+            </RecommendItem>
+          ))}
+        </RecommendList>
+      </Wrapper>
+    </AnimatePresence>
   );
 };
 
