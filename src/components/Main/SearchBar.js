@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  display: none;
 `;
 
 const SearchBarr = styled.div`
