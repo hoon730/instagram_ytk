@@ -6,12 +6,12 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   text-align: center;
-  font-size: var(--font-14);
   transition: all 0.3s;
   border-bottom: ${({ last }) =>
     last === "last" ? null : `1px solid var(--light-gray-color);`};
+  padding: ${({ padding }) => (padding ? `${padding}` : "auto")};
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   cursor: pointer;
-  padding: ${({ padding }) => (padding ? padding : null)};
   ${({ text }) =>
     text === "신고"
       ? `color: var(--warning-color); font-weight: var(--font-bold);`
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MoreItem = ({ text, padding, last }) => {
+const MoreItem = ({ text, padding, last, fontSize }) => {
   const navigate = useNavigate();
 
   const goLogin = () => {
@@ -32,6 +32,7 @@ const MoreItem = ({ text, padding, last }) => {
   return (
     <Wrapper
       padding={padding}
+      fontSize={fontSize}
       text={text}
       last={last}
       onClick={text === "로그아웃" ? goLogin : null}

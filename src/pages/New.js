@@ -221,7 +221,12 @@ const New = ({ closeNew }) => {
             width={"50%"}
             onClick={handleOnClick}
           />
-          <Button type={"positive"} text={"게시글 업로드 하기"} width={"50%"} />
+          <Button
+            type={"positive"}
+            text={"게시글 업로드 하기"}
+            width={"50%"}
+            height={"45px"}
+          />
         </ButtonsBox>
       </Form>
     </Wrapper>

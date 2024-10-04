@@ -95,6 +95,7 @@ const GlobalStyles = createGlobalStyle`
     --font-extrabold: 800;
     --font-black: 900;
     
+    --box-shadow:  0 0 30px rgba(0, 0, 0, 0.1);
   }
 `;
 
