@@ -8,11 +8,17 @@ import EditDesc from "../components/Edit/EditDesc";
 import EditBtns from "../components/Edit/EditBtns";
 
 const Container = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 const Wrapper = styled.div`
@@ -22,11 +28,12 @@ const Wrapper = styled.div`
   border: 1px solid lightgray;
   border-radius: 20px;
   padding: 30px;
+  background: var(--bg-white-color);
 `;
 
-const Setup = () => {
+const Setup = ({ setIsOpen }) => {
   return (
-    <Container>
+    <Container onClick={() => setIsOpen}>
       <Wrapper>
         <Header
           leftChild={<Button text={"취소"} />}

@@ -4,15 +4,15 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import { HiOutlineUserPlus } from "react-icons/hi2";
 
 const ButtonItem = styled.button`
-  width: ${({ width }) => `${width}` || "auto  "};
-  height: 45px;
+  width: ${({ width }) => `${width}` || "auto"};
+  height: ${({ height }) => `${height}` || "45px"};
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: ${({ followed }) => (followed === "unfollowed" ? "0" : "5px")};
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   font-family: "Noto Sans KR", sans-serif;
   cursor: pointer;
   color: #fff;
@@ -22,14 +22,14 @@ const ButtonItem = styled.button`
       ? `background: #6228D7;`
       : type === "negative"
       ? `background: #BFBFBF;`
-      : `background: transparent; color: #6228D7; font-size: var(--font-size-18); font-weight: var(--font-bold);`};
+      : `background: transparent; color: #6228D7;  font-weight: var(--font-bold);`};
   &:hover {
     ${({ type }) =>
       type === "positive"
         ? `background: #3E1494;`
         : type === "negative"
         ? `background: #A4A4A4;`
-        : `background: transparent; color: #6228D7; font-size: var(--font-size-18); font-weight: var(--font-bold);`};
+        : `background: transparent; color: #6228D7;  font-weight: var(--font-bold);`};
   }
 `;
 
@@ -44,9 +44,16 @@ const MesseageBtn = styled.span`
   }
 `;
 
-const Button = ({ width, text, type, onClick, followed }) => {
+const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
   return (
-    <ButtonItem width={width} type={type} onClick={onClick}>
+    <ButtonItem
+      width={width}
+      height={height}
+      fontSize={fontSize}
+      type={type}
+      onClick={onClick}
+      followed={followed}
+    >
       <MesseageBtn followed={followed}>
         {followed === "followed" ? (
           <IoPaperPlaneOutline />

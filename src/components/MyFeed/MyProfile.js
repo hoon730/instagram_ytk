@@ -60,14 +60,8 @@ const MyIntro = styled.div`
 `;
 
 const MyProfile = () => {
-  const [isOn, setIsOn] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const onClick = () => {
-    setIsOn(true);
-  };
-  const offClick = () => {
-    setIsOn(false);
-  };
   return (
     <Wrapper>
       <MyProfileBox>
@@ -76,8 +70,8 @@ const MyProfile = () => {
             <p>cat.h0du</p>
             <span>호두 Walnut</span>
           </MyName>
-          <EditBtn onClick={onClick}>
-            {isOn ? <Setup /> : null}
+          <EditBtn onClick={() => setIsOpen((current) => !current)}>
+            {isOpen ? <Setup setIsOpen={setIsOpen} /> : null}
             <FaGear />
           </EditBtn>
         </NameBox>

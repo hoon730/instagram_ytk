@@ -9,8 +9,12 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: calc(100% - 380px);
-  margin-left: 380px;
+  width: 80%;
+  margin-left: 20%;
+  
+  @media screen and (max-width: 630px) {
+    width: 100%;
+  }
 `;
 
 const Layout = () => {
