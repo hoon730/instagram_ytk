@@ -8,7 +8,6 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  display: none;
 `;
 
 const SearchBarr = styled.div`
@@ -49,25 +48,44 @@ const SearchInput = styled.input`
   font-size: 16px;
   background: none;
   color: var(--font-black-color);
+  &:focus {
+    div:has(input) .result {
+      display: block;
+    }
+  }
   &::placeholder {
     font-size: 14px;
+  }
+`;
+
+const ResultArea = styled.div`
+  display: none;
+  &.active {
+    display: block;
   }
 `;
 
 const SearchBar = () => {
   const [text, setText] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [resultActive, setResultActive] = useState(false);
 
   const deleteBtnActive = (e) => {
     setText(e.target.value);
     setIsActive(true);
-    if (e.target.value === "") setIsActive(false);
-    else setIsActive(true);
+    if (e.target.value === "") {
+      setIsActive(false);
+      setResultActive(false);
+    } else {
+      setIsActive(true);
+      setResultActive(true);
+    }
   };
 
   const inputReset = () => {
     setText("");
     setIsActive(false);
+    setResultActive(false);
   };
 
   return (
@@ -89,7 +107,9 @@ const SearchBar = () => {
           <AiOutlineClose />
         </ItemArea>
       </SearchBarr>
-      <SearchResult text={text} />
+      <ResultArea className={resultActive ? "result active" : "result"}>
+        <SearchResult text={text} />
+      </ResultArea>
     </Wrapper>
   );
 };

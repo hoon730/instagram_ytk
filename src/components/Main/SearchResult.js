@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchItem from "../Detail/SearchItem";
 
 const Wrapper = styled.div`
   width: 100%;
+  max-height: 380px;
   padding: 20px 20px;
   position: absolute;
   display: flex;
@@ -52,16 +53,33 @@ const SearchList = styled.div`
   gap: 10px;
 `;
 
+const NoResult = styled.div`
+  font-size: var(--font-18);
+  color: var(--gray-color);
+  display: block;
+  &.active {
+    display: none;
+  }
+`;
+
 const SearchResult = ({ text }) => {
   const [getUserNickName, setGetUserNickName] = useState(`${text}`);
 
+  useEffect(() => {
+    setGetUserNickName(text);
+  }, [text]);
+
   const showUserNickName = () => {
     return getUserNickName === ""
-      ? itemArray
-      : itemArray.filter((it) =>
-          it.userNickName
-            .toLocaleLowerCase()
-            .includes(getUserNickName.toLocaleLowerCase())
+      ? []
+      : itemArray.filter(
+          (it) =>
+            it.userNickName
+              .toLocaleLowerCase()
+              .includes(getUserNickName.toLocaleLowerCase()) ||
+            it.userName
+              .toLocaleLowerCase()
+              .includes(getUserNickName.toLocaleLowerCase())
         );
   };
 
@@ -71,6 +89,15 @@ const SearchResult = ({ text }) => {
         {showUserNickName().map((it, idx) => (
           <SearchItem key={idx} type={"mainSearch"} {...it} />
         ))}
+        <NoResult
+          className={
+            getUserNickName === "" || showUserNickName().length > 0
+              ? "active"
+              : ""
+          }
+        >
+          검색결과가 없습니다.
+        </NoResult>
       </SearchList>
     </Wrapper>
   );
