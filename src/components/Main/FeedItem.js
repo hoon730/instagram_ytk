@@ -74,6 +74,9 @@ const FeedText = styled.div`
   white-space: normal;
   word-wrap: break-word;
   position: relative;
+  &::before {
+    content: "#";
+  }
 `;
 
 const MoreText = styled.span`
@@ -84,7 +87,7 @@ const MoreText = styled.span`
 
 const MoreSpan = styled.span`
   border: 1px solid #f00;
-  background: #fff;
+  //background: #fff;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -113,66 +116,24 @@ const FeedItem = () => {
   //const lines = feedDetail.content.split("\n").slice(0, 2);
 
   const [more, setMore] = useState(false);
-  //const [lines, setLines] = useState(feedDetail.content.split("\n"));
-  // const [lines, setLines] = useState(
-  //   "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).".split(
-  //     "\n"
-  //   )
-  // );
-  const [chunks, setChunks] = useState([]);
+  // const [lines, setLines] = useState(feedDetail.content.split("\n"));
+  const [lines, setLines] = useState(
+    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).".split(
+      "\n"
+    )
+  );
+
+  const textRef = useRef();
 
   useEffect(() => {
-    const text =
-      "It is a long established fact that a reader will be distracted by the readable content of a page when \nlooking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).";
-
-    const measureTextWidth = (text) => {
-      const canvas = document.createElement("canvas");
-      const context = canvas.getContext("2d");
-      context.font = "16px Noto Sans KR"; // 글꼴과 크기를 설정
-      return context.measureText(text).width;
-    };
-
-    const getTextChunks = (text, maxWidth) => {
-      let currentChunk = "";
-      let currentWidth = 0;
-      const result = [];
-
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const charWidth = measureTextWidth(char);
-
-        if (currentWidth + charWidth > maxWidth) {
-          result.push(currentChunk);
-          currentChunk = char;
-          currentWidth = charWidth;
-        } else {
-          currentChunk += char;
-          currentWidth += charWidth;
-        }
-      }
-
-      if (currentChunk) {
-        result.push(currentChunk); // 남아있는 텍스트를 배열에 추가
-      }
-
-      return result;
-    };
-
-    const chunksArray = getTextChunks(text, 600); // 100px 너비로 텍스트 자르기
-    setChunks(chunksArray);
+    if (textRef.current.scrollHeight > 48 || lines.length > 2) {
+      setLines(lines.slice(0, 2));
+      setMore(true);
+    }
   }, []);
-
-  // const textRef = useRef();
-
-  // useEffect(() => {
-  //   if (textRef.current.scrollHeight > 48 || lines.length > 2) {
-  //     setLines(lines.slice(0, 2));
-  //     setMore(true);
-  //   }
-  // }, []);
-  // const showMore = () => {
-  //   setMore(false);
-  // };
+  const showMore = () => {
+    setMore(false);
+  };
 
   return (
     <Wrapper>
@@ -212,26 +173,19 @@ const FeedItem = () => {
             onChange={handleResizeHeight}
             readOnly
           ></FeedText> */}
-          {/* <FeedText ref={textRef}>
+          <FeedText ref={textRef}>
             {lines.map((it, idx) => (
               <span key={idx}>
                 {it}
                 {idx !== lines.length - 1 ? <br /> : null}
               </span>
             ))}
-            {more ? (
+            {/* {more ? (
               <MoreSpan>
                 ...<MoreText onClick={showMore}>더 보기</MoreText>
               </MoreSpan>
-            ) : null}
-          </FeedText> */}
-          <div>
-            {chunks.map((chunk, index) => (
-              <div key={index} style={{ marginBottom: "10px" }}>
-                {chunk}
-              </div>
-            ))}
-          </div>
+            ) : null} */}
+          </FeedText>
         </FeedDesc>
       </FeedDescArea>
     </Wrapper>
