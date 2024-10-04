@@ -6,24 +6,30 @@ import { AiOutlineClose } from "react-icons/ai";
 import { IoCloseOutline } from "react-icons/io5";
 
 const Wrapper = styled.div`
+  display: ${({ display }) => (display ? "block" : "none")};
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px;
-  padding: 20px;
+  width: 400px;
+  padding: 15px;
   background: var(--bg-white-color);
   border-radius: var(--border-radius-12);
+  box-shadow: var(--box-shadow);
+
+  @media screen and (max-width: 430px) {
+    width: 82%;
+  }
 `;
 
 const Title = styled.div`
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   position: relative;
 `;
 
 const H3 = styled.h3`
-  font-size: var(--font-20);
+  font-size: var(--font-16);
   font-weight: var(--font-bold);
   text-align: center;
 `;
@@ -44,7 +50,7 @@ const CloseBtn = styled.button`
 
 const SearchInputBox = styled.div`
   width: 100%;
-  height: 40px;
+  height: 35px;
   padding: 12px;
   border-radius: 8px;
   background: #eeeeee;
@@ -114,11 +120,10 @@ const itemArray = [
   },
 ];
 
-const SearchList = styled.div`
-  height: 320px;
-`;
+const SearchList = styled.div``;
 
 const Follower = () => {
+  const [isClose, setIsClose] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [getUserNickName, setGetUserNickName] = useState("");
 
@@ -145,10 +150,10 @@ const Follower = () => {
   };
 
   return (
-    <Wrapper>
-      <Title>
+    <Wrapper display={isClose}>
+      <Title className="title">
         <H3>팔로워</H3>
-        <CloseBtn>
+        <CloseBtn onClick={() => setIsClose(false)}>
           <IoCloseOutline />
         </CloseBtn>
       </Title>

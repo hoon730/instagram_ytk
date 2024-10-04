@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import Setting from "./Setting";
 import { ThemeContext } from "../../../App";
-import Setting  from "./Setting";
 
 const ToolBox = styled.div`
   width: 40px;
@@ -11,6 +11,7 @@ const ToolBox = styled.div`
   align-items: center;
   border-radius: 50%;
   background: ${({ theme }) => theme.iconBgColor};
+  position: relative;
   cursor: pointer;
   position: relative;
   z-index: 0;
@@ -30,6 +31,12 @@ const ToolBox = styled.div`
     svg {
       color: var(--sub-pink-color);
     }
+  }
+
+  @media screen and (max-width: 1024px) {
+    &:nth-child(2) {
+      display: none;
+    }    
   }
 `;
 
@@ -56,6 +63,7 @@ const ToolItem = ({ name, iconCode, id }) => {
       id={id}
       className={name}
     >
+      {setting ? <Setting /> : null}
       {iconCode}
       {setting ? <Setting /> : null}
     </ToolBox>

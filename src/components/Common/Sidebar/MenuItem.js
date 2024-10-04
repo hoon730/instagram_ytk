@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  max-width: 305px;
+  width: 100%;
   height: 65px;
   padding-left: 30px;
   display: flex;
@@ -21,11 +21,24 @@ const Wrapper = styled.div`
   &:hover {
     color: var(--gray-color);
   }
+
+  @media screen and (max-width: 1024px) {
+    width: 55px;
+    height: 55px;
+    padding-left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .text {
+      display: none;
+    }
+  }
 `;
 const IconWrapper = styled.div`
   display: flex;
   align-items: center;
-  
+
   svg {
     font-size: 20px;
   }
@@ -46,6 +59,8 @@ const MenuItem = ({ name, iconCode, path, isActive, setIsActive, onClick }) => {
     if (name === "만들기") onClick();
   };
 
+  console.log(isActive, setIsActive);
+
   return (
     <Wrapper
       className={isActive ? "active" : ""}
@@ -55,7 +70,7 @@ const MenuItem = ({ name, iconCode, path, isActive, setIsActive, onClick }) => {
       }}
     >
       <IconWrapper>{iconCode}</IconWrapper>
-      <MenuText>{name}</MenuText>
+      <MenuText className="text">{name}</MenuText>
     </Wrapper>
   );
 };
