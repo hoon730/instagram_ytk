@@ -27,6 +27,7 @@ const StyledSpan = styled.span`
 
 const IdSpan = styled.div`
   position: relative;
+  color: ${({ theme }) => theme.fontColor};
   cursor: pointer;
 `;
 
