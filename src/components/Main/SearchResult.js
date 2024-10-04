@@ -9,10 +9,10 @@ const Wrapper = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
-  border: 1px solid var(--light-gray-color);
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 8px;
-  background: var(--bg-white-color);
-  box-shadow: 0 5px 6px rgba(0, 0, 0, 0.1);
+  background: ${({ theme }) => theme.bgColor};
+  box-shadow: 0 5px 6px ${({ theme }) => theme.shadowAlpha};
   margin-top: 5px;
 `;
 

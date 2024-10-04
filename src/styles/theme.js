@@ -7,6 +7,9 @@ export const lightTheme = {
   nonActiveBtnColor: "#BFBFBF", // gray
   iconBgColor: "#EEEEEE", //  Light-gray
   iconColor: "#2B2B2B", // Black
+  shadowAlpha: "rgba(0, 0, 0, 0.1)",
+  loadingLogoBack: "none",
+  loadingTextLogo: "43, 43, 43,",
 };
 
 export const darkTheme = {
@@ -18,4 +21,7 @@ export const darkTheme = {
   nonActiveBtnColor: "#7E7E7E", // dark-gray
   iconBgColor: "#7E7E7E", // dark-gray
   iconColor: "#FFFFFF", // White
+  shadowAlpha: "rgba(126, 126, 126, 0.1)",
+  loadingLogoBack: "block",
+  loadingTextLogo: "255, 255, 255,",
 };
