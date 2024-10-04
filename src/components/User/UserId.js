@@ -34,6 +34,7 @@ const UserIdArea = styled.div`
 
 const IdSpan = styled.div`
   position: relative;
+  color: ${({ theme }) => theme.fontColor};
   cursor: pointer;
 `;
 

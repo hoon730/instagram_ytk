@@ -20,7 +20,7 @@ const FeedTabBar = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--light-gray-color);
+  border-top: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 const FeedTabBtn = styled.div`
@@ -36,7 +36,7 @@ const ActiveBorderArea = styled.div`
 const ActiveBorder = styled.div`
   width: 50%;
   height: 100%;
-  background: var(--font-black-color);
+  background: ${({ theme }) => theme.fontColor};
   transition: transform 0.3s;
   ${({ $tabChange }) =>
     $tabChange === "recommend"

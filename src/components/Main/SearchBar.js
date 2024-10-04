@@ -14,7 +14,7 @@ const SearchBarr = styled.div`
   width: 100%;
   padding: 10px 14px;
   border-radius: 8px;
-  background: var(--light-gray-color);
+  background: ${({ theme }) => theme.iconBgColor};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,7 +34,7 @@ const ItemArea = styled.div`
     cursor: pointer;
     & > svg {
       width: 70%;
-      color: var(--bg-white-color);
+      color: ${({ theme }) => theme.iconBgColor};
     }
     &.active {
       display: flex;
@@ -47,14 +47,10 @@ const SearchInput = styled.input`
   height: 24px;
   font-size: 16px;
   background: none;
-  color: var(--font-black-color);
-  &:focus {
-    div:has(input) .result {
-      display: block;
-    }
-  }
+  color: ${({ theme }) => theme.fontColor};
   &::placeholder {
     font-size: 14px;
+    color: ${({ theme }) => theme.fontColor};
   }
 `;
 

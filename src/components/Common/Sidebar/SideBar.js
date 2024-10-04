@@ -72,7 +72,6 @@ const SideBar = () => {
   const [activeId, setActiveId] = useState(null);
   const [openNew, setOpenNew] = useState(false);
 
-
   const onClick = () => {
     setOpenNew(true);
   };

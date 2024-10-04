@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../../../App";
-import Setting  from "./Setting";
+import Setting from "./Setting";
+import { FaMoon } from "react-icons/fa";
 
 const ToolBox = styled.div`
   width: 40px;
@@ -26,6 +27,12 @@ const ToolBox = styled.div`
     }
   }
 
+  &.dark {
+    svg {
+      color: ${({ theme }) => theme.iconColor};
+    }
+  }
+
   &.heartFill {
     svg {
       color: var(--sub-pink-color);
@@ -33,12 +40,14 @@ const ToolBox = styled.div`
   }
 `;
 
-const ToolItem = ({ name, iconCode, id }) => {
+const ToolItem = ({ name, iconCode, id, clickEvent }) => {
   const [setting, setSetting] = useState(false);
+  const { darkMode } = useContext(ThemeContext);
   const { changeDark } = useContext(ThemeContext);
 
   const onClick = () => {
     if (id === 3) changeDark();
+    if (name === "heart" || name === "heartFill") clickEvent();
   };
 
   const toggleSetting = () => {
@@ -54,9 +63,9 @@ const ToolItem = ({ name, iconCode, id }) => {
         toggleSetting();
       }}
       id={id}
-      className={name}
+      className={darkMode && id === 3 ? "dark" : name}
     >
-      {iconCode}
+      {darkMode && id === 3 ? <FaMoon /> : iconCode}
       {setting ? <Setting /> : null}
     </ToolBox>
   );

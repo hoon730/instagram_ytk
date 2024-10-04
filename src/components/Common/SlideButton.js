@@ -3,23 +3,22 @@ import styled from "styled-components";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const ButtonWrapper = styled.div`
-  width: ${({ $bgsize }) => `${$bgsize || 26}`}px;
-  height: ${({ $bgsize }) => `${$bgsize || 26}`}px;
-  background: var(${({ $bgcolor }) => `${$bgcolor || "--light-gray-color"}`});
+  width: 26px;
+  height: 26px;
+  background: ${({ theme }) => theme.iconBgColor};
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   .slideButtonIcon {
-    color: var(${({ $fontcolor }) => `${$fontcolor || "--bg-white-color"}`});
+    color: ${({ theme }) => theme.bgColor};
   }
 `;
 
-function SlideButton({ type, bgsize, bgcolor, fontcolor }) {
-  //console.log(type, bgsize, bgcolor, fontcolor);
+function SlideButton({ type }) {
   return (
-    <ButtonWrapper $bgsize={bgsize} $bgcolor={bgcolor} $fontcolor={fontcolor}>
+    <ButtonWrapper>
       {type === "left" ? (
         <FaAngleLeft className="slideButtonIcon" />
       ) : (

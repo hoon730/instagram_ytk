@@ -567,7 +567,7 @@ const feed = [
 const limit = feed[1].imgPath.length - 1;
 
 const Wrapper = styled.div`
-  border: 1px solid var(--light-gray-color);
+  border: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 const ProfileSection = styled.div`
