@@ -8,15 +8,16 @@ import Button from "../Common/Button";
 import { mouseon } from "../../utils/utils";
 
 const Wrapper = styled(motion.div)`
-  max-width: 450px;
+  width: 380px;
   padding: 20px;
   border-radius: var(--border-radius-12);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   position: absolute;
-  top: 22px;
+  /* top: ${({ target }) => (target === "id" ? "22px" : "45px")}; */
+  ${({ top }) => (top ? `top: ${top}px;` : "top: 22px;")}
   left: 0;
   background: ${({ theme }) => theme.bgColor};
-  z-index: 10;
+  z-index: 3;
 `;
 
 const Userinfo = styled.div`
@@ -66,6 +67,7 @@ const HoverProfile = ({
   createDate,
   followed,
   location,
+  top,
 }) => {
   return (
     <Wrapper
@@ -73,16 +75,23 @@ const HoverProfile = ({
       initial="initial"
       animate="visible"
       exit="exits"
+      top={top}
     >
       <Userinfo>
         <ProfileImg
           size={"55"}
           type={"active"}
           url={"/images/userImgs/user123456/profile-photo.jpg"}
+          hover={true}
         />
         <Userdesc>
-          <UserId type={"feed"} userNickname={"bbok"} check={"active"} />
-          <Optional type={type}>Bank of America{location}</Optional>
+          <UserId
+            type={"feed"}
+            userNickname={"bbok"}
+            check={"active"}
+            hover={true}
+          />
+          <Optional type={"feed"}>이젠 앞자리{location}</Optional>
         </Userdesc>
       </Userinfo>
       <div>
@@ -101,11 +110,17 @@ const HoverProfile = ({
         <Btns followed={"followed"}>
           <Button
             width={"66.66%"}
+            height={"40px"}
             followed={"followed"}
             type={"positive"}
             text={"메시지 보내기"}
           />
-          <Button width={"33.33%"} type={"negative"} text={"팔로우"} />
+          <Button
+            width={"33.33%"}
+            height={"40px"}
+            type={"negative"}
+            text={"팔로우"}
+          />
         </Btns>
       </div>
     </Wrapper>

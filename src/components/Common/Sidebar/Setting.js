@@ -15,17 +15,18 @@ const MoreList = styled(motion.div)`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   overflow: hidden;
+
+  @media screen and (max-width: 1024px) {
+    bottom: 0;
+    left: 120%;
+  }
 `;
 
 const Setting = () => {
   return (
     <MoreList variants={click} initial="initial" animate="visible" exit="exits">
       <MoreItem text={"계정 전환"} padding={"10px"} />
-      <MoreItem
-        text={"로그아웃"}
-        padding={"10px"}
-        last={"last"}
-      />
+      <MoreItem text={"로그아웃"} padding={"10px"} last={"last"} />
     </MoreList>
   );
 };
