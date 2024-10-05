@@ -152,6 +152,7 @@ const NewBg = styled.div`
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  z-index: 3;
 `;
 
 const SideBar = () => {

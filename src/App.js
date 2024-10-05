@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./styles/theme";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -10,6 +10,9 @@ import Login from "./pages/Login";
 import Layout from "./components/Layout";
 import SearchResult from "./pages/SearchResult";
 import New from "./pages/New";
+import Loading from "./components/Common/Loading";
+
+import { auth } from "./utils/firebase";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +45,16 @@ const router = createBrowserRouter([
 
 export const ThemeContext = React.createContext();
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const init = async () => {
+    await auth.authStateReady();
+    await setIsLoading(false);
+  };
   const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    init();
+  }, []);
 
   const changeDark = () => {
     setDarkMode((current) => !current);
@@ -53,7 +65,7 @@ function App() {
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <ThemeContext.Provider value={{ changeDark, darkMode }}>
           <GlobalStyles />
-          <RouterProvider router={router} />
+          {isLoading ? <Loading /> : <RouterProvider router={router} />}
         </ThemeContext.Provider>
       </ThemeProvider>
     </>
