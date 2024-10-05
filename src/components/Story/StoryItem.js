@@ -14,6 +14,7 @@ const UserNameSection = styled.div`
   width: fit-content;
   p {
     font-size: 12px;
+    color: ${({ theme }) => theme.fontColor};
   }
 `;
 

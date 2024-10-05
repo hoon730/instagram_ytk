@@ -23,16 +23,10 @@ const StorySection = styled.div`
   overflow: hidden;
 `;
 
-const styles = {
-  bgsize: 26,
-  bgcolor: "--light-gray-color",
-  fontcolor: "--bg-white-color",
-};
-
 const StoryContent = () => {
   return (
     <Wrapper>
-      <SlideButton type={"left"} {...styles} />
+      <SlideButton type={"left"} />
       <StorySection>
         <StoryItem />
         <StoryItem />

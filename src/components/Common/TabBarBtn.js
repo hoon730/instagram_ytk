@@ -8,12 +8,10 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   color: var(--dark-gray-color);
-  fill: var(--dark-gray-color);
   cursor: pointer;
   &.active {
     font-weight: var(--font-bold);
-    color: var(--font-black-color);
-    fill: var(--font-black-color);
+    color: ${({ theme }) => theme.fontColor};
   }
 `;
 

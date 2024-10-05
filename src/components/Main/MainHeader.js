@@ -8,12 +8,15 @@ import { GoHeart, GoHeartFill } from "react-icons/go";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Wrapper = styled.div`
-  border-bottom: 1px solid var(--light-gray-color);
+  border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   height: 85px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 36px;
+  background: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
+  border-right: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 const SearchBarArea = styled.div`
@@ -34,13 +37,13 @@ const Profile = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid var(--light-gray-color);
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 12px;
   padding: 8px;
   transition: background 0.3s;
   cursor: pointer;
   &:hover {
-    background: var(--light-gray-color);
+    background: ${({ theme }) => theme.iconBgColor};
   }
 `;
 
@@ -85,9 +88,9 @@ const MainHeader = () => {
       </SearchBarArea>
       <ProfileArea>
         <ToolItem
-          onClick={heartChange}
+          clickEvent={heartChange}
           iconCode={heart ? <GoHeartFill /> : <GoHeart />}
-          name={heart ? "heartFill" : null}
+          name={heart ? "heartFill" : "heart"}
         />
         <Profile>
           <UserProfile>

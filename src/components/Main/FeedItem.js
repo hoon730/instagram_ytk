@@ -1,20 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import Slide from "./Slide";
 import FeedIcon from "./FeedIcon";
-
-// 데이터
-import Data from "../../data.json";
-const user = Data.user;
-const profile = Data.profile;
-const feed = Data.feed;
-const userId = "lualbvqvQmVWkfDU7JUKJRYdqf3";
+import FeedText from "./FeedText";
+import CommentInput from "../Common/CommentInput";
 
 const Wrapper = styled.div`
-  border: 1px solid var(--light-gray-color);
   padding-bottom: 50px;
+  border: 1px solid ${({ theme }) => theme.borderColor};
+  border-bottom: none;
+  &:last-child {
+    border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+  }
 `;
 
 const ProfileSection = styled.div`
@@ -53,71 +52,9 @@ const FeedDesc = styled.div`
   margin-top: 22px;
 `;
 
-const FeedText = styled.div`
-  font-size: var(--font-16);
-  margin-top: 5px;
-  ${({ $showMore }) =>
-    $showMore
-      ? ""
-      : `display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-  word-wrap: break-word;`}
-`;
-
-const OriginalText = styled.div`
-  font-size: var(--font-16);
-  word-wrap: break-word;
-  overflow: hidden;
-  height: 0;
-`;
-
-const MoreText = styled.span`
-  margin: 25px 10px 0;
-  color: var(--sub-purple-color);
-  float: right;
-  shape-outside: border-box;
-  cursor: pointer;
-`;
-
-const HashTag = styled.span`
-  margin: 0 4px;
-  color: var(--sub-purple-color);
-  cursor: pointer;
-`;
-
-const FeedItem = () => {
-  const myProfile = profile.find((it) => it.userId === userId);
-  const feedProfile = profile.find((it) => it.userId === feed[0].userId);
-  const feedUser = user.find((it) => it.userId === feed[0].userId);
-  const feedDetail = feed[0].feedDetail[1];
-
-  const [lines, setLines] = useState(feedDetail.content.split("\n"));
-  const [isEllipsed, setIsEllipsed] = useState(false);
-  const [showMore, setShowMore] = useState(false);
-  const commentRef = useRef(null);
-  const originalCommentRef = useRef(null);
-
-  useEffect(() => {
-    const handleMoreButton = () => {
-      if (!originalCommentRef.current || !commentRef.current) return;
-      const { clientHeight: originalHeight } = originalCommentRef.current;
-      const { clientHeight: commentHeight } = commentRef.current;
-      setIsEllipsed(originalHeight !== commentHeight);
-    };
-
-    handleMoreButton();
-    window.addEventListener("resize", handleMoreButton);
-    return () => window.addEventListener("resize", handleMoreButton);
-  }, []);
-
-  const moreView = () => {
-    setShowMore(true);
-    setIsEllipsed(false);
-  };
+const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
+  const feedProfile = profile.find((it) => it.userId === feedUserId);
+  const feedUser = user.find((it) => it.userId === feedUserId);
 
   return (
     <Wrapper>
@@ -139,7 +76,17 @@ const FeedItem = () => {
         </UserInfo>
       </ProfileSection>
       <PhotoSection>
-        <Slide imgPath={feedDetail.imgPath} />
+        {feedDetail.type === "reels" ? (
+          <video
+            autoPlay
+            muted
+            loop
+            src={feedDetail.imgPath}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        ) : (
+          <Slide imgPath={feedDetail.imgPath} />
+        )}
       </PhotoSection>
       <FeedDescArea>
         <FeedIcon user={user} feedDetail={feedDetail} myProfile={myProfile} />
@@ -151,43 +98,8 @@ const FeedItem = () => {
               check={feedProfile.badge ? "active" : ""}
             />
           </UserInfo>
-          <FeedText $showMore={showMore}>
-            {isEllipsed && <MoreText onClick={moreView}>더보기</MoreText>}
-            <p ref={commentRef}>
-              {lines.map((it, idx) => (
-                <React.Fragment key={idx}>
-                  {it
-                    .split(" ")
-                    .map((word, idx) =>
-                      word.startsWith("#") ? (
-                        <HashTag key={idx}>{word}</HashTag>
-                      ) : (
-                        <React.Fragment key={idx}>{word}</React.Fragment>
-                      )
-                    )}
-                  <br />
-                </React.Fragment>
-              ))}
-            </p>
-          </FeedText>
-          <OriginalText>
-            <p ref={originalCommentRef}>
-              {lines.map((it, idx) => (
-                <React.Fragment key={idx}>
-                  {it
-                    .split(" ")
-                    .map((word, idx) =>
-                      word.startsWith("#") ? (
-                        <HashTag key={idx}>{word}</HashTag>
-                      ) : (
-                        <React.Fragment key={idx}>{word}</React.Fragment>
-                      )
-                    )}
-                  <br />
-                </React.Fragment>
-              ))}
-            </p>
-          </OriginalText>
+          <FeedText feedDetail={feedDetail} />
+          <CommentInput width={"100%"} height={"50px"} />
         </FeedDesc>
       </FeedDescArea>
     </Wrapper>

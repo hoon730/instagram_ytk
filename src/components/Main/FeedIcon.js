@@ -11,6 +11,10 @@ import {
   IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
 
+const Wrapper = styled.div`
+  width: 100%;
+`;
+
 const Icons = styled.div`
   display: flex;
   justify-content: space-between;
@@ -33,31 +37,42 @@ const icon = `
 
 const Heart = styled(GoHeart)`
   ${icon}
+  color: ${({ theme }) => theme.iconColor};
 `;
 
 const HeartFill = styled(GoHeartFill)`
   ${icon}
   fill: crimson;
+  color: ${({ theme }) => theme.iconColor};
 `;
 
 const Reply = styled(IoChatbubbleEllipsesOutline)`
   ${icon}
+  color: ${({ theme }) => theme.iconColor};
 `;
 
 const Message = styled(IoPaperPlaneOutline)`
   ${icon}
+  color: ${({ theme }) => theme.iconColor};
 `;
 
 const Bookmark = styled(GoBookmark)`
   ${icon}
+  color: ${({ theme }) => theme.iconColor};
 `;
 
 const BookmarkFill = styled(GoBookmarkFill)`
   ${icon}
+  color: ${({ theme }) => theme.iconColor};
 `;
 
 const LikeSection = styled.div`
   font-size: var(--font-16);
+  color: ${({ theme }) => theme.fontColor};
+  strong {
+    font-weight: bold;
+    cursor: pointer;
+  }
 `;
 
 const FeedIcon = ({ user, feedDetail, myProfile }) => {
@@ -75,7 +90,7 @@ const FeedIcon = ({ user, feedDetail, myProfile }) => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <Icons>
         <LeftIcons>
           {fillHeart ? (
@@ -102,7 +117,7 @@ const FeedIcon = ({ user, feedDetail, myProfile }) => {
           <strong>좋아요 {feedDetail.like.length}개</strong>
         )}
       </LikeSection>
-    </div>
+    </Wrapper>
   );
 };
 
