@@ -5,12 +5,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
 import Main from "./pages/Main";
 import Detail from "./pages/Detail";
+import MyFeed from "./pages/MyFeed";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
 import New from "./pages/New";
 import Loading from "./components/Common/Loading";
 
 import { auth } from "./utils/firebase";
+import Setup from "./pages/Setup";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "new",
         element: <New />,
+      },
+      {
+        path: "myfeed",
+        element: <MyFeed />,
+      },
+      {
+        path: "setup",
+        element: <Setup />,
       },
     ],
   },
