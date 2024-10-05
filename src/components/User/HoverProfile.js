@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "./UserId";
 import PostAndFollow from "./PostAndFollow";
@@ -13,7 +13,6 @@ const Wrapper = styled(motion.div)`
   border-radius: var(--border-radius-12);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   position: absolute;
-  /* top: ${({ target }) => (target === "id" ? "22px" : "45px")}; */
   ${({ top }) => (top ? `top: ${top}px;` : "top: 22px;")}
   left: 0;
   background: ${({ theme }) => theme.bgColor};
@@ -64,6 +63,7 @@ const Btns = styled.div`
 const HoverProfile = ({
   type,
   userNickname,
+  userName,
   createDate,
   followed,
   location,

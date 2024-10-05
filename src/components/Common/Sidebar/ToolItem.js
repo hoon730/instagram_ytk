@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import Setting from "./Setting";
 import { ThemeContext } from "../../../App";
-import Setting from "./Setting";
 import { FaMoon } from "react-icons/fa";
 
 const ToolBox = styled.div`
@@ -14,9 +13,8 @@ const ToolBox = styled.div`
   border-radius: 50%;
   background: ${({ theme }) => theme.iconBgColor};
   position: relative;
-  cursor: pointer;
-  position: relative;
   z-index: 0;
+  cursor: pointer;
 
   svg {
     font-size: 24px;
