@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
@@ -53,44 +53,40 @@ const FeedDesc = styled.div`
   margin-top: 22px;
 `;
 
-// const FeedText = styled.textarea`
-//   width: 100%;
-//   height: auto;
-//   padding: 5px 0%;
-//   border: none;
-//   resize: none;
-//   overflow: hidden;
-//   border: 1px solid #f00;
-// `;
-
 const FeedText = styled.div`
-  border: 1px solid #f00;
   font-size: var(--font-16);
-  display: -webkit-box;
+  margin-top: 5px;
+  ${({ $showMore }) =>
+    $showMore
+      ? ""
+      : `display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+  word-wrap: break-word;`}
+`;
+
+const OriginalText = styled.div`
+  font-size: var(--font-16);
   word-wrap: break-word;
-  position: relative;
-  &::before {
-    content: "#";
-  }
+  overflow: hidden;
+  height: 0;
 `;
 
 const MoreText = styled.span`
-  margin-left: 5px;
+  margin: 25px 10px 0;
   color: var(--sub-purple-color);
+  float: right;
+  shape-outside: border-box;
   cursor: pointer;
 `;
 
-const MoreSpan = styled.span`
-  border: 1px solid #f00;
-  //background: #fff;
-  position: absolute;
-  bottom: 0;
-  right: 0;
+const HashTag = styled.span`
+  margin: 0 4px;
+  color: var(--sub-purple-color);
+  cursor: pointer;
 `;
 
 const FeedItem = () => {
@@ -99,40 +95,28 @@ const FeedItem = () => {
   const feedUser = user.find((it) => it.userId === feed[0].userId);
   const feedDetail = feed[0].feedDetail[1];
 
-  // const [textVal, setTextVal] = useState(feedDetail.content);
-  // const textRef = useRef();
-  // const handleResizeHeight = useCallback((e) => {
-  //   setTextVal(e.target.value);
-  //   textRef.current.style.height = textRef.current.scrollHeight + "px";
-  // }, []);
-
-  // useEffect(() => {
-  //   const lines = textRef.current.value.split("\n");
-  //   if (lines.length > 2) {
-  //     setTextVal(`${lines.slice(0, 2).join("\n")}...`);
-  //   }
-  // }, []);
-
-  //const lines = feedDetail.content.split("\n").slice(0, 2);
-
-  const [more, setMore] = useState(false);
-  // const [lines, setLines] = useState(feedDetail.content.split("\n"));
-  const [lines, setLines] = useState(
-    "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).".split(
-      "\n"
-    )
-  );
-
-  const textRef = useRef();
+  const [lines, setLines] = useState(feedDetail.content.split("\n"));
+  const [isEllipsed, setIsEllipsed] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const commentRef = useRef(null);
+  const originalCommentRef = useRef(null);
 
   useEffect(() => {
-    if (textRef.current.scrollHeight > 48 || lines.length > 2) {
-      setLines(lines.slice(0, 2));
-      setMore(true);
-    }
+    const handleMoreButton = () => {
+      if (!originalCommentRef.current || !commentRef.current) return;
+      const { clientHeight: originalHeight } = originalCommentRef.current;
+      const { clientHeight: commentHeight } = commentRef.current;
+      setIsEllipsed(originalHeight !== commentHeight);
+    };
+
+    handleMoreButton();
+    window.addEventListener("resize", handleMoreButton);
+    return () => window.addEventListener("resize", handleMoreButton);
   }, []);
-  const showMore = () => {
-    setMore(false);
+
+  const moreView = () => {
+    setShowMore(true);
+    setIsEllipsed(false);
   };
 
   return (
@@ -167,25 +151,43 @@ const FeedItem = () => {
               check={feedProfile.badge ? "active" : ""}
             />
           </UserInfo>
-          {/* <FeedText
-            ref={textRef}
-            value={textVal}
-            onChange={handleResizeHeight}
-            readOnly
-          ></FeedText> */}
-          <FeedText ref={textRef}>
-            {lines.map((it, idx) => (
-              <span key={idx}>
-                {it}
-                {idx !== lines.length - 1 ? <br /> : null}
-              </span>
-            ))}
-            {/* {more ? (
-              <MoreSpan>
-                ...<MoreText onClick={showMore}>더 보기</MoreText>
-              </MoreSpan>
-            ) : null} */}
+          <FeedText $showMore={showMore}>
+            {isEllipsed && <MoreText onClick={moreView}>더보기</MoreText>}
+            <p ref={commentRef}>
+              {lines.map((it, idx) => (
+                <React.Fragment key={idx}>
+                  {it
+                    .split(" ")
+                    .map((word, idx) =>
+                      word.startsWith("#") ? (
+                        <HashTag key={idx}>{word}</HashTag>
+                      ) : (
+                        <React.Fragment key={idx}>{word}</React.Fragment>
+                      )
+                    )}
+                  <br />
+                </React.Fragment>
+              ))}
+            </p>
           </FeedText>
+          <OriginalText>
+            <p ref={originalCommentRef}>
+              {lines.map((it, idx) => (
+                <React.Fragment key={idx}>
+                  {it
+                    .split(" ")
+                    .map((word, idx) =>
+                      word.startsWith("#") ? (
+                        <HashTag key={idx}>{word}</HashTag>
+                      ) : (
+                        <React.Fragment key={idx}>{word}</React.Fragment>
+                      )
+                    )}
+                  <br />
+                </React.Fragment>
+              ))}
+            </p>
+          </OriginalText>
         </FeedDesc>
       </FeedDescArea>
     </Wrapper>
