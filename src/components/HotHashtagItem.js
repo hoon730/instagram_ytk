@@ -7,12 +7,12 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   padding-left: 24px;
-  border: 1px solid var(--light-gray-color);
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 12px;
   transition: background 0.3s;
   cursor: pointer;
   &:hover {
-    background: var(--light-gray-color);
+    background: ${({ theme }) => theme.iconBgColor};
   }
 `;
 
@@ -23,7 +23,7 @@ const Text = styled.div`
 const Keyword = styled.h4`
   font-size: 16px;
   font-weight: 700;
-  color: var(--font-black-color);
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const PostCount = styled.p`

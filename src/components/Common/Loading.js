@@ -9,13 +9,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
-  &.darkmode {
-    background: var(--font-black-color);
-    & .logoBack {
-      display: block;
-    }
-  }
+  background: ${({ theme }) => theme.bgColor};
 `;
 
 const Area = styled.div`
@@ -63,7 +57,7 @@ const LogoBack = styled(motion.div)`
   height: 120px;
   background: var(--bg-white-color);
   border-radius: 35px;
-  display: none;
+  display: ${({ theme }) => theme.loadingLogoBack};
 `;
 
 const Img = styled.img`
@@ -76,10 +70,7 @@ const Svg = styled.svg`
   width: 120px;
   margin-bottom: 100px;
   path {
-    ${({ lightMode }) =>
-      lightMode
-        ? "stroke: var(--font-black-color);"
-        : "stroke: var(--bg-white-color);"}
+    stroke: var(--dark-gray-color);
     stroke-width: 1;
   }
 `;
@@ -91,9 +82,9 @@ const motionTransition = {
   repeat: Infinity,
 };
 
-const Loading = ({ lightMode = true }) => {
+const Loading = () => {
   return (
-    <Wrapper className={lightMode ? "" : "darkmode"}>
+    <Wrapper>
       <Area>
         <LogoBack
           className="logoBack"
@@ -122,20 +113,16 @@ const Loading = ({ lightMode = true }) => {
           />
         </GradientArea>
       </Area>
-      <Svg
-        mode={lightMode}
-        viewBox="0 0 159 46"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <Svg viewBox="0 0 159 46" xmlns="http://www.w3.org/2000/svg">
         <motion.path
           animate={{
             pathLength: [0, 1, 0, 0, 0],
             fill: [
-              `rgba(${lightMode ? "43, 43, 43," : "255, 255, 255,"} 0)`,
-              `rgba(${lightMode ? "43, 43, 43," : "255, 255, 255,"} 0)`,
-              `rgba(${lightMode ? "43, 43, 43," : "255, 255, 255,"} 1)`,
-              `rgba(${lightMode ? "43, 43, 43," : "255, 255, 255,"} 1)`,
-              `rgba(${lightMode ? "43, 43, 43," : "255, 255, 255,"} 0)`,
+              `rgba(126, 126, 126, 0)`,
+              `rgba(126, 126, 126, 0)`,
+              `rgba(126, 126, 126, 1)`,
+              `rgba(126, 126, 126, 1)`,
+              `rgba(126, 126, 126, 0)`,
             ],
             transition: {
               duration: 5,

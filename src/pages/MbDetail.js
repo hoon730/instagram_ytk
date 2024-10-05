@@ -79,7 +79,7 @@ const UserDetail = styled.div`
 
 const UserImg = styled.div`
   position: relative;
-  z-index: 1;
+  z-index: 0;
 `;
 
 const ImgEditBtn = styled.label`

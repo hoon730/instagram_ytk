@@ -25,12 +25,7 @@ const BoundaryLine = styled.span`
   display: inline-block;
   width: ${({ size }) => `${size - 4 || 91}`}px;
   height: ${({ size }) => `${size - 4 || 91}`}px;
-  background: ${({ type }) =>
-    type === "active"
-      ? "var(--bg-white-color)"
-      : type === "inactive"
-      ? "var(--bg-white-color)"
-      : "transparent"};
+  background: ${({ theme }) => theme.bgColor};
   border-radius: 50%;
   position: relative;
   top: 50%;

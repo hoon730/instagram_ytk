@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import Button from "../components/Common/Button";
 import styled from "styled-components";
 
+import { auth, db, storage } from "../utils/firebase";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 const Wrapper = styled.div`
   position: fixed;
   top: 50%;
@@ -13,7 +17,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   padding: 30px 50px;
-  background: var(--bg-white-color);
+  background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
   z-index: 1;
 `;
@@ -62,7 +66,7 @@ const StyledSpan = styled.span`
   padding: 14px 0;
   font-size: var(--font-16);
   font-weight: var(--font-medium);
-  color: var(--sub-purple-color);
+  color: ${({ theme }) => theme.subColor};
 `;
 
 const SearchBtn = styled.label`
@@ -131,20 +135,38 @@ const ButtonsBox = styled.div`
   gap: 10px;
 `;
 
-const New = ({ closeNew }) => {
-  console.log(closeNew);
+const SubmitBtn = styled.input`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 45px;
+  font-size: var(--font-16);
+  font-family: "Noto Sans KR", sans-serif;
+  color: var(--bg-white-color);
+  background-color: ${({ theme }) => theme.subColor};
+  border-radius: var(--border-radius-8);
+  transition: background 0.3s;
+  cursor: pointer;
+`;
 
+const New = ({ closeNew }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState("");
-  const [file, setfile] = useState(null);
+  const [file, setFile] = useState(null);
   const [textValueLength, setTextValueLength] = useState(0);
 
-  console.log(file);
+  const maxFileSize = 5 * 1024 * 1024;
 
   const fileAdd = (e) => {
-    console.log(e);
     const { files } = e.target;
-    if (files && files.length === 1) setfile(files[0]);
+    if (files && files.length === 1) {
+      if (files[0].size > maxFileSize) {
+        alert("업로드 할 수 있는 최대용량은 5MB입니다.");
+        return;
+      }
+      setFile(files[0]);
+    }
   };
 
   const onChange = (e) => {
@@ -152,27 +174,45 @@ const New = ({ closeNew }) => {
     setTextValueLength(e.target.textLength);
   };
 
-  const handleOnClick = () => {
-    closeNew();
-  };
-
   const onSubmit = async (e) => {
     e.preventDefault();
-    // const user = auth.currentUser;
-    // if (!user || isLoading || post === "" || post.length > 180) return;
-    // try {
-    //  setIsLoading(true);
-    //   await addDoc(collection(db, "contents"), {
-    //     post,
-    //     createdAt: Date.now(),
-    //     username: user?.displayName || "Anonymous",
-    //     userId: user.uid,
-    //   });
-    // } catch (e) {
-    //   console.error(e);
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    const user = auth.currentUser;
+    if (!user || isLoading || post === "" || post.length > 2200) return;
+    try {
+      setIsLoading(true);
+      const doc = await addDoc(collection(db, "contents"), {
+        post,
+        createdAt: Date.now(),
+        userName: user.displayName || "Anonymous",
+        userId: user.uid,
+      });
+      if (file) {
+        const locationRef = ref(storage, `contents/${user.uid}/${doc.id}`);
+        const result = await uploadBytes(locationRef, file);
+        const url = await getDownloadURL(result.ref);
+        const fileType = file.type;
+        if (fileType.startsWith("image/")) {
+          await updateDoc(doc, {
+            photo: url,
+          });
+        }
+        if (fileType.startsWith("video/")) {
+          await updateDoc(doc, {
+            video: url,
+          });
+        }
+      }
+      setPost("");
+      setFile(null);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOnClick = () => {
+    closeNew();
   };
 
   return (
@@ -221,11 +261,9 @@ const New = ({ closeNew }) => {
             width={"50%"}
             onClick={handleOnClick}
           />
-          <Button
-            type={"positive"}
-            text={"게시글 업로드 하기"}
-            width={"50%"}
-            height={"45px"}
+          <SubmitBtn
+            type="submit"
+            value={isLoading ? "업로드중..." : "게시글 업로드하기"}
           />
         </ButtonsBox>
       </Form>
