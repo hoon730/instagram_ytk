@@ -11,7 +11,6 @@ import { LuSunMedium } from "react-icons/lu";
 
 import { BsHeart } from "react-icons/bs";
 import { RxMagnifyingGlass } from "react-icons/rx";
-import ProfileImg from "../components/Profile/ProfileImg";
 
 export const getFormattedDate = (targetDate) => {
   const year = targetDate.getFullYear();
@@ -86,12 +85,7 @@ export const mbMenuData = [
   {
     id: 4,
     name: "마이 프로필",
-    iconCode: (
-      <ProfileImg
-        size={"38"}
-        url={"/images/userImgs/user123456/feedDetail.jpg"}
-      />
-    ),
+    iconCode: "",
     path: "/detail",
   },
 ];
