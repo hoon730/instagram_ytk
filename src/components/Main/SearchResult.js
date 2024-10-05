@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
   box-shadow: 0 5px 6px ${({ theme }) => theme.shadowAlpha};
   margin-top: 5px;
+  z-index: 1;
 `;
 
 const itemArray = [
@@ -48,10 +49,22 @@ const itemArray = [
 ];
 
 const SearchList = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 `;
+
+const MainSearchItem = styled.div`
+  width: 100%;
+  padding: 5px;
+  border-radius: var(--border-radius-8);
+  cursor: pointer;
+  transition: background 0.3s;
+  &:hover {
+    background: ${({ theme }) => theme.iconBgColor};
+  }
+`
 
 const NoResult = styled.div`
   font-size: var(--font-18);
@@ -87,7 +100,9 @@ const SearchResult = ({ text }) => {
     <Wrapper>
       <SearchList>
         {showUserNickName().map((it, idx) => (
-          <SearchItem key={idx} type={"mainSearch"} {...it} />
+          <MainSearchItem>
+            <SearchItem key={idx} type={"mainSearch"} {...it} />
+          </MainSearchItem>
         ))}
         <NoResult
           className={

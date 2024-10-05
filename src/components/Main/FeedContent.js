@@ -5,6 +5,7 @@ import { FaRegStar } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import FeedItem from "./FeedItem";
 import Loading from "../Common/Loading";
+import Follower from "../Detail/Follower";
 
 const tabWidth = 340;
 
@@ -87,7 +88,6 @@ const FeedContent = () => {
         </FeedTabBar>
         <FeedItem />
       </FeedArea>
-      <Loading />
     </Wrapper>
   );
 };

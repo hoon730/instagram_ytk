@@ -4,12 +4,13 @@ export const lightTheme = {
   mainColor: "linear-gradient(-75deg, #F9CE34, #EE2A7B, #6228D7)", // 인스타 메인 컬러
   subColor: "#6228D7", // Purple
   borderColor: "#EEEEEE", //  Light-gray
+  buttonHoverColor: "#3e1494", //darkPurple
   nonActiveBtnColor: "#BFBFBF", // gray
+  nonActiveBtnHoverColor: "#7E7E7E", //dark-gray
   iconBgColor: "#EEEEEE", //  Light-gray
   iconColor: "#2B2B2B", // Black
   shadowAlpha: "rgba(0, 0, 0, 0.1)",
   loadingLogoBack: "none",
-  loadingTextLogo: "43, 43, 43,",
 };
 
 export const darkTheme = {
@@ -18,10 +19,11 @@ export const darkTheme = {
   mainColor: "linear-gradient(-75deg, #F9CE34, #EE2A7B, #6228D7)",
   subColor: "#EE2A7B", // Pink
   borderColor: "#7E7E7E", //  dark-gray
+  buttonHoverColor: "#CF236A", //darkPink
   nonActiveBtnColor: "#7E7E7E", // dark-gray
+  nonActiveBtnHoverColor: "#666666", //light-black
   iconBgColor: "#7E7E7E", // dark-gray
   iconColor: "#FFFFFF", // White
   shadowAlpha: "rgba(126, 126, 126, 0.1)",
   loadingLogoBack: "block",
-  loadingTextLogo: "255, 255, 255,",
 };

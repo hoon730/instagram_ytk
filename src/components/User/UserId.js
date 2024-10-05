@@ -7,7 +7,8 @@ import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
 
 const Wrapper = styled.span`
-  width: 100%;
+  width: ${({ type }) =>
+    type === "notification" ? "" : "100%" };
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,10 +20,10 @@ const StyledSpan = styled.span`
   gap: 8px;
   ${({ type }) =>
     type === "feed"
-      ? `font-size: var(--font-14); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
       : type === "hover"
-      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
-      : `font-size: var(--font-14); font-weight: var(--font-bold);`}
+      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
+      : `font-size: var(--font-size-14); font-weight: var(--font-bold);`}
 `;
 
 const IdSpan = styled.div`
@@ -65,7 +66,6 @@ const MoreBtn = styled.button`
   display: flex;
   align-items: center;
   svg {
-    font-size: var(--font-18);
     color: var(--dark-gray-color);
   }
 `;
@@ -95,6 +95,7 @@ const CancelBtn = styled.button`
   padding: 12px;
   font-size: var(--font-14);
   text-align: center;
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const HeartBtn = styled.button`
@@ -128,7 +129,7 @@ const UserId = ({
   };
 
   return (
-    <Wrapper>
+    <Wrapper type={type}>
       <StyledSpan type={type}>
         <IdSpan onMouseEnter={showProfile} onMouseLeave={hideProfile}>
           {!hover && hoverId ? <HoverProfile target={"id"} top={"22"} /> : null}
@@ -150,7 +151,7 @@ const UserId = ({
       </StyledSpan>
       {btn === "more" ? (
         <MoreBtn onClick={() => setOpenMore(true)}>
-          <LuMoreHorizontal />
+          <LuMoreHorizontal size={22} />
         </MoreBtn>
       ) : btn === "heart" ? (
         <HeartBtn
@@ -171,12 +172,12 @@ const UserId = ({
           }}
         >
           <MoreList>
-            <MoreItem text={"신고"} padding={"12px"} fontSize={"14"} />
-            <MoreItem text={"게시물로 이동"} padding={"12px"} fontSize={"14"} />
-            <MoreItem text={"공유 대상..."} padding={"12px"} fontSize={"14"} />
-            <MoreItem text={"링크 복사"} padding={"12px"} fontSize={"14"} />
-            <MoreItem text={"퍼가기"} padding={"12px"} fontSize={"14"} />
-            <MoreItem text={"이 계정 정보"} padding={"12px"} fontSize={"14"} />
+            <MoreItem text={"신고"} padding={"18px"} fontSize={"14"} />
+            <MoreItem text={"게시물로 이동"} padding={"18px"} fontSize={"14"} />
+            <MoreItem text={"공유 대상..."} padding={"18px"} fontSize={"14"} />
+            <MoreItem text={"링크 복사"} padding={"18px"} fontSize={"14"} />
+            <MoreItem text={"퍼가기"} padding={"18px"} fontSize={"14"} />
+            <MoreItem text={"이 계정 정보"} padding={"18px"} fontSize={"14"} />
             <CancelBtn
               onClick={() => {
                 setOpenMore(false);

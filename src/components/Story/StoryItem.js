@@ -25,6 +25,7 @@ const StoryItem = () => {
         url={"/images/userImgs/user123456/profile-photo.jpg"}
         size={80}
         type={"active"}
+        hover={"noHover"}
       />
       <UserNameSection>
         <p>CourtneyHenry</p>

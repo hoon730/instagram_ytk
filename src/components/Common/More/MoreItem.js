@@ -7,8 +7,8 @@ const Wrapper = styled.div`
   color: ${({ theme }) => theme.fontColor};
   text-align: center;
   transition: all 0.3s;
-  border-bottom: ${({ last }) =>
-    last === "last" ? null : `1px solid var(--light-gray-color);`};
+  border-bottom: ${({ last, theme }) =>
+    last === "last" ? null : `1px solid ${theme.borderColor};`};
   padding: ${({ padding }) => (padding ? `${padding}` : "auto")};
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   cursor: pointer;
@@ -18,7 +18,10 @@ const Wrapper = styled.div`
       : ""};
 
   &:hover {
-    color: var(--gray-color);
+    ${({ text }) =>
+    text === "신고"
+      ? `color: #ED4816; font-weight: var(--font-bold);`
+      : `color: var(--gray-color);`};
   }
 `;
 

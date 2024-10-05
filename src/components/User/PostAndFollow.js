@@ -14,15 +14,17 @@ const NumberingBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 4px;
   cursor: pointer;
 
   span {
     text-align: center;
-    font-size: var(--font-14);
+    font-size: var(--font-size-14);
     font-weight: var(--font-regular);
+    color: ${({ theme }) => theme.fontColor};
     &:first-child {
       font-weight: var(--font-bold);
-      font-size: var(--font-16);
+      font-size: var(--font-size-16);
     }
   }
 `;

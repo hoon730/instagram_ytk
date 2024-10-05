@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "./UserId";
 import PostAndFollow from "./PostAndFollow";
@@ -10,10 +10,10 @@ import { mouseon } from "../../utils/utils";
 const Wrapper = styled(motion.div)`
   width: 380px;
   padding: 20px;
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: var(--border-radius-12);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px ${({ theme }) => theme.shadowAlpha};
   position: absolute;
-  /* top: ${({ target }) => (target === "id" ? "22px" : "45px")}; */
   ${({ top }) => (top ? `top: ${top}px;` : "top: 22px;")}
   left: 0;
   background: ${({ theme }) => theme.bgColor};
@@ -29,6 +29,7 @@ const Userdesc = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 4px;
 `;
 
 const Optional = styled.p`
@@ -64,6 +65,7 @@ const Btns = styled.div`
 const HoverProfile = ({
   type,
   userNickname,
+  userName,
   createDate,
   followed,
   location,
@@ -79,7 +81,7 @@ const HoverProfile = ({
     >
       <Userinfo>
         <ProfileImg
-          size={"55"}
+          size={"54"}
           type={"active"}
           url={"/images/userImgs/user123456/profile-photo.jpg"}
           hover={true}

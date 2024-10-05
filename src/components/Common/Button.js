@@ -10,25 +10,25 @@ const ButtonItem = styled.button`
   justify-content: center;
   align-items: center;
   gap: ${({ followed }) => (followed === "unfollowed" ? "0" : "5px")};
+  color: var(--bg-white-color);
   border: none;
-  border-radius: 8px;
-  font-size: ${({fontSize}) => fontSize ? `${fontSize}px` : "16px"};
+  border-radius: var(--border-radius-8);
+  font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   font-family: "Noto Sans KR", sans-serif;
   cursor: pointer;
-  color: #fff;
   transition: background 0.3s;
-  ${({ type }) =>
+  ${({ type, theme }) =>
     type === "positive"
-      ? `background: #6228D7;`
+      ? `background: ${theme.subColor};`
       : type === "negative"
-      ? `background: #BFBFBF;`
+      ? `background: ${theme.nonActiveBtnColor};`
       : `background: transparent; color: #6228D7;  font-weight: var(--font-bold);`};
   &:hover {
-    ${({ type }) =>
+    ${({ type, theme }) =>
       type === "positive"
-        ? `background: #3E1494;`
+        ? `background: ${theme.buttonHoverColor};`
         : type === "negative"
-        ? `background: #A4A4A4;`
+        ? `background: ${theme.nonActiveBtnHoverColor};`
         : `background: transparent; color: #6228D7;  font-weight: var(--font-bold);`};
   }
 `;
