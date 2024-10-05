@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "./UserId";
 import PostAndFollow from "./PostAndFollow";
@@ -63,6 +63,7 @@ const Btns = styled.div`
 const HoverProfile = ({
   type,
   userNickname,
+  userName,
   createDate,
   followed,
   location,

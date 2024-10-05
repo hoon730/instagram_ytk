@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import SearchItem from "../Detail/SearchItem";
+// import SearchItem from "../Detail/SearchItem";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -86,9 +86,9 @@ const SearchResult = ({ text }) => {
   return (
     <Wrapper>
       <SearchList>
-        {showUserNickName().map((it, idx) => (
+        {/* {showUserNickName().map((it, idx) => (
           <SearchItem key={idx} type={"mainSearch"} {...it} />
-        ))}
+        ))} */}
         <NoResult
           className={
             getUserNickName === "" || showUserNickName().length > 0
