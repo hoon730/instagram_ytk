@@ -75,7 +75,7 @@ const SearchBtn = styled.label`
   align-items: center;
   width: 180px;
   height: 40px;
-  background: var(--sub-purple-color);
+  background: ${({ theme }) => theme.subColor};
   color: var(--bg-white-color);
   border-radius: var(--border-radius-8);
   cursor: pointer;
@@ -160,6 +160,7 @@ const New = ({ closeNew }) => {
 
   const fileAdd = (e) => {
     const { files } = e.target;
+    console.log(files);
     if (files && files.length === 1) {
       if (files[0].size > maxFileSize) {
         alert("업로드 할 수 있는 최대용량은 5MB입니다.");
@@ -177,7 +178,7 @@ const New = ({ closeNew }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-    if (!user || isLoading || post === "" || post.length > 2200) return;
+    // if (!user || isLoading || post === "" || post.length > 2200) return;
     try {
       setIsLoading(true);
       const doc = await addDoc(collection(db, "contents"), {

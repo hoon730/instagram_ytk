@@ -1,23 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import ClickFeed from "../components/Detail/ClickFeed"
-import Follower from "../components/Detail/Follower"
-import HoverProfile from "../components/User/HoverProfile"
-import UserInfo from "../components/User/UserInfo";
-import TabBarBtn from "../components/Common/TabBarBtn";
-import MbDetail from "./MbDetail";
-import MbMenu from "../components/Common/MbMenu/MbMenu";
+import MyFeed from "./MyFeed";
+import Clickdetail from "../components/Detail/ClickFeed copy";
 
 const Wrapper = styled.div``;
 
 const Detail = () => {
   return (
     <Wrapper>
-      <MbDetail/>
-      {/* <ClickFeed /> */}
-      {/* <Follower/> */}
-      {/* <HoverProfile/> */}
-      {/* <UserInfo/> */}
+      <MyFeed />
+      {/* <Clickdetail/> */}
     </Wrapper>
   );
 };
