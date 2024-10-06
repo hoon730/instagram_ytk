@@ -2029,9 +2029,9 @@
       "storyHistory": [
         {
           "storyId": "sh00000029",
-          "imgPath": "images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/",
+          "imgPath": "images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/story1.jpg",
           "createDate": "2024-09-30",
-          "content": "오늘은 창의력 폭발의 날! 🎨",
+          "content": "발이 시려워 꽁",
           "like": [
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
             "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -2062,9 +2062,9 @@
         },
         {
           "storyId": "sh00000030",
-          "imgPath": "images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/",
+          "imgPath": "images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/story2.jpg",
           "createDate": "2024-10-01",
-          "content": "친구들과의 소중한 시간 🥂",
+          "content": "겁쟁이!",
           "like": [
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
             "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -2092,9 +2092,9 @@
         },
         {
           "storyId": "sh00000031",
-          "imgPath": "images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/",
+          "imgPath": "images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/story3.jpg",
           "createDate": "2024-10-14",
-          "content": "오늘 날씨 최고! ☀️",
+          "content": "작업실 동상",
           "like": [
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
             "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -2131,9 +2131,14 @@
       ],
       "storyStorage": [
         {
-          "storyStorageId": "ss00000029",
-          "title": "♥",
-          "storyIds": ["sh00000029", "sh00000030", "sh00000031"]
+          "storyStorageId": "ss00000001",
+          "title": "뽀짝 호두♥",
+          "storyIds": ["sh00000029"]
+        },
+        {
+          "storyStorageId": "ss00000002",
+          "title": "작업실 호두♥",
+          "storyIds": ["sh00000030", "sh00000031"]
         }
       ]
     },
@@ -2142,9 +2147,9 @@
       "storyHistory": [
         {
           "storyId": "sh00000032",
-          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/",
-          "createDate": "2024-09-29",
-          "content": "인생은 여행, 매 순간을 즐기자 🚴‍♂️",
+          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/story1.jpg",
+          "createDate": "2024-09-12",
+          "content": "함께하는 매 순간을 즐기자!",
           "like": [
             "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
             "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -2172,9 +2177,9 @@
         },
         {
           "storyId": "sh00000033",
-          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/",
-          "createDate": "2024-10-16",
-          "content": "작은 성취에도 축하! 🎉",
+          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/story2.jpg",
+          "createDate": "2024-09-17",
+          "content": "바다냄새 좋다",
           "like": [
             "4JhKn3cYHd9dY9muGz1oXiJAruo",
             "EnweBLflxt3pYRGLy8hfJ18MeOm",
@@ -2203,7 +2208,7 @@
         },
         {
           "storyId": "sh00000034",
-          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/",
+          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/story3.jpg",
           "createDate": "2024-09-30",
           "content": "작은 변화가 큰 변화를 만든다 🔄",
           "like": [
@@ -2234,9 +2239,9 @@
         },
         {
           "storyId": "sh00000035",
-          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/",
+          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/story4.jpg",
           "createDate": "2024-10-03",
-          "content": "새롭게 배운 것, 공유해요 📚",
+          "content": "구름 가득한 날",
           "like": [
             "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
             "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -2260,9 +2265,9 @@
         },
         {
           "storyId": "sh00000036",
-          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/",
+          "imgPath": "images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/story5.jpg",
           "createDate": "2024-10-11",
-          "content": "주말엔 뭐 하고 놀까? 🎉",
+          "content": "여유로운 산책",
           "like": [
             "lualbvqvQmVWkfDU7JUKJRYdqf3",
             "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -2284,16 +2289,32 @@
           ]
         }
       ],
-      "storyStorage": []
+      "storyStorage": [
+        {
+          "storyStorageId": "ss00000001",
+          "title": "여름추억",
+          "storyIds": ["sh00000032"]
+        },
+        {
+          "storyStorageId": "ss00000002",
+          "title": "refresh",
+          "storyIds": ["sh00000033", "sh00000034", "sh00000036"]
+        },
+        {
+          "storyStorageId": "ss00000003",
+          "title": "RAPBEAT 2024",
+          "storyIds": ["sh00000035"]
+        }
+      ]
     },
     {
       "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
       "storyHistory": [
         {
           "storyId": "sh00000037",
-          "imgPath": "images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/",
-          "createDate": "2024-09-26",
-          "content": "자연 속에서 잠시 휴식 🌳",
+          "imgPath": "images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/story1.jpg",
+          "createDate": "2024-09-12",
+          "content": "푸푸루푸딩～",
           "like": [
             "EnweBLflxt3pYRGLy8hfJ18MeOm",
             "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
@@ -2325,9 +2346,9 @@
         },
         {
           "storyId": "sh00000038",
-          "imgPath": "images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/",
+          "imgPath": "images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/story2.jpg",
           "createDate": "2024-09-28",
-          "content": "운동 후에 마시는 시원한 물 💧",
+          "content": "초코초코",
           "like": [
             "EnweBLflxt3pYRGLy8hfJ18MeOm",
             "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
@@ -2353,9 +2374,9 @@
         },
         {
           "storyId": "sh00000039",
-          "imgPath": "images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/",
+          "imgPath": "images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/story3.jpg",
           "createDate": "2024-10-09",
-          "content": "내가 제일 좋아하는 장소 💕",
+          "content": "베라💕",
           "like": [
             "wAKs9uXSWsTJbbJGg2MaErFaKqE",
             "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -2387,9 +2408,9 @@
         },
         {
           "storyId": "sh00000040",
-          "imgPath": "images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/",
+          "imgPath": "images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/story4.jpg",
           "createDate": "2024-10-12",
-          "content": "오늘 하루 목표 달성! ✅",
+          "content": "칭구들과 카페",
           "like": [
             "EnweBLflxt3pYRGLy8hfJ18MeOm",
             "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
@@ -2413,16 +2434,22 @@
           ]
         }
       ],
-      "storyStorage": []
+      "storyStorage": [
+        {
+          "storyStorageId": "ss00000001",
+          "title": "냠!",
+          "storyIds": ["sh00000037", "sh00000038", "sh00000039", "sh00000040"]
+        }
+      ]
     },
     {
       "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
       "storyHistory": [
         {
           "storyId": "sh00000041",
-          "imgPath": "images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/",
-          "createDate": "2024-10-09",
-          "content": "새로운 하루, 새로운 기회! 🌞",
+          "imgPath": "images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/story1.jpg",
+          "createDate": "2024-09-21",
+          "content": "하트 발견!",
           "like": [
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
             "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -2454,9 +2481,9 @@
         },
         {
           "storyId": "sh00000042",
-          "imgPath": "images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/",
-          "createDate": "2024-10-17",
-          "content": "오늘 하루도 열심히 보내보자 💪",
+          "imgPath": "images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/story2.jpg",
+          "createDate": "2024-10-13",
+          "content": "날씨 좋다🌞",
           "like": [
             "KWUUuqMImhcKDZ822gc2InH4vSN",
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
@@ -2486,9 +2513,9 @@
         },
         {
           "storyId": "sh00000043",
-          "imgPath": "images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/",
+          "imgPath": "images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/story3.jpg",
           "createDate": "2024-10-17",
-          "content": "다음 여행지는 어디로? 🌍",
+          "content": "토마토",
           "like": [
             "KWUUuqMImhcKDZ822gc2InH4vSN",
             "kdGgFnRk8TyyUVeXQji7vZybpQ1",
@@ -2510,7 +2537,23 @@
           ]
         }
       ],
-      "storyStorage": []
+      "storyStorage": [
+        {
+          "storyStorageId": "ss00000001",
+          "title": "♡",
+          "storyIds": ["sh00000041"]
+        },
+        {
+          "storyStorageId": "ss00000002",
+          "title": "상쾌한 하루",
+          "storyIds": ["sh00000042"]
+        },
+        {
+          "storyStorageId": "ss00000003",
+          "title": "멋쟁이 토마토",
+          "storyIds": ["sh00000043"]
+        }
+      ]
     },
     {
       "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
@@ -8057,11 +8100,11 @@
       "feedDetail": [
         {
           "feedId": "fd00000054",
-          "createDate": "2024-10-15",
+          "createDate": "2024-09-02",
           "type": "img",
-          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6"],
-          "content": "독서와 함께하는 일상, 반려동물과의 시간은 언제나 힐링이에요 🐶 #반려동물 #소확행 #힐링",
-          "hashtag": ["#반려동물", "#소확행", "#힐링"],
+          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/feed1.jpg"],
+          "content": "호두와 함께하는 일상, 반려동물과의 시간은 언제나 힐링이에요 #반려동물 #소확행 #힐링",
+          "hashtag": ["#반려동물", "#호두", "#힐링"],
           "location": "서울숲",
           "like": [
             "kdGgFnRk8TyyUVeXQji7vZybpQ1",
@@ -8078,8 +8121,8 @@
           "reply": [
             {
               "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-              "content": "여기 가면 꼭 먹어봐야겠어요!",
-              "createDate": "2024-10-15",
+              "content": "꺄 너무 귀여워!!!!!",
+              "createDate": "2024-09-02",
               "like": [
                 "kdGgFnRk8TyyUVeXQji7vZybpQ1",
                 "FNUEoSKu7equPIpWvLcKumRz7Pc"
@@ -8087,8 +8130,8 @@
               "reReply": [
                 {
                   "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-                  "content": "여기 정말 아름다워요.",
-                  "createDate": "2024-10-15",
+                  "content": "오동통 앞발 너무 귀엽지 >.<",
+                  "createDate": "2024-09-02",
                   "like": [
                     "BbVEQf8MoEuxL7XREuCVTjUQkSx",
                     "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
@@ -8098,8 +8141,8 @@
                 },
                 {
                   "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
-                  "content": "저도 사진만 봐도 힐링되네요.",
-                  "createDate": "2024-10-15",
+                  "content": "저도 사진만 봐도 힐링되네요 ♥",
+                  "createDate": "2024-09-02",
                   "like": [
                     "kdGgFnRk8TyyUVeXQji7vZybpQ1",
                     "bIqUJE0DxQa1HdkLfMqh105VOrQ"
@@ -8111,7 +8154,7 @@
             },
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-              "content": "운동 후 먹으면 정말 좋을 것 같아요!",
+              "content": "호두는 어떻게 저렇게 이쁠까?",
               "createDate": "2024-10-17",
               "like": [],
               "reReply": [],
@@ -8119,7 +8162,7 @@
             },
             {
               "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-              "content": "멋진 장소에서의 운동, 너무 좋아 보여요!",
+              "content": "너무 귀여운 호두!",
               "createDate": "2024-10-16",
               "like": [
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -8130,7 +8173,7 @@
             },
             {
               "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-              "content": "사진 속 분위기가 너무 좋아요.",
+              "content": "호두 볼살 와랄랄라 하고 싶당",
               "createDate": "2024-10-16",
               "like": [],
               "reReply": [
@@ -8146,13 +8189,13 @@
             },
             {
               "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
-              "content": "운동 후 먹으면 정말 좋을 것 같아요!",
+              "content": "호두 보러 놀러가고 싶어ㅠㅠㅠ",
               "createDate": "2024-10-16",
               "like": [],
               "reReply": [
                 {
                   "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
-                  "content": "한 번 가보시면 후회 안 하실 거예요.",
+                  "content": "저두요 ㅠ0ㅠ 호두야아",
                   "createDate": "2024-10-18",
                   "like": [
                     "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
@@ -8163,7 +8206,7 @@
                 },
                 {
                   "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-                  "content": "한 번 가보시면 후회 안 하실 거예요.",
+                  "content": "호두랑 악수하고 싶은 나...",
                   "createDate": "2024-10-16",
                   "like": [
                     "0aDoIgvbfsQYBX20nWRnuOkNrNh",
@@ -8179,12 +8222,12 @@
         },
         {
           "feedId": "fd00000055",
-          "createDate": "2024-10-09",
+          "createDate": "2024-09-10",
           "type": "img",
-          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6"],
-          "content": "주말에는 역시 데일리룩이죠! 자연 속에서 즐기는 시간은 언제나 특별해요 🌲 #캠핑스타그램 #여행 #힐링",
-          "hashtag": ["#캠핑스타그램", "#여행", "#힐링"],
-          "location": "제주 오름",
+          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/feed5.jpg"],
+          "content": "호두와 함께하는 시간은 언제나 특별해 ♥",
+          "hashtag": ["#집스타그램", "#호두", "#힐링"],
+          "location": "우리집",
           "like": [
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
             "z7UhehujghvKX02fUj1ig9gfP7n",
@@ -8204,13 +8247,13 @@
             {
               "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
               "content": "사진만 봐도 힐링되네요.",
-              "createDate": "2024-10-11",
+              "createDate": "2024-09-10",
               "like": [],
               "reReply": [
                 {
                   "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
-                  "content": "저도 여기서 즐거운 시간 보냈어요!",
-                  "createDate": "2024-10-16",
+                  "content": "호두테라피 짱이랍니다",
+                  "createDate": "2024-09-10",
                   "like": [
                     "z7UhehujghvKX02fUj1ig9gfP7n",
                     "lualbvqvQmVWkfDU7JUKJRYdqf3",
@@ -8220,8 +8263,8 @@
                 },
                 {
                   "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
-                  "content": "정말 예쁘죠!",
-                  "createDate": "2024-10-11",
+                  "content": "호두 너무 귀엽잖아~!",
+                  "createDate": "2024-09-10",
                   "like": [
                     "0aDoIgvbfsQYBX20nWRnuOkNrNh",
                     "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -8234,7 +8277,7 @@
             },
             {
               "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-              "content": "저도 이 장소에서 즐거운 시간 보냈어요.",
+              "content": "난 왜 호두 없어ㅠㅠㅠ",
               "createDate": "2024-10-12",
               "like": ["VA2MxTOE2O9mN4nVQy4Fw2glB2h"],
               "reReply": [],
@@ -8242,13 +8285,13 @@
             },
             {
               "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
-              "content": "이 사진 보고 저도 도전해볼게요!",
+              "content": "귀여운 호두!",
               "createDate": "2024-10-13",
               "like": ["Af4BexYzzRIvqtGjSeYEG3pqZHw"],
               "reReply": [
                 {
                   "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
-                  "content": "여기서 맛있게 먹었어요.",
+                  "content": "정말 귀여워...♡",
                   "createDate": "2024-10-17",
                   "like": [
                     "BbVEQf8MoEuxL7XREuCVTjUQkSx",
@@ -8262,13 +8305,13 @@
             },
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-              "content": "멋진 장소에서의 운동, 너무 좋아 보여요!",
+              "content": "호두야 너 징짜 귀엽당",
               "createDate": "2024-10-17",
               "like": ["z7UhehujghvKX02fUj1ig9gfP7n"],
               "reReply": [
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-                  "content": "이 장소의 매력에 빠졌어요.",
+                  "content": "호두집사님 부러우ㅓ요!!!",
                   "createDate": "2024-10-17",
                   "like": [
                     "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -8282,7 +8325,7 @@
             },
             {
               "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
-              "content": "정말 예쁜 장소네요!",
+              "content": "호두로 완성되는 인테리어!",
               "createDate": "2024-10-11",
               "like": [
                 "lualbvqvQmVWkfDU7JUKJRYdqf3",
@@ -8291,21 +8334,21 @@
               "reReply": [
                 {
                   "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
-                  "content": "저도 사진만 봐도 힐링되네요.",
+                  "content": "ㅋㅋㅋㅋㅋㅋㅋ",
                   "createDate": "2024-10-11",
                   "like": [],
                   "reReplyId": "rr00000226"
                 },
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-                  "content": "다음에 같이 가봐요!",
+                  "content": "집사님 집에 초대해주세용",
                   "createDate": "2024-10-12",
                   "like": [],
                   "reReplyId": "rr00000227"
                 },
                 {
                   "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
-                  "content": "운동 후에 여기가 딱이에요!",
+                  "content": "귀여운 호두테리어 ㅋㅋㅋ",
                   "createDate": "2024-10-11",
                   "like": [
                     "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -8320,12 +8363,12 @@
         },
         {
           "feedId": "fd00000056",
-          "createDate": "2024-09-30",
+          "createDate": "2024-09-12",
           "type": "img",
-          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6"],
-          "content": "요리에서 만난 예쁜 카페! 인테리어와 맛있는 디저트로 힐링한 하루 🍰 #카페투어 #디저트 #힐링",
-          "hashtag": ["#카페투어", "#디저트", "#힐링"],
-          "location": "홍대",
+          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/feed7.jpg"],
+          "content": "오늘도 내 작업실에서 함께하는 호두 🍰 #작업실 #호두 #힐링",
+          "hashtag": ["#작업실", "#호두", "#힐링"],
+          "location": "우리집",
           "like": [
             "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
             "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -8343,13 +8386,13 @@
           "reply": [
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-              "content": "여기 음식이 정말 맛있었어요!",
+              "content": "작업하는 호두...!?",
               "createDate": "2024-10-14",
               "like": ["z7UhehujghvKX02fUj1ig9gfP7n"],
               "reReply": [
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-                  "content": "맞아요! 정말 강추하는 곳이에요!",
+                  "content": "완전 얼리어답터냥이다!!!",
                   "createDate": "2024-10-17",
                   "like": [],
                   "reReplyId": "rr00000229"
@@ -8361,12 +8404,12 @@
         },
         {
           "feedId": "fd00000057",
-          "createDate": "2024-10-03",
+          "createDate": "2024-09-21",
           "type": "img",
-          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6"],
-          "content": "디저트와 함께하는 일상, 반려동물과의 시간은 언제나 힐링이에요 🐶 #반려동물 #소확행 #힐링",
-          "hashtag": ["#반려동물", "#소확행", "#힐링"],
-          "location": "북한산",
+          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/feed9.jpg"],
+          "content": "오늘도 우리 호두랑 집 콕! #호두",
+          "hashtag": ["#호두", "#고양이", "#힐링"],
+          "location": "우리집",
           "like": [
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
             "bIqUJE0DxQa1HdkLfMqh105VOrQ",
@@ -8383,14 +8426,14 @@
           "reply": [
             {
               "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
-              "content": "저도 이 장소에서 즐거운 시간 보냈어요.",
-              "createDate": "2024-10-17",
+              "content": "오늘두 귀여운 호두두두두",
+              "createDate": "2024-09-21",
               "like": [],
               "reReply": [
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
-                  "content": "이 장소의 매력에 빠졌어요.",
-                  "createDate": "2024-10-17",
+                  "content": "동구라미 호두 귀여워엉 ♥",
+                  "createDate": "2024-09-21",
                   "like": [
                     "lualbvqvQmVWkfDU7JUKJRYdqf3",
                     "kdGgFnRk8TyyUVeXQji7vZybpQ1",
@@ -8405,11 +8448,11 @@
         },
         {
           "feedId": "fd00000058",
-          "createDate": "2024-10-05",
-          "type": "img",
-          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6"],
-          "content": "플랜테리어와 함께하는 일상, 반려동물과의 시간은 언제나 힐링이에요 🐶 #반려동물 #소확행 #힐링",
-          "hashtag": ["#반려동물", "#소확행", "#힐링"],
+          "createDate": "2024-09-22",
+          "type": "video",
+          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/reels1.mp4"],
+          "content": "우리 호두 더 아기 때 #호두 #아깽이 #힐링",
+          "hashtag": ["#호두", "#아깽이", "#힐링"],
           "location": "서울숲",
           "like": [
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
@@ -8428,14 +8471,14 @@
           "reply": [
             {
               "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
-              "content": "운동 후 먹으면 정말 좋을 것 같아요!",
-              "createDate": "2024-10-13",
+              "content": "아장아장 귀여워라ㅠㅠㅠ",
+              "createDate": "202-09-22",
               "like": ["FNUEoSKu7equPIpWvLcKumRz7Pc"],
               "reReply": [
                 {
                   "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
-                  "content": "한 번 가보시면 후회 안 하실 거예요.",
-                  "createDate": "2024-10-15",
+                  "content": "정말 너무 귀엽다!!!",
+                  "createDate": "2024-09-22",
                   "like": [
                     "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                     "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -8448,8 +8491,8 @@
             },
             {
               "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
-              "content": "저도 이곳에서 좋은 추억이 있어요.",
-              "createDate": "2024-10-15",
+              "content": "저도 호두 키우고 싶어요 ㅠ0ㅠ",
+              "createDate": "2024-09-22",
               "like": [
                 "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -8460,13 +8503,13 @@
             },
             {
               "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
-              "content": "정말 멋진 순간이에요!",
+              "content": "아기 호두 소중해 ♥",
               "createDate": "2024-10-09",
               "like": ["0aDoIgvbfsQYBX20nWRnuOkNrNh"],
               "reReply": [
                 {
                   "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
-                  "content": "다음번에 이곳에서 만나면 좋겠어요!",
+                  "content": "너무 귀여운 아기 호두...!",
                   "createDate": "2024-10-09",
                   "like": [
                     "BbVEQf8MoEuxL7XREuCVTjUQkSx",
@@ -8477,7 +8520,7 @@
                 },
                 {
                   "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
-                  "content": "운동 후에 여기가 딱이에요!",
+                  "content": "쪼꼬미 호두 너무 이뿌다 >.<!",
                   "createDate": "2024-10-18",
                   "like": [
                     "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -8493,12 +8536,12 @@
         },
         {
           "feedId": "fd00000059",
-          "createDate": "2024-09-28",
-          "type": "img",
-          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6"],
-          "content": "오늘은 집콕으로 스트레스를 날려버렸어요! 땀 흘리고 나니 기분이 최고에요 💪 #운동스타그램 #헬스 #건강",
-          "hashtag": ["#운동스타그램", "#헬스", "#건강"],
-          "location": "한강공원",
+          "createDate": "2024-10-10",
+          "type": "video",
+          "imgPath": ["images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/reels2.mp4"],
+          "content": "ㅋㅋㅋㅋ 고래잡는 울 용감한 호두!",
+          "hashtag": ["#냥스타그램", "#고래", "#호두"],
+          "location": "우리집",
           "like": [
             "lualbvqvQmVWkfDU7JUKJRYdqf3",
             "bIqUJE0DxQa1HdkLfMqh105VOrQ",
@@ -8515,13 +8558,13 @@
           "reply": [
             {
               "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-              "content": "멋진 장소에서의 운동, 너무 좋아 보여요!",
+              "content": "ㅋㅋㅋㅋㅋㅋ너무 귀엽다",
               "createDate": "2024-10-10",
               "like": ["hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
               "reReply": [
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-                  "content": "다음번에 이곳에서 만나면 좋겠어요!",
+                  "content": "낚시하는 고양이라니!",
                   "createDate": "2024-10-17",
                   "like": [
                     "bIqUJE0DxQa1HdkLfMqh105VOrQ",
@@ -8532,7 +8575,7 @@
                 },
                 {
                   "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-                  "content": "다음번에 이곳에서 만나면 좋겠어요!",
+                  "content": "우리집 고양이도 사줘야겠어요!!",
                   "createDate": "2024-10-11",
                   "like": [],
                   "reReplyId": "rr00000235"
@@ -8542,13 +8585,13 @@
             },
             {
               "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
-              "content": "여기 가면 꼭 먹어봐야겠어요!",
+              "content": "아 너무 귀엽다 ㅋㅋㅋㅋㅋ",
               "createDate": "2024-10-18",
               "like": ["hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
               "reReply": [
                 {
                   "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-                  "content": "다음번에 이곳에서 만나면 좋겠어요!",
+                  "content": "고래잡이 호두라니!!!",
                   "createDate": "2024-10-18",
                   "like": ["4JhKn3cYHd9dY9muGz1oXiJAruo"],
                   "reReplyId": "rr00000236"
@@ -8565,7 +8608,7 @@
       "feedDetail": [
         {
           "feedId": "fd00000060",
-          "createDate": "2024-10-02",
+          "createDate": "2024-09-04",
           "type": "img",
           "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1"],
           "content": "디저트가득한 주말! 집에서 쉬며 책 읽고 커피 마시며 여유로운 시간 ☕️ #집콕 #독서 #소확행",
@@ -8591,7 +8634,7 @@
         },
         {
           "feedId": "fd00000061",
-          "createDate": "2024-09-29",
+          "createDate": "2024-09-04",
           "type": "img",
           "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1"],
           "content": "새로운 집스타그램 다이어트 요리 도전! 저칼로리지만 맛있게 즐길 수 있어요 🍽️ #다이어트 #헬시푸드 #건강",
@@ -8613,7 +8656,7 @@
             {
               "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
               "content": "정말 예쁜 장소네요!",
-              "createDate": "2024-10-08",
+              "createDate": "2024-09-04",
               "like": [
                 "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -8626,12 +8669,12 @@
         },
         {
           "feedId": "fd00000062",
-          "createDate": "2024-10-12",
+          "createDate": "2024-09-04",
           "type": "img",
-          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1"],
-          "content": "독서와 함께하는 아침 운동! 상쾌한 공기가 하루를 시작하게 해줘요 🏃‍♀️ #운동스타그램 #헬시라이프 #아침",
-          "hashtag": ["#운동스타그램", "#헬시라이프", "#아침"],
-          "location": "잠실운동장",
+          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/feed1.jpg"],
+          "content": "오늘도 여행을 시작해볼까!",
+          "hashtag": ["#여행스타그램", "#자유로운나를봐", "#자유로워"],
+          "location": "마드리드",
           "like": [
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
             "z7UhehujghvKX02fUj1ig9gfP7n",
@@ -8649,7 +8692,7 @@
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
               "content": "사진만 봐도 힐링되네요.",
-              "createDate": "2024-10-14",
+              "createDate": "2024-09-04",
               "like": [
                 "z7UhehujghvKX02fUj1ig9gfP7n",
                 "lualbvqvQmVWkfDU7JUKJRYdqf3",
@@ -8658,8 +8701,8 @@
               "reReply": [
                 {
                   "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
-                  "content": "맞아요! 정말 강추하는 곳이에요!",
-                  "createDate": "2024-10-16",
+                  "content": "마드리드! 정말 강추하는 곳이에요!",
+                  "createDate": "2024-09-04",
                   "like": [],
                   "reReplyId": "rr00000237"
                 }
@@ -8668,8 +8711,8 @@
             },
             {
               "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-              "content": "멋진 장소에서의 운동, 너무 좋아 보여요!",
-              "createDate": "2024-10-14",
+              "content": "멋진 장소에서의 여행, 너무 좋아 보여요!",
+              "createDate": "2024-09-04",
               "like": [
                 "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                 "4JhKn3cYHd9dY9muGz1oXiJAruo"
@@ -8678,7 +8721,7 @@
                 {
                   "userId": "1JaMETkLKPzcOLuDpbmRoTpKbgt",
                   "content": "저도 이곳에서 좋은 기억이 많아요!",
-                  "createDate": "2024-10-16",
+                  "createDate": "2024-09-06",
                   "like": [
                     "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                     "bIqUJE0DxQa1HdkLfMqh105VOrQ",
@@ -8689,7 +8732,7 @@
                 {
                   "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
                   "content": "꼭 가보세요!",
-                  "createDate": "2024-10-18",
+                  "createDate": "2024-09-04",
                   "like": [],
                   "reReplyId": "rr00000239"
                 }
@@ -8698,8 +8741,8 @@
             },
             {
               "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-              "content": "운동 후 먹으면 정말 좋을 것 같아요!",
-              "createDate": "2024-10-18",
+              "content": "즐거운 여행하고 와!!!",
+              "createDate": "2024-09-05",
               "like": [
                 "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                 "bIqUJE0DxQa1HdkLfMqh105VOrQ"
@@ -8707,8 +8750,8 @@
               "reReply": [
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-                  "content": "여기 정말 아름다워요.",
-                  "createDate": "2024-10-18",
+                  "content": "여기 정말 이쁘다..!",
+                  "createDate": "2024-09-04",
                   "like": [
                     "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                     "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
@@ -8723,12 +8766,12 @@
         },
         {
           "feedId": "fd00000063",
-          "createDate": "2024-10-08",
+          "createDate": "2024-09-09",
           "type": "img",
-          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1"],
-          "content": "새로운 브런치 다이어트 요리 도전! 저칼로리지만 맛있게 즐길 수 있어요 🍽️ #다이어트 #헬시푸드 #건강",
-          "hashtag": ["#다이어트", "#헬시푸드", "#건강"],
-          "location": "이태원 브런치 카페",
+          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/feed2.jpg"],
+          "content": "친구들과 함께하는 즐거운 여행",
+          "hashtag": ["#여행스타그램", "#빙글빙글돌아가는", "#맷돌"],
+          "location": "리옹",
           "like": [
             "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
             "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -8746,8 +8789,8 @@
           "reply": [
             {
               "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-              "content": "정말 예쁜 장소네요!",
-              "createDate": "2024-10-11",
+              "content": "ㅋㅋㅋㅋㅋㅋ진짜 웃겨",
+              "createDate": "2024-09-09",
               "like": [
                 "wAKs9uXSWsTJbbJGg2MaErFaKqE",
                 "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
@@ -8756,15 +8799,15 @@
               "reReply": [
                 {
                   "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-                  "content": "저도 이곳에서 좋은 기억이 많아요!",
-                  "createDate": "2024-10-17",
+                  "content": "해맑은 동훈이 귀엽다 ㅋㅋㅋㅋㅋ",
+                  "createDate": "2024-09-09",
                   "like": ["Af4BexYzzRIvqtGjSeYEG3pqZHw"],
                   "reReplyId": "rr00000241"
                 },
                 {
                   "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-                  "content": "여기 정말 아름다워요.",
-                  "createDate": "2024-10-11",
+                  "content": "골뱅이 무침 먹고싶다!",
+                  "createDate": "2024-09-09",
                   "like": ["FNUEoSKu7equPIpWvLcKumRz7Pc"],
                   "reReplyId": "rr00000242"
                 }
@@ -8776,10 +8819,10 @@
         {
           "feedId": "fd00000064",
           "createDate": "2024-09-24",
-          "type": "img",
-          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1"],
-          "content": "플랜테리어을 하며 하루를 시작했어요! 운동 후에 먹는 프로틴 한 잔은 필수 🥤 #헬스 #운동 #프로틴",
-          "hashtag": ["#헬스", "#운동", "#프로틴"],
+          "type": "video",
+          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/reels1.mp4"],
+          "content": "가슴이 웅장해진다!",
+          "hashtag": ["#여행스타그램"],
           "location": "서래마을",
           "like": [
             "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -8799,27 +8842,27 @@
             {
               "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
               "content": "저도 이 장소에서 즐거운 시간 보냈어요.",
-              "createDate": "2024-10-14",
+              "createDate": "2024-09-24",
               "like": [],
               "reReply": [
                 {
                   "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
                   "content": "다음에 같이 가면 좋겠네요!",
-                  "createDate": "2024-10-18",
+                  "createDate": "2024-09-24",
                   "like": [],
                   "reReplyId": "rr00000243"
                 },
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                   "content": "정말 예쁘죠!",
-                  "createDate": "2024-10-18",
+                  "createDate": "2024-09-24",
                   "like": ["lualbvqvQmVWkfDU7JUKJRYdqf3"],
                   "reReplyId": "rr00000244"
                 },
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                   "content": "여기 정말 아름다워요.",
-                  "createDate": "2024-10-16",
+                  "createDate": "2024-09-26",
                   "like": [
                     "EnweBLflxt3pYRGLy8hfJ18MeOm",
                     "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
@@ -8833,21 +8876,21 @@
             {
               "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
               "content": "저도 여기에 가보고 싶어요!",
-              "createDate": "2024-10-05",
+              "createDate": "2024-09-24",
               "like": ["lualbvqvQmVWkfDU7JUKJRYdqf3"],
               "reReply": [],
               "replyId": "rp00000151"
             },
             {
               "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-              "content": "여기 가면 꼭 먹어봐야겠어요!",
-              "createDate": "2024-10-07",
+              "content": "나두 가고싶어~~~~!!",
+              "createDate": "2024-09-24",
               "like": ["4JhKn3cYHd9dY9muGz1oXiJAruo"],
               "reReply": [
                 {
                   "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
-                  "content": "정말 예쁘죠!",
-                  "createDate": "2024-10-08",
+                  "content": "진짜 멋지다!",
+                  "createDate": "2024-09-24",
                   "like": ["lualbvqvQmVWkfDU7JUKJRYdqf3"],
                   "reReplyId": "rr00000246"
                 }
@@ -8856,8 +8899,8 @@
             },
             {
               "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
-              "content": "저도 이 장소에서 즐거운 시간 보냈어요.",
-              "createDate": "2024-09-30",
+              "content": "저도 한번 더 다녀오고싶네요",
+              "createDate": "2024-09-24",
               "like": [
                 "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                 "lualbvqvQmVWkfDU7JUKJRYdqf3",
@@ -8866,15 +8909,15 @@
               "reReply": [
                 {
                   "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-                  "content": "저도 사진만 봐도 힐링되네요.",
-                  "createDate": "2024-10-09",
+                  "content": "사진만 봐도 힐링되네요.",
+                  "createDate": "2024-09-24",
                   "like": [],
                   "reReplyId": "rr00000247"
                 },
                 {
                   "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
                   "content": "다음번에 이곳에서 만나면 좋겠어요!",
-                  "createDate": "2024-10-11",
+                  "createDate": "2024-09-26",
                   "like": [],
                   "reReplyId": "rr00000248"
                 }
@@ -8885,12 +8928,12 @@
         },
         {
           "feedId": "fd00000065",
-          "createDate": "2024-09-25",
+          "createDate": "2024-09-27",
           "type": "img",
-          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1"],
-          "content": "주말에는 역시 플랜테리어이죠! 자연 속에서 즐기는 시간은 언제나 특별해요 🌲 #캠핑스타그램 #여행 #힐링",
-          "hashtag": ["#캠핑스타그램", "#여행", "#힐링"],
-          "location": "제주 오름",
+          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/feed3.jpg"],
+          "content": "나 제법 귀여운 듯",
+          "hashtag": ["#여행스타그램", "#귀여운남자", "#힐링"],
+          "location": "파리",
           "like": [
             "KWUUuqMImhcKDZ822gc2InH4vSN",
             "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -8909,14 +8952,14 @@
           "reply": [
             {
               "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-              "content": "정말 멋진 순간이에요!",
-              "createDate": "2024-10-10",
+              "content": "그래 정말 귀엽다 ^^...",
+              "createDate": "2024-09-27",
               "like": [],
               "reReply": [
                 {
                   "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
-                  "content": "저도 꼭 다시 가고 싶어요!",
-                  "createDate": "2024-10-17",
+                  "content": "귀엽네....정말........",
+                  "createDate": "2024-09-27",
                   "like": [],
                   "reReplyId": "rr00000249"
                 }
@@ -8927,12 +8970,12 @@
         },
         {
           "feedId": "fd00000066",
-          "createDate": "2024-10-17",
+          "createDate": "2024-09-28",
           "type": "img",
-          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1"],
-          "content": "소확행에서 만난 예쁜 카페! 인테리어와 맛있는 디저트로 힐링한 하루 🍰 #카페투어 #디저트 #힐링",
-          "hashtag": ["#카페투어", "#디저트", "#힐링"],
-          "location": "연남동",
+          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/feed4.jpg"],
+          "content": "뭘해도 즐거워!!!",
+          "hashtag": ["#여행스타그램", "#미소천사"],
+          "location": "파리",
           "like": [
             "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
@@ -8950,8 +8993,8 @@
           "reply": [
             {
               "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
-              "content": "이 사진 보고 저도 도전해볼게요!",
-              "createDate": "2024-10-18",
+              "content": "ㅋㅋㅋㅋ그래보인다",
+              "createDate": "2024-09-28",
               "like": [
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
                 "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
@@ -8960,8 +9003,8 @@
               "reReply": [
                 {
                   "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
-                  "content": "이 장소의 매력에 빠졌어요.",
-                  "createDate": "2024-10-18",
+                  "content": "동훈이 잇몸 마르겠어~",
+                  "createDate": "2024-09-28",
                   "like": [
                     "BbVEQf8MoEuxL7XREuCVTjUQkSx",
                     "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
@@ -8976,11 +9019,11 @@
         },
         {
           "feedId": "fd00000067",
-          "createDate": "2024-10-17",
-          "type": "img",
-          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1"],
-          "content": "홈카페에서 만난 예쁜 카페! 인테리어와 맛있는 디저트로 힐링한 하루 🍰 #카페투어 #디저트 #힐링",
-          "hashtag": ["#카페투어", "#디저트", "#힐링"],
+          "createDate": "2024-10-03",
+          "type": "video",
+          "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/reels2.mp4"],
+          "content": "잠시 노을보며 힐링하는 중",
+          "hashtag": ["#여행스타그램", "#힐링"],
           "location": "삼청동",
           "like": [
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
@@ -9005,12 +9048,12 @@
       "feedDetail": [
         {
           "feedId": "fd00000068",
-          "createDate": "2024-09-25",
+          "createDate": "2024-09-07",
           "type": "img",
-          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
-          "content": "바다와 함께하는 일상, 반려동물과의 시간은 언제나 힐링이에요 🐶 #반려동물 #소확행 #힐링",
-          "hashtag": ["#반려동물", "#소확행", "#힐링"],
-          "location": "제주 올레길",
+          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/feed1.jpg"],
+          "content": "윌리스LA피자 너무 맛있는데!!",
+          "hashtag": ["#먹스타그램"],
+          "location": "뚝섬",
           "like": [
             "FNUEoSKu7equPIpWvLcKumRz7Pc",
             "z7UhehujghvKX02fUj1ig9gfP7n",
@@ -9025,8 +9068,8 @@
           "reply": [
             {
               "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
-              "content": "정말 예쁜 장소네요!",
-              "createDate": "2024-10-10",
+              "content": "우와 피자 맛잇겠다!!!",
+              "createDate": "2024-09-07",
               "like": [
                 "EnweBLflxt3pYRGLy8hfJ18MeOm",
                 "0aDoIgvbfsQYBX20nWRnuOkNrNh"
@@ -9034,8 +9077,8 @@
               "reReply": [
                 {
                   "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
-                  "content": "다음번에 이곳에서 만나면 좋겠어요!",
-                  "createDate": "2024-10-14",
+                  "content": "다음에 우리 다같이 가자!!",
+                  "createDate": "2024-09-07",
                   "like": [],
                   "reReplyId": "rr00000251"
                 }
@@ -9044,8 +9087,8 @@
             },
             {
               "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
-              "content": "사진만 봐도 힐링되네요.",
-              "createDate": "2024-10-09",
+              "content": "너무 배고파서 먹고싶어요ㅠㅠ",
+              "createDate": "2024-09-07",
               "like": [
                 "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                 "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -9057,13 +9100,13 @@
             {
               "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
               "content": "여기 꼭 가보고 싶네요!",
-              "createDate": "2024-09-29",
+              "createDate": "2024-09-07",
               "like": [],
               "reReply": [
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-                  "content": "저도 이곳에서 좋은 기억이 많아요!",
-                  "createDate": "2024-10-12",
+                  "content": "이 피자집 진짜 맛잇어요!",
+                  "createDate": "2024-09-08",
                   "like": ["VA2MxTOE2O9mN4nVQy4Fw2glB2h"],
                   "reReplyId": "rr00000252"
                 }
@@ -9074,12 +9117,12 @@
         },
         {
           "feedId": "fd00000069",
-          "createDate": "2024-10-15",
+          "createDate": "2024-09-15",
           "type": "img",
-          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
-          "content": "홈카페 다녀왔어요! 분위기가 정말 좋고 커피도 맛있었어요 ☕️ #카페투어 #소확행 #힐링",
-          "hashtag": ["#카페투어", "#소확행", "#힐링"],
-          "location": "홍대",
+          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/feed6.jpg"],
+          "content": "소금빵이 유명한 카페!",
+          "hashtag": ["#카페투어", "#소금빵", "#카페단소금"],
+          "location": "대부도",
           "like": [
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
             "z7UhehujghvKX02fUj1ig9gfP7n",
@@ -9096,12 +9139,12 @@
         },
         {
           "feedId": "fd00000070",
-          "createDate": "2024-10-18",
+          "createDate": "2024-09-18",
           "type": "img",
-          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
-          "content": "캠핑스타그램와 함께하는 아침 운동! 상쾌한 공기가 하루를 시작하게 해줘요 🏃‍♀️ #운동스타그램 #헬시라이프 #아침",
-          "hashtag": ["#운동스타그램", "#헬시라이프", "#아침"],
-          "location": "한강공원",
+          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/feed8.jpg"],
+          "content": "조개구이 못 참지 ^,^ 청춘조개!!!",
+          "hashtag": ["#먹스타그램", "#조개구이"],
+          "location": "월미도",
           "like": [
             "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
@@ -9119,14 +9162,14 @@
           "reply": [
             {
               "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
-              "content": "저도 다음에 가볼게요!",
-              "createDate": "2024-10-18",
+              "content": "헐 다음에 나랑도 가자",
+              "createDate": "2024-09-18",
               "like": ["0aDoIgvbfsQYBX20nWRnuOkNrNh"],
               "reReply": [
                 {
                   "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
-                  "content": "저도 이곳에서 좋은 기억이 많아요!",
-                  "createDate": "2024-10-18",
+                  "content": "나두 같이 가!!!",
+                  "createDate": "2024-09-18",
                   "like": [
                     "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                     "KWUUuqMImhcKDZ822gc2InH4vSN"
@@ -9138,8 +9181,8 @@
             },
             {
               "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-              "content": "여기 가면 꼭 먹어봐야겠어요!",
-              "createDate": "2024-10-18",
+              "content": "여기 가봐야겠어요 맛잇겠다!",
+              "createDate": "2024-09-18",
               "like": [
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
                 "1JaMETkLKPzcOLuDpbmRoTpKbgt",
@@ -9148,15 +9191,15 @@
               "reReply": [
                 {
                   "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
-                  "content": "여기서 맛있게 먹었어요.",
-                  "createDate": "2024-10-18",
+                  "content": "저도 여기서 맛있게 먹었어요!",
+                  "createDate": "2024-09-18",
                   "like": ["VA2MxTOE2O9mN4nVQy4Fw2glB2h"],
                   "reReplyId": "rr00000254"
                 },
                 {
                   "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-                  "content": "꼭 가보세요!",
-                  "createDate": "2024-10-18",
+                  "content": "너무 맛있겠다ㅠㅠㅠ",
+                  "createDate": "2024-09-18",
                   "like": [
                     "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                     "VA2MxTOE2O9mN4nVQy4Fw2glB2h"
@@ -9168,8 +9211,8 @@
             },
             {
               "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
-              "content": "멋진 장소에서의 운동, 너무 좋아 보여요!",
-              "createDate": "2024-10-18",
+              "content": "월미도 가셨군요!!!",
+              "createDate": "2024-09-18",
               "like": [
                 "KWUUuqMImhcKDZ822gc2InH4vSN",
                 "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -9178,8 +9221,8 @@
               "reReply": [
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-                  "content": "저도 꼭 다시 가고 싶어요!",
-                  "createDate": "2024-10-18",
+                  "content": "너무 먹고싶어요ㅠㅠㅠ",
+                  "createDate": "2024-09-18",
                   "like": ["BbVEQf8MoEuxL7XREuCVTjUQkSx"],
                   "reReplyId": "rr00000256"
                 }
@@ -9189,15 +9232,15 @@
             {
               "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
               "content": "사진만 봐도 힐링되네요.",
-              "createDate": "2024-10-18",
+              "createDate": "2024-09-18",
               "like": ["KWUUuqMImhcKDZ822gc2InH4vSN"],
               "reReply": [],
               "replyId": "rp00000162"
             },
             {
               "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
-              "content": "이 사진 보고 저도 도전해볼게요!",
-              "createDate": "2024-10-18",
+              "content": "우리 이제 만날 때 된 거 같아..!",
+              "createDate": "2024-09-18",
               "like": [
                 "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                 "0aDoIgvbfsQYBX20nWRnuOkNrNh"
@@ -9205,8 +9248,8 @@
               "reReply": [
                 {
                   "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-                  "content": "저도 여기서 즐거운 시간 보냈어요!",
-                  "createDate": "2024-10-18",
+                  "content": "다같이 만나자 >.<",
+                  "createDate": "2024-09-18",
                   "like": [
                     "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                     "Rwkuz4I5TDjog8sfK3rzUCI4Ik6"
@@ -9215,15 +9258,15 @@
                 },
                 {
                   "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-                  "content": "이 장소의 매력에 빠졌어요.",
-                  "createDate": "2024-10-18",
+                  "content": "날 잡자~",
+                  "createDate": "2024-09-18",
                   "like": [],
                   "reReplyId": "rr00000258"
                 },
                 {
                   "userId": "1JaMETkLKPzcOLuDpbmRoTpKbgt",
-                  "content": "다음번에 이곳에서 만나면 좋겠어요!",
-                  "createDate": "2024-10-18",
+                  "content": "같이 가자 ㅎㅎㅎ",
+                  "createDate": "2024-09-18",
                   "like": [
                     "BbVEQf8MoEuxL7XREuCVTjUQkSx",
                     "tePhQ1wQJAwRlEcw1TOWpE4N9JU"
@@ -9237,12 +9280,12 @@
         },
         {
           "feedId": "fd00000071",
-          "createDate": "2024-09-27",
+          "createDate": "2024-09-20",
           "type": "img",
-          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
-          "content": "집스타그램에서 만난 예쁜 카페! 인테리어와 맛있는 디저트로 힐링한 하루 🍰 #카페투어 #디저트 #힐링",
-          "hashtag": ["#카페투어", "#디저트", "#힐링"],
-          "location": "홍대",
+          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/feed9.jpg"],
+          "content": "팅팅탱탱 푸딩!",
+          "hashtag": ["#카페투어", "#푸딩", "#TRACK3"],
+          "location": "하남시청역",
           "like": [
             "EnweBLflxt3pYRGLy8hfJ18MeOm",
             "BbVEQf8MoEuxL7XREuCVTjUQkSx",
@@ -9261,8 +9304,8 @@
           "reply": [
             {
               "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-              "content": "저도 이곳에서 좋은 추억이 있어요.",
-              "createDate": "2024-10-04",
+              "content": "여기 푸딩 엄청 맛있어!!",
+              "createDate": "2024-09-20",
               "like": [
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
                 "kdGgFnRk8TyyUVeXQji7vZybpQ1"
@@ -9270,8 +9313,8 @@
               "reReply": [
                 {
                   "userId": "1JaMETkLKPzcOLuDpbmRoTpKbgt",
-                  "content": "꼭 가보세요!",
-                  "createDate": "2024-10-12",
+                  "content": "나도 가고싶어!",
+                  "createDate": "2024-09-20",
                   "like": [
                     "wAKs9uXSWsTJbbJGg2MaErFaKqE",
                     "kdGgFnRk8TyyUVeXQji7vZybpQ1",
@@ -9282,14 +9325,14 @@
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
                   "content": "이 장소의 매력에 빠졌어요.",
-                  "createDate": "2024-10-10",
+                  "createDate": "2024-09-20",
                   "like": ["BbVEQf8MoEuxL7XREuCVTjUQkSx"],
                   "reReplyId": "rr00000261"
                 },
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-                  "content": "이 장소의 매력에 빠졌어요.",
-                  "createDate": "2024-10-10",
+                  "content": "주차는 괜찮나요?",
+                  "createDate": "2024-09-20",
                   "like": [],
                   "reReplyId": "rr00000262"
                 }
@@ -9299,7 +9342,7 @@
             {
               "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
               "content": "저도 여기에 가보고 싶어요!",
-              "createDate": "2024-10-10",
+              "createDate": "2024-09-20",
               "like": [
                 "z7UhehujghvKX02fUj1ig9gfP7n",
                 "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
@@ -9310,8 +9353,8 @@
             },
             {
               "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
-              "content": "운동 후 먹으면 정말 좋을 것 같아요!",
-              "createDate": "2024-09-29",
+              "content": "디저트로 먹으면 정말 좋을 것 같아!",
+              "createDate": "2024-09-20",
               "like": [
                 "lualbvqvQmVWkfDU7JUKJRYdqf3",
                 "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -9320,8 +9363,8 @@
               "reReply": [
                 {
                   "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-                  "content": "저도 꼭 다시 가고 싶어요!",
-                  "createDate": "2024-09-30",
+                  "content": "하 너무 먹고싶다아아",
+                  "createDate": "2024-09-20",
                   "like": [],
                   "reReplyId": "rr00000263"
                 }
@@ -9330,8 +9373,8 @@
             },
             {
               "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-              "content": "사진 속 분위기가 너무 좋아요.",
-              "createDate": "2024-10-11",
+              "content": "쟁반의 파란색이랑 푸딩이 너무 잘어울려!",
+              "createDate": "2024-09-20",
               "like": [
                 "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                 "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
@@ -9340,8 +9383,8 @@
               "reReply": [
                 {
                   "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
-                  "content": "저도 이곳에서 좋은 기억이 많아요!",
-                  "createDate": "2024-10-12",
+                  "content": "구니까 너무 이쁜데!?",
+                  "createDate": "2024-09-20",
                   "like": [
                     "4JhKn3cYHd9dY9muGz1oXiJAruo",
                     "tePhQ1wQJAwRlEcw1TOWpE4N9JU"
@@ -9350,8 +9393,8 @@
                 },
                 {
                   "userId": "1JaMETkLKPzcOLuDpbmRoTpKbgt",
-                  "content": "한 번 가보시면 후회 안 하실 거예요.",
-                  "createDate": "2024-10-16",
+                  "content": "ㅋㅋㅋ 먹으러 가자!!!",
+                  "createDate": "2024-09-20",
                   "like": [
                     "EnweBLflxt3pYRGLy8hfJ18MeOm",
                     "4JhKn3cYHd9dY9muGz1oXiJAruo"
@@ -9363,8 +9406,8 @@
             },
             {
               "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
-              "content": "저도 여기에 가보고 싶어요!",
-              "createDate": "2024-09-29",
+              "content": "저희 동네인데 가봐야겠어요!",
+              "createDate": "2024-09-20",
               "like": [
                 "kdGgFnRk8TyyUVeXQji7vZybpQ1",
                 "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -9377,12 +9420,12 @@
         },
         {
           "feedId": "fd00000072",
-          "createDate": "2024-10-12",
+          "createDate": "2024-09-27",
           "type": "img",
-          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
-          "content": "다이어트을 가며 만난 아름다운 바다, 이 순간을 사진으로 남겼어요 🌊 #여행 #바다 #일몰",
-          "hashtag": ["#여행", "#바다", "#일몰"],
-          "location": "경주",
+          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/feed13.jpg"],
+          "content": "오랜만에 홍대~~ 여기 맛있다!",
+          "hashtag": ["#홍대", "#먹스타그램", "#불떡클럽"],
+          "location": "홍대",
           "like": [
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
             "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -9399,7 +9442,7 @@
             {
               "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
               "content": "저도 이 장소에서 즐거운 시간 보냈어요.",
-              "createDate": "2024-10-17",
+              "createDate": "2024-09-27",
               "like": [
                 "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -9408,22 +9451,22 @@
               "reReply": [
                 {
                   "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
-                  "content": "운동 후에 여기가 딱이에요!",
-                  "createDate": "2024-10-18",
+                  "content": "친구들 만날 때 여기가 딱이에요!",
+                  "createDate": "2024-09-27",
                   "like": ["KWUUuqMImhcKDZ822gc2InH4vSN"],
                   "reReplyId": "rr00000266"
                 },
                 {
                   "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
-                  "content": "한 번 가보시면 후회 안 하실 거예요.",
-                  "createDate": "2024-10-18",
+                  "content": "여기 지금은 없어졌어요 ㅠㅠ",
+                  "createDate": "2024-09-27",
                   "like": ["lualbvqvQmVWkfDU7JUKJRYdqf3"],
                   "reReplyId": "rr00000267"
                 },
                 {
                   "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
-                  "content": "저도 꼭 다시 가고 싶어요!",
-                  "createDate": "2024-10-18",
+                  "content": "헉... 너무 아쉬워요ㅠ",
+                  "createDate": "2024-09-27",
                   "like": [],
                   "reReplyId": "rr00000268"
                 }
@@ -9432,8 +9475,8 @@
             },
             {
               "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-              "content": "정말 멋진 순간이에요!",
-              "createDate": "2024-10-17",
+              "content": "여기 정말 맛있었는데ㅠㅠ",
+              "createDate": "2024-09-27",
               "like": [
                 "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                 "0aDoIgvbfsQYBX20nWRnuOkNrNh",
@@ -9442,8 +9485,8 @@
               "reReply": [
                 {
                   "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-                  "content": "저도 꼭 다시 가고 싶어요!",
-                  "createDate": "2024-10-18",
+                  "content": "다음에 다른 맛잇는데도 찾아보자!",
+                  "createDate": "2024-09-27",
                   "like": ["0aDoIgvbfsQYBX20nWRnuOkNrNh"],
                   "reReplyId": "rr00000269"
                 }
@@ -9454,12 +9497,12 @@
         },
         {
           "feedId": "fd00000073",
-          "createDate": "2024-10-13",
+          "createDate": "2024-10-03",
           "type": "img",
-          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
-          "content": "힐링을 가며 만난 아름다운 바다, 이 순간을 사진으로 남겼어요 🌊 #여행 #바다 #일몰",
-          "hashtag": ["#여행", "#바다", "#일몰"],
-          "location": "서울 남산타워",
+          "imgPath": ["images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/feed14.jpg"],
+          "content": "내가 좋아하는 까눌레! 맛있다는 카페 찾아왔지!!",
+          "hashtag": ["#먹스타그램", "#부산여행", "#까눌레", "#연의양과"],
+          "location": "부산 전포공구길",
           "like": [
             "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
             "0aDoIgvbfsQYBX20nWRnuOkNrNh",
@@ -9480,20 +9523,20 @@
             {
               "userId": "1JaMETkLKPzcOLuDpbmRoTpKbgt",
               "content": "이 사진 보고 저도 도전해볼게요!",
-              "createDate": "2024-10-17",
+              "createDate": "2024-10-03",
               "like": [],
               "reReply": [
                 {
                   "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
                   "content": "저도 여기서 즐거운 시간 보냈어요!",
-                  "createDate": "2024-10-17",
+                  "createDate": "2024-10-03",
                   "like": [],
                   "reReplyId": "rr00000270"
                 },
                 {
                   "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                   "content": "다음에 같이 가면 좋겠네요!",
-                  "createDate": "2024-10-18",
+                  "createDate": "2024-10-03",
                   "like": [
                     "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                     "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -9504,7 +9547,7 @@
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                   "content": "한 번 가보시면 후회 안 하실 거예요.",
-                  "createDate": "2024-10-18",
+                  "createDate": "2024-10-03",
                   "like": [],
                   "reReplyId": "rr00000272"
                 }
@@ -9514,7 +9557,7 @@
             {
               "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
               "content": "저도 다음에 가볼게요!",
-              "createDate": "2024-10-14",
+              "createDate": "2024-10-03",
               "like": [
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
                 "z7UhehujghvKX02fUj1ig9gfP7n"
@@ -9523,7 +9566,7 @@
                 {
                   "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
                   "content": "다음에 같이 가봐요!",
-                  "createDate": "2024-10-17",
+                  "createDate": "2024-10-03",
                   "like": [],
                   "reReplyId": "rr00000273"
                 }
@@ -9532,8 +9575,8 @@
             },
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-              "content": "정말 멋진 순간이에요!",
-              "createDate": "2024-10-18",
+              "content": "부산여행 갔다왔구나!!!",
+              "createDate": "2024-10-03",
               "like": [
                 "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                 "4JhKn3cYHd9dY9muGz1oXiJAruo"
@@ -9541,8 +9584,8 @@
               "reReply": [
                 {
                   "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
-                  "content": "저도 사진만 봐도 힐링되네요.",
-                  "createDate": "2024-10-18",
+                  "content": "담에 우리랑도 부산여행 가자!",
+                  "createDate": "2024-10-03",
                   "like": [
                     "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                     "BbVEQf8MoEuxL7XREuCVTjUQkSx",
@@ -9552,8 +9595,8 @@
                 },
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-                  "content": "다음에 같이 가봐요!",
-                  "createDate": "2024-10-18",
+                  "content": "재밌겠다!!!",
+                  "createDate": "2024-10-03",
                   "like": [
                     "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                     "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -9563,8 +9606,8 @@
                 },
                 {
                   "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
-                  "content": "저도 여기서 즐거운 시간 보냈어요!",
-                  "createDate": "2024-10-18",
+                  "content": "너무 좋아 >.< 내가 계획 짤게!",
+                  "createDate": "2024-10-03",
                   "like": [
                     "0aDoIgvbfsQYBX20nWRnuOkNrNh",
                     "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
@@ -9577,8 +9620,8 @@
             },
             {
               "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
-              "content": "저도 이곳에서 좋은 추억이 있어요.",
-              "createDate": "2024-10-14",
+              "content": "요즘 여기 카페가 많이 생겼어!",
+              "createDate": "2024-10-03",
               "like": [
                 "1JaMETkLKPzcOLuDpbmRoTpKbgt",
                 "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
@@ -9587,8 +9630,8 @@
               "reReply": [
                 {
                   "userId": "1JaMETkLKPzcOLuDpbmRoTpKbgt",
-                  "content": "정말 예쁘죠!",
-                  "createDate": "2024-10-16",
+                  "content": "아 정말!?",
+                  "createDate": "2024-10-05",
                   "like": [
                     "BbVEQf8MoEuxL7XREuCVTjUQkSx",
                     "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -9601,28 +9644,28 @@
             },
             {
               "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-              "content": "운동 후 먹으면 정말 좋을 것 같아요!",
-              "createDate": "2024-10-15",
+              "content": "까눌레... 저도 정말 좋아해요!",
+              "createDate": "2024-10-03",
               "like": [],
               "reReply": [
                 {
                   "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
-                  "content": "정말 예쁘죠!",
-                  "createDate": "2024-10-16",
+                  "content": "맛있겠다!!",
+                  "createDate": "2024-10-03",
                   "like": [],
                   "reReplyId": "rr00000278"
                 },
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-                  "content": "이 장소의 매력에 빠졌어요.",
-                  "createDate": "2024-10-17",
+                  "content": "여기 카페 사장님들도 친절해요!",
+                  "createDate": "2024-10-03",
                   "like": ["BbVEQf8MoEuxL7XREuCVTjUQkSx"],
                   "reReplyId": "rr00000279"
                 },
                 {
                   "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-                  "content": "운동 후에 여기가 딱이에요!",
-                  "createDate": "2024-10-16",
+                  "content": "산책 후에 이 카페 오면 좋아요!",
+                  "createDate": "2024-10-04",
                   "like": [],
                   "reReplyId": "rr00000280"
                 }
@@ -9638,12 +9681,12 @@
       "feedDetail": [
         {
           "feedId": "fd00000074",
-          "createDate": "2024-10-14",
+          "createDate": "2024-09-08",
           "type": "img",
-          "imgPath": ["images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx"],
-          "content": "바다을 가며 만난 아름다운 바다, 이 순간을 사진으로 남겼어요 🌊 #여행 #바다 #일몰",
-          "hashtag": ["#여행", "#바다", "#일몰"],
-          "location": "강릉 경포대",
+          "imgPath": ["images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/feed1.jpg"],
+          "content": "#오늘도전시 ",
+          "hashtag": ["#데일리", "#취미스타그램"],
+          "location": "DDP",
           "like": [
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
             "0aDoIgvbfsQYBX20nWRnuOkNrNh",
@@ -9659,8 +9702,8 @@
           "reply": [
             {
               "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-              "content": "저도 여기에 가보고 싶어요!",
-              "createDate": "2024-10-15",
+              "content": "저도 이 전시 가고 싶어요!",
+              "createDate": "2024-09-08",
               "like": [
                 "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
                 "wAKs9uXSWsTJbbJGg2MaErFaKqE"
@@ -9668,8 +9711,8 @@
               "reReply": [
                 {
                   "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
-                  "content": "이 장소의 매력에 빠졌어요.",
-                  "createDate": "2024-10-17",
+                  "content": "이 전시의 매력에 빠졌어요.",
+                  "createDate": "2024-09-08",
                   "like": [
                     "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                     "wAKs9uXSWsTJbbJGg2MaErFaKqE"
@@ -9678,15 +9721,15 @@
                 },
                 {
                   "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
-                  "content": "정말 예쁘죠!",
-                  "createDate": "2024-10-17",
+                  "content": "정말 볼 게 많죠!",
+                  "createDate": "2024-09-08",
                   "like": ["0aDoIgvbfsQYBX20nWRnuOkNrNh"],
                   "reReplyId": "rr00000282"
                 },
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
-                  "content": "저도 꼭 다시 가고 싶어요!",
-                  "createDate": "2024-10-18",
+                  "content": "저는 한번 더 가고 싶어요!",
+                  "createDate": "2024-09-08",
                   "like": ["tePhQ1wQJAwRlEcw1TOWpE4N9JU"],
                   "reReplyId": "rr00000283"
                 }
@@ -9695,14 +9738,14 @@
             },
             {
               "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
-              "content": "저도 여기에 가보고 싶어요!",
-              "createDate": "2024-10-16",
+              "content": "여기 전시 진짜 재밌더라구요",
+              "createDate": "2024-09-08",
               "like": [],
               "reReply": [
                 {
                   "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
-                  "content": "저도 이곳에서 좋은 기억이 많아요!",
-                  "createDate": "2024-10-18",
+                  "content": "저도 이번 전시에서 좋은 기억이 많아요!",
+                  "createDate": "2024-09-08",
                   "like": [
                     "wAKs9uXSWsTJbbJGg2MaErFaKqE",
                     "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -9717,12 +9760,12 @@
         },
         {
           "feedId": "fd00000075",
-          "createDate": "2024-09-22",
+          "createDate": "2024-09-11",
           "type": "img",
-          "imgPath": ["images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx"],
-          "content": "피크닉가득한 주말! 집에서 쉬며 책 읽고 커피 마시며 여유로운 시간 ☕️ #집콕 #독서 #소확행",
-          "hashtag": ["#집콕", "#독서", "#소확행"],
-          "location": "광화문 교보문고",
+          "imgPath": ["images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/feed2.jpg"],
+          "content": "#오늘도전시 오늘은 혼자 가볍게 다녀왔다!",
+          "hashtag": ["#전시스타그램", "#소확행"],
+          "location": "광화문",
           "like": [
             "0aDoIgvbfsQYBX20nWRnuOkNrNh",
             "kdGgFnRk8TyyUVeXQji7vZybpQ1",
@@ -9741,8 +9784,8 @@
           "reply": [
             {
               "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-              "content": "정말 맛있어 보여요!",
-              "createDate": "2024-10-15",
+              "content": "정말 재밌어 보여요!",
+              "createDate": "2024-09-11",
               "like": [
                 "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                 "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -9751,15 +9794,15 @@
               "reReply": [
                 {
                   "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
-                  "content": "여기 정말 아름다워요.",
-                  "createDate": "2024-10-17",
+                  "content": "여기 정말 재밌어요!",
+                  "createDate": "2024-09-11",
                   "like": ["KWUUuqMImhcKDZ822gc2InH4vSN"],
                   "reReplyId": "rr00000285"
                 },
                 {
                   "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                   "content": "꼭 가보세요!",
-                  "createDate": "2024-10-17",
+                  "createDate": "2024-09-11",
                   "like": [
                     "lualbvqvQmVWkfDU7JUKJRYdqf3",
                     "KWUUuqMImhcKDZ822gc2InH4vSN"
@@ -9768,8 +9811,8 @@
                 },
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-                  "content": "여기서 맛있게 먹었어요.",
-                  "createDate": "2024-10-15",
+                  "content": "저도 이 전시 재밌게 봤어요.",
+                  "createDate": "2024-09-11",
                   "like": [],
                   "reReplyId": "rr00000287"
                 }
@@ -9778,8 +9821,8 @@
             },
             {
               "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
-              "content": "여기 가면 꼭 먹어봐야겠어요!",
-              "createDate": "2024-10-16",
+              "content": "귀엽다!!",
+              "createDate": "2024-09-11",
               "like": [
                 "FNUEoSKu7equPIpWvLcKumRz7Pc",
                 "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -9791,7 +9834,7 @@
             {
               "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
               "content": "저도 이 장소에서 즐거운 시간 보냈어요.",
-              "createDate": "2024-09-29",
+              "createDate": "2024-09-11",
               "like": [
                 "EnweBLflxt3pYRGLy8hfJ18MeOm",
                 "0aDoIgvbfsQYBX20nWRnuOkNrNh",
@@ -9801,14 +9844,14 @@
                 {
                   "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                   "content": "이 장소의 매력에 빠졌어요.",
-                  "createDate": "2024-10-16",
+                  "createDate": "2024-09-11",
                   "like": [],
                   "reReplyId": "rr00000288"
                 },
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
-                  "content": "운동 후에 여기가 딱이에요!",
-                  "createDate": "2024-10-13",
+                  "content": "가볍게 전시 보기엔 여기가 딱이에요!",
+                  "createDate": "2024-09-11",
                   "like": [],
                   "reReplyId": "rr00000289"
                 }
@@ -9818,7 +9861,7 @@
             {
               "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
               "content": "정말 멋진 순간이에요!",
-              "createDate": "2024-10-10",
+              "createDate": "2024-09-11",
               "like": [
                 "lualbvqvQmVWkfDU7JUKJRYdqf3",
                 "UtcsfzZbJYxJ0qzD6P6nvqXGFM1"
@@ -9829,7 +9872,7 @@
             {
               "userId": "4JhKn3cYHd9dY9muGz1oXiJAruo",
               "content": "여기 꼭 가보고 싶네요!",
-              "createDate": "2024-10-16",
+              "createDate": "2024-09-11",
               "like": [
                 "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                 "hCTuFAf5A87ZG7mhWx1poHaNF3Q"
@@ -9841,12 +9884,12 @@
         },
         {
           "feedId": "fd00000076",
-          "createDate": "2024-10-05",
+          "createDate": "2024-09-14",
           "type": "img",
-          "imgPath": ["images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx"],
-          "content": "플랜테리어와 함께하는 일상, 반려동물과의 시간은 언제나 힐링이에요 🐶 #반려동물 #소확행 #힐링",
-          "hashtag": ["#반려동물", "#소확행", "#힐링"],
-          "location": "남산 둘레길",
+          "imgPath": ["images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/feed3.jpg"],
+          "content": "#오늘도전시 진짜 너무 멋진 전시였다!",
+          "hashtag": ["#전시스타그램", "#취미스타그램"],
+          "location": "강릉",
           "like": [
             "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
             "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -9862,7 +9905,7 @@
             {
               "userId": "1JaMETkLKPzcOLuDpbmRoTpKbgt",
               "content": "여기 꼭 가보고 싶네요!",
-              "createDate": "2024-10-06",
+              "createDate": "2024-09-14",
               "like": [
                 "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                 "EnweBLflxt3pYRGLy8hfJ18MeOm",
@@ -9871,8 +9914,8 @@
               "reReply": [
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-                  "content": "여기서 맛있게 먹었어요.",
-                  "createDate": "2024-10-15",
+                  "content": "여기 정말 멋있어요!",
+                  "createDate": "2024-09-14",
                   "like": [
                     "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                     "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -9886,7 +9929,7 @@
             {
               "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
               "content": "저도 이 장소에서 즐거운 시간 보냈어요.",
-              "createDate": "2024-10-05",
+              "createDate": "2024-09-14",
               "like": [
                 "KWUUuqMImhcKDZ822gc2InH4vSN",
                 "kdGgFnRk8TyyUVeXQji7vZybpQ1",
@@ -9896,7 +9939,7 @@
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
                   "content": "여기 정말 아름다워요.",
-                  "createDate": "2024-10-07",
+                  "createDate": "2024-09-14",
                   "like": [
                     "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                     "1JaMETkLKPzcOLuDpbmRoTpKbgt"
@@ -9908,28 +9951,28 @@
             },
             {
               "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
-              "content": "여기 가면 꼭 먹어봐야겠어요!",
-              "createDate": "2024-10-05",
+              "content": "여기 꼭 가야겠어요!",
+              "createDate": "2024-09-14",
               "like": ["z7UhehujghvKX02fUj1ig9gfP7n"],
               "reReply": [
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                   "content": "다음번에 이곳에서 만나면 좋겠어요!",
-                  "createDate": "2024-10-05",
+                  "createDate": "2024-09-14",
                   "like": ["4JhKn3cYHd9dY9muGz1oXiJAruo"],
                   "reReplyId": "rr00000292"
                 },
                 {
                   "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
-                  "content": "여기 정말 아름다워요.",
-                  "createDate": "2024-10-12",
+                  "content": "꼭 미리 예매하고 가세요!",
+                  "createDate": "2024-09-14",
                   "like": [],
                   "reReplyId": "rr00000293"
                 },
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-                  "content": "다음번에 이곳에서 만나면 좋겠어요!",
-                  "createDate": "2024-10-18",
+                  "content": "여행할 때 들리면 더 좋더라구요!",
+                  "createDate": "2024-09-14",
                   "like": [
                     "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                     "hCTuFAf5A87ZG7mhWx1poHaNF3Q"
@@ -9942,13 +9985,13 @@
             {
               "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
               "content": "저도 다음에 가볼게요!",
-              "createDate": "2024-10-14",
+              "createDate": "2024-09-14",
               "like": ["0aDoIgvbfsQYBX20nWRnuOkNrNh"],
               "reReply": [
                 {
                   "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
                   "content": "저도 이곳에서 좋은 기억이 많아요!",
-                  "createDate": "2024-10-15",
+                  "createDate": "2024-09-14",
                   "like": [
                     "4JhKn3cYHd9dY9muGz1oXiJAruo",
                     "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
@@ -9958,8 +10001,8 @@
                 },
                 {
                   "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
-                  "content": "여기 정말 아름다워요.",
-                  "createDate": "2024-10-14",
+                  "content": "여기 정말 아름답게 꾸며져있더라구요",
+                  "createDate": "2024-09-14",
                   "like": [
                     "KWUUuqMImhcKDZ822gc2InH4vSN",
                     "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
@@ -9970,7 +10013,7 @@
                 {
                   "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
                   "content": "저도 사진만 봐도 힐링되네요.",
-                  "createDate": "2024-10-18",
+                  "createDate": "2024-09-14",
                   "like": [],
                   "reReplyId": "rr00000297"
                 }
@@ -9980,7 +10023,7 @@
             {
               "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
               "content": "여기 꼭 가보고 싶네요!",
-              "createDate": "2024-10-05",
+              "createDate": "2024-09-14",
               "like": [
                 "4JhKn3cYHd9dY9muGz1oXiJAruo",
                 "0aDoIgvbfsQYBX20nWRnuOkNrNh",
@@ -9990,21 +10033,21 @@
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                   "content": "정말 예쁘죠!",
-                  "createDate": "2024-10-14",
+                  "createDate": "2024-09-14",
                   "like": [],
                   "reReplyId": "rr00000298"
                 },
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                   "content": "다음번에 이곳에서 만나면 좋겠어요!",
-                  "createDate": "2024-10-17",
+                  "createDate": "2024-09-14",
                   "like": [],
                   "reReplyId": "rr00000299"
                 },
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
                   "content": "꼭 가보세요!",
-                  "createDate": "2024-10-07",
+                  "createDate": "2024-09-14",
                   "like": [],
                   "reReplyId": "rr00000300"
                 }
@@ -10017,7 +10060,7 @@
           "feedId": "fd00000077",
           "createDate": "2024-09-23",
           "type": "img",
-          "imgPath": ["images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx"],
+          "imgPath": ["images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/feed4.jpg"],
           "content": "캠핑스타그램을 하며 하루를 시작했어요! 운동 후에 먹는 프로틴 한 잔은 필수 🥤 #헬스 #운동 #프로틴",
           "hashtag": ["#헬스", "#운동", "#프로틴"],
           "location": "올림픽공원",
