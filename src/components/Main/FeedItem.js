@@ -14,6 +14,9 @@ const Wrapper = styled.div`
   &:last-child {
     border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   }
+  @media screen and (max-width: 1330px) {
+    padding-bottom: 22px;
+  }
 `;
 
 const ProfileSection = styled.div`
@@ -22,6 +25,22 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
+  @media screen and (max-width: 1330px) {
+    margin: 0 20px;
+    height: 66px;
+    & .storyFirstCircle {
+      width: 46px;
+      height: 46px;
+      & .storySecondCircle {
+        width: 42px;
+        height: 42px;
+        & .storyThirdCircle {
+          width: 38px;
+          height: 38px;
+        }
+      }
+    }
+  }
 `;
 
 const UserInfo = styled.div`
@@ -33,6 +52,9 @@ const UserInfo = styled.div`
 const UserName = styled.p`
   font-size: var(--font-14);
   color: var(--gray-color);
+  @media screen and (max-width: 1330px) {
+    font-size: var(--font-12);
+  }
 `;
 
 const PhotoSection = styled.div`
@@ -42,14 +64,27 @@ const PhotoSection = styled.div`
   border-radius: 8px;
   position: relative;
   overflow: hidden;
+  @media screen and (max-width: 1330px) {
+    width: 370px;
+    height: 370px;
+  }
 `;
 
 const FeedDescArea = styled.div`
   margin: 0 36px;
+  @media screen and (max-width: 1330px) {
+    margin: 0 20px;
+  }
 `;
 
 const FeedDesc = styled.div`
   margin-top: 22px;
+  @media screen and (max-width: 1330px) {
+    & input {
+      height: 28px;
+      border-radius: 8px;
+    }
+  }
 `;
 
 const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {

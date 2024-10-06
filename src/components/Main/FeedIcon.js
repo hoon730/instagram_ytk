@@ -24,6 +24,9 @@ const Icons = styled.div`
 const LeftIcons = styled.span`
   display: flex;
   gap: 30px;
+  @media screen and (max-width: 1330px) {
+    gap: 18px;
+  }
 `;
 
 const icon = `
@@ -32,6 +35,10 @@ const icon = `
   cursor: pointer;
   &:hover{
     color: var(--gray-color);
+  }
+  @media screen and (max-width: 1330px) {
+    width: 23px;
+    height: 23px;
   }
 `;
 
@@ -72,6 +79,9 @@ const LikeSection = styled.div`
   strong {
     font-weight: bold;
     cursor: pointer;
+  }
+  @media screen and (max-width: 1330px) {
+    font-size: var(--font-12);
   }
 `;
 

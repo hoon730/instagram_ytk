@@ -29,7 +29,6 @@ const FeedSection = styled.div`
 const Main = () => {
   return (
     <Wrapper>
-      {/* <SideBar /> */}
       <MainSection>
         <MainHeader />
         <MainContent>

@@ -53,6 +53,10 @@ const SlideButton = styled.span`
     width: inherit;
     height: inherit;
   }
+  @media screen and (max-width: 1330px) {
+    width: 25px;
+    height: 25px;
+  }
 `;
 
 const SlideButtonImg = () => {
