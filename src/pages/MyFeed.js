@@ -14,7 +14,6 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 936px;
-  height: 100vh;
   margin: 0 auto;
   /* border: 1px solid lightgray; */
 `;

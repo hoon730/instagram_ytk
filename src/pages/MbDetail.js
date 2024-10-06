@@ -10,6 +10,7 @@ import { IoChevronDown } from "react-icons/io5";
 import { BsThreads } from "react-icons/bs";
 import { LuMenu } from "react-icons/lu";
 import { GoPlus } from "react-icons/go";
+import MyPostItem from "../components/MyFeed/MyPostItem";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -123,6 +124,21 @@ const Buttons = styled.div`
   justify-content: space-between;
 `;
 
+const MbPostContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+`;
+
+const MbPostBox = styled.div`
+  width: 430px;
+  display: flex;
+  gap: 5px;
+`;
+
 const MbDetail = () => {
   const [isRecommend, setIsRecommend] = useState(false);
 
@@ -130,7 +146,7 @@ const MbDetail = () => {
     <Wrapper>
       <Header>
         <IdBox>
-          <Id>bbbok</Id>
+          <Id>bb_bok</Id>
           <IdBtn>
             <IoChevronDown />
           </IdBtn>
@@ -144,7 +160,7 @@ const MbDetail = () => {
           </Menu>
         </HeaderBtn>
       </Header>
-      <ProfileBg src="/images/mb_profile_bg.jpg" />
+      <ProfileBg src="/images/postImgs/user1/bg.jpg" />
       <UserDetail>
         <UserImg>
           <ProfileImg
@@ -156,11 +172,11 @@ const MbDetail = () => {
           </ImgEditBtn>
           <ImgEditInput type="file" id="file" accept="video/*, image/*" />
         </UserImg>
-        <PostAndFollow posting={"73"} follower={"255"} following={"358"} />
+        <PostAndFollow posting={"18"} follower={"777"} following={"333"} />
       </UserDetail>
       <UserDesc>
-        <UserName>bbo</UserName>
-        <UserIntro>마라탕 좋아해요</UserIntro>
+        <UserName>복</UserName>
+        <UserIntro>⋆｡˚ ☁︎ ˚｡⋆｡</UserIntro>
       </UserDesc>
       <Buttons>
         <Button
@@ -186,6 +202,38 @@ const MbDetail = () => {
         />
       </Buttons>
       {isRecommend ? <MbRecommend /> : null}
+      <MbPostContainer>
+        <MbPostBox>
+          <MyPostItem size={140} url={"/images/postImgs/user1/post1.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post2.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post3.jpg"} />
+        </MbPostBox>
+        <MbPostBox>
+          <MyPostItem size={140} url={"/images/postImgs/user1/post4.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post5.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post6.jpg"} />
+        </MbPostBox>
+        <MbPostBox>
+          <MyPostItem size={140} url={"/images/postImgs/user1/post7.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post8.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post9.jpg"} />
+        </MbPostBox>
+        <MbPostBox>
+          <MyPostItem size={140} url={"/images/postImgs/user1/post10.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post11.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post12.jpg"} />
+        </MbPostBox>
+        <MbPostBox>
+          <MyPostItem size={140} url={"/images/postImgs/user1/post13.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post14.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post15.jpg"} />
+        </MbPostBox>
+        <MbPostBox>
+          <MyPostItem size={140} url={"/images/postImgs/user1/post16.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post18.jpg"} />
+          <MyPostItem size={140} url={"/images/postImgs/user1/post19.jpg"} />
+        </MbPostBox>
+      </MbPostContainer>
       <MbMenu />
     </Wrapper>
   );

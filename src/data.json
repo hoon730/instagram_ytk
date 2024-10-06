@@ -66,34 +66,34 @@
     },
     {
       "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-      "userNickname": "wanderlust_3b",
+      "userNickname": "ria.hodu.b",
       "phone": "01013622941",
-      "email": "hongseoyoung@gmail.com",
-      "userRealName": "홍서영",
+      "email": "riah@gmail.com",
+      "userRealName": "박리아",
       "password": "UdZh8jJN"
     },
     {
       "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
-      "userNickname": "stellar_glow41",
+      "userNickname": "easy_guy.b",
       "phone": "01066631200",
-      "email": "yoo_haneul@gmail.com",
-      "userRealName": "유하늘",
+      "email": "donghun@gmail.com",
+      "userRealName": "염동훈",
       "password": "jHlmJl06"
     },
     {
       "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-      "userNickname": "urban_voyager78",
+      "userNickname": "hi_sheep.b",
       "phone": "01030616085",
-      "email": "limdohyun@gmail.com",
-      "userRealName": "임도현",
+      "email": "heejin@gmail.com",
+      "userRealName": "양희진",
       "password": "Tb10ULaq9"
     },
     {
       "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-      "userNickname": "electric_horizon27",
+      "userNickname": "zzi_sun.b",
       "phone": "01094867362",
-      "email": "kimhana@gmail.com",
-      "userRealName": "김하나",
+      "email": "jisun@gmail.com",
+      "userRealName": "김지선",
       "password": "RtWh1oqf3f"
     },
     {
@@ -558,14 +558,14 @@
     },
     {
       "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-      "userName": "서영",
+      "userName": "리아",
       "gender": "woman",
-      "introduction": "🌺 행복을 찾아 떠나는 여행 | 매일매일 새로운 나",
+      "introduction": "ㄴㅐ ㅇㅣ름 호두. 귀ㅇㅕ운 두쨜 고양ㅇㅣㅈㅣ",
       "website": "",
       "recommendation": true,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-      "bgPhoto": "/images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
+      "profilePhoto": "/images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/profile.jpg",
+      "bgPhoto": "/images/userImgs/Rwkuz4I5TDjog8sfK3rzUCI4Ik6/bg.jpg",
       "follower": [
         "lualbvqvQmVWkfDU7JUKJRYdqf3",
         "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -608,14 +608,14 @@
     },
     {
       "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
-      "userName": "하늘",
-      "gender": "woman",
-      "introduction": "☀️ 매일 매일의 아름다움 | 작은 행복을 소중히",
+      "userName": "동훈",
+      "gender": "man",
+      "introduction": "가을엔 염동훈 | Everything is easy and light for me ^^",
       "website": "",
       "recommendation": false,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1",
-      "bgPhoto": "/images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1",
+      "profilePhoto": "/images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/profile.jpg",
+      "bgPhoto": "/images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/bg.jpg",
       "follower": [
         "lualbvqvQmVWkfDU7JUKJRYdqf3",
         "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -658,14 +658,14 @@
     },
     {
       "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-      "userName": "도현",
-      "gender": "man",
-      "introduction": "🛤️ 여행과 음악을 사랑하는 사람 | 새로운 이야기 만들어 가기",
+      "userName": "희진",
+      "gender": "woman",
+      "introduction": "냠냠 기록!",
       "website": "",
       "recommendation": true,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-      "bgPhoto": "/images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q",
+      "profilePhoto": "/images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/profile.jpg",
+      "bgPhoto": "/images/userImgs/hCTuFAf5A87ZG7mhWx1poHaNF3Q/bg.jpg",
       "follower": [
         "lualbvqvQmVWkfDU7JUKJRYdqf3",
         "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -709,14 +709,14 @@
     },
     {
       "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-      "userName": "하나",
+      "userName": "지선",
       "gender": "woman",
-      "introduction": "🌼 나만의 색깔로 그리는 삶 | 매일의 소소한 행복",
+      "introduction": "And at last, I see the light",
       "website": "",
       "recommendation": false,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx",
-      "bgPhoto": "/images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx",
+      "profilePhoto": "/images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/profile.jpg",
+      "bgPhoto": "/images/userImgs/BbVEQf8MoEuxL7XREuCVTjUQkSx/bg.jpg",
       "follower": [
         "lualbvqvQmVWkfDU7JUKJRYdqf3",
         "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -2129,7 +2129,13 @@
           ]
         }
       ],
-      "storyStorage": []
+      "storyStorage": [
+        {
+          "storyStorageId": "ss00000029",
+          "title": "♥",
+          "storyIds": ["sh00000029", "sh00000030", "sh00000031"]
+        }
+      ]
     },
     {
       "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
