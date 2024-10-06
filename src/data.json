@@ -98,10 +98,10 @@
     },
     {
       "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
-      "userNickname": "crimson_wind_a7",
+      "userNickname": "leesoohyuk",
       "phone": "01072087580",
-      "email": "yeonsu@gmail.com",
-      "userRealName": "정연수",
+      "email": "leesoohyuk@gmail.com",
+      "userRealName": "이수혁",
       "password": "4txLRpWx"
     },
     {
@@ -760,14 +760,14 @@
     },
     {
       "userId": "z7UhehujghvKX02fUj1ig9gfP7n",
-      "userName": "수",
-      "gender": "woman",
-      "introduction": "🌿 내 꿈과 목표를 향해 | 긍정적인 에너지로 가득",
+      "userName": "이수혁",
+      "gender": "man",
+      "introduction": "Every Moments 📸",
       "website": "",
       "recommendation": true,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/z7UhehujghvKX02fUj1ig9gfP7n",
-      "bgPhoto": "/images/userImgs/z7UhehujghvKX02fUj1ig9gfP7n",
+      "profilePhoto": "/images/userImgs/z7UhehujghvKX02fUj1ig9gfP7n/profile.jpg",
+      "bgPhoto": "/images/userImgs/z7UhehujghvKX02fUj1ig9gfP7n/bg.jpg",
       "follower": [
         "lualbvqvQmVWkfDU7JUKJRYdqf3",
         "KWUUuqMImhcKDZ822gc2InH4vSN",

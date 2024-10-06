@@ -17,14 +17,14 @@ const UserDetail = styled.div`
 `
 
 const UserDesc = styled.div`
-  width: 100%;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
 `;
 
 const Text = styled.div`
   display: flex;
+  line-height: 1.3;
   gap: 4px;
 `;
 
@@ -35,9 +35,10 @@ const NotificationItem = ({type, feedbackUser, userNickName, url, comment}) => {
       <UserDetail>
         <ProfileImg size={50} url={url} hover={"noHover"}/>
         <UserDesc>
-        <Text>
-          {feedbackUser} 님이 {type === "like" ? "회원님의 게시물을 좋아합니다." : type === "follow" ? "회원님을 팔로우하기 시작했습니다." : `댓글을 남겼습니다. ${<span>{userNickName}</span>} ${comment}}`}
+          <Text>
+          {feedbackUser} 님이 {type === "like" ? "회원님의 게시물을 좋아합니다." : type === "follow" ? "회원님을 팔로우하기 시작했습니다." : `댓글을 남겼습니다. ${userNickName} ${comment}`}
           </Text>
+          {type === "follow" ? <Button type={"positive"} width={"120px"} height={"30px"} text={"팔로우"}/> : null}
         </UserDesc>
       </UserDetail>
     </Wrapper>
