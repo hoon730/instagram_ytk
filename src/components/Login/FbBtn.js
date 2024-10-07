@@ -13,6 +13,7 @@ const FBLogin = styled.div`
   /* justify-content: start;
   align-items: start; */
   color: var(--sub-purple-color);
+  font-size: 14px;
 `;
 
 const FbClick = styled.div`

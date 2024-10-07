@@ -47,11 +47,6 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const Error = styled.p`
-  color: ${colors.sub2};
-  /* margin: 10px 0 -5px 0; */
-  font-size: 14px;
-`;
 
 const Block = styled.div`
   display: flex;
@@ -62,18 +57,18 @@ const Block = styled.div`
   border: 1px solid;
   border-color: var(--gray-color);
   border-radius: 10px;
-`;
+  `;
 
 const PleaseSignUp = styled.p`
   color: ${colors.sub2};
   font-size: 14px;
-`;
+  `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
-`;
+  `;
 
 const InputBox = styled.div`
   position: relative;
@@ -86,19 +81,19 @@ const InputBox = styled.div`
   &:focus-within {
     border-color: ${colors.sub2};
   }
-`;
+  `;
 
 const LoginInput = styled.input`
   width: ${(props) => props.width || "100%"};
-  font-size: 18px;
-
+  font-size: 16px;
+  
   &::-webkit-input-password,
   &::-webkit-clear-button,
   &::-ms-reveal,
   &::-ms-clear {
     display: none;
   }
-
+  
   &:focus ~ label,
   &:not(:placeholder-shown) ~ label {
     top: -11px;
@@ -106,7 +101,7 @@ const LoginInput = styled.input`
     font-size: 12px;
     color: ${colors.sub2};
   }
-`;
+  `;
 
 const Label = styled.label`
   background: #fff;
@@ -114,12 +109,18 @@ const Label = styled.label`
   padding: 0 2px;
   left: 18px;
   top: 12px;
-  font-size: 18px;
+  font-size: 16px;
   color: ${colors.darkGray};
   pointer-events: none;
   transition: 0.2s ease all;
-`;
+  `;
 
+  const Error = styled.p`
+    color: ${colors.sub2};
+    /* margin: 10px 0 -5px 0; */
+    font-size: 14px;
+  `;
+  
 const PasswordBtn = styled.button`
   height: 21px;
   width: 45px;

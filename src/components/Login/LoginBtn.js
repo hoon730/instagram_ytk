@@ -7,7 +7,7 @@ const Submit = styled.input`
   padding: 15px 20px;
   background: var(--sub-purple-color);
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
   transition: opacity 0.3s;
   &:hover {
