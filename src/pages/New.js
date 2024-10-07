@@ -184,8 +184,8 @@ const New = ({ closeNew }) => {
       const doc = await addDoc(collection(db, "contents"), {
         post,
         createdAt: Date.now(),
-        userName: user.displayName || "Anonymous",
-        userId: user.uid,
+        userName: user?.displayName || "Anonymous",
+        userId: user?.uid || 1,
       });
       if (file) {
         const locationRef = ref(storage, `contents/${user.uid}/${doc.id}`);
