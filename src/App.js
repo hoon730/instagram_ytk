@@ -9,7 +9,6 @@ import Detail from "./pages/Detail";
 import MyFeed from "./pages/MyFeed";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
-import SearchResult from "./pages/SearchResult";
 import New from "./pages/New";
 import Setup from "./pages/Setup";
 
@@ -25,10 +24,6 @@ const router = createBrowserRouter([
       {
         path: "detail",
         element: <Detail />,
-      },
-      {
-        path: "search-result",
-        element: <SearchResult />,
       },
       {
         path: "new",

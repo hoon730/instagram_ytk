@@ -8,14 +8,13 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  display: none;
 `;
 
 const SearchBarr = styled.div`
   width: 100%;
   padding: 10px 14px;
   border-radius: 8px;
-  background: var(--light-gray-color);
+  background: ${({ theme }) => theme.iconBgColor};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,7 +34,7 @@ const ItemArea = styled.div`
     cursor: pointer;
     & > svg {
       width: 70%;
-      color: var(--bg-white-color);
+      color: ${({ theme }) => theme.iconBgColor};
     }
     &.active {
       display: flex;
@@ -48,26 +47,41 @@ const SearchInput = styled.input`
   height: 24px;
   font-size: 16px;
   background: none;
-  color: var(--font-black-color);
+  color: ${({ theme }) => theme.fontColor};
   &::placeholder {
     font-size: 14px;
+    color: ${({ theme }) => theme.fontColor};
+  }
+`;
+
+const ResultArea = styled.div`
+  display: none;
+  &.active {
+    display: block;
   }
 `;
 
 const SearchBar = () => {
   const [text, setText] = useState("");
   const [isActive, setIsActive] = useState(false);
+  const [resultActive, setResultActive] = useState(false);
 
   const deleteBtnActive = (e) => {
     setText(e.target.value);
     setIsActive(true);
-    if (e.target.value === "") setIsActive(false);
-    else setIsActive(true);
+    if (e.target.value === "") {
+      setIsActive(false);
+      setResultActive(false);
+    } else {
+      setIsActive(true);
+      setResultActive(true);
+    }
   };
 
   const inputReset = () => {
     setText("");
     setIsActive(false);
+    setResultActive(false);
   };
 
   return (
@@ -89,7 +103,9 @@ const SearchBar = () => {
           <AiOutlineClose />
         </ItemArea>
       </SearchBarr>
-      <SearchResult text={text} />
+      <ResultArea className={resultActive ? "result active" : "result"}>
+        <SearchResult text={text} />
+      </ResultArea>
     </Wrapper>
   );
 };

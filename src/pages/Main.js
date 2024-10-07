@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import SideBar from "../components/Common/Sidebar/SideBar";
 import HotHashtag from "../components/HotHashtag";
 import MainHeader from "../components/Main/MainHeader";
 import FeedContent from "../components/Main/FeedContent";
@@ -18,6 +17,7 @@ const MainSection = styled.div`
 
 const MainContent = styled.div`
   display: flex;
+  background: ${({ theme }) => theme.bgColor};
 `;
 
 const FeedSection = styled.div`
