@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import SearchBar from "../Common/SearchBar";
+import SearchBar from "./SearchBar";
 import ToolItem from "../Common/Sidebar/ToolItem";
 import ProfileImg from "../Profile/ProfileImg";
-import UserInfo from "../User/UserInfo";
+import UserId from "../User/UserId";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Wrapper = styled.div`
-  border-bottom: 1px solid var(--light-gray-color);
+  border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   height: 85px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 36px;
+  background: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
+  border-right: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 const SearchBarArea = styled.div`
-  width: 585px;
+  width: 500px;
 `;
 
 const ProfileArea = styled.div`
@@ -34,13 +37,13 @@ const Profile = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid var(--light-gray-color);
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 12px;
   padding: 8px;
   transition: background 0.3s;
   cursor: pointer;
   &:hover {
-    background: var(--light-gray-color);
+    background: ${({ theme }) => theme.iconBgColor};
   }
 `;
 
@@ -55,12 +58,7 @@ const ProfileText = styled.div`
   flex-direction: column;
 `;
 
-const UserNickname = styled.div`
-  font-size: var(--font-14);
-  font-weight: var(--font-bold);
-`;
-
-const Optional = styled.div`
+const UserName = styled.div`
   font-size: var(--font-12);
   font-weight: var(--font-regular);
   color: var(--gray-color);
@@ -90,9 +88,9 @@ const MainHeader = () => {
       </SearchBarArea>
       <ProfileArea>
         <ToolItem
-          onClick={heartChange}
+          clickEvent={heartChange}
           iconCode={heart ? <GoHeartFill /> : <GoHeart />}
-          name={heart ? "heartFill" : null}
+          name={heart ? "heartFill" : "heart"}
         />
         <Profile>
           <UserProfile>
@@ -101,8 +99,8 @@ const MainHeader = () => {
               size={"45"}
             />
             <ProfileText>
-              <UserNickname>lotte_ria</UserNickname>
-              <Optional>decent</Optional>
+              <UserId type={"feed"} userNickname={"burxxxking"} />
+              <UserName>decent</UserName>
             </ProfileText>
           </UserProfile>
           <AccountIcon>

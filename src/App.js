@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme } from "./styles/theme";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
 import Main from "./pages/Main";
 import Detail from "./pages/Detail";
+import MyFeed from "./pages/MyFeed";
 import Login from "./pages/Login";
 import Layout from "./components/Layout";
+import New from "./pages/New";
+import Loading from "./components/Common/Loading";
+
+import { auth } from "./utils/firebase";
+import Setup from "./pages/Setup";
 import Signup from "./pages/Signup";
-import { auth } from "./firebase";
-import { useEffect } from "react";
 import ProtectedPage from "./components/ProtectedPage";
 
 const router = createBrowserRouter([
@@ -31,11 +35,19 @@ const router = createBrowserRouter([
       },
       {
         path: "detail",
-        element: (
-          <ProtectedPage>
-            <Detail />
-          </ProtectedPage>
-        ),
+        element: <Detail />,
+      },
+      {
+        path: "new",
+        element: <New />,
+      },
+      {
+        path: "myfeed",
+        element: <MyFeed />,
+      },
+      {
+        path: "setup",
+        element: <Setup />,
       },
     ],
   },
@@ -51,24 +63,27 @@ const router = createBrowserRouter([
 
 export const ThemeContext = React.createContext();
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const init = async () => {
+    await auth.authStateReady();
+    await setIsLoading(false);
+  };
   const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    init();
+  }, []);
 
   const changeDark = () => {
     setDarkMode((current) => !current);
   };
 
-  const init = async () => {
-    await auth.authStateReady();
-  };
-  useEffect(() => {
-    init();
-  }, []);
   return (
     <>
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <ThemeContext.Provider value={{ changeDark, darkMode }}>
           <GlobalStyles />
-          <RouterProvider router={router} />
+          {isLoading ? <Loading /> : <RouterProvider router={router} />}
         </ThemeContext.Provider>
       </ThemeProvider>
     </>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../utils/firebase";
 import { FirebaseError } from "firebase/app";
 import LogoImg from "../components/Login/LogoImg";
 import LoginBtn from "../components/Login/LoginBtn";

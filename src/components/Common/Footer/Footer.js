@@ -23,11 +23,16 @@ const BtnListWrapper = styled.div`
   margin-bottom: 15px;
 `;
 
-const BtnList = styled.ul`
+const BtnList = styled.div`
+  display: flex;
+  gap: 1px;
+`;
+
+const ItemObject = styled.ul`
   display: flex;
   gap: 1px;
   &.second_row {
-    & li:last-child {
+    &:last-child li:last-child {
       display: none;
     }
   }
@@ -84,19 +89,19 @@ const Footer = ({ direction, color }) => {
     <Wrapper color={color}>
       <BtnListWrapper direction={direction}>
         <BtnList>
-          {footerItemName1.map((it) => (
-            <>
+          {footerItemName1.map((it, idx) => (
+            <ItemObject key={`footerFirstItem${idx}`}>
               <FooterListItem text={it.name} url={it.url} />
               <FooterListText text={"·"} />
-            </>
+            </ItemObject>
           ))}
         </BtnList>
-        <BtnList className="second_row">
-          {footerItemName2.map((it) => (
-            <>
+        <BtnList>
+          {footerItemName2.map((it, idx) => (
+            <ItemObject key={`footerSecondItem${idx}`} className="second_row">
               <FooterListItem text={it.name} url={it.url} />
               <FooterListText text={"·"} />
-            </>
+            </ItemObject>
           ))}
         </BtnList>
       </BtnListWrapper>

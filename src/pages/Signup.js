@@ -8,7 +8,7 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth } from "../utils/firebase";
 import { FirebaseError } from "firebase/app";
 import styled from "styled-components";
 import LogoImg from "../components/Login/LogoImg";
