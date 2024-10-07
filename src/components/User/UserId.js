@@ -90,11 +90,16 @@ const MoreList = styled.div`
   overflow: hidden;
 `;
 
-const CancelBtn = styled.button`
+const CancelBtn = styled.div`
   width: 100%;
   padding: 12px;
   font-size: var(--font-14);
   text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--gray-color);
+  }
 `;
 
 const HeartBtn = styled.button`
@@ -114,6 +119,8 @@ const UserId = ({
   btn,
   hover,
   top,
+  feed,
+  onClick,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -171,8 +178,32 @@ const UserId = ({
           }}
         >
           <MoreList>
-            <MoreItem text={"신고"} padding={"12px"} fontSize={"14"} />
-            <MoreItem text={"게시물로 이동"} padding={"12px"} fontSize={"14"} />
+            {feed === "myfeed" ? (
+              <>
+                <MoreItem
+                  text={"삭제"}
+                  padding={"12px"}
+                  fontSize={"14"}
+                  onClick={onClick}
+                />
+                <MoreItem
+                  text={"수정"}
+                  padding={"12px"}
+                  fontSize={"14"}
+                  onClick={onClick}
+                />
+              </>
+            ) : (
+              <>
+                <MoreItem text={"신고"} padding={"12px"} fontSize={"14"} />
+                <MoreItem
+                  text={"게시물로 이동"}
+                  padding={"12px"}
+                  fontSize={"14"}
+                />
+              </>
+            )}
+
             <MoreItem text={"공유 대상..."} padding={"12px"} fontSize={"14"} />
             <MoreItem text={"링크 복사"} padding={"12px"} fontSize={"14"} />
             <MoreItem text={"퍼가기"} padding={"12px"} fontSize={"14"} />

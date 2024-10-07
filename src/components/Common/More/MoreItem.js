@@ -7,13 +7,14 @@ const Wrapper = styled.div`
   color: ${({ theme }) => theme.fontColor};
   text-align: center;
   transition: all 0.3s;
+  cursor: pointer;
   border-bottom: ${({ last }) =>
     last === "last" ? null : `1px solid var(--light-gray-color);`};
   padding: ${({ padding }) => (padding ? `${padding}` : "auto")};
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   cursor: pointer;
   ${({ text }) =>
-    text === "신고"
+    text === "신고" || text === "삭제"
       ? `color: var(--warning-color); font-weight: var(--font-bold);`
       : ""};
 
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MoreItem = ({ text, padding, last, fontSize }) => {
+const MoreItem = ({ text, padding, last, fontSize, onClick }) => {
   const navigate = useNavigate();
 
   const goLogin = () => {
