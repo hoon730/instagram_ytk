@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import MoreItem from "../Common/More/MoreItem";
 import HoverProfile from "./HoverProfile";
+import { getFormattedDate } from "../../utils/utils";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
@@ -114,7 +115,7 @@ const UserId = ({
   userNickname,
   check,
   comment,
-  createDate,
+  createdAt,
   follwed,
   btn,
   hover,
@@ -134,6 +135,8 @@ const UserId = ({
     setHoverId(false);
   };
 
+  console.log(onClick);
+
   return (
     <Wrapper>
       <StyledSpan type={type}>
@@ -143,10 +146,10 @@ const UserId = ({
         </IdSpan>
         {check === "active" ? <Check src="/images/check.svg" /> : null}
         {comment ? <Comment>{comment}</Comment> : null}
-        {createDate ? (
+        {createdAt ? (
           <Date>
             <span>&middot;</span>
-            {createDate}
+            {getFormattedDate(createdAt)}
           </Date>
         ) : null}
         {follwed ? (

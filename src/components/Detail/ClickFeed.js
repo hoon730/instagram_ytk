@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { getFormattedDate } from "../../utils/utils";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
@@ -387,6 +388,7 @@ const Clickdetail = ({
   location,
   onClick,
   userName,
+  createdAt,
   post,
   photo,
   video,
@@ -511,7 +513,6 @@ const Clickdetail = ({
       <BgWrapper
         ref={bgRef}
         onClick={(e) => {
-          console.log(bgRef.current);
           if (e.target === bgRef.current) {
             onClick();
           }
@@ -521,9 +522,9 @@ const Clickdetail = ({
           <Inner className="inner" isEditing={isEditing}>
             {isEditing ? (
               <Title>
-                <Button text={"취소"} onClick={handleCancel} />
+                <Button text={"취소"} />
                 <span>편집 하기</span>
-                <Button text={"완료"} onClick={handleEdit} />
+                <Button text={"완료"} />
               </Title>
             ) : null}
             <Contents isEditing={isEditing}>
@@ -604,6 +605,7 @@ const Clickdetail = ({
                           userNickname={"bbok"}
                           btn={"more"}
                           feed={"myfeed"}
+                          onClick={handleEdit}
                         />
                         <UserLocation>대관령 목장</UserLocation>
                       </Userinfo>
@@ -618,7 +620,7 @@ const Clickdetail = ({
                       ) : (
                         <>
                           <Content size={"40"}>{post}</Content>
-                          <Date>2023년 12월 25일</Date>
+                          <Date>{createdAt}</Date>
                         </>
                       )}
                     </UserContents>
