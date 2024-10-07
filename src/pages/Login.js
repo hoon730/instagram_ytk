@@ -82,7 +82,7 @@ const Label = styled.label`
   position: absolute;
   padding: 0 2px;
   left: 18px;
-  top: 12px;
+  top: 18px;
   font-size: 16px;
   color: ${colors.darkGray};
   pointer-events: none;

@@ -47,7 +47,6 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-
 const Block = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,18 +56,18 @@ const Block = styled.div`
   border: 1px solid;
   border-color: var(--gray-color);
   border-radius: 10px;
-  `;
+`;
 
 const PleaseSignUp = styled.p`
   color: ${colors.sub2};
   font-size: 14px;
-  `;
+`;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  `;
+`;
 
 const InputBox = styled.div`
   position: relative;
@@ -78,22 +77,23 @@ const InputBox = styled.div`
   border-radius: 5px;
   padding: 15px 20px;
   justify-content: space-between;
+  align-items: center;
   &:focus-within {
     border-color: ${colors.sub2};
   }
-  `;
+`;
 
 const LoginInput = styled.input`
   width: ${(props) => props.width || "100%"};
   font-size: 16px;
-  
+
   &::-webkit-input-password,
   &::-webkit-clear-button,
   &::-ms-reveal,
   &::-ms-clear {
     display: none;
   }
-  
+
   &:focus ~ label,
   &:not(:placeholder-shown) ~ label {
     top: -11px;
@@ -101,31 +101,31 @@ const LoginInput = styled.input`
     font-size: 12px;
     color: ${colors.sub2};
   }
-  `;
+`;
 
 const Label = styled.label`
   background: #fff;
   position: absolute;
   padding: 0 2px;
   left: 18px;
-  top: 12px;
+  top: 18px;
   font-size: 16px;
   color: ${colors.darkGray};
   pointer-events: none;
   transition: 0.2s ease all;
-  `;
+`;
 
-  const Error = styled.p`
-    color: ${colors.sub2};
-    /* margin: 10px 0 -5px 0; */
-    font-size: 14px;
-  `;
-  
+const Error = styled.p`
+  color: ${colors.sub2};
+  /* margin: 10px 0 -5px 0; */
+  font-size: 14px;
+`;
+
 const PasswordBtn = styled.button`
   height: 21px;
   width: 45px;
   color: ${colors.font};
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   padding-left: 20px;
@@ -134,21 +134,22 @@ const PasswordBtn = styled.button`
 `;
 
 const DomainSelect = styled.select`
-  height: 21px;
+  height: 24px;
   border: none;
   border-left: 1px solid ${colors.gray};
   padding: 0 0 0 10px;
   color: ${colors.darkGray};
-  font-size: 18px;
+  font-size: 16px;
   outline: none;
+
 `;
 
 const CountrySelect = styled.select`
-  height: 21px;
+  height: 24px;
   border: none;
   border-right: 1px solid ${colors.gray};
   color: ${colors.darkGray};
-  font-size: 18px;
+  font-size: 16px;
   outline: none;
 `;
 
