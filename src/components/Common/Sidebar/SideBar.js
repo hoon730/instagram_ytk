@@ -73,7 +73,7 @@ const MobileLogo = styled.div`
   align-items: center;
 
   svg {
-    font-size: var(--font-24);
+    font-size: var(--font-size-24);
     color: ${({ theme }) => theme.fontColor};
   }
 `;

@@ -9,6 +9,13 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
+const MainHeaderMargin = styled.div`
+  height: 85px;
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
+`;
+
 const MainSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,6 +31,17 @@ const FeedSection = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(100% - 380px);
+  margin: 0 auto;
+  @media screen and (max-width: 1350px) {
+    width: 100%;
+  }
+`;
+
+const HotHashtagMargin = styled.div`
+  width: 380px;
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 const Main = () => {
@@ -32,12 +50,14 @@ const Main = () => {
       {/* <SideBar /> */}
       <MainSection>
         <MainHeader />
+        <MainHeaderMargin />
         <MainContent>
           <FeedSection>
             <StoryContent />
             <FeedContent />
           </FeedSection>
           <HotHashtag />
+          <HotHashtagMargin />
         </MainContent>
       </MainSection>
     </Wrapper>

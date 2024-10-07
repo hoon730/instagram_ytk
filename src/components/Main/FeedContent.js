@@ -4,14 +4,8 @@ import TabBarBtn from "../Common/TabBarBtn";
 import { FaRegStar } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import FeedItem from "./FeedItem";
-import Loading from "../Common/Loading";
-import Follower from "../Detail/Follower";
 
-const tabWidth = 340;
-
-const Wrapper = styled.div`
-  width: 100%;
-`;
+const Wrapper = styled.div``;
 
 const FeedArea = styled.div`
   width: 680px;
@@ -72,7 +66,7 @@ const FeedContent = () => {
           <FeedTabBtn>
             <TabBarBtn
               onClick={recommendActive}
-              width={tabWidth}
+              width={340}
               iconCode={<FaRegStar />}
               text={"추천 게시물"}
               isActive={recommend}

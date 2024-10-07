@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import NotificationItem from './NotificationItem';
+import React from "react";
+import styled from "styled-components";
+import NotificationItem from "./NotificationItem";
 
 const Wrapper = styled.div`
   width: 380px;
@@ -72,7 +72,7 @@ const Notification = () => {
         </NotificationList>
       ))}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Notification
+export default Notification;

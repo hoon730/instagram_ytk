@@ -64,7 +64,7 @@ const MainSearchItem = styled.div`
   &:hover {
     background: ${({ theme }) => theme.iconBgColor};
   }
-`
+`;
 
 const NoResult = styled.div`
   font-size: var(--font-18);

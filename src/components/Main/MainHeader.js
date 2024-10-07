@@ -9,6 +9,7 @@ import Notification from "./Notification";
 
 const Wrapper = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+  width: 80%;
   height: 85px;
   display: flex;
   justify-content: space-between;
@@ -17,6 +18,11 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   border-right: 1px solid ${({ theme }) => theme.borderColor};
+  position: fixed;
+  z-index: 1;
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 const SearchBarArea = styled.div`
@@ -36,7 +42,7 @@ const NotificationArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const Profile = styled.div`
   width: calc(100% - 52px);
@@ -86,12 +92,12 @@ const MainHeader = () => {
       </SearchBarArea>
       <ProfileArea>
         <NotificationArea>
-        <ToolItem
-          clickEvent={heartChange}
-          iconCode={heart ? <GoHeartFill /> : <GoHeart />}
-          name={heart ? "heartFill" : "heart"}
-        />
-        {heart ? <Notification/> : null}
+          <ToolItem
+            clickEvent={heartChange}
+            iconCode={heart ? <GoHeartFill /> : <GoHeart />}
+            name={heart ? "heartFill" : "heart"}
+          />
+          {heart ? <Notification /> : null}
         </NotificationArea>
         <Profile>
           <UserProfile>
@@ -101,7 +107,7 @@ const MainHeader = () => {
               hover={"noHover"}
             />
             <ProfileText>
-              <UserId userNickname={"burxxxking"} hover={"noHover"}/>
+              <UserId userNickname={"burxxxking"} hover={"noHover"} />
               <UserName>decent</UserName>
             </ProfileText>
           </UserProfile>
