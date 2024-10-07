@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "../firebase";
+import { auth } from "../utils/firebase";
 import { Navigate } from "react-router-dom";
 
 const ProtectedPage = ({ children }) => {
