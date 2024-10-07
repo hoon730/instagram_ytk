@@ -147,11 +147,9 @@ const Slides = styled.ul`
 `;
 
 const Slide = styled.li`
-  width: 100%;
-  height: 100%;
   img {
-    width: inherit;
-    height: inherit;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
   }
 `;
@@ -344,15 +342,16 @@ const Contents = styled.div`
 `;
 
 const SetContentButton = styled.label`
-  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
   cursor: pointer;
-  &:hover {
-    color: #1d9bf0;
-    transition: color 0.3s;
-  }
-  svg {
-    color: var(--gray-color);
-  }
+`;
+
+const Icon = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 const SetContentInputButton = styled.input`
@@ -424,9 +423,9 @@ const Clickdetail = ({
     setEditedPost(e.target.value);
   };
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
+  // const handleEdit = () => {
+  //   setIsEditing(true);
+  // };
 
   const handleCancel = () => {
     setIsEditing(false);
@@ -442,7 +441,7 @@ const Clickdetail = ({
     const ok = window.confirm("정말로 지금 게시물을 삭제하시겠습니까?");
     if (!ok || user.uid !== userId) return;
     try {
-      await deleteDoc(doc(db, `content`, id));
+      await deleteDoc(doc(db, `contents`, id));
       if (photo) {
         const photoRef = ref(storage, `contents/${user.uid}/${id}`);
         await deleteObject(photoRef);
@@ -454,9 +453,9 @@ const Clickdetail = ({
 
   const onUpDate = async () => {
     try {
-      if (user.uid !== userId) return;
+      if (user?.uid !== userId) return;
 
-      const postDoc = await getDoc(doc, "contents", id);
+      const postDoc = await getDoc(doc(db, "contents", id));
 
       if (!postDoc.exists()) throw new Error("게시글이 존재하지 않습니다");
       const postData = postDoc.data();
@@ -466,15 +465,15 @@ const Clickdetail = ({
         if (postData.video) postData.fileType = "video";
       }
 
-      const exsitingfileType = post.Data.fileType || null;
+      const exsitingfileType = postData?.fileType || null;
 
       if (editedPhoto) {
-        const newFileType = editedPhoto.type.startsWidth("image/")
+        const newFileType = editedPhoto.type.startsWith("image/")
           ? "image"
           : "video";
 
         if (exsitingfileType && exsitingfileType !== newFileType) {
-          alert("동일한 컨텐츠만 업로드가 가능합니다");
+          alert("동일한 컨텐츠만 업로드가 가능합니다.");
           return;
         }
 
@@ -484,7 +483,7 @@ const Clickdetail = ({
           uploadTask.cancel();
           throw new StorageError(
             StorageErrorCode.CANCELED,
-            "파일의 크기가 5MB를 초과하였습니다"
+            "파일의 크기가 5MB를 초과하였습니다."
           );
         }
         const result = await uploadBytes(locationRef, editedPhoto);
@@ -522,27 +521,16 @@ const Clickdetail = ({
           <Inner className="inner" isEditing={isEditing}>
             {isEditing ? (
               <Title>
-                <Button text={"취소"} />
+                <Button text={"취소"} onClick={handleCancel} />
                 <span>편집 하기</span>
-                <Button text={"완료"} />
+                <Button text={"완료"} onClick={onUpDate} />
               </Title>
             ) : null}
             <Contents isEditing={isEditing}>
               <Slider className="slider">
                 {isEditing ? (
                   <SetContentButton htmlFor="edit-content">
-                    <svg
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <path
-                        clipRule="evenodd"
-                        fillRule="evenodd"
-                        d="M1 5.25A2.25 2.25 0 0 1 3.25 3h13.5A2.25 2.25 0 0 1 19 5.25v9.5A2.25 2.25 0 0 1 16.75 17H3.25A2.25 2.25 0 0 1 1 14.75v-9.5Zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 0 0 .75-.75v-2.69l-2.22-2.219a.75.75 0 0 0-1.06 0l-1.91 1.909.47.47a.75.75 0 1 1-1.06 1.06L6.53 8.091a.75.75 0 0 0-1.06 0l-2.97 2.97ZM12 7a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
-                      />
-                    </svg>
+                    <Icon src="/images/newPostIcon.svg" />
                     <SetContentInputButton
                       id="edit-content"
                       type="file"
@@ -553,11 +541,14 @@ const Clickdetail = ({
                 ) : (
                   <>
                     <Slides visible={visible}>
-                      {feed[1].imgPath.map((it, idx) => (
+                      {/* {feed[1].imgPath.map((it, idx) => (
                         <Slide key={idx}>
                           <img src={it} />
                         </Slide>
-                      ))}
+                      ))} */}
+                      <Slide>
+                        <img src={photo} />
+                      </Slide>
                     </Slides>
                     <SlideButtons>
                       <SlideButton
@@ -602,10 +593,11 @@ const Clickdetail = ({
                       <Userinfo>
                         <UserId
                           type={"feed"}
-                          userNickname={"bbok"}
+                          userNickname={userName}
                           btn={"more"}
                           feed={"myfeed"}
-                          onClick={handleEdit}
+                          onClick={onDelete}
+                          setIsEditing={setIsEditing}
                         />
                         <UserLocation>대관령 목장</UserLocation>
                       </Userinfo>

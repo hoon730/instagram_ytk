@@ -122,6 +122,7 @@ const UserId = ({
   top,
   feed,
   onClick,
+  setIsEditing
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -135,7 +136,9 @@ const UserId = ({
     setHoverId(false);
   };
 
-  console.log(onClick);
+  const handleEditing = () => {
+    onClick();
+  };
 
   return (
     <Wrapper>
@@ -188,12 +191,14 @@ const UserId = ({
                   padding={"12px"}
                   fontSize={"14"}
                   onClick={onClick}
+                  setOpenMore={setOpenMore}
                 />
                 <MoreItem
                   text={"수정"}
                   padding={"12px"}
                   fontSize={"14"}
-                  onClick={onClick}
+                  setIsEditing={setIsEditing}
+                  setOpenMore={setOpenMore}
                 />
               </>
             ) : (

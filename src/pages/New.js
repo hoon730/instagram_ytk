@@ -205,6 +205,7 @@ const New = ({ closeNew }) => {
       }
       setPost("");
       setFile(null);
+      closeNew()
     } catch (e) {
       console.error(e);
     } finally {

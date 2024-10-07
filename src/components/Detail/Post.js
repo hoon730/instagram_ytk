@@ -32,7 +32,7 @@ const Video = styled.video`
   height: 100%;
 `;
 
-const Post = ({ UserName, createdAt, post, photo, video, userId, id }) => {
+const Post = ({ userName, createdAt, post, photo, video, userId, id }) => {
   // const [isEditing, setIsEditing] = useState(false);
   // const [editedPost, setEditedPost] = useState(post);
   // const [editedPhoto, setEditedPhoto] = useState(null);
@@ -137,7 +137,7 @@ const Post = ({ UserName, createdAt, post, photo, video, userId, id }) => {
       {isClicked ? (
         <ClickFeed
           onClick={showFeed}
-          {...{ UserName, createdAt, post, photo, video, userId, id }}
+          {...{ userName, createdAt, post, photo, video, userId, id }}
         />
       ) : null}
     </>
