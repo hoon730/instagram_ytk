@@ -13,15 +13,25 @@ import Loading from "./components/Common/Loading";
 
 import { auth } from "./utils/firebase";
 import Setup from "./pages/Setup";
+import Signup from "./pages/Signup";
+import ProtectedPage from "./components/ProtectedPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedPage>
+        <Layout />
+      </ProtectedPage>
+    ),
     children: [
       {
         path: "",
-        element: <Main />,
+        element: (
+          <ProtectedPage>
+            <Main />
+          </ProtectedPage>
+        ),
       },
       {
         path: "detail",
@@ -44,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
   },
 ]);
 

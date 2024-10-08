@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import MoreItem from "../Common/More/MoreItem";
 import HoverProfile from "./HoverProfile";
+import { getFormattedDate } from "../../utils/utils";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
@@ -90,11 +91,16 @@ const MoreList = styled.div`
   overflow: hidden;
 `;
 
-const CancelBtn = styled.button`
+const CancelBtn = styled.div`
   width: 100%;
   padding: 12px;
   font-size: var(--font-14);
   text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--gray-color);
+  }
 `;
 
 const HeartBtn = styled.button`
@@ -109,11 +115,14 @@ const UserId = ({
   userNickname,
   check,
   comment,
-  createDate,
+  createdAt,
   follwed,
   btn,
   hover,
   top,
+  feed,
+  onClick,
+  setIsEditing
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -127,6 +136,10 @@ const UserId = ({
     setHoverId(false);
   };
 
+  const handleEditing = () => {
+    onClick();
+  };
+
   return (
     <Wrapper>
       <StyledSpan type={type}>
@@ -136,10 +149,10 @@ const UserId = ({
         </IdSpan>
         {check === "active" ? <Check src="/images/check.svg" /> : null}
         {comment ? <Comment>{comment}</Comment> : null}
-        {createDate ? (
+        {createdAt ? (
           <Date>
             <span>&middot;</span>
-            {createDate}
+            {getFormattedDate(createdAt)}
           </Date>
         ) : null}
         {follwed ? (
@@ -171,8 +184,34 @@ const UserId = ({
           }}
         >
           <MoreList>
-            <MoreItem text={"신고"} padding={"12px"} fontSize={"14"} />
-            <MoreItem text={"게시물로 이동"} padding={"12px"} fontSize={"14"} />
+            {feed === "myfeed" ? (
+              <>
+                <MoreItem
+                  text={"삭제"}
+                  padding={"12px"}
+                  fontSize={"14"}
+                  onClick={onClick}
+                  setOpenMore={setOpenMore}
+                />
+                <MoreItem
+                  text={"수정"}
+                  padding={"12px"}
+                  fontSize={"14"}
+                  setIsEditing={setIsEditing}
+                  setOpenMore={setOpenMore}
+                />
+              </>
+            ) : (
+              <>
+                <MoreItem text={"신고"} padding={"12px"} fontSize={"14"} />
+                <MoreItem
+                  text={"게시물로 이동"}
+                  padding={"12px"}
+                  fontSize={"14"}
+                />
+              </>
+            )}
+
             <MoreItem text={"공유 대상..."} padding={"12px"} fontSize={"14"} />
             <MoreItem text={"링크 복사"} padding={"12px"} fontSize={"14"} />
             <MoreItem text={"퍼가기"} padding={"12px"} fontSize={"14"} />

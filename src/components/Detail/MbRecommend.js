@@ -85,7 +85,7 @@ const MbRecommend = () => {
         <RecommendList drag="x" dragSnapToOrigin>
           {userData.map((it, idx) => (
             <RecommendItem key={idx}>
-              <ProfileImg size={"75"} url={it.imgPath} />
+              <ProfileImg size={"75"} url={it.imgPath} hover={true} />
               <Id>{it.userNickName}</Id>
               <Desc>{it.desc}님이 팔로우 합니다</Desc>
               <Button

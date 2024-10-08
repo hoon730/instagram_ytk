@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 25px 0;
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const NumberingBox = styled.div`

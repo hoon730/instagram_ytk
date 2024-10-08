@@ -70,10 +70,10 @@ const ProfileImg = ({ url, type, size, onClick, hover, top }) => {
       onMouseEnter={showProfile}
       onMouseLeave={hideProfile}
     >
-      {!hover && hoverImg ? <HoverProfile target={"img"} top={"45"}/> : null}
-      <ActivationArea size={size} type={type}>
-        <BoundaryLine size={size} type={type}>
-          <ImgBox size={size}>
+      {!hover && hoverImg ? <HoverProfile target={"img"} top={"45"} /> : null}
+      <ActivationArea className="storyFirstCircle" size={size} type={type}>
+        <BoundaryLine className="storySecondCircle" size={size} type={type}>
+          <ImgBox className="storyThirdCircle" size={size}>
             <Img src={url} alt="profile photo" />
           </ImgBox>
         </BoundaryLine>

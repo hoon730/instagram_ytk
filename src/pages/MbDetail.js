@@ -220,6 +220,7 @@ const MbDetail = () => {
           <ProfileImg
             size={"78"}
             url={"/images/userImgs/user123456/feedDetail.jpg"}
+            hover={true}
           />
           <ImgEditBtn htmlFor="file">
             <GoPlus />

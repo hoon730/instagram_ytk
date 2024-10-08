@@ -9,7 +9,6 @@ import { FaGear } from "react-icons/fa6";
 import { BsThreads } from "react-icons/bs";
 import { LuSunMedium } from "react-icons/lu";
 
-import { BsHeart } from "react-icons/bs";
 import { RxMagnifyingGlass } from "react-icons/rx";
 
 export const getFormattedDate = (targetDate) => {
@@ -17,8 +16,8 @@ export const getFormattedDate = (targetDate) => {
   let month = targetDate.getMonth() + 1;
   let date = targetDate.getDate();
 
-  month = month < 10 ? `0${month}` : month;
-  date = date < 10 ? `0${date}` : date;
+  if (month < 10) month = `0${month}`;
+  if (date < 10) date = `0${date}`;
 
   return `${year}-${month}-${date}`;
 };
@@ -42,20 +41,18 @@ export const menuData = [
   },
   {
     id: 3,
-    name: "저장됨",
-    iconCode: <FaRegBookmark />,
-    path: "/detail",
-  },
-  {
-    id: 4,
     name: "메시지",
     iconCode: <IoPaperPlaneOutline />,
   },
   {
-    id: 5,
+    id: 4,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
-    // path: "/new",
+  },
+  {
+    id: 5,
+    name: "프로필",
+    path: "/detail",
   },
 ];
 
