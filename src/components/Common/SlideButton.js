@@ -14,15 +14,30 @@ const ButtonWrapper = styled.div`
   .slideButtonIcon {
     color: ${({ theme }) => theme.bgColor};
   }
+  visibility: ${({ type, $visible, $limit }) =>
+    type
+      ? type === "left"
+        ? $visible === 0
+          ? "hidden"
+          : "visible"
+        : $visible === $limit
+        ? "hidden"
+        : "visible"
+      : "visible"};
 `;
 
-function SlideButton({ type }) {
+function SlideButton({ type, onClick, visible, limit }) {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper
+      onClick={onClick}
+      type={type}
+      $visible={visible}
+      $limit={limit}
+    >
       {type === "left" ? (
-        <FaAngleLeft className="slideButtonIcon" />
+        <FaAngleLeft className="slideButtonIcon prev" />
       ) : (
-        <FaAngleRight className="slideButtonIcon" />
+        <FaAngleRight className="slideButtonIcon next" />
       )}
     </ButtonWrapper>
   );
