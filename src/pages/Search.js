@@ -11,11 +11,18 @@ const Wrapper = styled.div`
 
 const Margin = styled.div`
   height: 185px;
+  @media screen and (max-width: 1170px) {
+    height: 80px;
+  }
 `;
 
 const Container = styled.div`
   width: 936px;
   margin: 0 auto;
+  @media screen and (max-width: 1170px) {
+    width: 100%;
+    padding: 0 40px;
+  }
 `;
 
 const Header = styled.div`
@@ -29,10 +36,21 @@ const Header = styled.div`
   position: fixed;
   top: 85px;
   color: ${({ theme }) => theme.fontColor};
+  @media screen and (max-width: 1170px) {
+    top: 0;
+    width: calc(100% - 20% - 80px);
+    height: 80px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: calc(100% - 92px - 80px);
+  }
+  @media screen and (max-width: 630px) {
+    width: calc(100% - 80px);
+  }
 `;
 
 const Keyword = styled.div`
-  font-size: var(--font-size-28);
+  font-size: var(--font-28);
   font-weight: var(--font-bold);
 `;
 
@@ -41,6 +59,9 @@ const ItemArea = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
+  @media screen and (max-width: 1170px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 const mockUp = [

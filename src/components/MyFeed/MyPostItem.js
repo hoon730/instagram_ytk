@@ -6,6 +6,9 @@ const Wrapper = styled.div`
   height: 305px;
   /* border: 1px solid lightgray; */
   border-radius: 10px;
+  @media screen and (max-width: 1170px) {
+    width: 100%;
+  }
 `;
 
 const ImgBox = styled.div`

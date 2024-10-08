@@ -14,15 +14,13 @@ const feed = Data.feed;
 const userId = "lualbvqvQmVWkfDU7JUKJRYdqf3";
 const myProfile = profile.find((it) => it.userId === userId);
 
-const tabWidth = 340;
-
 const Wrapper = styled.div``;
 
 const FeedArea = styled.div`
   width: 680px;
   margin: 0 auto;
 
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     width: 390px;
   }
 `;

@@ -20,10 +20,10 @@ const StyledSpan = styled.span`
   gap: 8px;
   ${({ type }) =>
     type === "feed"
-      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
       : type === "hover"
-      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
-      : `font-size: var(--font-size-14); font-weight: var(--font-bold);`}
+      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
+      : `font-size: var(--font-14); font-weight: var(--font-bold);`}
 `;
 
 const IdSpan = styled.div`
