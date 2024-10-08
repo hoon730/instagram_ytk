@@ -100,10 +100,7 @@ const CancelBtn = styled.div`
   &:hover {
     color: var(--gray-color);
   }
-<<<<<<< HEAD
-=======
   color: ${({ theme }) => theme.fontColor};
->>>>>>> 7872f53976050a526c46b730ad247431191168f7
 `;
 
 const HeartBtn = styled.button`
@@ -125,10 +122,7 @@ const UserId = ({
   top,
   feed,
   onClick,
-<<<<<<< HEAD
-=======
   setIsEditing,
->>>>>>> 7872f53976050a526c46b730ad247431191168f7
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -203,21 +197,14 @@ const UserId = ({
                   padding={"12px"}
                   fontSize={"14"}
                   onClick={onClick}
-<<<<<<< HEAD
-=======
                   setOpenMore={setOpenMore}
->>>>>>> 7872f53976050a526c46b730ad247431191168f7
                 />
                 <MoreItem
                   text={"수정"}
                   padding={"12px"}
                   fontSize={"14"}
-<<<<<<< HEAD
-                  onClick={onClick}
-=======
                   setIsEditing={setIsEditing}
                   setOpenMore={setOpenMore}
->>>>>>> 7872f53976050a526c46b730ad247431191168f7
                 />
               </>
             ) : (
