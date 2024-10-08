@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import MyPostItem from "./MyPostItem";
+<<<<<<< HEAD
+import ClickFeed from "../Detail/ClickFeed"
+=======
 import ClickFeed from "../Detail/ClickFeed";
+>>>>>>> 7872f53976050a526c46b730ad247431191168f7
 import styled from "styled-components";
 
 const Wrapper = styled.div`

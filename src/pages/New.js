@@ -165,6 +165,7 @@ const New = ({ closeNew }) => {
   const fileAdd = (e) => {
     console.log(e.target.result);
     const { files } = e.target;
+    console.log(files);
     if (files && files.length === 1) {
       if (files[0].size > maxFileSize) {
         alert("업로드 할 수 있는 최대용량은 5MB입니다.");

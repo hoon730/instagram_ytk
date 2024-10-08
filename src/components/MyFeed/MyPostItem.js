@@ -25,7 +25,11 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
+<<<<<<< HEAD
+const MyPostItem = ({ url, onClick }) => {
+=======
 const MyPostItem = ({ size, url, onClick }) => {
+>>>>>>> 7872f53976050a526c46b730ad247431191168f7
   const showFeed = () => {
     onClick();
   };
