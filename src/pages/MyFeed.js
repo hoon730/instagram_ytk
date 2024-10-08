@@ -10,9 +10,13 @@ import TimeLine from "../components/Detail/TimeLine";
 
 const Wrapper = styled.div`
   width: 936px;
-  height: 100vh;
   margin: 0 auto;
   /* border: 1px solid lightgray; */
+
+  @media screen and (max-width: 390px) {
+    width: 390px;
+    border: 1px solid red;
+  }
 `;
 
 const MyFeed = () => {
