@@ -8,13 +8,8 @@ const Wrapper = styled.div`
   text-align: center;
   transition: all 0.3s;
   cursor: pointer;
-<<<<<<< HEAD
-  border-bottom: ${({ last }) =>
-    last === "last" ? null : `1px solid var(--light-gray-color);`};
-=======
   border-bottom: ${({ last, theme }) =>
     last === "last" ? null : `1px solid ${theme.borderColor};`};
->>>>>>> 7872f53976050a526c46b730ad247431191168f7
   padding: ${({ padding }) => (padding ? `${padding}` : "auto")};
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   cursor: pointer;
@@ -31,9 +26,6 @@ const Wrapper = styled.div`
   }
 `;
 
-<<<<<<< HEAD
-const MoreItem = ({ text, padding, last, fontSize, onClick }) => {
-=======
 const MoreItem = ({
   text,
   padding,
@@ -43,7 +35,6 @@ const MoreItem = ({
   setOpenMore,
   setIsEditing,
 }) => {
->>>>>>> 7872f53976050a526c46b730ad247431191168f7
   const navigate = useNavigate();
 
   const goLogin = () => {
