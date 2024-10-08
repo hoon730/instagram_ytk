@@ -5,7 +5,8 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 935px;
+  /* height: 935px; */
+  background: ${({ theme }) => theme.bgColor};
 `;
 
 const MyPostContainer = styled.div`
@@ -74,8 +75,8 @@ const MyPost = () => {
             onClick={onClick}
           />
           {isClicked ? <ClickFeed onClick={onClick} /> : null}
-          <MyPostItem url={"/images/postImgs/user1/post4.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post5.jpg"} />
+          <MyPostItem url={"/images/postImgs/user1/post2.jpg"} />
+          <MyPostItem url={"/images/postImgs/user1/post3.jpg"} />
           {/* {imgArr.map((it) => (
             <MyPostItem key={it.id} url={it.url} />
           ))} */}

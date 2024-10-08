@@ -10,11 +10,14 @@ import TimeLine from "../components/Detail/TimeLine";
 
 const Wrapper = styled.div`
   width: 936px;
+  min-height: 100vh;
+  height: fit-content;
   margin: 0 auto;
-  /* border: 1px solid lightgray; */
+  background: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
 
-  @media screen and (max-width: 390px) {
-    width: 390px;
+  @media screen and (max-width: 430px) {
+    width: 100%;
     border: 1px solid red;
   }
 `;

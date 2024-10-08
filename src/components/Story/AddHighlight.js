@@ -53,7 +53,7 @@ const AddBox = styled.span`
 const AddIcon = styled.div`
   width: 100%;
   height: 100%;
-  background: var(--light-gray-color);
+  background: var(--gray-color);
   display: flex;
   justify-content: center;
   align-items: center;

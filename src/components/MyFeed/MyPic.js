@@ -8,7 +8,6 @@ const Wrapper = styled.div``;
 
 const MyPicBox = styled.div`
   width: 100%;
-  /* border: 1px solid red; */
   padding-bottom: 10px;
   position: relative;
 `;

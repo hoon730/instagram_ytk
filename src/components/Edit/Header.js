@@ -9,8 +9,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* padding: 20px 0; */
-  /* border-bottom: 1px solid #eeeeee; */
+
   & Button {
     padding: 0;
     font-size: var(--font-size-16);
@@ -26,7 +25,7 @@ const LeftChild = styled.div`
 const Title = styled.div`
   font-size: var(--font-size-18);
   font-weight: var(--font-semibold);
-  color: var(--font-black-color);
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const RightChild = styled.div``;

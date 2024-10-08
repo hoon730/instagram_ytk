@@ -9,7 +9,6 @@ const Wrapper = styled.div`
   height: 150px;
   display: flex;
   align-items: center;
-  /* border: 1px solid red; */
 `;
 
 const HighlightBox = styled.div`
@@ -18,17 +17,30 @@ const HighlightBox = styled.div`
   align-items: center;
   gap: 50px;
   margin: 0 70px;
-  /* border: 1px solid red; */
 `;
+
+const storys = [
+  {
+    userId: "l",
+    imgPath: "/images/postImgs/user1/hicover1.jpg",
+  },
+  { userId: "u", imgPath: "/images/postImgs/user1/hicover2.jpg" },
+  { userId: "c", imgPath: "/images/postImgs/user1/hicover3.jpg" },
+  { userId: "k", imgPath: "/images/postImgs/user1/hicover4.jpg" },
+];
 
 const MyHighlight = () => {
   return (
     <Wrapper>
       <HighlightBox>
-        <StoryItem />
-        <StoryItem />
-        <StoryItem />
-        <StoryItem />
+        {storys.map((it, idx) => (
+          <StoryItem
+            key={idx}
+            userId={it.userId}
+            imgPath={it.imgPath}
+            type={"inactive"}
+          />
+        ))}
         <AddHighlight size={80} />
       </HighlightBox>
     </Wrapper>

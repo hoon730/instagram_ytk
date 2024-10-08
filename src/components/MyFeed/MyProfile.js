@@ -7,12 +7,11 @@ const Wrapper = styled.div``;
 
 const MyProfileBox = styled.div`
   width: 100%;
-  border-top: 1px solid var(--light-gray-color);
+  border-top: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 const NameBox = styled.div`
   width: 100%;
-  /* border-bottom: 1px solid var(--gray-color); */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,7 +35,7 @@ const MyName = styled.div`
 const EditBtn = styled.div`
   width: 40px;
   height: 40px;
-  background: var(--light-gray-color);
+  background: ${({ theme }) => theme.nonActiveBtnColor};
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -45,15 +44,15 @@ const EditBtn = styled.div`
 
   svg {
     font-size: 25px;
+    color: #fff;
   }
 `;
 
 const MyIntro = styled.div`
   width: 100%;
-  border-bottom: 1px solid var(--light-gray-color);
+  border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   padding: 20px 70px;
   font-size: var(--font-size-16);
-  /* border: 1px solid red; */
 `;
 
 const MyProfile = () => {
