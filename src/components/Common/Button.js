@@ -10,16 +10,16 @@ const ButtonItem = styled.button`
   justify-content: center;
   align-items: center;
   gap: ${({ followed }) => (followed === "unfollowed" ? "0" : "5px")};
+  color: var(--bg-white-color);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--border-radius-8);
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   font-family: "Noto Sans KR", sans-serif;
   cursor: pointer;
-  color: #fff;
   transition: background 0.3s;
   ${({ type }) =>
     type === "positive"
-      ? `background: #6228D7;`
+      ? `background: #6228D7`
       : type === "negative"
       ? `background: #BFBFBF;`
       : `background: transparent; color: #6228D7;  font-weight: var(--font-bold);`};

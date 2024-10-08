@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import ProfileImg from "../Profile/ProfileImg";
 import StoryItem from "../Story/StoryItem";
 import AddHighlight from "../Story/AddHighlight";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 130px;
+  height: 150px;
   display: flex;
   align-items: center;
   /* border: 1px solid red; */

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { menuData } from "../../../utils/utils";
 import New from "../../../pages/New";
 import { mbMenuData } from "../../../utils/utils";
+import ProfileImg from "../../Profile/ProfileImg";
 
 const MenuList = styled.div`
   height: 70px;
@@ -104,7 +105,16 @@ const MbMenu = () => {
             isActive(it.id);
           }}
         >
-          <IconWrapper>{it.iconCode}</IconWrapper>
+          <IconWrapper>
+            {idx === 4 ? (
+              <ProfileImg
+                size={"38"}
+                url={"/images/userImgs/user123456/feedDetail.jpg"}
+              />
+            ) : (
+              it.iconCode
+            )}
+          </IconWrapper>
           <MenuText className="text">{it.name}</MenuText>
         </MenuItem>
       ))}

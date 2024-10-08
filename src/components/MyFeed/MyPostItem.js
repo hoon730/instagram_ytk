@@ -2,10 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: 305px;
-  height: 305px;
+  width: ${({ size }) => `${size || 305}`}px;
+  height: ${({ size }) => `${size || 305}`}px;
   /* border: 1px solid lightgray; */
   border-radius: 10px;
+
+  @media screen and (max-width: 390px) {
+    width: 140px;
+    height: 140px;
+  }
 `;
 
 const ImgBox = styled.div`
@@ -16,13 +21,13 @@ const ImgBox = styled.div`
 const Img = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   object-fit: cover;
 `;
 
-const MyPostItem = ({ url }) => {
+const MyPostItem = ({ size, url }) => {
   return (
-    <Wrapper>
+    <Wrapper size={size}>
       <ImgBox>
         <Img src={url} alt="postphoto" />
       </ImgBox>

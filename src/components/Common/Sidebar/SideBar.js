@@ -4,7 +4,6 @@ import { ThemeContext } from "../../../App";
 import styled from "styled-components";
 import { menuData } from "../../../utils/utils";
 import { toolData } from "../../../utils/utils";
-// import MenuItem from "./MenuItem";
 import ToolItem from "./ToolItem";
 import New from "../../../pages/New";
 
@@ -152,6 +151,7 @@ const NewBg = styled.div`
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  z-index: 3;
 `;
 
 const SideBar = () => {

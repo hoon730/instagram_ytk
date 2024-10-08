@@ -29,14 +29,14 @@ const RecommendItem = styled.div`
   border-radius: var(--border-radius-8);
 `;
 const Id = styled.span`
-  font-size: var(--font-14);
+  font-size: var(--font-8);
   font-weight: var(--font-bold);
 `;
 const Desc = styled.p`
   width: 74px;
   padding-bottom: 8px;
   text-align: center;
-  font-size: var(--font-10);
+  font-size: var(--font-8);
 `;
 
 const userData = [
