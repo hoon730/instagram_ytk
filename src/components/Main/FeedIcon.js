@@ -19,12 +19,15 @@ const Icons = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 20px 0;
+  @media screen and (max-width: 1024px) {
+    padding: 13px 0;
+  }
 `;
 
 const LeftIcons = styled.span`
   display: flex;
   gap: 30px;
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     gap: 18px;
   }
 `;
@@ -36,7 +39,7 @@ const icon = `
   &:hover{
     color: var(--gray-color);
   }
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     width: 23px;
     height: 23px;
   }
@@ -80,7 +83,7 @@ const LikeSection = styled.div`
     font-weight: bold;
     cursor: pointer;
   }
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
   }
 `;

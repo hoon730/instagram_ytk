@@ -22,7 +22,7 @@ const FeedArea = styled.div`
   width: 680px;
   margin: 0 auto;
 
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     width: 390px;
   }
 `;
@@ -95,13 +95,13 @@ const FeedContent = () => {
             />
           </FeedTabBtn>
         </FeedTabBar>
-        {feed[0].feedDetail.map((it, idx) => (
+        {feed[3].feedDetail.map((it, idx) => (
           <FeedItem
             key={idx}
             user={user}
             profile={profile}
             myProfile={myProfile}
-            feedUserId={feed[0].userId}
+            feedUserId={feed[3].userId}
             feedDetail={it}
           />
         ))}

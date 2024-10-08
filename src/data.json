@@ -523,7 +523,6 @@
       "profilePhoto": "/images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/profile.jpg",
       "bgPhoto": "/images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/bg.jpg",
       "follower": [
-        
         "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
         "wAKs9uXSWsTJbbJGg2MaErFaKqE",
         "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -2112,7 +2111,7 @@
         {
           "storyStorageId": "ss00000001",
           "title": "일상",
-          "storyIds": ["sh00000025","sh00000026","sh00000027"]
+          "storyIds": ["sh00000025", "sh00000026", "sh00000027"]
         },
         {
           "storyStorageId": "ss00000002",
@@ -3765,7 +3764,7 @@
             "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed7.jpg",
             "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed8.jpg"
           ],
-          "content": "늘 편안하고 행복한 공간 #제주도 🩵 #바다 #노을을 보면서 하루를 마무리했어요! ",
+          "content": "늘 편안하고 행복한 공간 #제주도 #바다 #노을을 보면서 하루를 마무리했어요! ",
           "hashtag": ["#제주도", "#바다", "#노을"],
           "location": "제주도 서귀포",
           "like": [
@@ -6649,9 +6648,7 @@
           "feedId": "fd00000036",
           "createDate": "2024-09-25",
           "type": "reels",
-          "imgPath": [
-            "images/userImgs/EnweBLflxt3pYRGLy8hfJ18MeOm/feed3.mp4"
-          ],
+          "imgPath": ["images/userImgs/EnweBLflxt3pYRGLy8hfJ18MeOm/feed3.mp4"],
           "content": "신나는 나폴리 동네 한바퀴 🛣️",
           "hashtag": ["#한달살이", "#힐링", "#나폴리"],
           "location": "나폴리",
@@ -7389,9 +7386,7 @@
           "feedId": "fd00000042",
           "createDate": "2024-09-30",
           "type": "reels",
-          "imgPath": [
-            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed05.mp4"
-          ],
+          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed05.mp4"],
           "content": "격식있게 데킬라 한잔 ✅",
           "hashtag": ["#데킬라", "#시어서커", "#호텔"],
           "location": "용산",
@@ -7420,7 +7415,12 @@
           "feedId": "fd00000043",
           "createDate": "2024-10-01",
           "type": "img",
-          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed06.jpg","images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed7.jpg","images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed8.jpg","images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed9.jpg"],
+          "imgPath": [
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed06.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed7.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed8.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed9.jpg"
+          ],
           "content": "새로운 콜라보 탄생 📸",
           "hashtag": ["#패션", "#엄브로", "#프레피"],
           "location": "호주",
@@ -7512,7 +7512,11 @@
           "feedId": "fd00000044",
           "createDate": "2024-10-03",
           "type": "img",
-          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed10.jpg","images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed11.jpg", "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed12.jpg"],
+          "imgPath": [
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed10.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed11.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed12.jpg"
+          ],
           "content": "마우리치오 카텔란 전시회",
           "hashtag": ["#전시회", "#문화생활", "#카텔란"],
           "location": "리움미술관",
@@ -7529,9 +7533,9 @@
             "FNUEoSKu7equPIpWvLcKumRz7Pc"
           ],
           "tagUser": [
-           "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-        "kdGgFnRk8TyyUVeXQji7vZybpQ1",
-        "hCTuFAf5A87ZG7mhWx1poHaNF3Q"
+            "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
+            "kdGgFnRk8TyyUVeXQji7vZybpQ1",
+            "hCTuFAf5A87ZG7mhWx1poHaNF3Q"
           ],
           "reply": [
             {
@@ -7566,9 +7570,7 @@
           "feedId": "fd00000045",
           "createDate": "2024-10-06",
           "type": "img",
-          "imgPath": [
-            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed13.jpg"
-          ],
+          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed13.jpg"],
           "content": "빈티지에 테일러를 더하다..",
           "hashtag": ["#패션", "#테일러", "#빈티지"],
           "location": "삿포로",
@@ -7587,8 +7589,8 @@
           ],
           "tagUser": [
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-        "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-        "0aDoIgvbfsQYBX20nWRnuOkNrNh"
+            "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
+            "0aDoIgvbfsQYBX20nWRnuOkNrNh"
           ],
           "reply": [
             {
@@ -7710,7 +7712,11 @@
           "feedId": "fd00000046",
           "createDate": "2024-10-10",
           "type": "reels",
-          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed17.jpg","images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed18.jpg","images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed14.mp4"],
+          "imgPath": [
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed17.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed18.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed14.mp4"
+          ],
           "content": "여름 한달 휴가 시작 ✈️ ",
           "hashtag": ["#방콕", "#한달살기", "#힐링"],
           "location": "방콕",
@@ -7727,7 +7733,7 @@
           ],
           "tagUser": [
             "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-        "BbVEQf8MoEuxL7XREuCVTjUQkSx"
+            "BbVEQf8MoEuxL7XREuCVTjUQkSx"
           ],
           "reply": [
             {
@@ -7768,7 +7774,7 @@
           ],
           "tagUser": [
             "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-        "wAKs9uXSWsTJbbJGg2MaErFaKqE"
+            "wAKs9uXSWsTJbbJGg2MaErFaKqE"
           ],
           "reply": [
             {
@@ -7823,7 +7829,11 @@
           "feedId": "fd00000048",
           "createDate": "2024-09-30",
           "type": "img",
-          "imgPath": ["images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed4.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed5.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed6.jpg"],
+          "imgPath": [
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed4.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed5.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed6.jpg"
+          ],
           "content": "밀크티.빅토리아파크.대충어쩌구",
           "hashtag": ["#여행", "#홍콩", "#밀크티"],
           "location": "홍콩",
@@ -7839,8 +7849,10 @@
             "KWUUuqMImhcKDZ822gc2InH4vSN",
             "UtcsfzZbJYxJ0qzD6P6nvqXGFM1"
           ],
-          "tagUser": ["4JhKn3cYHd9dY9muGz1oXiJAruo",
-        "EnweBLflxt3pYRGLy8hfJ18MeOm"],
+          "tagUser": [
+            "4JhKn3cYHd9dY9muGz1oXiJAruo",
+            "EnweBLflxt3pYRGLy8hfJ18MeOm"
+          ],
           "reply": [
             {
               "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
@@ -7957,15 +7969,23 @@
             "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
             "z7UhehujghvKX02fUj1ig9gfP7n"
           ],
-          "tagUser": ["kdGgFnRk8TyyUVeXQji7vZybpQ1",
-        "hCTuFAf5A87ZG7mhWx1poHaNF3Q"],
+          "tagUser": [
+            "kdGgFnRk8TyyUVeXQji7vZybpQ1",
+            "hCTuFAf5A87ZG7mhWx1poHaNF3Q"
+          ],
           "reply": []
         },
         {
           "feedId": "fd00000050",
           "createDate": "2024-10-04",
           "type": "img",
-          "imgPath": ["images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed8.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed9.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed10.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed11.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed12.jpg"],
+          "imgPath": [
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed8.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed9.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed10.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed11.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed12.jpg"
+          ],
           "content": "나는 성덕이야..드디어 만남!",
           "hashtag": ["#동물원", "#푸바오", "#소확행"],
           "location": "에버랜드",
@@ -7980,9 +8000,11 @@
             "EnweBLflxt3pYRGLy8hfJ18MeOm",
             "hCTuFAf5A87ZG7mhWx1poHaNF3Q"
           ],
-          "tagUser": ["BbVEQf8MoEuxL7XREuCVTjUQkSx",
-        "z7UhehujghvKX02fUj1ig9gfP7n",
-        "bIqUJE0DxQa1HdkLfMqh105VOrQ"],
+          "tagUser": [
+            "BbVEQf8MoEuxL7XREuCVTjUQkSx",
+            "z7UhehujghvKX02fUj1ig9gfP7n",
+            "bIqUJE0DxQa1HdkLfMqh105VOrQ"
+          ],
           "reply": [
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
@@ -8032,7 +8054,12 @@
           "feedId": "fd00000051",
           "createDate": "2024-10-09",
           "type": "img",
-          "imgPath": ["images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd13.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd14.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd15.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd16.jpg"],
+          "imgPath": [
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd13.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd14.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd15.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd16.jpg"
+          ],
           "content": "즐거운 내집 마련의 꿈!!",
           "hashtag": ["#캠핑", "#글램핑", "#일상"],
           "location": "가평",
@@ -8049,8 +8076,10 @@
             "BbVEQf8MoEuxL7XREuCVTjUQkSx",
             "UtcsfzZbJYxJ0qzD6P6nvqXGFM1"
           ],
-          "tagUser": ["Af4BexYzzRIvqtGjSeYEG3pqZHw",
-        "tePhQ1wQJAwRlEcw1TOWpE4N9JU"],
+          "tagUser": [
+            "Af4BexYzzRIvqtGjSeYEG3pqZHw",
+            "tePhQ1wQJAwRlEcw1TOWpE4N9JU"
+          ],
           "reply": [
             {
               "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
@@ -8190,10 +8219,12 @@
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
             "EnweBLflxt3pYRGLy8hfJ18MeOm"
           ],
-          "tagUser": ["VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-        "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-        "4JhKn3cYHd9dY9muGz1oXiJAruo",
-        "EnweBLflxt3pYRGLy8hfJ18MeOm"],
+          "tagUser": [
+            "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
+            "wAKs9uXSWsTJbbJGg2MaErFaKqE",
+            "4JhKn3cYHd9dY9muGz1oXiJAruo",
+            "EnweBLflxt3pYRGLy8hfJ18MeOm"
+          ],
           "reply": [
             {
               "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
@@ -8238,7 +8269,13 @@
           "feedId": "fd00000053",
           "createDate": "2024-10-16",
           "type": "img",
-          "imgPath": ["images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed18.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed19.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed20.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed21.jpg","images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed22.jpg"],
+          "imgPath": [
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed18.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed19.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed20.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed21.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed22.jpg"
+          ],
           "content": "더 늦기전에 꽃 구경 🌷",
           "hashtag": ["#꽃", "#피크닉", "#힐링"],
           "location": "여수",
@@ -8256,11 +8293,13 @@
             "Af4BexYzzRIvqtGjSeYEG3pqZHw",
             "EnweBLflxt3pYRGLy8hfJ18MeOm"
           ],
-          "tagUser": ["Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-        "kdGgFnRk8TyyUVeXQji7vZybpQ1",
-        "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-        "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-        "z7UhehujghvKX02fUj1ig9gfP7n"],
+          "tagUser": [
+            "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
+            "kdGgFnRk8TyyUVeXQji7vZybpQ1",
+            "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
+            "BbVEQf8MoEuxL7XREuCVTjUQkSx",
+            "z7UhehujghvKX02fUj1ig9gfP7n"
+          ],
           "reply": [
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",

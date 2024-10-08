@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   &:last-child {
     border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   }
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     padding-bottom: 22px;
   }
 `;
@@ -25,7 +25,7 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     margin: 0 20px;
     height: 66px;
     & .storyFirstCircle {
@@ -48,12 +48,15 @@ const UserInfo = styled.div`
   flex-direction: column;
   width: 100%;
   gap: 4px;
+  @media screen and (max-width: 1024px) {
+    font-size: var(--font-12);
+  }
 `;
 
 const UserName = styled.p`
   font-size: var(--font-14);
   color: var(--gray-color);
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
   }
 `;
@@ -65,7 +68,7 @@ const PhotoSection = styled.div`
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     width: 370px;
     height: 370px;
   }
@@ -73,14 +76,15 @@ const PhotoSection = styled.div`
 
 const FeedDescArea = styled.div`
   margin: 0 36px;
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     margin: 0 20px;
   }
 `;
 
 const FeedDesc = styled.div`
   margin-top: 22px;
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
+    margin-top: 13px;
     & input {
       height: 28px;
       border-radius: 8px;
@@ -91,6 +95,7 @@ const FeedDesc = styled.div`
 const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
   const feedProfile = profile.find((it) => it.userId === feedUserId);
   const feedUser = user.find((it) => it.userId === feedUserId);
+  const followResult = myProfile.following.find((it) => it === feedUserId);
 
   return (
     <Wrapper>
@@ -105,8 +110,9 @@ const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
             type={"feed"}
             userNickname={feedUser.userNickname}
             check={feedProfile.badge ? "active" : ""}
-            createDate={feedDetail.createDate}
+            createdAt={new Date(feedDetail.createDate)}
             btn={"more"}
+            follwed={followResult ? "" : "팔로우"}
           />
           <UserName>{feedProfile.userName}</UserName>
         </UserInfo>
