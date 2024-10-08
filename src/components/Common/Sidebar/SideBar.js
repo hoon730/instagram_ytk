@@ -8,6 +8,7 @@ import ToolItem from "./ToolItem";
 import New from "../../../pages/New";
 
 import { FaInstagram } from "react-icons/fa6";
+import ProfileImg from "../../Profile/ProfileImg";
 
 const StyledAside = styled.aside`
   position: fixed;
@@ -109,6 +110,11 @@ const MenuItem = styled.div`
     color: var(--gray-color);
   }
 
+  &:last-child {
+    padding-left: 22px;
+    gap: 10px;
+  }
+
   @media screen and (max-width: 1024px) {
     width: 55px;
     height: 55px;
@@ -116,6 +122,10 @@ const MenuItem = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &:last-child {
+      padding-left: 0;
+    }
 
     .text {
       display: none;
@@ -212,7 +222,17 @@ const SideBar = () => {
                 isActive(it.id);
               }}
             >
-              <IconWrapper>{it.iconCode}</IconWrapper>
+              <IconWrapper>
+                {it.name === "프로필" ? (
+                  <ProfileImg
+                    url={"/images/userImgs/user123456/feedDetail.jpg"}
+                    size={"32"}
+                    hover={true}
+                  />
+                ) : (
+                  it.iconCode
+                )}
+              </IconWrapper>
               <MenuText className="text">{it.name}</MenuText>
             </MenuItem>
           ))}

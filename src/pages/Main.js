@@ -47,7 +47,6 @@ const HotHashtagMargin = styled.div`
 const Main = () => {
   return (
     <Wrapper>
-      {/* <SideBar /> */}
       <MainSection>
         <MainHeader />
         <MainHeaderMargin />

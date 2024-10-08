@@ -7,29 +7,49 @@ const Wrapper = styled.div`
   color: ${({ theme }) => theme.fontColor};
   text-align: center;
   transition: all 0.3s;
+  cursor: pointer;
   border-bottom: ${({ last, theme }) =>
     last === "last" ? null : `1px solid ${theme.borderColor};`};
   padding: ${({ padding }) => (padding ? `${padding}` : "auto")};
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   cursor: pointer;
   ${({ text }) =>
-    text === "신고"
+    text === "신고" || text === "삭제"
       ? `color: var(--warning-color); font-weight: var(--font-bold);`
       : ""};
 
   &:hover {
     ${({ text }) =>
-    text === "신고"
-      ? `color: #ED4816; font-weight: var(--font-bold);`
-      : `color: var(--gray-color);`};
+      text === "신고"
+        ? `color: #ED4816; font-weight: var(--font-bold);`
+        : `color: var(--gray-color);`};
   }
 `;
 
-const MoreItem = ({ text, padding, last, fontSize }) => {
+const MoreItem = ({
+  text,
+  padding,
+  last,
+  fontSize,
+  onClick,
+  setOpenMore,
+  setIsEditing,
+}) => {
   const navigate = useNavigate();
 
   const goLogin = () => {
     navigate("/login");
+  };
+
+  const handleOnClick = () => {
+    if (text === "로그아웃") {
+      goLogin();
+    } else if (text === "수정") {
+      setIsEditing(true);
+      setOpenMore(false);
+    } else if (text === "삭제") {
+      onClick();
+    }
   };
 
   return (
@@ -38,7 +58,7 @@ const MoreItem = ({ text, padding, last, fontSize }) => {
       fontSize={fontSize}
       text={text}
       last={last}
-      onClick={text === "로그아웃" ? goLogin : null}
+      onClick={handleOnClick}
     >
       {text}
     </Wrapper>

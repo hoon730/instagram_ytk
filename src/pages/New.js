@@ -163,6 +163,7 @@ const New = ({ closeNew }) => {
   const maxFileSize = 5 * 1024 * 1024;
 
   const fileAdd = (e) => {
+    console.log(e.target.result);
     const { files } = e.target;
     if (files && files.length === 1) {
       if (files[0].size > maxFileSize) {
@@ -181,14 +182,14 @@ const New = ({ closeNew }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-    if (!user || isLoading || post === "" || post.length > 2200) return;
+    // if (!user || isLoading || post === "" || post.length > 2200) return;
     try {
       setIsLoading(true);
       const doc = await addDoc(collection(db, "contents"), {
         post,
         createdAt: Date.now(),
-        userName: user.displayName || "Anonymous",
-        userId: user.uid,
+        userName: user?.displayName || "Anonymous",
+        userId: user?.uid || 1,
       });
       if (file) {
         const locationRef = ref(storage, `contents/${user.uid}/${doc.id}`);
@@ -208,6 +209,7 @@ const New = ({ closeNew }) => {
       }
       setPost("");
       setFile(null);
+      closeNew();
     } catch (e) {
       console.error(e);
     } finally {

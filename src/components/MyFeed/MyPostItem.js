@@ -20,9 +20,13 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const MyPostItem = ({ url }) => {
+const MyPostItem = ({ url, onClick }) => {
+  const showFeed = () => {
+    onClick();
+  };
+
   return (
-    <Wrapper>
+    <Wrapper onClick={showFeed}>
       <ImgBox>
         <Img src={url} alt="postphoto" />
       </ImgBox>
