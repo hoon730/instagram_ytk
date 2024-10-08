@@ -17,18 +17,18 @@ const ButtonItem = styled.button`
   font-family: "Noto Sans KR", sans-serif;
   cursor: pointer;
   transition: background 0.3s;
-  ${({ type }) =>
+  ${({ type, theme }) =>
     type === "positive"
-      ? `background: #6228D7`
+      ? `background: ${theme.subColor};`
       : type === "negative"
-      ? `background: #BFBFBF;`
+      ? `background: ${theme.nonActiveBtnColor};`
       : `background: transparent; color: #6228D7;  font-weight: var(--font-bold);`};
   &:hover {
-    ${({ type }) =>
+    ${({ type, theme }) =>
       type === "positive"
-        ? `background: #3E1494;`
+        ? `background: ${theme.buttonHoverColor};`
         : type === "negative"
-        ? `background: #A4A4A4;`
+        ? `background: ${theme.nonActiveBtnHoverColor};`
         : `background: transparent; color: #6228D7;  font-weight: var(--font-bold);`};
   }
 `;

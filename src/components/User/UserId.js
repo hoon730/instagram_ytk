@@ -2,12 +2,13 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import MoreItem from "../Common/More/MoreItem";
 import HoverProfile from "./HoverProfile";
+import { getFormattedDate } from "../../utils/utils";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
 
 const Wrapper = styled.span`
-  width: 100%;
+  width: ${({ type }) => (type === "notification" ? "" : "100%")};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,10 +20,10 @@ const StyledSpan = styled.span`
   gap: 8px;
   ${({ type }) =>
     type === "feed"
-      ? `font-size: var(--font-14); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
       : type === "hover"
-      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
-      : `font-size: var(--font-14); font-weight: var(--font-bold);`}
+      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
+      : `font-size: var(--font-size-14); font-weight: var(--font-bold);`}
 `;
 
 const IdSpan = styled.div`
@@ -65,7 +66,6 @@ const MoreBtn = styled.button`
   display: flex;
   align-items: center;
   svg {
-    font-size: var(--font-18);
     color: var(--dark-gray-color);
   }
 `;
@@ -100,6 +100,10 @@ const CancelBtn = styled.div`
   &:hover {
     color: var(--gray-color);
   }
+<<<<<<< HEAD
+=======
+  color: ${({ theme }) => theme.fontColor};
+>>>>>>> 7872f53976050a526c46b730ad247431191168f7
 `;
 
 const HeartBtn = styled.button`
@@ -114,13 +118,17 @@ const UserId = ({
   userNickname,
   check,
   comment,
-  createDate,
+  createdAt,
   follwed,
   btn,
   hover,
   top,
   feed,
   onClick,
+<<<<<<< HEAD
+=======
+  setIsEditing,
+>>>>>>> 7872f53976050a526c46b730ad247431191168f7
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -134,30 +142,40 @@ const UserId = ({
     setHoverId(false);
   };
 
+  const handleEditing = () => {
+    onClick();
+  };
+
   return (
-    <Wrapper>
+    <Wrapper type={type}>
       <StyledSpan type={type}>
-        <IdSpan onMouseEnter={showProfile} onMouseLeave={hideProfile}>
+        <IdSpan
+          className="user-id"
+          onMouseEnter={showProfile}
+          onMouseLeave={hideProfile}
+        >
           {!hover && hoverId ? <HoverProfile target={"id"} top={"22"} /> : null}
           {userNickname}
         </IdSpan>
-        {check === "active" ? <Check src="/images/check.svg" /> : null}
+        {check === "active" ? (
+          <Check className="user-check" src="/images/check.svg" />
+        ) : null}
         {comment ? <Comment>{comment}</Comment> : null}
-        {createDate ? (
-          <Date>
+        {createdAt ? (
+          <Date className="user-date">
             <span>&middot;</span>
-            {createDate}
+            {getFormattedDate(createdAt)}
           </Date>
         ) : null}
         {follwed ? (
-          <IsFollowed>
+          <IsFollowed className="user-followed">
             <span>&middot;{follwed}</span>{" "}
           </IsFollowed>
         ) : null}
       </StyledSpan>
       {btn === "more" ? (
         <MoreBtn onClick={() => setOpenMore(true)}>
-          <LuMoreHorizontal />
+          <LuMoreHorizontal size={22} />
         </MoreBtn>
       ) : btn === "heart" ? (
         <HeartBtn
@@ -185,12 +203,21 @@ const UserId = ({
                   padding={"12px"}
                   fontSize={"14"}
                   onClick={onClick}
+<<<<<<< HEAD
+=======
+                  setOpenMore={setOpenMore}
+>>>>>>> 7872f53976050a526c46b730ad247431191168f7
                 />
                 <MoreItem
                   text={"수정"}
                   padding={"12px"}
                   fontSize={"14"}
+<<<<<<< HEAD
                   onClick={onClick}
+=======
+                  setIsEditing={setIsEditing}
+                  setOpenMore={setOpenMore}
+>>>>>>> 7872f53976050a526c46b730ad247431191168f7
                 />
               </>
             ) : (

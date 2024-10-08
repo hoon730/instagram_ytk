@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import styled from "styled-components";
 import { db } from "../../utils/firebase";
-import Clickdetail from "./ClickFeed copy";
+import Post from "./Post";
 
 export const IPost = {
   id: String,
@@ -22,11 +22,11 @@ export const IPost = {
 };
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  margin-bottom: 10px;
   /* overflow-y: scroll; */
-  padding: 0 10px;
 `;
 
 const TimeLine = () => {
@@ -66,7 +66,7 @@ const TimeLine = () => {
   return (
     <Wrapper>
       {posts.map((post) => (
-        <Clickdetail key={post.id} {...post} />
+        <Post key={post.id} {...post} />
       ))}
     </Wrapper>
   );

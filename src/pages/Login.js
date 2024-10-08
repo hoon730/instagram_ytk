@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import LogoImg from "../components/Login/LogoImg";
-import LoginBtn from "../components/Login/LoginBtn";
+import LogoImg from "../components/Login/LogoImg.js";
+import LoginBtn from "../components/Login/LoginBtn.js";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
-import FbBtn from "../components/Login/FbBtn";
+import FbBtn from "../components/Login/FbBtn.js";
 import { auth } from "../utils/firebase.js";
 
 const colors = {
