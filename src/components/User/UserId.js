@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import MoreItem from "../Common/More/MoreItem";
 import HoverProfile from "./HoverProfile";
+import { getFormattedDate } from "../../utils/utils";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
@@ -114,13 +115,14 @@ const UserId = ({
   userNickname,
   check,
   comment,
-  createDate,
+  createdAt,
   follwed,
   btn,
   hover,
   top,
   feed,
   onClick,
+  setIsEditing
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -134,6 +136,10 @@ const UserId = ({
     setHoverId(false);
   };
 
+  const handleEditing = () => {
+    onClick();
+  };
+
   return (
     <Wrapper>
       <StyledSpan type={type}>
@@ -143,10 +149,10 @@ const UserId = ({
         </IdSpan>
         {check === "active" ? <Check src="/images/check.svg" /> : null}
         {comment ? <Comment>{comment}</Comment> : null}
-        {createDate ? (
+        {createdAt ? (
           <Date>
             <span>&middot;</span>
-            {createDate}
+            {getFormattedDate(createdAt)}
           </Date>
         ) : null}
         {follwed ? (
@@ -185,12 +191,14 @@ const UserId = ({
                   padding={"12px"}
                   fontSize={"14"}
                   onClick={onClick}
+                  setOpenMore={setOpenMore}
                 />
                 <MoreItem
                   text={"수정"}
                   padding={"12px"}
                   fontSize={"14"}
-                  onClick={onClick}
+                  setIsEditing={setIsEditing}
+                  setOpenMore={setOpenMore}
                 />
               </>
             ) : (

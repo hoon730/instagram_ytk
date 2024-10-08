@@ -110,6 +110,7 @@ const MbMenu = () => {
               <ProfileImg
                 size={"38"}
                 url={"/images/userImgs/user123456/feedDetail.jpg"}
+                hover={true}
               />
             ) : (
               it.iconCode
