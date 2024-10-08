@@ -3,87 +3,192 @@ import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import CommentItem from "./CommentItem";
-import { slide } from "../../utils/utils";
+import Button from "../Common/Button";
 
-import { AnimatePresence, motion } from "framer-motion";
-
+import { IoIosCloseCircle } from "react-icons/io";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
-import { IoChevronBack } from "react-icons/io5";
-import { IoChevronForwardOutline } from "react-icons/io5";
+
+import { IPost } from "./TimeLine";
+import { auth, db, storage } from "../../utils/firebase";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { use } from "framer-motion/client";
+import {
+  deleteObject,
+  ref,
+  getDownloadURL,
+  StorageError,
+  StorageErrorCode,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
+
+const feed = [
+  {
+    type: "img",
+    imgPath: ["images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed1.jpg"],
+    content:
+      "#브런치 먹으러 다녀왔어요! 분위기가 정말 좋고 커피도 맛있었어요 ☕️ #카페투어 #소확행 #힐링",
+  },
+  {
+    type: "img",
+    imgPath: [
+      "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed2.jpg",
+      "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed3.jpg",
+      "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed4.jpg",
+      "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed5.jpg",
+    ],
+  },
+];
 
 const BgWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   z-index: 3;
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-  width: 76%;
-  height: 93%;
-  background: var(--bg-white-color);
-  border-radius: var(--border-radius-12);
-  overflow: hidden;
+const CloseBtn = styled.button`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 4;
+
+  svg {
+    font-size: 30px;
+    color: var(--bg-white-color);
+  }
 `;
+
+const Wrapper = styled.div`
+  ${({ isEditing }) =>
+    isEditing
+      ? `width: 52%;
+  height: 74%;`
+      : `width: 80%;
+  height: 93%;`}
+  border-radius: var(--border-radius-12);
+  transition: all 0.3s;
+
+  @media screen and (max-width: 1400px) {
+    position: relative;
+    height: 0;
+    padding-top: 56.25%;
+
+    .inner {
+      width: 100%;
+      height: ${({ isEditing }) => (isEditing ? "auto" : "100%")};
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    .slider {
+      width: 55%;
+    }
+    .desc {
+      width: 45%;
+
+      .user_container {
+        padding: 10px;
+      }
+      .comment_list {
+        padding: 10px;
+      }
+      .writing_comment {
+        padding: 10px;
+      }
+    }
+  }
+`;
+
+const Inner = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  ${({ isEditing }) =>
+    isEditing
+      ? `width: 52%;
+  height: 74%;`
+      : `width: 80%;
+  height: 93%;`}
+  background: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
+  border-radius: var(--border-radius-12);
+  transition: all 0.3s;
+`;
+
+const limit = feed[1].imgPath.length - 1;
 
 const Slider = styled.div`
   width: 60%;
   height: 100%;
   position: relative;
+  border-radius: var(--border-radius-12) 0 0 var(--border-radius-12);
   overflow: hidden;
 `;
 
-// const SlideWrapper = styled(motion.div)`
-//   width: 100%;
-//   height: 100%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
-
-const Slide = styled(motion.div)`
-  width: 100%;
+const Slides = styled.ul`
+  width: ${100 * (feed[1].imgPath.length || 1)}%;
   height: 100%;
+  display: flex;
+  transform: translateX(
+    ${({ visible }) => `${-visible * (100 / feed[1].imgPath.length) || 0}%`}
+  );
+  transition: transform 0.5s;
 `;
 
-const Btns = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+const Slide = styled.li`
   width: 100%;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  & > button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 24px;
-    height: 24px;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-
-    svg {
-      font-size: var(--font-16);
-    }
+  height: 100%;
+  img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
   }
 `;
 
-const LeftBtn = styled.button``;
-const RightBtn = styled.button``;
+const SlideButtons = styled.div`
+  width: 100%;
+  padding: 0 22px;
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SlideButton = styled.span`
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  &.prev {
+    transform: rotate(180deg);
+    visibility: ${({ visible }) => (visible === 0 ? "hidden" : "visible")};
+  }
+  &.next {
+    visibility: ${({ visible }) => (visible === limit ? "hidden" : "visible")};
+  }
+  & img {
+    width: inherit;
+    height: inherit;
+  }
+`;
+
+const SlideButtonImg = () => {
+  return (
+    <>
+      <img src={"/images/slide-button.svg"} />
+    </>
+  );
+};
 
 const Pagers = styled.div`
   position: absolute;
@@ -93,25 +198,20 @@ const Pagers = styled.div`
   padding-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 `;
 
 const Pager = styled.div`
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--gray-color);
+  background: var(--dark-gray-color);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 
   &.active {
     background: var(--bg-white-color);
   }
-`;
-
-const Img = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 `;
 
 const Desc = styled.div`
@@ -122,19 +222,23 @@ const Desc = styled.div`
   justify-content: space-between;
 `;
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const UserContainer = styled.div`
   width: 100%;
   padding: 20px;
-  border-bottom: 1px solid var(--light-gray-color);
+  border-bottom: ${({ isEditing }) =>
+    isEditing ? "none" : `1px solid ${({ theme }) => theme.borderColor}`};
 `;
 
 const UserBox = styled.div`
   width: 100%;
   display: flex;
   gap: 15px;
-  padding-bottom: 5px;
+  padding-bottom: ${({ isEditing }) => (isEditing ? "20px" : "5px")};
 `;
 
 const Userinfo = styled.div`
@@ -184,11 +288,12 @@ const Top = styled.div`
 `;
 const Notification = styled.div`
   display: flex;
-  /* align-items: center; */
+  align-items: center;
+  font-size: var(--font-14);
   gap: 8px;
 
   svg {
-    font-size: var(--font-24);
+    font-size: var(--font-20);
   }
 `;
 const IconBtns = styled.div`
@@ -198,16 +303,16 @@ const IconBtns = styled.div`
   cursor: pointer;
 
   svg {
-    font-size: var(--font-20);
+    font-size: var(--font-16);
   }
 `;
 
 const StyledInput = styled.input`
   width: 100%;
-  height: 45px;
+  height: 35px;
   background: var(--light-gray-color);
   border-radius: var(--border-radius-8);
-  padding-left: 10px;
+  padding: 0 20px;
 
   &::placeholder {
     color: var(--gray-color);
@@ -217,117 +322,343 @@ const StyledInput = styled.input`
 
 const Form = styled.form``;
 
-const slideArray = [1, 2, 3, 4];
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
 
-const Clickdetail = ({ location }) => {
+  span {
+    font-weight: var(--font-bold);
+  }
+  & button:first-child {
+    color: ${({ theme }) => theme.nonActiveBtnColor};
+  }
+`;
+
+const Contents = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+`;
+
+const SetContentButton = styled.label`
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    color: #1d9bf0;
+    transition: color 0.3s;
+  }
+  svg {
+    color: var(--gray-color);
+  }
+`;
+
+const SetContentInputButton = styled.input`
+  display: none;
+`;
+
+const EditedTextArea = styled.textarea`
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--light-gray-color);
+  border-radius: var(--border-radius-12);
+  color: var(--bg-black-color);
+  font-size: var(--font-16);
+  resize: none;
+  &::placeholder {
+    color: var(--gray-color);
+    opacity: 1;
+    transition: opacity 0.3s;
+  }
+  &:focus {
+    &::placeholder {
+      opacity: 0;
+    }
+    outline: none;
+    border-color: var(--sub-purple-color);
+    & ~ div {
+      color: var(--sub-purple-color);
+    }
+  }
+`;
+
+const Clickdetail = ({
+  location,
+  onClick,
+  userName,
+  post,
+  photo,
+  video,
+  userId,
+  id,
+}) => {
   const commentRef = useRef();
+  const bgRef = useRef();
   const [comment, setComment] = useState("");
-  const [visible, setVisible] = useState(1);
-  const [back, setBack] = useState(false);
+  const [visible, setVisible] = useState(0);
 
-  const onClick = () => {
+  const moveSlide = (e, num) => {
+    if (e.target.localName === "img") {
+      setVisible(num + visible);
+    } else {
+      setVisible(num);
+    }
+  };
+
+  const onFocus = () => {
     commentRef.current.focus();
   };
 
-  const goLeft = () => {
-    setBack(true);
-    setVisible((prev) => (prev === 1 ? 4 : prev - 1));
+  const closeFeed = () => {
+    onClick();
   };
 
-  const goRight = () => {
-    setBack(false);
-    setVisible((prev) => (prev === 4 ? 1 : prev + 1));
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedPost, setEditedPost] = useState(post);
+  const [editedPhoto, setEditedPhoto] = useState(null);
+
+  const onChange = (e) => {
+    setEditedPost(e.target.value);
+  };
+
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const onClickSetContent = (e) => {
+    const { files } = e.target;
+    if (files && files.length === 1) setEditedPhoto(files[0]);
+  };
+
+  const user = auth.currentUser;
+  const onDelete = async () => {
+    const ok = window.confirm("정말로 지금 게시물을 삭제하시겠습니까?");
+    if (!ok || user.uid !== userId) return;
+    try {
+      await deleteDoc(doc(db, `content`, id));
+      if (photo) {
+        const photoRef = ref(storage, `contents/${user.uid}/${id}`);
+        await deleteObject(photoRef);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onUpDate = async () => {
+    try {
+      if (user.uid !== userId) return;
+
+      const postDoc = await getDoc(doc, "contents", id);
+
+      if (!postDoc.exists()) throw new Error("게시글이 존재하지 않습니다");
+      const postData = postDoc.data();
+
+      if (postData) {
+        if (postData.photo) postData.fileType = "image";
+        if (postData.video) postData.fileType = "video";
+      }
+
+      const exsitingfileType = post.Data.fileType || null;
+
+      if (editedPhoto) {
+        const newFileType = editedPhoto.type.startsWidth("image/")
+          ? "image"
+          : "video";
+
+        if (exsitingfileType && exsitingfileType !== newFileType) {
+          alert("동일한 컨텐츠만 업로드가 가능합니다");
+          return;
+        }
+
+        const locationRef = ref(storage, `contents/${user.uid}/${id}`);
+        const uploadTask = uploadBytesResumable(locationRef, editedPhoto);
+        if (editedPhoto.size >= 5 * 1024 * 1024) {
+          uploadTask.cancel();
+          throw new StorageError(
+            StorageErrorCode.CANCELED,
+            "파일의 크기가 5MB를 초과하였습니다"
+          );
+        }
+        const result = await uploadBytes(locationRef, editedPhoto);
+        const url = await getDownloadURL(result.ref);
+        await updateDoc(doc(db, "contents", id), {
+          post: editedPost,
+          photo: newFileType === "image" ? url : "",
+          video: newFileType === "video" ? url : "",
+          fileType: newFileType,
+        });
+      } else {
+        await updateDoc(doc(db, "contents", id), { post: editedPost });
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsEditing(false);
+    }
   };
 
   return (
-    <BgWrapper>
-      <Wrapper>
-        <Slider>
-          {/* <SlideWrapper> */}
-          <AnimatePresence custom={back}>
-            {slideArray.map((idx) =>
-              idx === visible ? (
-                <Slide
-                  key={visible}
-                  custom={back}
-                  variants={slide}
-                  initial="initial"
-                  animate="visible"
-                  exit="exits"
-                >
-                  <Img
-                    key={visible}
-                    src="/images/userImgs/user123456/feedDetail.jpg"
-                  />
-                </Slide>
-              ) : null
-            )}
-          </AnimatePresence>
-          {/* </SlideWrapper> */}
-          <Btns>
-            <LeftBtn onClick={goLeft}>
-              <IoChevronBack />
-            </LeftBtn>
-            <RightBtn onClick={goRight}>
-              <IoChevronForwardOutline />
-            </RightBtn>
-          </Btns>
-          <Pagers>
-            <Pager className="active" />
-            <Pager />
-            <Pager />
-            <Pager />
-          </Pagers>
-        </Slider>
-        <Desc>
-          <Container>
-            <UserContainer>
-              <UserBox>
-                <ProfileImg
-                  size={"40"}
-                  url={"/images/userImgs/user123456/profile-photo.jpg"}
-                />
-                <Userinfo>
-                  <UserId type={"feed"} userNickname={"bbok"} more={true} />
-                  <UserLocation>대관령 목장</UserLocation>
-                </Userinfo>
-              </UserBox>
-              <UserContents>
-                <Content size={"40"}>
-                  크리스마스 <br /> 눈썰매타기
-                </Content>
-                <Date>2023년 12월 25일</Date>
-              </UserContents>
-            </UserContainer>
-            <CommentList>
-              <CommentItem onClick={onClick} />
-            </CommentList>
-          </Container>
-          <WritingComment>
-            <Top>
-              <Notification>
-                <IoHeartOutline />
-                <span>
-                  <b>maratang</b>님 외 <b>109</b>명이 좋아합니다
-                </span>
-              </Notification>
-              <IconBtns>
-                <IoPaperPlaneOutline />
-                <FaRegBookmark />
-              </IconBtns>
-            </Top>
-            <Form>
-              <StyledInput
-                ref={commentRef}
-                value={comment}
-                placeholder="댓글 달기... "
-                onChange={(e) => setComment(e.target.value)}
-              />
-            </Form>
-          </WritingComment>
-        </Desc>
-      </Wrapper>
-    </BgWrapper>
+    <>
+      <CloseBtn onClick={closeFeed}>
+        <IoIosCloseCircle />
+      </CloseBtn>
+      <BgWrapper
+        ref={bgRef}
+        onClick={(e) => {
+          console.log(bgRef.current);
+          if (e.target === bgRef.current) {
+            onClick();
+          }
+        }}
+      >
+        <Wrapper isEditing={isEditing}>
+          <Inner className="inner" isEditing={isEditing}>
+            {isEditing ? (
+              <Title>
+                <Button text={"취소"} onClick={handleCancel} />
+                <span>편집 하기</span>
+                <Button text={"완료"} onClick={handleEdit} />
+              </Title>
+            ) : null}
+            <Contents isEditing={isEditing}>
+              <Slider className="slider">
+                {isEditing ? (
+                  <SetContentButton htmlFor="edit-content">
+                    <svg
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-hidden="true"
+                    >
+                      <path
+                        clipRule="evenodd"
+                        fillRule="evenodd"
+                        d="M1 5.25A2.25 2.25 0 0 1 3.25 3h13.5A2.25 2.25 0 0 1 19 5.25v9.5A2.25 2.25 0 0 1 16.75 17H3.25A2.25 2.25 0 0 1 1 14.75v-9.5Zm1.5 5.81v3.69c0 .414.336.75.75.75h13.5a.75.75 0 0 0 .75-.75v-2.69l-2.22-2.219a.75.75 0 0 0-1.06 0l-1.91 1.909.47.47a.75.75 0 1 1-1.06 1.06L6.53 8.091a.75.75 0 0 0-1.06 0l-2.97 2.97ZM12 7a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+                      />
+                    </svg>
+                    <SetContentInputButton
+                      id="edit-content"
+                      type="file"
+                      accept="video/mpk, video/*, image/*"
+                      onChange={onClickSetContent}
+                    />
+                  </SetContentButton>
+                ) : (
+                  <>
+                    <Slides visible={visible}>
+                      {feed[1].imgPath.map((it, idx) => (
+                        <Slide key={idx}>
+                          <img src={it} />
+                        </Slide>
+                      ))}
+                    </Slides>
+                    <SlideButtons>
+                      <SlideButton
+                        className="prev"
+                        visible={visible}
+                        onClick={(e) => moveSlide(e, -1)}
+                      >
+                        <SlideButtonImg />
+                      </SlideButton>
+                      <SlideButton
+                        className="next"
+                        visible={visible}
+                        onClick={(e) => moveSlide(e, 1)}
+                      >
+                        <SlideButtonImg />
+                      </SlideButton>
+                    </SlideButtons>
+                    <Pagers>
+                      {feed[1].imgPath.map((i, idx) => (
+                        <Pager
+                          key={idx}
+                          className={idx === visible ? "active" : ""}
+                          idx={idx}
+                          onClick={(e) => moveSlide(e, idx)}
+                        />
+                      ))}
+                    </Pagers>
+                  </>
+                )}
+              </Slider>
+              <Desc className="desc">
+                <Container>
+                  <UserContainer
+                    className="user_container"
+                    isEditing={isEditing}
+                  >
+                    <UserBox isEditing={isEditing}>
+                      <ProfileImg
+                        size={"40"}
+                        url={"/images/userImgs/user123456/profile-photo.jpg"}
+                      />
+                      <Userinfo>
+                        <UserId
+                          type={"feed"}
+                          userNickname={"bbok"}
+                          btn={"more"}
+                          feed={"myfeed"}
+                        />
+                        <UserLocation>대관령 목장</UserLocation>
+                      </Userinfo>
+                    </UserBox>
+                    <UserContents>
+                      {isEditing ? (
+                        <EditedTextArea
+                          value={editedPost}
+                          placeholder={post}
+                          onChange={onChange}
+                        />
+                      ) : (
+                        <>
+                          <Content size={"40"}>{post}</Content>
+                          <Date>2023년 12월 25일</Date>
+                        </>
+                      )}
+                    </UserContents>
+                  </UserContainer>
+                  {isEditing ? null : (
+                    <CommentList className="comment_list">
+                      <CommentItem onClick={onFocus} />
+                    </CommentList>
+                  )}
+                </Container>
+                {isEditing ? null : (
+                  <WritingComment className="writing_comment">
+                    <Top>
+                      <Notification>
+                        <IoHeartOutline />
+                        <span>
+                          <b>maratang</b>님 외 <b>109</b>명이 좋아합니다
+                        </span>
+                      </Notification>
+                      <IconBtns>
+                        <IoPaperPlaneOutline />
+                        <FaRegBookmark />
+                      </IconBtns>
+                    </Top>
+                    <Form>
+                      <StyledInput
+                        ref={commentRef}
+                        value={comment}
+                        placeholder="댓글 달기... "
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                    </Form>
+                  </WritingComment>
+                )}
+              </Desc>
+            </Contents>
+          </Inner>
+        </Wrapper>
+      </BgWrapper>
+    </>
   );
 };
 

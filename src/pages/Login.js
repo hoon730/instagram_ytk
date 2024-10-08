@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
 import { FirebaseError } from "firebase/app";
 import LogoImg from "../components/Login/LogoImg";
 import LoginBtn from "../components/Login/LoginBtn";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
 import FbBtn from "../components/Login/FbBtn";
+import { auth } from "../utils/firebase.js";
 
 const colors = {
   sub2: "#6228D7",
@@ -82,7 +82,7 @@ const Label = styled.label`
   position: absolute;
   padding: 0 2px;
   left: 18px;
-  top: 12px;
+  top: 18px;
   font-size: 16px;
   color: ${colors.darkGray};
   pointer-events: none;

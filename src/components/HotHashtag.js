@@ -8,15 +8,14 @@ const Wrapper = styled.div`
   height: 100%;
   padding: 36px;
   text-align: left;
-  border-left: 1px solid var(--light-gray-color);
-  /* border: 1px solid #6228d7; */
+  border-left: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 22px;
-  color: var(--font-black-color);
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const ItemList = styled.div`
@@ -57,8 +56,9 @@ const HotHashtag = () => {
     <Wrapper>
       <Title>🔥지금 뜨는 #해시태그</Title>
       <ItemList>
-        {hotTagInfo.map((it) => (
+        {hotTagInfo.map((it, idx) => (
           <HotHashtagItem
+            key={`hotHashtag${idx}`}
             keyword={it.keyword}
             postcount={`게시물 ${it.postcount}개`}
           />

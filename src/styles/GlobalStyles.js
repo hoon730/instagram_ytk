@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyles = createGlobalStyle`
+  ${reset}
   * {
     margin: 0;
     padding: 0;
@@ -84,6 +86,10 @@ const GlobalStyles = createGlobalStyle`
     --font-20: 20px;
     --font-22: 22px;
     --font-24: 24px;
+    --font-26: 26px;
+    --font-28: 28px;
+    --font-32: 32px;
+    --font-34: 34px;
 
     --font-thin: 100;
     --font-extralight: 200;
@@ -95,6 +101,7 @@ const GlobalStyles = createGlobalStyle`
     --font-extrabold: 800;
     --font-black: 900;
     
+    --box-shadow:  0 0 30px rgba(0, 0, 0, 0.1);
   }
 `;
 

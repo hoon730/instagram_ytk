@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 25px 0;
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const NumberingBox = styled.div`
@@ -18,9 +19,11 @@ const NumberingBox = styled.div`
 
   span {
     text-align: center;
-    font-size: var(--font-16);
+    font-size: var(--font-14);
+    font-weight: var(--font-regular);
     &:first-child {
       font-weight: var(--font-bold);
+      font-size: var(--font-16);
     }
   }
 `;
