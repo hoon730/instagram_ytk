@@ -21,7 +21,7 @@ const UserNameSection = styled.div`
 const StoryItem = ({ userId, imgPath }) => {
   return (
     <Wrapper>
-      <ProfileImg url={imgPath} size={80} type={"active"} />
+      <ProfileImg url={imgPath} size={80} type={"active"} hover={"noHover"} />
       <UserNameSection>
         <p>{userId}</p>
       </UserNameSection>

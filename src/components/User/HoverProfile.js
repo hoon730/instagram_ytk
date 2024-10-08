@@ -10,8 +10,9 @@ import { mouseon } from "../../utils/utils";
 const Wrapper = styled(motion.div)`
   width: 380px;
   padding: 20px;
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: var(--border-radius-12);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px ${({ theme }) => theme.shadowAlpha};
   position: absolute;
   ${({ top }) => (top ? `top: ${top}px;` : "top: 22px;")}
   left: 0;
@@ -28,6 +29,7 @@ const Userdesc = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 4px;
 `;
 
 const Optional = styled.p`
@@ -79,7 +81,7 @@ const HoverProfile = ({
     >
       <Userinfo>
         <ProfileImg
-          size={"55"}
+          size={"54"}
           type={"active"}
           url={"/images/userImgs/user123456/profile-photo.jpg"}
           hover={true}
