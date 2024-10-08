@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { click, scale } from "../utils/utils";
 import Button from "../components/Common/Button";
 import styled from "styled-components";
 
@@ -6,11 +8,25 @@ import { auth, db, storage } from "../utils/firebase";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const Wrapper = styled.div`
+const NewBg = styled(motion.div)`
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 3;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
+`;
+
+const Wrapper = styled(motion.div)`
   width: 680px;
   display: flex;
   flex-direction: column;
@@ -19,7 +35,25 @@ const Wrapper = styled.div`
   padding: 30px 50px;
   background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
-  z-index: 1;
+
+  @media screen and (max-width: 1024px) {
+    position: relative;
+    height: 0;
+    padding-top: 56.25%;
+    width: 67%;
+  }
+`;
+
+const Inner = styled.div`
+  width: 100%;
+  @media screen and (max-width: 1024px) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 30px 50px;
+  }
 `;
 
 const H3 = styled.h3`
@@ -150,7 +184,8 @@ const SubmitBtn = styled.input`
   cursor: pointer;
 `;
 
-const New = ({ closeNew }) => {
+const New = ({ setOpenNew }) => {
+  const newBgRef = useRef();
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
@@ -205,7 +240,7 @@ const New = ({ closeNew }) => {
       }
       setPost("");
       setFile(null);
-      closeNew();
+      setOpenNew(false);
     } catch (e) {
       console.error(e);
     } finally {
@@ -214,62 +249,83 @@ const New = ({ closeNew }) => {
   };
 
   const handleOnClick = () => {
-    closeNew();
+    setOpenNew(false);
   };
 
   return (
-    <Wrapper>
-      <H3>새 게시물 만들기</H3>
-      <Form onSubmit={onSubmit}>
-        <MediaBox>
-          {file !== null ? (
-            file.type.startsWith("image/") ? (
-              <ImgMedia />
-            ) : (
-              <VidMedia />
-            )
-          ) : (
-            <Icon src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`} />
-          )}
-        </MediaBox>
-        <StyledSpan>사진이나 동영상을 업로드 해주세요</StyledSpan>
-        <SearchBtn htmlFor="file">
-          {file ? "업로드 완료" : "사진 및 동영상 찾기"}
-        </SearchBtn>
-        <SearchInput
-          type="file"
-          id="file"
-          accept="video/*, image/*"
-          onChange={fileAdd}
-        />
-        <TextInputArea>
-          <TextArea
-            maxLength={2200}
-            value={post}
-            name="contents"
-            id="contents"
-            placeholder="게시글 입력..."
-            onChange={onChange}
-          />
-          <TextCounter>
-            <span>{textValueLength}</span>
-            <span> / 2200</span>
-          </TextCounter>
-        </TextInputArea>
-        <ButtonsBox>
-          <Button
-            type={"negative"}
-            text={"취소하기"}
-            width={"50%"}
-            onClick={handleOnClick}
-          />
-          <SubmitBtn
-            type="submit"
-            value={isLoading ? "업로드중..." : "게시글 업로드하기"}
-          />
-        </ButtonsBox>
-      </Form>
-    </Wrapper>
+    <NewBg
+      variants={click}
+      initial="initial"
+      animate="visible"
+      exit="exits"
+      ref={newBgRef}
+      onClick={(e) => {
+        if (e.target === newBgRef.current) setOpenNew(false);
+      }}
+    >
+      <Wrapper
+        variants={scale}
+        initial="initial"
+        animate="visible"
+        exit="exits"
+      >
+        <Inner className="inner">
+          <H3>새 게시물 만들기</H3>
+          <Form onSubmit={onSubmit}>
+            <MediaBox>
+              {file !== null ? (
+                file.type.startsWith("image/") ? (
+                  <ImgMedia />
+                ) : (
+                  <VidMedia />
+                )
+              ) : (
+                <Icon
+                  src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`}
+                />
+              )}
+            </MediaBox>
+            <StyledSpan>사진이나 동영상을 업로드 해주세요</StyledSpan>
+            <SearchBtn htmlFor="file">
+              {file ? "업로드 완료" : "사진 및 동영상 찾기"}
+            </SearchBtn>
+            <SearchInput
+              type="file"
+              id="file"
+              accept="video/*, image/*"
+              onChange={fileAdd}
+            />
+            <TextInputArea>
+              <TextArea
+                maxLength={2200}
+                value={post}
+                name="contents"
+                id="contents"
+                placeholder="게시글 입력..."
+                onChange={onChange}
+              />
+              <TextCounter>
+                <span>{textValueLength}</span>
+                <span> / 2200</span>
+              </TextCounter>
+            </TextInputArea>
+            <ButtonsBox>
+              <Button
+                className="button"
+                type={"negative"}
+                text={"취소하기"}
+                width={"50%"}
+                onClick={handleOnClick}
+              />
+              <SubmitBtn
+                type="submit"
+                value={isLoading ? "업로드중..." : "게시글 업로드하기"}
+              />
+            </ButtonsBox>
+          </Form>
+        </Inner>
+      </Wrapper>
+    </NewBg>
   );
 };
 
