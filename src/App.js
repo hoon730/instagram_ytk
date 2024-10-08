@@ -7,6 +7,7 @@ import Main from "./pages/Main";
 import Detail from "./pages/Detail";
 import MyFeed from "./pages/MyFeed";
 import Login from "./pages/Login";
+import Search from "./pages/Search";
 import Layout from "./components/Layout";
 import New from "./pages/New";
 import Loading from "./components/Common/Loading";
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "setup",
         element: <Setup />,
+      },
+      {
+        path: "search",
+        element: <Search />,
       },
     ],
   },

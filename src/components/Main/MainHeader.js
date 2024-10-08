@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding: 36px;
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
@@ -27,6 +28,9 @@ const Wrapper = styled.div`
 
 const SearchBarArea = styled.div`
   width: 500px;
+  @media screen and (max-width: 1110px) {
+    width: 100%;
+  }
 `;
 
 const ProfileArea = styled.div`
