@@ -9,6 +9,11 @@ const Wrapper = styled.div`
   padding: 36px;
   text-align: left;
   border-left: 1px solid ${({ theme }) => theme.borderColor};
+  position: fixed;
+  right: 0;
+  @media screen and (max-width: 1350px) {
+    display: none;
+  }
 `;
 
 const Title = styled.h1`

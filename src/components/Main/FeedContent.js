@@ -6,15 +6,25 @@ import { FiUser } from "react-icons/fi";
 import FeedItem from "./FeedItem";
 import Loading from "../Common/Loading";
 
+// 파이어 스토어 연결하면 지울 목업 데이터
+import Data from "../../data.json";
+const user = Data.user;
+const profile = Data.profile;
+const feed = Data.feed;
+const userId = "lualbvqvQmVWkfDU7JUKJRYdqf3";
+const myProfile = profile.find((it) => it.userId === userId);
+
 const tabWidth = 340;
 
-const Wrapper = styled.div`
-  width: 100%;
-`;
+const Wrapper = styled.div``;
 
 const FeedArea = styled.div`
   width: 680px;
   margin: 0 auto;
+
+  @media screen and (max-width: 1024px) {
+    width: 390px;
+  }
 `;
 
 const FeedTabBar = styled.div`
@@ -71,7 +81,7 @@ const FeedContent = () => {
           <FeedTabBtn>
             <TabBarBtn
               onClick={recommendActive}
-              width={tabWidth}
+              width={340}
               iconCode={<FaRegStar />}
               text={"추천 게시물"}
               isActive={recommend}
@@ -85,9 +95,17 @@ const FeedContent = () => {
             />
           </FeedTabBtn>
         </FeedTabBar>
-        <FeedItem />
+        {feed[3].feedDetail.map((it, idx) => (
+          <FeedItem
+            key={idx}
+            user={user}
+            profile={profile}
+            myProfile={myProfile}
+            feedUserId={feed[3].userId}
+            feedDetail={it}
+          />
+        ))}
       </FeedArea>
-      <Loading />
     </Wrapper>
   );
 };

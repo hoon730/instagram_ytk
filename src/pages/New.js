@@ -116,7 +116,7 @@ const SearchBtn = styled.label`
   margin-bottom: 40px;
   transition: background 0.3s;
   &:hover {
-    background: #3e1494;
+    background: ${({ theme }) => theme.buttonHoverColor};
   }
 `;
 
@@ -132,10 +132,11 @@ const TextArea = styled.textarea`
   width: 100%;
   height: 220px;
   padding: 20px;
-  border: 2px solid var(--light-gray-color);
+  border: 2px solid ${({ theme }) => theme.iconBgColor};
   border-radius: var(--border-radius-12);
-  color: var(--bg-black-color);
+  color: ${({ theme }) => theme.fontColor};
   font-size: var(--font-16);
+  background: ${({ theme }) => theme.bgColor};
   resize: none;
   &::placeholder {
     color: var(--gray-color);
@@ -147,9 +148,9 @@ const TextArea = styled.textarea`
       opacity: 0;
     }
     outline: none;
-    border-color: var(--sub-purple-color);
+    border-color: ${({ theme }) => theme.subColor};
     & ~ div {
-      color: var(--sub-purple-color);
+      color: ${({ theme }) => theme.subColor};
     }
   }
 `;
@@ -180,8 +181,11 @@ const SubmitBtn = styled.input`
   color: var(--bg-white-color);
   background-color: ${({ theme }) => theme.subColor};
   border-radius: var(--border-radius-8);
-  transition: background 0.3s;
+  transition: background-color 0.3s;
   cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.buttonHoverColor};
+  }
 `;
 
 const New = ({ setOpenNew }) => {
@@ -196,6 +200,7 @@ const New = ({ setOpenNew }) => {
   const fileAdd = (e) => {
     console.log(e.target.result);
     const { files } = e.target;
+    console.log(files);
     if (files && files.length === 1) {
       if (files[0].size > maxFileSize) {
         alert("업로드 할 수 있는 최대용량은 5MB입니다.");

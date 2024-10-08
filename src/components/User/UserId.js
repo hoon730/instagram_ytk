@@ -8,7 +8,7 @@ import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
 
 const Wrapper = styled.span`
-  width: 100%;
+  width: ${({ type }) => (type === "notification" ? "" : "100%")};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -20,10 +20,10 @@ const StyledSpan = styled.span`
   gap: 8px;
   ${({ type }) =>
     type === "feed"
-      ? `font-size: var(--font-14); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
       : type === "hover"
-      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
-      : `font-size: var(--font-14); font-weight: var(--font-bold);`}
+      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
+      : `font-size: var(--font-size-14); font-weight: var(--font-bold);`}
 `;
 
 const IdSpan = styled.div`
@@ -66,7 +66,6 @@ const MoreBtn = styled.button`
   display: flex;
   align-items: center;
   svg {
-    font-size: var(--font-18);
     color: var(--dark-gray-color);
   }
 `;
@@ -101,6 +100,7 @@ const CancelBtn = styled.div`
   &:hover {
     color: var(--gray-color);
   }
+  color: ${({ theme }) => theme.fontColor};
 `;
 
 const HeartBtn = styled.button`
@@ -122,7 +122,7 @@ const UserId = ({
   top,
   feed,
   onClick,
-  setIsEditing
+  setIsEditing,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -141,29 +141,35 @@ const UserId = ({
   };
 
   return (
-    <Wrapper>
+    <Wrapper type={type}>
       <StyledSpan type={type}>
-        <IdSpan onMouseEnter={showProfile} onMouseLeave={hideProfile}>
+        <IdSpan
+          className="user-id"
+          onMouseEnter={showProfile}
+          onMouseLeave={hideProfile}
+        >
           {!hover && hoverId ? <HoverProfile target={"id"} top={"22"} /> : null}
           {userNickname}
         </IdSpan>
-        {check === "active" ? <Check src="/images/check.svg" /> : null}
+        {check === "active" ? (
+          <Check className="user-check" src="/images/check.svg" />
+        ) : null}
         {comment ? <Comment>{comment}</Comment> : null}
         {createdAt ? (
-          <Date>
+          <Date className="user-date">
             <span>&middot;</span>
             {getFormattedDate(createdAt)}
           </Date>
         ) : null}
         {follwed ? (
-          <IsFollowed>
+          <IsFollowed className="user-followed">
             <span>&middot;{follwed}</span>{" "}
           </IsFollowed>
         ) : null}
       </StyledSpan>
       {btn === "more" ? (
         <MoreBtn onClick={() => setOpenMore(true)}>
-          <LuMoreHorizontal />
+          <LuMoreHorizontal size={22} />
         </MoreBtn>
       ) : btn === "heart" ? (
         <HeartBtn
