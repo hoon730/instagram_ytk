@@ -48,6 +48,9 @@ const UserInfo = styled.div`
   flex-direction: column;
   width: 100%;
   gap: 4px;
+  @media screen and (max-width: 1024px) {
+    font-size: var(--font-12);
+  }
 `;
 
 const UserName = styled.p`
@@ -92,6 +95,7 @@ const FeedDesc = styled.div`
 const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
   const feedProfile = profile.find((it) => it.userId === feedUserId);
   const feedUser = user.find((it) => it.userId === feedUserId);
+  const followResult = myProfile.following.find((it) => it === feedUserId);
 
   return (
     <Wrapper>
@@ -106,8 +110,9 @@ const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
             type={"feed"}
             userNickname={feedUser.userNickname}
             check={feedProfile.badge ? "active" : ""}
-            createDate={feedDetail.createDate}
+            createdAt={new Date(feedDetail.createDate)}
             btn={"more"}
+            follwed={followResult ? "" : "팔로우"}
           />
           <UserName>{feedProfile.userName}</UserName>
         </UserInfo>

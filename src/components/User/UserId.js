@@ -143,20 +143,26 @@ const UserId = ({
   return (
     <Wrapper type={type}>
       <StyledSpan type={type}>
-        <IdSpan onMouseEnter={showProfile} onMouseLeave={hideProfile}>
+        <IdSpan
+          className="user-id"
+          onMouseEnter={showProfile}
+          onMouseLeave={hideProfile}
+        >
           {!hover && hoverId ? <HoverProfile target={"id"} top={"22"} /> : null}
           {userNickname}
         </IdSpan>
-        {check === "active" ? <Check src="/images/check.svg" /> : null}
+        {check === "active" ? (
+          <Check className="user-check" src="/images/check.svg" />
+        ) : null}
         {comment ? <Comment>{comment}</Comment> : null}
         {createdAt ? (
-          <Date>
+          <Date className="user-date">
             <span>&middot;</span>
             {getFormattedDate(createdAt)}
           </Date>
         ) : null}
         {follwed ? (
-          <IsFollowed>
+          <IsFollowed className="user-followed">
             <span>&middot;{follwed}</span>{" "}
           </IsFollowed>
         ) : null}

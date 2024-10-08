@@ -95,13 +95,13 @@ const FeedContent = () => {
             />
           </FeedTabBtn>
         </FeedTabBar>
-        {feed[0].feedDetail.map((it, idx) => (
+        {feed[3].feedDetail.map((it, idx) => (
           <FeedItem
             key={idx}
             user={user}
             profile={profile}
             myProfile={myProfile}
-            feedUserId={feed[0].userId}
+            feedUserId={feed[3].userId}
             feedDetail={it}
           />
         ))}
