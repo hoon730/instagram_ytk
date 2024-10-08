@@ -24,7 +24,7 @@ const EllipsisText = styled.div`
     line-height: 1.6;
   }
 
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
   }
 `;
@@ -38,7 +38,7 @@ const OriginalText = styled.div`
     line-height: 1.6;
   }
 
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
   }
 `;
@@ -49,16 +49,17 @@ const MoreText = styled.span`
   float: right;
   shape-outside: border-box;
   cursor: pointer;
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
+    margin: 25px 10px 0;
   }
 `;
 
 const HashTag = styled.span`
-  margin: 0 4px;
+  margin-right: 4px;
   color: ${({ theme }) => theme.subColor};
   cursor: pointer;
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
   }
 `;

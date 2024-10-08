@@ -22,7 +22,7 @@ const FeedArea = styled.div`
   width: 680px;
   margin: 0 auto;
 
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     width: 390px;
   }
 `;
