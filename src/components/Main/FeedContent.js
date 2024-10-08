@@ -16,9 +16,7 @@ const myProfile = profile.find((it) => it.userId === userId);
 
 const tabWidth = 340;
 
-const Wrapper = styled.div`
-  width: 100%;
-`;
+const Wrapper = styled.div``;
 
 const FeedArea = styled.div`
   width: 680px;
@@ -83,7 +81,7 @@ const FeedContent = () => {
           <FeedTabBtn>
             <TabBarBtn
               onClick={recommendActive}
-              width={tabWidth}
+              width={340}
               iconCode={<FaRegStar />}
               text={"추천 게시물"}
               isActive={recommend}
@@ -108,7 +106,6 @@ const FeedContent = () => {
           />
         ))}
       </FeedArea>
-      <Loading />
     </Wrapper>
   );
 };

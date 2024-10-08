@@ -5,30 +5,47 @@ import ToolItem from "../Common/Sidebar/ToolItem";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import { GoHeart, GoHeartFill } from "react-icons/go";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import Notification from "./Notification";
 
 const Wrapper = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+  width: 80%;
   height: 85px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding: 36px;
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   border-right: 1px solid ${({ theme }) => theme.borderColor};
+  position: fixed;
+  z-index: 1;
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 const SearchBarArea = styled.div`
   width: 500px;
+  @media screen and (max-width: 1110px) {
+    width: 100%;
+  }
 `;
 
 const ProfileArea = styled.div`
-  width: 330px;
-  height: 55px;
+  width: 305px;
+  height: 60px;
   display: flex;
   align-items: center;
   gap: 12px;
+  position: relative;
+`;
+
+const NotificationArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Profile = styled.div`
@@ -56,22 +73,13 @@ const UserProfile = styled.div`
 const ProfileText = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 2px;
 `;
 
 const UserName = styled.div`
-  font-size: var(--font-12);
+  font-size: var(--font-size-12);
   font-weight: var(--font-regular);
   color: var(--gray-color);
-`;
-
-const AccountIcon = styled.div`
-  height: 25px;
-  display: flex;
-  flex-direction: column;
-  margin-right: 15px;
-  svg {
-    fill: var(--gray-color);
-  }
 `;
 
 const MainHeader = () => {
@@ -87,26 +95,26 @@ const MainHeader = () => {
         <SearchBar />
       </SearchBarArea>
       <ProfileArea>
-        <ToolItem
-          clickEvent={heartChange}
-          iconCode={heart ? <GoHeartFill /> : <GoHeart />}
-          name={heart ? "heartFill" : "heart"}
-        />
+        <NotificationArea>
+          <ToolItem
+            clickEvent={heartChange}
+            iconCode={heart ? <GoHeartFill /> : <GoHeart />}
+            name={heart ? "heartFill" : "heart"}
+          />
+          {heart ? <Notification /> : null}
+        </NotificationArea>
         <Profile>
           <UserProfile>
             <ProfileImg
               url={`${process.env.PUBLIC_URL}/images/userImgs/user123456/profile-photo.jpg`}
               size={"45"}
+              hover={"noHover"}
             />
             <ProfileText>
-              <UserId type={"feed"} userNickname={"burxxxking"} />
+              <UserId userNickname={"burxxxking"} hover={"noHover"} />
               <UserName>decent</UserName>
             </ProfileText>
           </UserProfile>
-          <AccountIcon>
-            <IoIosArrowUp />
-            <IoIosArrowDown />
-          </AccountIcon>
         </Profile>
       </ProfileArea>
     </Wrapper>

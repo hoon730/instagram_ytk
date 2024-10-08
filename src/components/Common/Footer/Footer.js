@@ -17,8 +17,7 @@ const Wrapper = styled.div`
 const BtnListWrapper = styled.div`
   display: flex;
   ${({ direction }) =>
-    direction === "column" ? `flex-direction: column;` : `flex-direction: row;`}
-  gap: 2px;
+    direction === "column" ? `flex-direction: column;  gap: 8px;` : `flex-direction: row; gap: 2px;`}
   margin-top: 30px;
   margin-bottom: 15px;
 `;

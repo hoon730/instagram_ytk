@@ -8,10 +8,24 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
+const Margin = styled.div`
+  width: 20%;
+  @media screen and (max-width: 1024px) {
+    width: 92px;
+  }
+
+  @media screen and (max-width: 630px) {
+    width: 0;
+  }
+`;
+
 const Container = styled.div`
   width: 80%;
-  margin-left: 20%;
-  
+
+  @media screen and (max-width: 1024px) {
+    width: calc(100% - 92px);
+  }
+
   @media screen and (max-width: 630px) {
     width: 100%;
   }
@@ -21,6 +35,7 @@ const Layout = () => {
   return (
     <Wrapper>
       <SideBar />
+      <Margin />
       <Container>
         <Outlet />
       </Container>

@@ -10,7 +10,8 @@ const MoreList = styled(motion.div)`
   bottom: 120%;
   left: 0;
   width: 150px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px ${({ theme }) => theme.shadowAlpha};
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: var(--border-radius-12);
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
