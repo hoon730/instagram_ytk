@@ -5,6 +5,7 @@ import { FaRegStar } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import FeedItem from "./FeedItem";
 import Loading from "../Common/Loading";
+import ClickFeed from "../Detail/ClickFeed";
 
 // 파이어 스토어 연결하면 지울 목업 데이터
 import Data from "../../data.json";
@@ -59,6 +60,7 @@ const FeedContent = () => {
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
   const [$tabChange, setTabChange] = useState("recommend");
+  const [isClicked, setIsClicked] = useState(false);
 
   const recommendActive = () => {
     setRecommend(true);
@@ -69,6 +71,10 @@ const FeedContent = () => {
     setRecommend(false);
     setFollow(true);
     setTabChange("follow");
+  };
+
+  const onClick = () => {
+    setIsClicked((current) => !current);
   };
 
   return (
@@ -103,8 +109,10 @@ const FeedContent = () => {
             myProfile={myProfile}
             feedUserId={feed[3].userId}
             feedDetail={it}
+            onClick={onClick}
           />
         ))}
+        {isClicked ? <ClickFeed onClick={onClick} /> : null}
       </FeedArea>
     </Wrapper>
   );

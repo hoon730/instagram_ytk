@@ -198,9 +198,7 @@ const New = ({ setOpenNew }) => {
   const maxFileSize = 5 * 1024 * 1024;
 
   const fileAdd = (e) => {
-    console.log(e.target.result);
     const { files } = e.target;
-    console.log(files);
     if (files && files.length === 1) {
       if (files[0].size > maxFileSize) {
         alert("업로드 할 수 있는 최대용량은 5MB입니다.");
@@ -218,7 +216,7 @@ const New = ({ setOpenNew }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-    // if (!user || isLoading || post === "" || post.length > 2200) return;
+    if (!user || isLoading || post === "" || post.length > 2200) return;
     try {
       setIsLoading(true);
       const doc = await addDoc(collection(db, "contents"), {

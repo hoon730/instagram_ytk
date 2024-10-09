@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { getFormattedDate } from "../../utils/utils";
 import styled from "styled-components";
+import Slide from "../Main/Slide";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import CommentItem from "./CommentItem";
@@ -25,23 +26,10 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 
-const feed = [
-  {
-    type: "img",
-    imgPath: ["images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed1.jpg"],
-    content:
-      "#브런치 먹으러 다녀왔어요! 분위기가 정말 좋고 커피도 맛있었어요 ☕️ #카페투어 #소확행 #힐링",
-  },
-  {
-    type: "img",
-    imgPath: [
-      "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed2.jpg",
-      "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed3.jpg",
-      "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed4.jpg",
-      "images/userImgs/lualbvqvQmVWkfDU7JUKJRYdqf3/feed5.jpg",
-    ],
-  },
-];
+import Data from "../../data.json";
+import FeedText from "../Main/FeedText";
+const user = Data.user;
+const profile = Data.profile;
 
 const BgWrapper = styled.div`
   position: fixed;
@@ -126,91 +114,12 @@ const Inner = styled.div`
   transition: all 0.3s;
 `;
 
-const limit = feed[1].imgPath.length - 1;
-
 const Slider = styled.div`
   width: 60%;
   height: 100%;
   position: relative;
   border-radius: var(--border-radius-12) 0 0 var(--border-radius-12);
   overflow: hidden;
-`;
-
-const Slides = styled.ul`
-  width: ${100 * (feed[1].imgPath.length || 1)}%;
-  height: 100%;
-  display: flex;
-  transform: translateX(
-    ${({ visible }) => `${-visible * (100 / feed[1].imgPath.length) || 0}%`}
-  );
-  transition: transform 0.5s;
-`;
-
-const Slide = styled.li`
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const SlideButtons = styled.div`
-  width: 100%;
-  padding: 0 22px;
-  position: absolute;
-  top: 50%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const SlideButton = styled.span`
-  width: 26px;
-  height: 26px;
-  cursor: pointer;
-  &.prev {
-    transform: rotate(180deg);
-    visibility: ${({ visible }) => (visible === 0 ? "hidden" : "visible")};
-  }
-  &.next {
-    visibility: ${({ visible }) => (visible === limit ? "hidden" : "visible")};
-  }
-  & img {
-    width: inherit;
-    height: inherit;
-  }
-`;
-
-const SlideButtonImg = () => {
-  return (
-    <>
-      <img src={"/images/slide-button.svg"} />
-    </>
-  );
-};
-
-const Pagers = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  padding-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-`;
-
-const Pager = styled.div`
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--dark-gray-color);
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-
-  &.active {
-    background: var(--bg-white-color);
-  }
 `;
 
 const Desc = styled.div`
@@ -247,7 +156,7 @@ const Userinfo = styled.div`
   justify-content: center;
 `;
 
-const UserLocation = styled.span`
+const Location = styled.span`
   font-size: var(--font-14);
 `;
 
@@ -385,34 +294,26 @@ const EditedTextArea = styled.textarea`
 
 const Clickdetail = ({
   location,
-  onClick,
-  userName,
   createdAt,
   post,
   photo,
   video,
   userId,
   id,
+  onClick,
+  UserName,
+  fileType,
 }) => {
   const commentRef = useRef();
   const bgRef = useRef();
   const [comment, setComment] = useState("");
-  const [visible, setVisible] = useState(0);
 
-  const moveSlide = (e, num) => {
-    if (e.target.localName === "img") {
-      setVisible(num + visible);
-    } else {
-      setVisible(num);
-    }
+  const hideFeed = () => {
+    onClick();
   };
 
   const onFocus = () => {
     commentRef.current.focus();
-  };
-
-  const closeFeed = () => {
-    onClick();
   };
 
   const [isEditing, setIsEditing] = useState(false);
@@ -422,10 +323,6 @@ const Clickdetail = ({
   const onChange = (e) => {
     setEditedPost(e.target.value);
   };
-
-  // const handleEdit = () => {
-  //   setIsEditing(true);
-  // };
 
   const handleCancel = () => {
     setIsEditing(false);
@@ -506,14 +403,14 @@ const Clickdetail = ({
 
   return (
     <>
-      <CloseBtn onClick={closeFeed}>
+      <CloseBtn onClick={hideFeed}>
         <IoIosCloseCircle />
       </CloseBtn>
       <BgWrapper
         ref={bgRef}
         onClick={(e) => {
           if (e.target === bgRef.current) {
-            onClick();
+            hideFeed();
           }
         }}
       >
@@ -528,56 +425,38 @@ const Clickdetail = ({
             ) : null}
             <Contents isEditing={isEditing}>
               <Slider className="slider">
-                {isEditing ? (
-                  <SetContentButton htmlFor="edit-content">
-                    <Icon src="/images/newPostIcon.svg" />
-                    <SetContentInputButton
-                      id="edit-content"
-                      type="file"
-                      accept="video/mpk, video/*, image/*"
-                      onChange={onClickSetContent}
-                    />
-                  </SetContentButton>
-                ) : (
-                  <>
-                    <Slides visible={visible}>
-                      {/* {feed[1].imgPath.map((it, idx) => (
-                        <Slide key={idx}>
-                          <img src={it} />
-                        </Slide>
-                      ))} */}
-                      <Slide>
-                        <img src={photo} />
-                      </Slide>
-                    </Slides>
-                    <SlideButtons>
-                      <SlideButton
-                        className="prev"
-                        visible={visible}
-                        onClick={(e) => moveSlide(e, -1)}
-                      >
-                        <SlideButtonImg />
-                      </SlideButton>
-                      <SlideButton
-                        className="next"
-                        visible={visible}
-                        onClick={(e) => moveSlide(e, 1)}
-                      >
-                        <SlideButtonImg />
-                      </SlideButton>
-                    </SlideButtons>
-                    <Pagers>
-                      {feed[1].imgPath.map((i, idx) => (
-                        <Pager
-                          key={idx}
-                          className={idx === visible ? "active" : ""}
-                          idx={idx}
-                          onClick={(e) => moveSlide(e, idx)}
-                        />
-                      ))}
-                    </Pagers>
-                  </>
-                )}
+                {
+                  isEditing ? (
+                    <SetContentButton htmlFor="edit-content">
+                      <Icon src="/images/newPostIcon.svg" />
+                      <SetContentInputButton
+                        id="edit-content"
+                        type="file"
+                        accept="video/mpk, video/*, image/*"
+                        onChange={onClickSetContent}
+                      />
+                    </SetContentButton>
+                  ) : null
+                  // (
+                  //   <>
+                  //     {fileType === "reels" ? (
+                  //       <video
+                  //         autoPlay
+                  //         muted
+                  //         loop
+                  //         src={""}
+                  //         style={{
+                  //           width: "100%",
+                  //           height: "100%",
+                  //           objectFit: "cover",
+                  //         }}
+                  //       />
+                  //     ) : (
+                  //       <Slide/>
+                  //     )}
+                  //   </>
+                  // )
+                }
               </Slider>
               <Desc className="desc">
                 <Container>
@@ -586,35 +465,36 @@ const Clickdetail = ({
                     isEditing={isEditing}
                   >
                     <UserBox isEditing={isEditing}>
-                      <ProfileImg
-                        size={"40"}
-                        url={"/images/userImgs/user123456/profile-photo.jpg"}
-                      />
+                      <ProfileImg type={"active"} size={"40"} url={""} />
                       <Userinfo>
                         <UserId
                           type={"feed"}
-                          userNickname={userName}
+                          userNickname={""}
+                          // check={feedProfile.badge ? "active" : ""}
+                          // createdAt={new Date(feedDetail.createDate)}
                           btn={"more"}
-                          feed={"myfeed"}
+                          // follwed={followResult ? "" : "팔로우"}
                           onClick={onDelete}
                           setIsEditing={setIsEditing}
                         />
-                        <UserLocation>대관령 목장</UserLocation>
+                        <Location>{location}</Location>
                       </Userinfo>
                     </UserBox>
                     <UserContents>
-                      {isEditing ? (
-                        <EditedTextArea
-                          value={editedPost}
-                          placeholder={post}
-                          onChange={onChange}
-                        />
-                      ) : (
-                        <>
-                          <Content size={"40"}>{post}</Content>
-                          <Date>{createdAt}</Date>
-                        </>
-                      )}
+                      {
+                        isEditing ? (
+                          <EditedTextArea
+                            value={editedPost}
+                            placeholder={post}
+                            onChange={onChange}
+                          />
+                        ) : null
+                        // (
+                        //   <>
+                        //     <FeedText />
+                        //   </>
+                        // )
+                      }
                     </UserContents>
                   </UserContainer>
                   {isEditing ? null : (

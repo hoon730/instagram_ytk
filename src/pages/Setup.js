@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import reset from "styled-reset";
 import styled from "styled-components";
 import Header from "../components/Edit/Header";
@@ -31,12 +31,28 @@ const Wrapper = styled.div`
   background: var(--bg-white-color);
 `;
 
-const Setup = ({ setIsOpen }) => {
+const Setup = ({ onClick }) => {
+  const containerRef = useRef();
+
+  console.log(onClick);
+
+  const hideSetup = () => {
+    onClick();
+  };
+
   return (
-    <Container onClick={() => setIsOpen}>
-      <Wrapper>
+    <Container
+      ref={containerRef}
+      onClick={(e) => {
+        console.log("클릭");
+        if (!containerRef.current.contains(e.target)) {
+          hideSetup();
+        }
+      }}
+    >
+      <Wrapper onClick={(e) => e.stopPropagation()}>
         <Header
-          leftChild={<Button text={"취소"} />}
+          leftChild={<Button text={"취소"} onClick={onClick}/>}
           title={"프로필 수정"}
           rightChild={<Button text={"완료"} />}
         />
