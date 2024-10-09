@@ -16,6 +16,7 @@ import { auth } from "./utils/firebase";
 import Setup from "./pages/Setup";
 import Signup from "./pages/Signup";
 import ProtectedPage from "./components/ProtectedPage";
+import SetStorage from "./pages/SetStorage";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />,
+  },
+  {
+    path: "/setStorage",
+    element: <SetStorage />,
   },
 ]);
 
