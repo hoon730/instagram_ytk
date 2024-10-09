@@ -6,7 +6,6 @@ import AddHighlight from "../Story/AddHighlight";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 150px;
   display: flex;
   align-items: center;
 `;
@@ -16,7 +15,7 @@ const HighlightBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 50px;
-  margin: 0 70px;
+  margin: 20px 70px;
 `;
 
 const storys = [

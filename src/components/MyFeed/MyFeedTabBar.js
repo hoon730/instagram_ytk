@@ -6,7 +6,7 @@ import { BiMoviePlay } from "react-icons/bi";
 import { TbUserSquare } from "react-icons/tb";
 
 const Wrapper = styled.div`
-  width: 936px;
+  width: 934px;
   height: 70px;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -20,7 +20,7 @@ const ActiveBorderArea = styled.div`
 const ActiveBorder = styled.div`
   width: 33%;
   height: 100%;
-  background: ${({ theme }) => theme.borderColor};
+  background: ${({ theme }) => theme.fontColor};
   transition: transform 0.3s;
   ${({ xVal }) => `transform: translateX(${xVal}%);`}
 `;

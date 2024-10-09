@@ -2,13 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: ${({ size }) => `${size || 305}`}px;
-  height: ${({ size }) => `${size || 305}`}px;
+  width: ${({ size }) => `${size || 308}`}px;
+  height: ${({ size }) => `${size || 308}`}px;
   border-radius: 10px;
+
+  @media screen and (max-width: 780px) {
+    width: 100%;
+  }
 
   @media screen and (max-width: 430px) {
     width: 100%;
-    height: 140px;
   }
 `;
 
