@@ -7,9 +7,10 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 //console.log(Data);
 console.log("스토리지 세팅 시작");
-// 0. 한꺼번에 돌리지 말고 번호 순대로 주석 차례차례 풀면서 돌리기
+// 0. 먼저 주석을 풀기전에 /setStorage를 입력해서 화면이동. 그리고 주석을 한번에 풀어서 저장하지 말고 필요한 것만 풀어서 저장하면 바로 실행 됨.
+// 그리고 반드시 다시 주석처리 해야함 안그러면 중복 데이터가 올라감.. 주의!!!
 
-// 1. 계정 세팅
+// 1. 계정 세팅(Authentication에 넣을 때만 풀기.. 이미 계정이 있으면 절대 주석 풀지 말 것)
 /*Data.user.forEach(async (user) => {
   console.log(user);
   const credentials = await createUserWithEmailAndPassword(
@@ -93,14 +94,12 @@ console.log("스토리지 세팅 시작");
 setProfile();*/
 
 // 3. 피드 세팅
-const setFeed = async () => {
-  //const item = Data.feed[0];
+/*const setFeed = async () => {
   //Data.feed.map(async (item, idx) => {
   let idx = 0;
   for (const item of Data.feed) {
     const user = Data.user.find((it) => it.userId === item.userId);
 
-    //const detail = item.feedDetail[3];
     for (const detail of item.feedDetail) {
       const newLike = [];
       if (detail.like.length > 0) {
@@ -232,10 +231,9 @@ const setFeed = async () => {
       await setReply(detail.reply, doc.id);
     }
     console.log(`피드${idx}번 업데이트 완료`);
-    //});
     idx++;
   }
-};
+};*/
 //setFeed();
 
 const SetStorage = () => {
