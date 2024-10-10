@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import React, { useState, useRef } from "react";
 import reset from "styled-reset";
 import styled from "styled-components";
 import Header from "../components/Edit/Header";
