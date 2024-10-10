@@ -21,9 +21,6 @@ const NewBg = styled(motion.div)`
   overflow: hidden;
   z-index: 3;
 
-  @media screen and (max-width: 1024px) {
-    width: 100%;
-  }
 `;
 
 const Wrapper = styled(motion.div)`
@@ -36,24 +33,24 @@ const Wrapper = styled(motion.div)`
   background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
 
-  @media screen and (max-width: 1024px) {
+  /* @media screen and (max-width: 1024px) {
     position: relative;
     height: 0;
     padding-top: 56.25%;
-    width: 67%;
-  }
+    width: 68%;
+  } */
 `;
 
 const Inner = styled.div`
   width: 100%;
-  @media screen and (max-width: 1024px) {
+
+  /* @media screen and (max-width: 1024px) {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    padding: 30px 50px;
-  }
+  } */
 `;
 
 const H3 = styled.h3`

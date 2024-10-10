@@ -8,10 +8,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 40px;
-`;
-
-const SytledForm = styled.form`
-  width: 100%;
   ul {
     width: 100%;
     display: flex;
@@ -53,25 +49,36 @@ const SytledForm = styled.form`
   }
 `;
 
-const EditDesc = () => {
+const EditDesc = ({
+  handleUserName,
+  handleIntro,
+  handleLink,
+  userName,
+  intro,
+  link,
+}) => {
   return (
     <Wrapper>
-      <SytledForm method="get">
-        <ul>
-          <li>
-            <label htmlFor="name">이름</label>
-            <input name="이름" type="text" id="name" />
-          </li>
-          <li>
-            <label htmlFor="intro">소개</label>
-            <textarea name="이름" type="textarea" id="intro" />
-          </li>
-          <li>
-            <label htmlFor="link">링크</label>
-            <input name="링크" type="url" id="link" />
-          </li>
-        </ul>
-      </SytledForm>
+      <ul>
+        <li>
+          <label htmlFor="name">이름</label>
+          <input value={userName} name="이름" type="text" id="name" onChange={handleUserName} />
+        </li>
+        <li>
+          <label htmlFor="intro">소개</label>
+          <textarea
+            value={intro}
+            name="이름"
+            type="textarea"
+            id="intro"
+            onChange={handleIntro}
+          />
+        </li>
+        <li>
+          <label htmlFor="link">링크</label>
+          <input value={link} name="링크" type="url" id="link" onChange={handleLink} />
+        </li>
+      </ul>
     </Wrapper>
   );
 };
