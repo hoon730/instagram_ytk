@@ -20,10 +20,10 @@ const StyledSpan = styled.span`
   gap: 8px;
   ${({ type }) =>
     type === "feed"
-      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
+      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
       : type === "hover"
-      ? `font-size: var(--font-size-16); font-weight: var(--font-bold);`
-      : `font-size: var(--font-size-14); font-weight: var(--font-bold);`}
+      ? `font-size: var(--font-16); font-weight: var(--font-bold);`
+      : `font-size: var(--font-14); font-weight: var(--font-bold);`}
 `;
 
 const IdSpan = styled.div`
@@ -36,7 +36,7 @@ const Check = styled.img`
   width: 18px;
 `;
 
-const Comment = styled.span`
+const Content = styled.span`
   font-size: 13px;
   font-weight: var(--font-medium);
 `;
@@ -51,7 +51,7 @@ const Date = styled.div`
   color: var(--gray-color);
 `;
 
-const IsFollowed = styled.span`
+const IsFollowed = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -114,7 +114,7 @@ const UserId = ({
   type,
   userNickname,
   check,
-  comment,
+  content,
   createdAt,
   follwed,
   btn,
@@ -154,7 +154,7 @@ const UserId = ({
         {check === "active" ? (
           <Check className="user-check" src="/images/check.svg" />
         ) : null}
-        {comment ? <Comment>{comment}</Comment> : null}
+        {content ? <Content>{content}</Content> : null}
         {createdAt ? (
           <Date className="user-date">
             <span>&middot;</span>
@@ -163,7 +163,8 @@ const UserId = ({
         ) : null}
         {follwed ? (
           <IsFollowed className="user-followed">
-            <span>&middot;{follwed}</span>{" "}
+            <span>&middot;</span>
+            <span>{follwed}</span>
           </IsFollowed>
         ) : null}
       </StyledSpan>

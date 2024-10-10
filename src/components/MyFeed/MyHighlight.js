@@ -9,10 +9,6 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   border: 1px solid purple;
-
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
 `;
 
 const HighlightBox = styled.div`

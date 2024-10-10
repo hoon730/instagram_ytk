@@ -14,10 +14,6 @@ const Wrapper = styled.div`
   @media screen and (max-width: 1024px) {
     width: 900px;
   }
-
-  @media screen and (max-width: 780px) {
-    width: 500px;
-  }
 `;
 
 const ActiveBorderArea = styled.div`

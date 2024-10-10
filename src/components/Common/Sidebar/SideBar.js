@@ -74,7 +74,7 @@ const MobileLogo = styled.div`
   align-items: center;
 
   svg {
-    font-size: var(--font-size-24);
+    font-size: var(--font-24);
     color: ${({ theme }) => theme.fontColor};
   }
 `;
@@ -150,23 +150,8 @@ const ToolList = styled.div`
   gap: 8px;
 `;
 
-const NewBg = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  z-index: 3;
-`;
-
 const SideBar = () => {
   const navigate = useNavigate();
-  const newBgRef = useRef();
   const { darkMode } = useContext(ThemeContext);
   const [openNew, setOpenNew] = useState(false);
   const [currentNum, setCurrentNum] = useState(0);
@@ -187,9 +172,6 @@ const SideBar = () => {
     setOpenNew(true);
   };
 
-  const closeNew = () => {
-    setOpenNew(false);
-  };
 
   return (
     <StyledAside>
@@ -236,16 +218,7 @@ const SideBar = () => {
               <MenuText className="text">{it.name}</MenuText>
             </MenuItem>
           ))}
-          {openNew ? (
-            <NewBg
-              ref={newBgRef}
-              onClick={(e) => {
-                if (e.target === newBgRef.current) setOpenNew(false);
-              }}
-            >
-              <New closeNew={closeNew} />
-            </NewBg>
-          ) : null}
+          {openNew ? <New setOpenNew={setOpenNew} /> : null}
         </MenuList>
       </Wrapper>
       <ToolList className="toollist">

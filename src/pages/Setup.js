@@ -31,20 +31,28 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
 `;
 
-const Setup = ({ setIsOpen }) => {
+const Setup = ({ onClick }) => {
   const containerRef = useRef();
+
+  console.log(onClick);
+
+  const hideSetup = () => {
+    onClick();
+  };
 
   return (
     <Container
       ref={containerRef}
       onClick={(e) => {
         console.log("클릭");
-        if (e.target === containerRef.current) setIsOpen(true);
+        if (!containerRef.current.contains(e.target)) {
+          hideSetup();
+        }
       }}
     >
-      <Wrapper>
+      <Wrapper onClick={(e) => e.stopPropagation()}>
         <Header
-          leftChild={<Button text={"취소"} />}
+          leftChild={<Button text={"취소"} onClick={onClick}/>}
           title={"프로필 수정"}
           rightChild={<Button text={"완료"} />}
         />

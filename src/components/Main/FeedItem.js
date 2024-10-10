@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
@@ -48,8 +48,22 @@ const UserInfo = styled.div`
   flex-direction: column;
   width: 100%;
   gap: 4px;
+
   @media screen and (max-width: 1024px) {
+    gap: 0px;
     font-size: var(--font-12);
+    .user-id {
+      font-size: var(--font-12);
+    }
+    .user-check {
+      width: 10px;
+    }
+    .user-date {
+      font-size: var(--font-10);
+    }
+    .user-followed {
+      font-size: var(--font-10);
+    }
   }
 `;
 
@@ -57,7 +71,7 @@ const UserName = styled.p`
   font-size: var(--font-14);
   color: var(--gray-color);
   @media screen and (max-width: 1024px) {
-    font-size: var(--font-12);
+    font-size: var(--font-10);
   }
 `;
 
@@ -69,8 +83,8 @@ const PhotoSection = styled.div`
   position: relative;
   overflow: hidden;
   @media screen and (max-width: 1024px) {
-    width: 370px;
-    height: 370px;
+    width: 350px;
+    height: 350px;
   }
 `;
 
@@ -92,10 +106,21 @@ const FeedDesc = styled.div`
   }
 `;
 
-const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
+const FeedItem = ({
+  user,
+  profile,
+  myProfile,
+  feedUserId,
+  feedDetail,
+  onClick,
+}) => {
   const feedProfile = profile.find((it) => it.userId === feedUserId);
   const feedUser = user.find((it) => it.userId === feedUserId);
   const followResult = myProfile.following.find((it) => it === feedUserId);
+
+  const showFeed = () => {
+    onClick();
+  };
 
   return (
     <Wrapper>
@@ -117,7 +142,7 @@ const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
           <UserName>{feedProfile.userName}</UserName>
         </UserInfo>
       </ProfileSection>
-      <PhotoSection>
+      <PhotoSection onClick={showFeed}>
         {feedDetail.type === "reels" ? (
           <video
             autoPlay
