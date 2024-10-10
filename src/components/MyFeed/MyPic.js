@@ -4,15 +4,7 @@ import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import PostAndFollow from "../User/PostAndFollow";
 
-const Wrapper = styled.div`
-  @media screen and (max-width: 1000px) {
-    width: 100%;
-  }
-
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
-`;
+const Wrapper = styled.div``;
 
 const MyPicBox = styled.div`
   width: 100%;
@@ -27,13 +19,13 @@ const ProfileBg = styled.div`
 
   @media screen and (max-width: 1000px) {
     width: 100%;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
   }
 
   @media screen and (max-width: 500px) {
     width: 100%;
     height: 200px;
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
 `;
 
@@ -43,6 +35,17 @@ const ProfileImgBox = styled.div`
   left: 70px;
   border: 7px solid var(--bg-white-color);
   border-radius: 50%;
+
+  @media screen and (max-width: 1000px) {
+    width: 77px;
+    height: 77px;
+    /* border: 1px solid blue; */
+
+    .storyFirstCircle {
+      width: 70px;
+      height: 70px;
+    }
+  }
 `;
 
 const MyFeedDesc = styled.div`

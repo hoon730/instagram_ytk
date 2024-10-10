@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   margin-bottom: 10px;
 
   @media screen and (max-width: 1024px) {
-    width: 900px;
+    width: 100%;
   }
 `;
 

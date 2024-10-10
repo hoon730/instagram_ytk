@@ -7,14 +7,6 @@ const Wrapper = styled.div`
   height: 0;
   padding-top: 33%;
   overflow: hidden;
-
-  @media screen and (max-width: 780px) {
-    width: 100%;
-  }
-
-  @media screen and (max-width: 430px) {
-    width: 100%;
-  }
 `;
 
 const ImgBox = styled.div`

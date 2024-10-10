@@ -3,7 +3,11 @@ import styled from "styled-components";
 import { FaGear } from "react-icons/fa6";
 import Setup from "../../pages/Setup";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  @media screen and (max-width: 1024px) {
+    border: 1px solid red;
+  }
+`;
 
 const MyProfileBox = styled.div`
   width: 100%;
@@ -45,6 +49,14 @@ const EditBtn = styled.div`
   svg {
     font-size: var(--font-22);
     color: #fff;
+  }
+
+  @media screen and (max-width: 1024px) {
+    width: 30px;
+    height: 30px;
+    svg {
+      font-size: var(--font-18);
+    }
   }
 `;
 
