@@ -75,7 +75,7 @@ const FeedContent = () => {
   const [follow, setFollow] = useState(false);
   const [$tabChange, setTabChange] = useState("recommend");
   const [userUid, setUserUid] = useState(null); // 사용자 UID 상태 관리
-  const [profile, setProfile] = useState(null); // 프로필 상태 관리
+  const [myProfile, setMyProfile] = useState(null); // 프로필 상태 관리
   const [posts, setPosts] = useState([]); // 포스트 상태 관리
   let postsUnsubscribe = null; // postsQuery 구독 해제 변수
 
@@ -97,7 +97,7 @@ const FeedContent = () => {
 
           if (!profileSnapshot.empty) {
             const profileData = profileSnapshot.docs[0].data();
-            setProfile(profileData);
+            setMyProfile(profileData);
 
             // Firestore 구독 시작
             const postsQuery = query(
@@ -167,7 +167,7 @@ const FeedContent = () => {
     };
   }, []);
 
-  console.log(profile);
+  console.log(myProfile);
   console.log(posts);
 
   const recommendActive = () => {
