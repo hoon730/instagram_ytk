@@ -18,10 +18,10 @@ const UserNameSection = styled.div`
   }
 `;
 
-const StoryItem = ({ userId, imgPath }) => {
+const StoryItem = ({ userId, imgPath, type }) => {
   return (
     <Wrapper>
-      <ProfileImg url={imgPath} size={80} type={"active"} hover={"noHover"} />
+      <ProfileImg url={imgPath} size={80} type={type} hover={"noHover"} />
       <UserNameSection>
         <p>{userId}</p>
       </UserNameSection>

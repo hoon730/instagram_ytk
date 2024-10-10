@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import reset from "styled-reset";
 import styled from "styled-components";
 import Header from "../components/Edit/Header";
@@ -25,10 +26,10 @@ const Wrapper = styled.div`
   padding: 0 20px;
   width: 600px;
   height: 680px;
-  border: 1px solid lightgray;
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 20px;
   padding: 30px;
-  background: var(--bg-white-color);
+  background: ${({ theme }) => theme.bgColor};
 `;
 
 const Setup = ({ onClick }) => {
