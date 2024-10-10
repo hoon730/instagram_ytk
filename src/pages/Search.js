@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import MyPostItem from "../components/MyFeed/MyPostItem";
 import { LuMoreHorizontal } from "react-icons/lu";
+import { PiSirenLight } from "react-icons/pi";
 import MainHeader from "../components/Main/MainHeader";
 
 const Wrapper = styled.div`
@@ -12,7 +13,7 @@ const Wrapper = styled.div`
 const Margin = styled.div`
   height: 185px;
   @media screen and (max-width: 1170px) {
-    height: 80px;
+    height: 165px;
   }
 `;
 
@@ -37,7 +38,6 @@ const Header = styled.div`
   top: 85px;
   color: ${({ theme }) => theme.fontColor};
   @media screen and (max-width: 1170px) {
-    top: 0;
     width: calc(100% - 20% - 80px);
     height: 80px;
   }
@@ -52,6 +52,46 @@ const Header = styled.div`
 const Keyword = styled.div`
   font-size: var(--font-28);
   font-weight: var(--font-bold);
+`;
+
+const MoreIconArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  @media screen and (max-width: 1280px) {
+    align-items: flex-end;
+  }
+`;
+
+const MoreIcon = styled.div`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MorePopup = styled.div`
+  width: 200px;
+  padding: 20px 20px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--font-20);
+  color: var(--warning-color);
+  border: 1px solid ${({ theme }) => theme.borderColor};
+  border-radius: 8px;
+  background: ${({ theme }) => theme.bgColor};
+  box-shadow: 0 5px 6px ${({ theme }) => theme.shadowAlpha};
+  margin-top: 35px;
+  z-index: 1;
+  display: none;
+  &.active {
+    display: flex;
+  }
 `;
 
 const ItemArea = styled.div`
@@ -70,6 +110,12 @@ const mockUp = [
 ];
 
 const Search = () => {
+  const [moreBtn, setMoreBtn] = useState(false);
+
+  const handleMoreBtn = () => {
+    setMoreBtn((prev) => !prev);
+  };
+
   return (
     <Wrapper>
       <MainHeader />
@@ -77,11 +123,20 @@ const Search = () => {
       <Container>
         <Header>
           <Keyword>#여행</Keyword>
-          <LuMoreHorizontal size={22} />
+          <MoreIconArea>
+            <MoreIcon onClick={handleMoreBtn}>
+              <LuMoreHorizontal size={22} />
+            </MoreIcon>
+            <MorePopup className={moreBtn ? "active" : ""}>
+              <PiSirenLight size={24} />
+              신고하기
+            </MorePopup>
+          </MoreIconArea>
         </Header>
         <ItemArea>
-          {mockUp.map((it) => (
+          {mockUp.map((it, index) => (
             <MyPostItem
+              key={index}
               url={`/images/userImgs/bIqUJE0DxQa1HdkLfMqh105VOrQ/feed${it}.jpg`}
             />
           ))}

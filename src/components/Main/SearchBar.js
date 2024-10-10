@@ -28,6 +28,7 @@ const ItemArea = styled.div`
     color: var(--gray-color);
   }
   &.deleteBtn {
+    width: 18px;
     display: none;
     background: var(--gray-color);
     border-radius: 50%;

@@ -16,6 +16,9 @@ const Wrapper = styled.div`
   box-shadow: 0 5px 6px ${({ theme }) => theme.shadowAlpha};
   margin-top: 45px;
   z-index: 1;
+  @media screen and (max-width: 1024px) {
+    right: 0;
+  }
 `;
 
 const NotificationList = styled.ul`

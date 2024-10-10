@@ -33,7 +33,7 @@ const MyPostItem = ({ size, url, onClick }) => {
   };
 
   return (
-    <Wrapper onClick={showFeed}>
+    <Wrapper onClick={showFeed} size={size}>
       <ImgBox>
         <Img src={url} alt="postphoto" />
       </ImgBox>

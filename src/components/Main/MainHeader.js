@@ -21,14 +21,17 @@ const Wrapper = styled.div`
   border-right: 1px solid ${({ theme }) => theme.borderColor};
   position: fixed;
   z-index: 1;
-  @media screen and (max-width: 1170px) {
-    display: none;
+  @media screen and (max-width: 1024px) {
+    width: calc(100% - 92px);
+  }
+  @media screen and (max-width: 630px) {
+    width: 100%;
   }
 `;
 
 const SearchBarArea = styled.div`
   width: 500px;
-  @media screen and (max-width: 1110px) {
+  @media screen and (max-width: 1024px) {
     width: 100%;
   }
 `;
@@ -40,12 +43,19 @@ const ProfileArea = styled.div`
   align-items: center;
   gap: 12px;
   position: relative;
+  @media screen and (max-width: 1024px) {
+    gap: 0;
+    width: auto;
+  }
 `;
 
 const NotificationArea = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 1024px) {
+    align-items: flex-end;
+  }
 `;
 
 const Profile = styled.div`
@@ -62,6 +72,13 @@ const Profile = styled.div`
   &:hover {
     background: ${({ theme }) => theme.iconBgColor};
   }
+  @media screen and (max-width: 1024px) {
+    width: 45px;
+    border: none;
+    &:hover {
+      background: none;
+    }
+  }
 `;
 
 const UserProfile = styled.div`
@@ -74,6 +91,9 @@ const ProfileText = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2px;
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 const UserName = styled.div`
