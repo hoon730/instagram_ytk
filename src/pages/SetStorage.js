@@ -95,7 +95,6 @@ setProfile();*/
 
 // 3. 피드 세팅
 /*const setFeed = async () => {
-  //Data.feed.map(async (item, idx) => {
   let idx = 0;
   for (const item of Data.feed) {
     const user = Data.user.find((it) => it.userId === item.userId);
@@ -233,8 +232,8 @@ setProfile();*/
     console.log(`피드${idx}번 업데이트 완료`);
     idx++;
   }
-};*/
-//setFeed();
+};
+setFeed();*/
 
 const SetStorage = () => {
   return <div>SetStorage</div>;

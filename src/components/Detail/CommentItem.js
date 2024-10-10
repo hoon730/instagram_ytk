@@ -3,6 +3,12 @@ import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 
+import Data from "../../data.json";
+
+const user = Data.user;
+const profile = Data.profile;
+const feed = Data.feed;
+
 const UserBox = styled.div`
   display: flex;
   gap: 15px;
@@ -32,21 +38,18 @@ const ReplyBtn = styled.button`
 `;
 
 const CommentItem = ({ onClick }) => {
-  console.log(onClick);
+
   const focusingInput = () => {
     onClick();
   };
   return (
     <div>
       <UserBox>
-        <ProfileImg
-          size={"40"}
-          url={"/images/userImgs/user123456/profile-photo.jpg"}
-        />
+        <ProfileImg size={"40"} url={"/images/newPostIcon.svg"} />
         <Userinfo>
           <UserId
             userNickname={"bbok"}
-            comment={"와 진짜 다른 세상같다!"}
+            content={"대관령 파티"}
             btn={"heart"}
           />
           <DateAndReply>

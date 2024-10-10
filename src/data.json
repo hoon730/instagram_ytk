@@ -1922,7 +1922,7 @@
         {
           "storyId": "sh00000023",
           "imgPath": "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/story3.jpg",
-          "createDate": "2024-10-10",
+          "createDate": "2024-10-11",
           "content": "오늘은 하얗게 입어봤어",
           "like": [
             "lualbvqvQmVWkfDU7JUKJRYdqf3",
@@ -1950,7 +1950,7 @@
         {
           "storyId": "sh00000024",
           "imgPath": "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/story4.jpg",
-          "createDate": "2024-10-10",
+          "createDate": "2024-10-12",
           "content": "휴양하러 갔습니다 😌",
           "like": [
             "lualbvqvQmVWkfDU7JUKJRYdqf3",
@@ -1989,12 +1989,7 @@
         {
           "storyStorageId": "ss00000002",
           "title": "일상",
-          "storyIds": ["sh00000020", "sh00000021", "sh00000022"]
-        },
-        {
-          "storyStorageId": "ss00000003",
-          "title": "일상",
-          "storyIds": ["sh00000023", "sh00000024"]
+          "storyIds": ["sh00000022", "sh00000023", "sh00000024"]
         }
       ]
     },
@@ -6337,7 +6332,11 @@
           "feedId": "fd00000032",
           "createDate": "2024-10-19",
           "type": "img",
-          "imgPath": ["images/userImgs/4JhKn3cYHd9dY9muGz1oXiJAruo"],
+          "imgPath": [
+            "images/userImgs/4JhKn3cYHd9dY9muGz1oXiJAruo/feed8.jpg",
+            "images/userImgs/4JhKn3cYHd9dY9muGz1oXiJAruo/feed9.jpg",
+            "images/userImgs/4JhKn3cYHd9dY9muGz1oXiJAruo/feed10.jpg"
+          ],
           "content": "파리 생제르망 ❤️",
           "hashtag": ["#축구", "#생제르망", "#파리"],
           "location": "우리집",
@@ -6572,7 +6571,7 @@
         },
         {
           "feedId": "fd00000034",
-          "createDate": "2024-09-25",
+          "createDate": "2024-10-20",
           "type": "img",
           "imgPath": ["images/userImgs/4JhKn3cYHd9dY9muGz1oXiJAruo/feed12.jpg"],
           "content": "온 세상이 하얗게 물들었다 ☃️",
@@ -6598,7 +6597,7 @@
             {
               "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
               "content": "너무 이쁘다.. 겨울 좋아",
-              "createDate": "2024-10-15",
+              "createDate": "2024-10-20",
               "like": [
                 "EnweBLflxt3pYRGLy8hfJ18MeOm",
                 "Af4BexYzzRIvqtGjSeYEG3pqZHw",
@@ -6619,8 +6618,8 @@
           "createDate": "2024-09-22",
           "type": "img",
           "imgPath": [
-            "images/userImgs/EnweBLflxt3pYRGLy8hfJ18MeOm/feed1",
-            "images/userImgs/EnweBLflxt3pYRGLy8hfJ18MeOm/feed2"
+            "images/userImgs/EnweBLflxt3pYRGLy8hfJ18MeOm/feed1.jpg",
+            "images/userImgs/EnweBLflxt3pYRGLy8hfJ18MeOm/feed2.jpg"
           ],
           "content": "요가로 하루 마무리",
           "hashtag": ["#요가", "#운동", "#제주"],
@@ -6955,7 +6954,7 @@
         },
         {
           "feedId": "fd00000039",
-          "createDate": "2024-09-29",
+          "createDate": "2024-10-18",
           "type": "img",
           "imgPath": [
             "images/userImgs/EnweBLflxt3pYRGLy8hfJ18MeOm/feed9.jpg",
@@ -6983,13 +6982,13 @@
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
               "content": "와 꿈의 장소",
-              "createDate": "2024-10-16",
+              "createDate": "2024-10-18",
               "like": ["Af4BexYzzRIvqtGjSeYEG3pqZHw"],
               "reReply": [
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
                   "content": "사진으로만 보던 그 곳",
-                  "createDate": "2024-10-16",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000153"
                 },
@@ -7003,7 +7002,7 @@
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
                   "content": "비틀즈 포레버",
-                  "createDate": "2024-10-16",
+                  "createDate": "2024-10-19",
                   "like": [
                     "kdGgFnRk8TyyUVeXQji7vZybpQ1",
                     "KWUUuqMImhcKDZ822gc2InH4vSN"
@@ -7016,7 +7015,7 @@
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
               "content": "롱다리들~",
-              "createDate": "2024-10-14",
+              "createDate": "2024-10-19",
               "like": [
                 "z7UhehujghvKX02fUj1ig9gfP7n",
                 "KWUUuqMImhcKDZ822gc2InH4vSN"
@@ -7025,14 +7024,14 @@
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                   "content": "ㅋㅋ몇명은 아닌데~",
-                  "createDate": "2024-10-18",
+                  "createDate": "2024-10-19",
                   "like": ["BbVEQf8MoEuxL7XREuCVTjUQkSx"],
                   "reReplyId": "rr00000156"
                 },
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                   "content": "악마다 악마ㅋㅋ",
-                  "createDate": "2024-10-16",
+                  "createDate": "2024-10-20",
                   "like": [],
                   "reReplyId": "rr00000157"
                 }
@@ -7085,7 +7084,10 @@
           "feedId": "fd00000040",
           "createDate": "2024-09-27",
           "type": "img",
-          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed1.jpg"],
+          "imgPath": [
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed1.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed2.jpg"
+          ],
           "content": "나만 산책하고 싶나봐 ?",
           "hashtag": ["#라이프", "#산책"],
           "location": "역삼동",
@@ -7249,7 +7251,10 @@
           "feedId": "fd00000041",
           "createDate": "2024-09-29",
           "type": "img",
-          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed18.jpg"],
+          "imgPath": [
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed3.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed4.jpg"
+          ],
           "content": "이 책이 좋을까 ??",
           "hashtag": ["패션", "#책", "#잡지"],
           "location": "가로수길",
@@ -7753,11 +7758,7 @@
           "feedId": "fd00000046",
           "createDate": "2024-10-10",
           "type": "reels",
-          "imgPath": [
-            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed17.jpg",
-            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed18.jpg",
-            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed14.mp4"
-          ],
+          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed14.mp4"],
           "content": "여름 한달 휴가 시작 ✈️ ",
           "hashtag": ["#방콕", "#한달살기", "#힐링"],
           "location": "방콕",
@@ -7799,7 +7800,11 @@
           "feedId": "fd00000047",
           "createDate": "2024-09-27",
           "type": "img",
-          "imgPath": ["images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed1.jpg"],
+          "imgPath": [
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed1.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed2.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed3.jpg"
+          ],
           "content": "슬기는..여행중..🧳",
           "hashtag": ["#여행", "#비행기"],
           "location": "도쿄",
@@ -11815,7 +11820,11 @@
           "feedId": "fd00000095",
           "createDate": "2024-11-02",
           "type": "img",
-          "imgPath": ["images/userImgs/vmgb4hOLWStnp2SZwwjMSw29A9i/feed20.jpg", "images/userImgs/vmgb4hOLWStnp2SZwwjMSw29A9i/feed21.jpg", "images/userImgs/vmgb4hOLWStnp2SZwwjMSw29A9i/feed22.jpg"],
+          "imgPath": [
+            "images/userImgs/vmgb4hOLWStnp2SZwwjMSw29A9i/feed20.jpg",
+            "images/userImgs/vmgb4hOLWStnp2SZwwjMSw29A9i/feed21.jpg",
+            "images/userImgs/vmgb4hOLWStnp2SZwwjMSw29A9i/feed22.jpg"
+          ],
           "content": "아빠boy의 생일을 맞이해 둘이서 데이트를 했는데 카메라가 호재얼굴을 인식하지 못하고 블러 처리했다 역시 요괴라서 그런가 그래도 행복하게 마무리 ...🎂 #일상생활 #데이트 #요괴",
           "hashtag": ["#일상생활", "#데이트", "#요괴"],
           "location": "골드코스트",

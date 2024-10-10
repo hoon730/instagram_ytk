@@ -144,23 +144,20 @@ export const click = {
   },
 };
 
-export const slide = {
-  initial: (back) => ({
-    x: back ? -800 : 800,
-  }),
-  visible: {
-    x: 0,
-    transition: {
-      type: "tween",
-      duration: 0.5,
-      ease: [0.42, 0, 0.58, 1],
-    },
+export const scale = {
+  initial: {
+    opacity: 0,
+    scale: 0.7,
   },
-  exit: (back) => ({
-    x: back ? 800 : -800,
+  visible: {
+    opacity: 1,
+    scale: 1,
+  },
+  exits: {
+    opacity: 0,
+    scale: 0.7,
     transition: {
       duration: 0.3,
-      ease: "easeInOut",
     },
-  }),
+  },
 };

@@ -58,6 +58,10 @@ const MyIntro = styled.div`
 const MyProfile = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const onClick = () => {
+    setIsOpen((current) => !current)
+  }
+
   return (
     <Wrapper>
       <MyProfileBox>
@@ -66,8 +70,8 @@ const MyProfile = () => {
             <p>bb_bok</p>
             <span>복</span>
           </MyName>
-          <EditBtn onClick={() => setIsOpen((current) => !current)}>
-            {isOpen ? <Setup setIsOpen={setIsOpen} /> : null}
+          <EditBtn onClick={onClick}>
+            {isOpen ? <Setup onClick={onClick} /> : null}
             <FaGear />
           </EditBtn>
         </NameBox>
