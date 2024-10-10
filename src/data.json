@@ -562,7 +562,7 @@
     },
     {
       "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-      "userName": "리아",
+      "userName": "리아랑 호두랑",
       "gender": "woman",
       "introduction": "ㄴㅐ ㅇㅣ름 호두. 귀ㅇㅕ운 두쨜 고양ㅇㅣㅈㅣ",
       "website": "",
@@ -612,9 +612,9 @@
     },
     {
       "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
-      "userName": "동훈",
+      "userName": "얌",
       "gender": "man",
-      "introduction": "가을엔 염동훈 | Everything is easy and light for me ^^",
+      "introduction": "가을엔 훈야미 | Everything is easy and light for me ^^",
       "website": "",
       "recommendation": false,
       "nondisclosure": false,
@@ -662,7 +662,7 @@
     },
     {
       "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-      "userName": "희진",
+      "userName": "양양이",
       "gender": "woman",
       "introduction": "냠냠 기록!",
       "website": "",
@@ -713,7 +713,7 @@
     },
     {
       "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-      "userName": "지선",
+      "userName": "떠니",
       "gender": "woman",
       "introduction": "And at last, I see the light",
       "website": "",
@@ -8405,7 +8405,7 @@
               "reReply": [
                 {
                   "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-                  "content": "오동통 앞발 너무 귀엽지 >.<",
+                  "content": "오동통 앞발 너무 귀엽다 >.<",
                   "createDate": "2024-09-02",
                   "like": [
                     "BbVEQf8MoEuxL7XREuCVTjUQkSx",
@@ -8416,7 +8416,7 @@
                 },
                 {
                   "userId": "0aDoIgvbfsQYBX20nWRnuOkNrNh",
-                  "content": "저도 사진만 봐도 힐링되네요 ♥",
+                  "content": "저도 사진만 봐도 힐링돼 ♥",
                   "createDate": "2024-09-02",
                   "like": [
                     "kdGgFnRk8TyyUVeXQji7vZybpQ1",
@@ -8454,7 +8454,7 @@
               "reReply": [
                 {
                   "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
-                  "content": "정말 예쁘죠!",
+                  "content": "넘 이뽀 호두두",
                   "createDate": "2024-10-17",
                   "like": ["EnweBLflxt3pYRGLy8hfJ18MeOm"],
                   "reReplyId": "rr00000219"
@@ -9088,14 +9088,14 @@
               "reReply": [
                 {
                   "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-                  "content": "해맑은 동훈이 귀엽다 ㅋㅋㅋㅋㅋ",
+                  "content": "해맑은 동훈이 귀엽다 ^^",
                   "createDate": "2024-09-09",
                   "like": ["Af4BexYzzRIvqtGjSeYEG3pqZHw"],
                   "reReplyId": "rr00000241"
                 },
                 {
                   "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-                  "content": "행복해보여...",
+                  "content": "? ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ귀여운 동후ㄴ이..",
                   "createDate": "2024-09-09",
                   "like": ["FNUEoSKu7equPIpWvLcKumRz7Pc"],
                   "reReplyId": "rr00000242"
@@ -9108,6 +9108,7 @@
         {
           "feedId": "fd00000064",
           "createDate": "2024-09-24",
+          "type": "img",
           "imgPath": ["images/userImgs/kdGgFnRk8TyyUVeXQji7vZybpQ1/feed4.jpg"],
           "content": "뭘해도 즐거워!!!",
           "hashtag": ["#여행스타그램", "#미소천사"],
@@ -9149,7 +9150,7 @@
                 },
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-                  "content": "우리 호두도 데려가!",
+                  "content": "우리 호두랑 나 데려가!",
                   "createDate": "2024-09-26",
                   "like": [
                     "EnweBLflxt3pYRGLy8hfJ18MeOm",
@@ -9521,7 +9522,7 @@
               "reReply": [
                 {
                   "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
-                  "content": "너무 먹고싶어요ㅠㅠㅠ",
+                  "content": "나도 조개구이 좋아하는데..",
                   "createDate": "2024-09-18",
                   "like": ["BbVEQf8MoEuxL7XREuCVTjUQkSx"],
                   "reReplyId": "rr00000256"
@@ -9951,7 +9952,7 @@
             },
             {
               "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
-              "content": "까눌레... 저도 정말 좋아해요!",
+              "content": "까눌레... 저도 정말 좋아하눈데요!",
               "createDate": "2024-10-03",
               "like": [],
               "reReply": [
@@ -9964,14 +9965,14 @@
                 },
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
-                  "content": "여기 카페 사장님들도 친절해요!",
+                  "content": "여기 카페 사장님들도 친절해!",
                   "createDate": "2024-10-03",
                   "like": ["BbVEQf8MoEuxL7XREuCVTjUQkSx"],
                   "reReplyId": "rr00000279"
                 },
                 {
                   "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-                  "content": "산책 후에 이 카페 오면 좋아요!",
+                  "content": "마자 산책하고 들리기 딱이얌",
                   "createDate": "2024-10-04",
                   "like": [],
                   "reReplyId": "rr00000280"

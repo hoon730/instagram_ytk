@@ -27,7 +27,7 @@ const SytledForm = styled.form`
         padding-left: 15px;
         flex: 17;
         height: 45px;
-        border: 1px solid var(--light-gray-color);
+        border: 1px solid ${({ theme }) => theme.borderColor};
         border-radius: var(--border-radius-8);
         font-size: var(--font-size-14);
         &:focus {
@@ -41,7 +41,7 @@ const SytledForm = styled.form`
         padding-left: 15px;
         flex: 17;
         height: 45px;
-        border: 1px solid var(--light-gray-color);
+        border: 1px solid ${({ theme }) => theme.borderColor};
         border-radius: var(--border-radius-8);
         font-size: var(--font-size-14);
         resize: none;

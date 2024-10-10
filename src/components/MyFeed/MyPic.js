@@ -4,11 +4,18 @@ import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import PostAndFollow from "../User/PostAndFollow";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  @media screen and (max-width: 780px) {
+    width: 780px;
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 390px;
+  }
+`;
 
 const MyPicBox = styled.div`
   width: 100%;
-  /* border: 1px solid red; */
   padding-bottom: 10px;
   position: relative;
 `;
@@ -17,6 +24,11 @@ const ProfileBg = styled.div`
   width: 100%;
   height: 270px;
   background: url(/images/postImgs/user1/bg.jpg) center/ cover no-repeat;
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
+    height: 200px;
+  }
 `;
 
 const ProfileImgBox = styled.div`
