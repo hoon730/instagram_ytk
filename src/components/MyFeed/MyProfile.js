@@ -7,12 +7,11 @@ const Wrapper = styled.div``;
 
 const MyProfileBox = styled.div`
   width: 100%;
-  border-top: 1px solid var(--light-gray-color);
+  border-top: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 const NameBox = styled.div`
   width: 100%;
-  /* border-bottom: 1px solid var(--gray-color); */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -21,22 +20,22 @@ const NameBox = styled.div`
 
 const MyName = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 15px;
   align-items: center;
   p {
-    font-size: var(--font-size-22);
+    font-size: var(--font-20);
     font-weight: var(--font-bold);
   }
   span {
-    font-size: var(--font-size-16);
+    font-size: var(--font-16);
     font-weight: var(--font-bold);
   }
 `;
 
 const EditBtn = styled.div`
-  width: 40px;
-  height: 40px;
-  background: var(--light-gray-color);
+  width: 36px;
+  height: 36px;
+  background: ${({ theme }) => theme.nonActiveBtnColor};
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -44,16 +43,16 @@ const EditBtn = styled.div`
   cursor: pointer;
 
   svg {
-    font-size: 25px;
+    font-size: var(--font-22);
+    color: #fff;
   }
 `;
 
 const MyIntro = styled.div`
   width: 100%;
-  border-bottom: 1px solid var(--light-gray-color);
-  padding: 20px 70px;
+  border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+  padding: 10px 70px;
   font-size: var(--font-size-16);
-  /* border: 1px solid red; */
 `;
 
 const MyProfile = () => {

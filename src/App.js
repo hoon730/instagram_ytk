@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider, styled } from "styled-components";
 import { lightTheme, darkTheme } from "./styles/theme";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
@@ -17,6 +17,15 @@ import Setup from "./pages/Setup";
 import Signup from "./pages/Signup";
 import ProtectedPage from "./components/ProtectedPage";
 import SetStorage from "./pages/SetStorage";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.bgColor};
+`;
 
 const router = createBrowserRouter([
   {
@@ -93,7 +102,13 @@ function App() {
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <ThemeContext.Provider value={{ changeDark, darkMode }}>
           <GlobalStyles />
-          {isLoading ? <Loading /> : <RouterProvider router={router} />}
+          {isLoading ? (
+            <Wrapper>
+              <Loading />
+            </Wrapper>
+          ) : (
+            <RouterProvider router={router} />
+          )}
         </ThemeContext.Provider>
       </ThemeProvider>
     </>

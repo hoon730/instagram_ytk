@@ -5,7 +5,16 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 935px;
+  /* height: 934px; */
+  background: ${({ theme }) => theme.bgColor};
+
+  @media screen and (max-width: 780px) {
+    width: 780px;
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 390px;
+  }
 `;
 
 const MyPostContainer = styled.div`
@@ -14,14 +23,14 @@ const MyPostContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 `;
 
 const MyPostBox = styled.div`
   width: 100%;
-  height: 305px;
+  height: 308px;
   display: flex;
-  gap: 10px;
+  gap: 5px;
 `;
 
 const imgArr = [
@@ -74,8 +83,8 @@ const MyPost = () => {
             onClick={onClick}
           />
           {isClicked ? <ClickFeed onClick={onClick} /> : null}
-          <MyPostItem url={"/images/postImgs/user1/post4.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post5.jpg"} />
+          <MyPostItem url={"/images/postImgs/user1/post2.jpg"} />
+          <MyPostItem url={"/images/postImgs/user1/post3.jpg"} />
           {/* {imgArr.map((it) => (
             <MyPostItem key={it.id} url={it.url} />
           ))} */}

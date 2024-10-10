@@ -6,9 +6,8 @@ import { BiMoviePlay } from "react-icons/bi";
 import { TbUserSquare } from "react-icons/tb";
 
 const Wrapper = styled.div`
-  width: 936px;
+  width: 934px;
   height: 70px;
-  /* border: 1px solid lightgray; */
   border-radius: 10px;
   margin-bottom: 10px;
 `;
@@ -21,7 +20,7 @@ const ActiveBorderArea = styled.div`
 const ActiveBorder = styled.div`
   width: 33%;
   height: 100%;
-  background: var(--font-black-color);
+  background: ${({ theme }) => theme.fontColor};
   transition: transform 0.3s;
   ${({ xVal }) => `transform: translateX(${xVal}%);`}
 `;
@@ -35,7 +34,7 @@ const MyPostTabBox = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid var(--light-gray-color);
+  border-top: 1px solid ${({ theme }) => theme.borderColor};
   margin-bottom: 10px;
 `;
 

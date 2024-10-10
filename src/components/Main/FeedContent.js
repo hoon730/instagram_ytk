@@ -25,8 +25,6 @@ import {
 // const userId = "lualbvqvQmVWkfDU7JUKJRYdqf3";
 // const myProfile = profile.find((it) => it.userId === userId);
 
-const tabWidth = 340;
-
 const Wrapper = styled.div``;
 
 const FeedArea = styled.div`
