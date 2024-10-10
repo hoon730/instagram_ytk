@@ -7,38 +7,35 @@ const Wrapper = styled.div``;
 
 const MyProfileBox = styled.div`
   width: 100%;
-  height: 250px;
-  border-top: 1px solid var(--light-gray-color);
+  border-top: 1px solid ${({ theme }) => theme.borderColor};
 `;
 
 const NameBox = styled.div`
   width: 100%;
-  height: 80px;
-  /* border-bottom: 1px solid var(--gray-color); */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 70px;
+  padding: 20px 70px 0;
 `;
 
 const MyName = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 15px;
   align-items: center;
   p {
-    font-size: var(--font-size-28);
+    font-size: var(--font-20);
     font-weight: var(--font-bold);
   }
   span {
-    font-size: var(--font-size-20);
+    font-size: var(--font-16);
     font-weight: var(--font-bold);
   }
 `;
 
 const EditBtn = styled.div`
-  width: 40px;
-  height: 40px;
-  background: var(--light-gray-color);
+  width: 36px;
+  height: 36px;
+  background: ${({ theme }) => theme.nonActiveBtnColor};
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -46,16 +43,15 @@ const EditBtn = styled.div`
   cursor: pointer;
 
   svg {
-    font-size: 25px;
+    font-size: var(--font-22);
+    color: #fff;
   }
 `;
 
 const MyIntro = styled.div`
   width: 100%;
-  height: 150px;
-  /* border: 1px solid red; */
-  border-bottom: 1px solid var(--light-gray-color);
-  padding: 0px 70px;
+  border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+  padding: 10px 70px;
   font-size: var(--font-size-16);
 `;
 
@@ -67,8 +63,8 @@ const MyProfile = () => {
       <MyProfileBox>
         <NameBox>
           <MyName>
-            <p>cat.h0du</p>
-            <span>호두 Walnut</span>
+            <p>bb_bok</p>
+            <span>복</span>
           </MyName>
           <EditBtn onClick={() => setIsOpen((current) => !current)}>
             {isOpen ? <Setup setIsOpen={setIsOpen} /> : null}
@@ -76,12 +72,8 @@ const MyProfile = () => {
           </EditBtn>
         </NameBox>
         <MyIntro>
-          ㄴㅐ ㅇㅣ름 호두 <br />
-          귀ㅇㅕ운 두쨜 고양ㅇㅣㅈㅣ
+          ⋆｡˚ ☁︎ ˚｡⋆｡
           <br />
-          <br />
-          구ㅣ여운 날 봐, ㄷㅐ박임 <br />
-          ㅇㅑ옹 🐱💛 더보기에 넣기
           <br />
         </MyIntro>
       </MyProfileBox>

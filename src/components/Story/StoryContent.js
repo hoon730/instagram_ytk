@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   align-items: center;
   gap: 24px;
 
-  @media screen and (max-width: 1330px) {
+  @media screen and (max-width: 1024px) {
     min-width: 370px;
     gap: 19px;
   }

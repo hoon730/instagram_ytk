@@ -9,10 +9,16 @@ import MyPostItem from "../components/MyFeed/MyPostItem";
 import TimeLine from "../components/Detail/TimeLine";
 
 const Wrapper = styled.div`
-  width: 936px;
-  height: 100vh;
+  width: 934px;
+  min-height: 100vh;
+  height: fit-content;
   margin: 0 auto;
-  /* border: 1px solid lightgray; */
+  background: ${({ theme }) => theme.bgColor};
+  color: ${({ theme }) => theme.fontColor};
+
+  @media screen and (max-width: 780px) {
+    width: 100%;
+  }
 `;
 
 const MyFeed = () => {

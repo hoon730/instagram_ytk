@@ -19,7 +19,7 @@ const Text = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 10px;
 `;
 
 const TabBarBtn = ({ width, iconCode, text, isActive, onClick }) => {

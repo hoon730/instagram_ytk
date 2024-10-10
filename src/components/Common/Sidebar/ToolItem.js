@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import Setting from "./Setting";
 import { ThemeContext } from "../../../App";
 import { FaMoon } from "react-icons/fa";
+import Setting from "./Setting";
 
 const ToolBox = styled.div`
   width: 40px;

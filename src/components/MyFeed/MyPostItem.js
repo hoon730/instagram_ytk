@@ -2,11 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: 305px;
-  height: 305px;
-  /* border: 1px solid lightgray; */
+  width: ${({ size }) => `${size || 308}`}px;
+  height: ${({ size }) => `${size || 308}`}px;
   border-radius: 10px;
-  @media screen and (max-width: 1170px) {
+
+  @media screen and (max-width: 780px) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 430px) {
     width: 100%;
   }
 `;
@@ -19,11 +23,11 @@ const ImgBox = styled.div`
 const Img = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   object-fit: cover;
 `;
 
-const MyPostItem = ({ url, onClick }) => {
+const MyPostItem = ({ size, url, onClick }) => {
   const showFeed = () => {
     onClick();
   };

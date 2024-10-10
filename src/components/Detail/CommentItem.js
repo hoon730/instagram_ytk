@@ -32,6 +32,7 @@ const ReplyBtn = styled.button`
 `;
 
 const CommentItem = ({ onClick }) => {
+  console.log(onClick);
   const focusingInput = () => {
     onClick();
   };
