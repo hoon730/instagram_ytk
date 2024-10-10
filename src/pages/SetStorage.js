@@ -21,7 +21,7 @@ console.log("스토리지 세팅 시작");
   await updateProfile(credentials.user, { displayName: user.userRealName });
 });*/
 
-// 1-1. 제일 중요한 작업 : firebase Authentication에 잘 들어갔으면, data.json의 user의 uid를 firebase의 uid로 바꿔주기..
+// 1-1. 제일 중요한 작업 : firebase Authentication에 잘 들어갔으면, data.json의 user의 uid를 firebase의 uid로 바꿔주기..(1번을 했을 시에만...)
 
 // 2. 프로필 세팅
 /*const setProfile = () => {
