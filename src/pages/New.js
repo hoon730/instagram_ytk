@@ -193,6 +193,7 @@ const New = ({ setOpenNew }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
   const [textValueLength, setTextValueLength] = useState(0);
 
   const maxFileSize = 5 * 1024 * 1024;
@@ -206,6 +207,19 @@ const New = ({ setOpenNew }) => {
       }
       setFile(files[0]);
     }
+  };
+
+  const previewImg = (e) => {
+    const { files } = e.target;
+    const reader = new FileReader();
+    if (files[0]) {
+      reader.readAsDataURL(files[0]);
+    }
+
+    reader.onlaod = (event) => {
+      setPreview(event.target.result);
+      console.log(preview);
+    };
   };
 
   const onChange = (e) => {
@@ -278,9 +292,9 @@ const New = ({ setOpenNew }) => {
             <MediaBox>
               {file !== null ? (
                 file.type.startsWith("image/") ? (
-                  <ImgMedia />
+                  <ImgMedia src={file} />
                 ) : (
-                  <VidMedia />
+                  <VidMedia src={file} />
                 )
               ) : (
                 <Icon
@@ -297,6 +311,7 @@ const New = ({ setOpenNew }) => {
               id="file"
               accept="video/*, image/*"
               onChange={fileAdd}
+              onClick={previewImg}
             />
             <TextInputArea>
               <TextArea
