@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import MyFeed from "./MyFeed";
-// import Clickdetail from "../components/Detail/ClickFeed copy";
 import MbDetail from "./MbDetail";
+import UserId from "../components/User/UserId";
 
 const Wrapper = styled.div`
   height: 100%;

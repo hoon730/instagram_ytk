@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
@@ -92,10 +92,21 @@ const FeedDesc = styled.div`
   }
 `;
 
-const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
+const FeedItem = ({
+  user,
+  profile,
+  myProfile,
+  feedUserId,
+  feedDetail,
+  onClick,
+}) => {
   const feedProfile = profile.find((it) => it.userId === feedUserId);
   const feedUser = user.find((it) => it.userId === feedUserId);
   const followResult = myProfile.following.find((it) => it === feedUserId);
+
+  const showFeed = () => {
+    onClick();
+  };
 
   return (
     <Wrapper>
@@ -117,7 +128,7 @@ const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
           <UserName>{feedProfile.userName}</UserName>
         </UserInfo>
       </ProfileSection>
-      <PhotoSection>
+      <PhotoSection onClick={showFeed}>
         {feedDetail.type === "reels" ? (
           <video
             autoPlay
