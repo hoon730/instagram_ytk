@@ -3,7 +3,15 @@ import styled from "styled-components";
 import { FaGear } from "react-icons/fa6";
 import Setup from "../../pages/Setup";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
+`;
 
 const MyProfileBox = styled.div`
   width: 100%;

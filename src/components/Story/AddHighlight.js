@@ -3,13 +3,18 @@ import styled from "styled-components";
 import { HiOutlinePlus } from "react-icons/hi2";
 
 const Wrapper = styled.div`
-  width: fit-content;
+  /* width: fit-content; */
+  width: 100%;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 3px;
+
+  @media screen and (max-width: 780px) {
+    width: 100%;
+  }
 `;
 
 const ImgSection = styled.div`

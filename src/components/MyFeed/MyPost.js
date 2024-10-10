@@ -8,12 +8,12 @@ const Wrapper = styled.div`
   /* height: 934px; */
   background: ${({ theme }) => theme.bgColor};
 
-  @media screen and (max-width: 780px) {
-    width: 780px;
+  @media screen and (max-width: 1000px) {
+    width: 100%;
   }
 
-  @media screen and (max-width: 430px) {
-    width: 390px;
+  @media screen and (max-width: 500px) {
+    width: 100%;
   }
 `;
 

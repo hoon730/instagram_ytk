@@ -5,12 +5,12 @@ import ProfileImg from "../Profile/ProfileImg";
 import PostAndFollow from "../User/PostAndFollow";
 
 const Wrapper = styled.div`
-  @media screen and (max-width: 780px) {
-    width: 780px;
+  @media screen and (max-width: 1000px) {
+    width: 100%;
   }
 
-  @media screen and (max-width: 430px) {
-    width: 390px;
+  @media screen and (max-width: 500px) {
+    width: 100%;
   }
 `;
 
@@ -25,9 +25,15 @@ const ProfileBg = styled.div`
   height: 270px;
   background: url(/images/postImgs/user1/bg.jpg) center/ cover no-repeat;
 
-  @media screen and (max-width: 430px) {
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    border: 1px solid blue;
+  }
+
+  @media screen and (max-width: 500px) {
     width: 100%;
     height: 200px;
+    border: 1px solid red;
   }
 `;
 
