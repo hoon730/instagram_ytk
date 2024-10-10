@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   border-right: 1px solid ${({ theme }) => theme.borderColor};
   position: fixed;
   z-index: 1;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1170px) {
     display: none;
   }
 `;
