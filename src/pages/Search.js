@@ -15,6 +15,9 @@ const Margin = styled.div`
   @media screen and (max-width: 1170px) {
     height: 165px;
   }
+  @media screen and (max-width: 630px) {
+    height: 154px;
+  }
 `;
 
 const Container = styled.div`
@@ -46,6 +49,7 @@ const Header = styled.div`
   }
   @media screen and (max-width: 630px) {
     width: calc(100% - 80px);
+    top: 73px;
   }
 `;
 
@@ -73,14 +77,14 @@ const MoreIcon = styled.div`
 `;
 
 const MorePopup = styled.div`
-  width: 200px;
-  padding: 20px 20px;
+  width: 150px;
+  padding: 20px 10px;
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  font-size: var(--font-20);
+  font-size: var(--font-16);
   color: var(--warning-color);
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 8px;
@@ -128,7 +132,7 @@ const Search = () => {
               <LuMoreHorizontal size={22} />
             </MoreIcon>
             <MorePopup className={moreBtn ? "active" : ""}>
-              <PiSirenLight size={24} />
+              <PiSirenLight size={20} />
               신고하기
             </MorePopup>
           </MoreIconArea>
@@ -137,6 +141,7 @@ const Search = () => {
           {mockUp.map((it, index) => (
             <MyPostItem
               key={index}
+              size={304}
               url={`/images/userImgs/bIqUJE0DxQa1HdkLfMqh105VOrQ/feed${it}.jpg`}
             />
           ))}

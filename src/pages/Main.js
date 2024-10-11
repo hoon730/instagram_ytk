@@ -11,13 +11,15 @@ const Wrapper = styled.div`
 
 const MainHeaderMargin = styled.div`
   height: 85px;
+  @media screen and (max-width: 630px) {
+    height: 74px;
+  }
 `;
 
 const MainSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  z-index: 0;
 `;
 
 const MainContent = styled.div`

@@ -35,6 +35,9 @@ const FeedTabBar = styled.div`
 const FeedTabBtn = styled.div`
   display: flex;
   height: 60px;
+  @media screen and (max-width: 630px) {
+    height: 50px;
+  }
 `;
 
 const ActiveBorderArea = styled.div`
