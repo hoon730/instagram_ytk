@@ -20,10 +20,6 @@ const NewBg = styled(motion.div)`
   background: rgba(0, 0, 0, 0.5);
   overflow: hidden;
   z-index: 3;
-
-  @media screen and (max-width: 1024px) {
-    width: 100%;
-  }
 `;
 
 const Wrapper = styled(motion.div)`
@@ -36,24 +32,24 @@ const Wrapper = styled(motion.div)`
   background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
 
-  @media screen and (max-width: 1024px) {
+  /* @media screen and (max-width: 1024px) {
     position: relative;
     height: 0;
     padding-top: 56.25%;
-    width: 67%;
-  }
+    width: 68%;
+  } */
 `;
 
 const Inner = styled.div`
   width: 100%;
-  @media screen and (max-width: 1024px) {
+
+  /* @media screen and (max-width: 1024px) {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    padding: 30px 50px;
-  }
+  } */
 `;
 
 const H3 = styled.h3`
@@ -206,20 +202,20 @@ const New = ({ setOpenNew }) => {
         return;
       }
       setFile(files[0]);
+      previewImg(files[0]);
     }
   };
 
-  const previewImg = (e) => {
-    const { files } = e.target;
+  const previewImg = (file) => {
     const reader = new FileReader();
-    if (files[0]) {
-      reader.readAsDataURL(files[0]);
-    }
 
-    reader.onlaod = (event) => {
-      setPreview(event.target.result);
-      console.log(preview);
-    };
+    if (file) {
+      reader.readAsDataURL(file);
+
+      reader.onload = (event) => {
+        setPreview(event.target.result); 
+      };
+    }
   };
 
   const onChange = (e) => {
@@ -292,9 +288,9 @@ const New = ({ setOpenNew }) => {
             <MediaBox>
               {file !== null ? (
                 file.type.startsWith("image/") ? (
-                  <ImgMedia src={file} />
+                  <ImgMedia src={preview} alt="미리보기 이미지" />
                 ) : (
-                  <VidMedia src={file} />
+                  <VidMedia src={preview} alt="미리보기 동영상" />
                 )
               ) : (
                 <Icon
@@ -310,8 +306,7 @@ const New = ({ setOpenNew }) => {
               type="file"
               id="file"
               accept="video/*, image/*"
-              onChange={fileAdd}
-              onClick={previewImg}
+              onChange={fileAdd} // 
             />
             <TextInputArea>
               <TextArea

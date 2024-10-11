@@ -65,7 +65,6 @@ const FeedContent = () => {
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
   const [$tabChange, setTabChange] = useState("recommend");
-  const [isClicked, setIsClicked] = useState(false);
 
   const recommendActive = () => {
     setRecommend(true);
@@ -76,10 +75,6 @@ const FeedContent = () => {
     setRecommend(false);
     setFollow(true);
     setTabChange("follow");
-  };
-
-  const onClick = () => {
-    setIsClicked((current) => !current);
   };
 
   const [myProfile, setMyProfile] = useState(null);
@@ -196,11 +191,9 @@ const FeedContent = () => {
                 key={post.id}
                 myProfile={myProfile}
                 feedDetail={post}
-                onClick={onClick}
               />
             ))
           : null}
-        {isClicked ? <ClickFeed onClick={onClick} /> : null}
       </FeedArea>
     </Wrapper>
   );
