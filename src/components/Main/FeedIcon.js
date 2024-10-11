@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import ViewLikes from "./ViewLikes";
 import {
   GoHeart,
   GoHeartFill,
@@ -11,7 +12,16 @@ import {
   IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
 import { auth, db } from "../../utils/firebase";
-import { collection, limit, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  limit,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -81,6 +91,7 @@ const BookmarkFill = styled(GoBookmarkFill)`
 const LikeSection = styled.div`
   font-size: var(--font-16);
   color: ${({ theme }) => theme.fontColor};
+  position: relative;
   strong {
     font-weight: bold;
     cursor: pointer;
@@ -94,12 +105,13 @@ const FeedIcon = ({ feedDetail, myProfile }) => {
   const [followingUser, setFollowingUser] = useState("");
   const [fillHeart, setFillHeart] = useState(false);
   const [fillBookmark, setFillBookmark] = useState(false);
-  const toggleHeart = () => {
-    setFillHeart(!fillHeart);
-  };
-  const toggleBookmark = () => {
-    setFillBookmark(!fillBookmark);
-  };
+  const [likes, setLikes] = useState(feedDetail.like);
+  const [likeUser, setLikeUser] = useState([]);
+
+  useEffect(() => {
+    setFillHeart(likes.includes(myProfile.uid));
+    updateDoc(doc(db, "feed", feedDetail.id), { like: likes });
+  }, [likes]);
 
   useEffect(() => {
     const likeFollowing = feedDetail.like.find((it) =>
@@ -123,6 +135,49 @@ const FeedIcon = ({ feedDetail, myProfile }) => {
     getFollowingProfile(likeFollowing);
   }, [feedDetail]);
 
+  const toggleHeart = () => {
+    if (fillHeart) {
+      setLikes(likes.filter((it) => it !== myProfile.uid));
+    } else {
+      setLikes([...likes, myProfile.uid]);
+    }
+  };
+
+  const toggleBookmark = () => {
+    setFillBookmark(!fillBookmark);
+  };
+
+  const showLikeUserWithFollow = async () => {
+    try {
+      const likeUserQuery = query(
+        collection(db, "profile"),
+        where("uid", "in", feedDetail.like)
+      );
+
+      const querySnapshot = await getDocs(likeUserQuery);
+
+      const likeUserInfo = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          uid: data.uid,
+          userId: data.userId,
+          userName: data.userName,
+          badge: data.badge,
+          profilePhoto: data.profilePhoto,
+          follow: myProfile.following.includes(data.uid) ? 1 : 0,
+        };
+      });
+
+      const sortedLikeUserInfo = likeUserInfo.sort(
+        (a, b) => b.follow - a.follow
+      );
+
+      setLikeUser(sortedLikeUserInfo);
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+    }
+  };
+
   return (
     <Wrapper>
       <Icons>
@@ -144,11 +199,16 @@ const FeedIcon = ({ feedDetail, myProfile }) => {
       <LikeSection>
         {followingUser ? (
           <>
-            {followingUser.userId}님 외 <strong>여러 명</strong>이 좋아합니다
+            {followingUser.userId}님 외{" "}
+            <strong onClick={showLikeUserWithFollow}>여러 명</strong>이
+            좋아합니다
           </>
         ) : (
-          <strong>좋아요 {feedDetail.like.length}개</strong>
+          <strong onClick={showLikeUserWithFollow}>
+            좋아요 {feedDetail.like.length}개
+          </strong>
         )}
+        <ViewLikes likeUser={likeUser} />
       </LikeSection>
     </Wrapper>
   );

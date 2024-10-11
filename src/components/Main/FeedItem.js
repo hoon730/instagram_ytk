@@ -141,7 +141,7 @@ const FeedItem = ({ myProfile, feedDetail, onClick }) => {
       </ProfileSection>
       <PhotoSection onClick={showFeed}>
         {feedDetail.type === "reels" ? (
-          <video autoPlay muted loop src={feedDetail.imgPath} />
+          <Video autoPlay muted loop src={feedDetail.imgPath} />
         ) : (
           <Slide imgPath={feedDetail.imgPath} />
         )}
