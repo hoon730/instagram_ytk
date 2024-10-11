@@ -18,14 +18,6 @@ import {
 } from "firebase/firestore";
 import ClickFeed from "../Detail/ClickFeed";
 
-// 파이어 스토어 연결하면 지울 목업 데이터
-import Data from "../../data.json";
-const user = Data.user;
-const profile = Data.profile;
-const feed = Data.feed;
-const userId = "lualbvqvQmVWkfDU7JUKJRYdqf3";
-const myProfile = profile.find((it) => it.userId === userId);
-
 const Wrapper = styled.div``;
 
 const FeedArea = styled.div`
@@ -73,101 +65,6 @@ const FeedContent = () => {
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
   const [$tabChange, setTabChange] = useState("recommend");
-  // const [userUid, setUserUid] = useState(null); // 사용자 UID 상태 관리
-  // const [myProfile, setMyProfile] = useState(null); // 프로필 상태 관리
-  // const [posts, setPosts] = useState([]); // 포스트 상태 관리
-  // let postsUnsubscribe = null; // postsQuery 구독 해제 변수
-
-  // useEffect(() => {
-  //   // Firebase 인증 상태 변화를 감지
-  //   const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
-  //     if (user) {
-  //       // 로그인된 사용자가 있을 때 userUid 설정
-  //       setUserUid(user.uid);
-
-  //       try {
-  //         // 프로필 쿼리
-  //         const profileQuery = query(
-  //           collection(db, "profile"),
-  //           where("uid", "==", user.uid),
-  //           limit(1)
-  //         );
-  //         const profileSnapshot = await getDocs(profileQuery);
-
-  //         if (!profileSnapshot.empty) {
-  //           const profileData = profileSnapshot.docs[0].data();
-  //           setMyProfile(profileData);
-
-  //           // Firestore 구독 시작
-  //           const postsQuery = query(
-  //             collection(db, "feed"),
-  //             where("uid", "in", profileData.following),
-  //             where("type", "!=", null),
-  //             orderBy("createdAt", "desc"),
-  //             limit(5)
-  //           );
-
-  //           // 기존에 존재하는 postsQuery 구독이 있다면 해제
-  //           if (postsUnsubscribe) {
-  //             postsUnsubscribe();
-  //           }
-
-  //           // 새로운 postsQuery 구독 시작
-  //           postsUnsubscribe = onSnapshot(postsQuery, (snapshot) => {
-  //             const posts = snapshot.docs.map((doc) => {
-  //               const {
-  //                 content,
-  //                 createdAt,
-  //                 hashtag,
-  //                 imgPath,
-  //                 like,
-  //                 location,
-  //                 tagUser,
-  //                 type,
-  //                 uid,
-  //               } = doc.data();
-  //               return {
-  //                 id: doc.id,
-  //                 content,
-  //                 createdAt,
-  //                 hashtag,
-  //                 imgPath,
-  //                 like,
-  //                 location,
-  //                 tagUser,
-  //                 type,
-  //                 uid,
-  //               };
-  //             });
-  //             setPosts(posts);
-  //           });
-  //         } else {
-  //           console.error("Profile not found for user.");
-  //         }
-  //       } catch (error) {
-  //         console.error(error);
-  //       }
-  //     } else {
-  //       setUserUid(null); // 로그아웃되거나 사용자가 없는 경우 처리
-  //       setPosts([]); // 로그아웃 시 포스트 초기화
-  //     }
-  //   });
-
-  //   // 컴포넌트가 언마운트될 때 구독 해제
-  //   return () => {
-  //     // Firebase 인증 구독 해제
-  //     if (unsubscribeAuth) {
-  //       unsubscribeAuth();
-  //     }
-  //     // postsQuery 구독 해제
-  //     if (postsUnsubscribe) {
-  //       postsUnsubscribe();
-  //     }
-  //   };
-  // }, []);
-
-  // console.log(myProfile);
-  // console.log(posts);
   const [isClicked, setIsClicked] = useState(false);
 
   const recommendActive = () => {
@@ -184,6 +81,90 @@ const FeedContent = () => {
   const onClick = () => {
     setIsClicked((current) => !current);
   };
+
+  const [myProfile, setMyProfile] = useState(null);
+  const [postsWithProfiles, setPostsWithProfiles] = useState([]);
+
+  // 처음 마운트될 때 한 번만 프로필 정보를 가져오는 useEffect
+  useEffect(() => {
+    const userUid = auth.currentUser?.uid;
+    if (userUid) {
+      const getMyProfile = async (uid) => {
+        const profileQuery = query(
+          collection(db, "profile"),
+          where("uid", "==", uid),
+          limit(1)
+        );
+        const profileSnapshot = await getDocs(profileQuery);
+
+        if (!profileSnapshot.empty) {
+          const profileData = profileSnapshot.docs[0].data();
+          setMyProfile(profileData);
+        }
+      };
+
+      getMyProfile(userUid);
+    }
+  }, []);
+
+  // myProfile이 존재할 때 실시간으로 posts를 구독하는 useEffect
+  useEffect(() => {
+    let postsUnsubscribe = null;
+
+    if (myProfile && myProfile.following) {
+      const getPosts = (following) => {
+        const postsQuery = query(
+          collection(db, "feed"),
+          where("uid", "in", following),
+          where("type", "!=", null),
+          orderBy("createdAt", "desc"),
+          limit(5)
+        );
+
+        // 실시간 구독
+        postsUnsubscribe = onSnapshot(postsQuery, async (snapshot) => {
+          const postDocs = snapshot.docs;
+
+          // posts 배열에 포함된 uid와 profile의 uid를 맞춰 profile 정보도 가져오기
+          const posts = await Promise.all(
+            postDocs.map(async (doc) => {
+              const postData = doc.data();
+
+              // 각 post의 uid에 맞는 profile 가져오기
+              const profileQuery = query(
+                collection(db, "profile"),
+                where("uid", "==", postData.uid),
+                limit(1)
+              );
+              const profileSnapshot = await getDocs(profileQuery);
+
+              let profileData = {};
+              if (!profileSnapshot.empty) {
+                profileData = profileSnapshot.docs[0].data();
+              }
+
+              return {
+                id: doc.id,
+                ...postData,
+                profile: profileData, // profile 데이터를 post에 추가
+              };
+            })
+          );
+
+          setPostsWithProfiles(posts); // 프로필과 결합된 posts 배열 설정
+        });
+      };
+
+      getPosts(myProfile.following);
+    }
+
+    // 컴포넌트 언마운트 시 구독 해제
+    return () => {
+      if (postsUnsubscribe) {
+        postsUnsubscribe();
+      }
+    };
+  }, [myProfile]); // myProfile이 있을 때만 실행
 
   return (
     <Wrapper>
@@ -209,27 +190,16 @@ const FeedContent = () => {
             />
           </FeedTabBtn>
         </FeedTabBar>
-        {feed[3].feedDetail.map((it, idx) => (
-          <FeedItem
-            key={idx}
-            user={user}
-            profile={profile}
-            myProfile={myProfile}
-            feedUserId={feed[3].userId}
-            feedDetail={it}
-            onClick={onClick}
-          />
-        ))}
-        {/* {posts.length > 0
-          ? posts.map((post) => (
+        {postsWithProfiles && postsWithProfiles.length > 0
+          ? postsWithProfiles.map((post) => (
               <FeedItem
                 key={post.id}
                 myProfile={myProfile}
-                feedProfile={feedProfile}
                 feedDetail={post}
+                onClick={onClick}
               />
             ))
-          : null} */}
+          : null}
         {isClicked ? <ClickFeed onClick={onClick} /> : null}
       </FeedArea>
     </Wrapper>
