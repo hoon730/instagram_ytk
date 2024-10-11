@@ -13,6 +13,9 @@ const Wrapper = styled.div`
   transition: background 0.3s;
   &:hover {
     background: ${({ theme }) => theme.iconBgColor};
+    @media screen and (max-width: 630px) {
+      background: none;
+    }
   }
 `;
 

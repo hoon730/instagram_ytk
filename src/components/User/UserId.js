@@ -24,6 +24,10 @@ const StyledSpan = styled.span`
       : type === "hover"
       ? `font-size: var(--font-16); font-weight: var(--font-bold);`
       : `font-size: var(--font-14); font-weight: var(--font-bold);`}
+  @media screen and (max-width: 770px) {
+    gap: 4px;
+    font-size: var(--font-12);
+  }
 `;
 
 const IdSpan = styled.div`
@@ -34,6 +38,9 @@ const IdSpan = styled.div`
 
 const Check = styled.img`
   width: 18px;
+  @media screen and (max-width: 770px) {
+    width: 14px;
+  }
 `;
 
 const Comment = styled.span`
@@ -49,6 +56,11 @@ const Date = styled.div`
   font-size: var(--font-14);
   font-weight: var(--font-regular);
   color: var(--gray-color);
+  @media screen and (max-width: 770px) {
+    font-size: var(--font-12);
+    gap: 4px;
+    ${({ type }) => (type === "feed" ? "display: none;" : "")}
+  }
 `;
 
 const IsFollowed = styled.span`
@@ -58,8 +70,12 @@ const IsFollowed = styled.span`
   gap: 8px;
   font-size: var(--font-14);
   font-weight: var(--font-bold);
-  color: var(--sub-purple-color);
+  color: ${({ theme }) => theme.subColor};
   cursor: pointer;
+  @media screen and (max-width: 770px) {
+    font-size: var(--font-12);
+    gap: 4px;
+  }
 `;
 
 const MoreBtn = styled.button`
@@ -156,14 +172,15 @@ const UserId = ({
         ) : null}
         {comment ? <Comment>{comment}</Comment> : null}
         {createdAt ? (
-          <Date className="user-date">
+          <Date className="user-date" type={type}>
             <span>&middot;</span>
-            {getFormattedDate(createdAt)}
+            <span>{getFormattedDate(createdAt)}</span>
           </Date>
         ) : null}
         {follwed ? (
           <IsFollowed className="user-followed">
-            <span>&middot;{follwed}</span>{" "}
+            <span>&middot;</span>
+            <span>{follwed}</span>
           </IsFollowed>
         ) : null}
       </StyledSpan>

@@ -21,10 +21,10 @@ const Wrapper = styled.div`
     right: 0;
   }
   @media screen and (max-width: 630px) {
-    width: 100%;
+    width: calc(100% + 4px);
     height: 100vh;
     border-radius: 0;
-    margin-top: -48px;
+    margin-top: -45px;
   }
 `;
 

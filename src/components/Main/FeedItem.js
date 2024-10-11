@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { getFormattedDate } from "../../utils/utils";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import Slide from "./Slide";
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
   &:last-child {
     border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   }
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     padding-bottom: 22px;
   }
 `;
@@ -25,9 +26,10 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     margin: 0 20px;
     height: 66px;
+    gap: 10px;
     & .storyFirstCircle {
       width: 46px;
       height: 46px;
@@ -48,15 +50,16 @@ const UserInfo = styled.div`
   flex-direction: column;
   width: 100%;
   gap: 4px;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     font-size: var(--font-12);
+    gap: 0px;
   }
 `;
 
 const UserName = styled.p`
   font-size: var(--font-14);
   color: var(--gray-color);
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     font-size: var(--font-12);
   }
 `;
@@ -68,7 +71,7 @@ const PhotoSection = styled.div`
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     width: 370px;
     height: 370px;
   }
@@ -76,14 +79,14 @@ const PhotoSection = styled.div`
 
 const FeedDescArea = styled.div`
   margin: 0 36px;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     margin: 0 20px;
   }
 `;
 
 const FeedDesc = styled.div`
   margin-top: 22px;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     margin-top: 13px;
     & input {
       height: 28px;
@@ -92,10 +95,21 @@ const FeedDesc = styled.div`
   }
 `;
 
+const DateText = styled.div`
+  display: none;
+  @media screen and (max-width: 770px) {
+    display: block;
+    font-size: var(--font-14);
+    margin-bottom: 12px;
+    color: var(--gray-color);
+  }
+`;
+
 const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
   const feedProfile = profile.find((it) => it.userId === feedUserId);
   const feedUser = user.find((it) => it.userId === feedUserId);
   const followResult = myProfile.following.find((it) => it === feedUserId);
+  const dateMB = getFormattedDate(new Date(feedDetail.createDate));
 
   return (
     <Wrapper>
@@ -141,6 +155,7 @@ const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
+          <DateText>{`${dateMB}`}</DateText>
           <CommentInput width={"100%"} height={"50px"} />
         </FeedDesc>
       </FeedDescArea>
