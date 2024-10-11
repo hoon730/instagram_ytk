@@ -34,7 +34,7 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Post = ({ userName, createdAt, post, photo, video, userId, id }) => {
+const Post = ({ }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const showFeed = () => {
@@ -44,13 +44,12 @@ const Post = ({ userName, createdAt, post, photo, video, userId, id }) => {
   return (
     <>
       <Wrapper onClick={showFeed}>
-        {photo ? <Img src={photo} /> : null}
-        {video ? <Video src={video} /> : null}
+       
       </Wrapper>
       {isClicked ? (
         <ClickFeed
           onClick={showFeed}
-          {...{ userName, createdAt, post, photo, video, userId, id }}
+         
         />
       ) : null}
     </>

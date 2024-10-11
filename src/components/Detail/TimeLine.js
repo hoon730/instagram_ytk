@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Post from "./Post";
+
 import {
   collection,
+  query,
   limit,
   onSnapshot,
   orderBy,
-  query,
-  Unsubscribe,
 } from "firebase/firestore";
-import styled from "styled-components";
 import { db } from "../../utils/firebase";
-import Post from "./Post";
 
 export const IPost = {
   id: String,
@@ -24,13 +24,18 @@ export const IPost = {
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 5px;
+  margin-bottom: 5px;
   /* overflow-y: scroll; */
 `;
 
 const TimeLine = () => {
+  const [isClicked, setIsClicked] = useState(false);
   const [posts, setPosts] = useState([]);
+
+  const onClick = () => {
+    setIsClicked((current) => !current);
+  };
 
   useEffect(() => {
     let unsubscribe;

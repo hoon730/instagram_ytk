@@ -58,6 +58,7 @@ const MyPic = () => {
             type={"INactive"}
             size={170}
             url={"/images/postImgs/user1/profile.jpg"}
+            hover={true}
           />
         </ProfileImgBox>
         <MyFeedDesc>

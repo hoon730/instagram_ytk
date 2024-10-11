@@ -42,7 +42,7 @@ const CommentItem = ({ onClick, myProfile, feedDetail }) => {
     onClick();
   };
 
-  console.log(feedDetail.reply);
+  console.log(feedDetail, myProfile);
   return (
     <div>
       <UserBox>

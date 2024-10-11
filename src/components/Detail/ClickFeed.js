@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { getFormattedDate } from "../../utils/utils";
 import styled from "styled-components";
 import Slide from "../Main/Slide";
@@ -14,7 +14,17 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 
 import { IPost } from "./TimeLine";
 import { auth, db, storage } from "../../utils/firebase";
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import {
+  deleteDoc,
+  doc,
+  getDoc,
+  updateDoc,
+  collection,
+  limit,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { use } from "framer-motion/client";
 import {
   deleteObject,
@@ -296,7 +306,34 @@ const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
   const commentRef = useRef();
   const bgRef = useRef();
   const [comment, setComment] = useState("");
+  const [followingUser, setFollowingUser] = useState("");
+
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
+  const likeFollowing = feedDetail.like.find((it) =>
+    myProfile.following.includes(it)
+  );
+
+  useEffect(() => {
+    const likeFollowing = feedDetail.like.find((it) =>
+      myProfile.following.includes(it)
+    );
+
+    const getFollowingProfile = async (uid) => {
+      const profileQuery = query(
+        collection(db, "profile"),
+        where("uid", "==", uid),
+        limit(1)
+      );
+      const profileSnapshot = await getDocs(profileQuery);
+
+      if (!profileSnapshot.empty) {
+        const profileData = profileSnapshot.docs[0].data();
+        setFollowingUser(profileData);
+      }
+    };
+
+    getFollowingProfile(likeFollowing);
+  }, [feedDetail]);
 
   const hideFeed = () => {
     onClick();
@@ -505,7 +542,14 @@ const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
                       <Notification>
                         <IoHeartOutline />
                         <span>
-                          <b>maratang</b>님 외 <b>109</b>명이 좋아합니다
+                          {followingUser ? (
+                            <>
+                              {followingUser.userId}님 외{" "}
+                              <b> {feedDetail.like.length}명</b>이 좋아합니다
+                            </>
+                          ) : (
+                            <b>좋아요 {feedDetail.like.length}개</b>
+                          )}
                         </span>
                       </Notification>
                       <IconBtns>
