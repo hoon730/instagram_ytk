@@ -1,11 +1,23 @@
-import React, { useState } from "react";
-import MyPostItem from "./MyPostItem";
-import ClickFeed from "../Detail/ClickFeed";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import { auth, db } from "../../utils/firebase";
+import {
+  collection,
+  query,
+  limit,
+  onSnapshot,
+  orderBy,
+  where,
+  getDocs,
+} from "firebase/firestore";
+import TimeLine from "../Detail/TimeLine";
+
 const Wrapper = styled.div`
-  width: 100%;
-  /* height: 934px; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 5px;
   background: ${({ theme }) => theme.bgColor};
 
   @media screen and (max-width: 780px) {
@@ -13,60 +25,9 @@ const Wrapper = styled.div`
   }
 
   @media screen and (max-width: 430px) {
-    width: 390px;
+    width: 100%;
   }
 `;
-
-const MyPostContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-`;
-
-const MyPostBox = styled.div`
-  width: 100%;
-  height: 308px;
-  display: flex;
-  gap: 5px;
-`;
-
-const imgArr = [
-  {
-    id: 1,
-    url: "/images/postImgs/user1/post1.jpg",
-  },
-  {
-    id: 2,
-    url: "/images/postImgs/user1/post2.jpg",
-  },
-  {
-    id: 3,
-    url: "/images/postImgs/user1/post3.jpg",
-  },
-  {
-    id: 4,
-    url: "/images/postImgs/user1/post4.jpg",
-  },
-  {
-    id: 5,
-    url: "/images/postImgs/user1/post5.jpg",
-  },
-  {
-    id: 7,
-    url: "/images/postImgs/user1/post7.jpg",
-  },
-  {
-    id: 8,
-    url: "/images/postImgs/user1/post8.jpg",
-  },
-  {
-    id: 9,
-    url: "/images/postImgs/user1/post9.jpg",
-  },
-];
 
 const MyPost = () => {
   const [isClicked, setIsClicked] = useState(false);
@@ -74,47 +35,85 @@ const MyPost = () => {
   const onClick = () => {
     setIsClicked((current) => !current);
   };
+
+  const [myProfile, setMyProfile] = useState(null);
+  const [postsWithProfiles, setPostsWithProfiles] = useState([]);
+
+  useEffect(() => {
+    const userUid = auth.currentUser?.uid;
+    if (userUid) {
+      const getMyProfile = async (uid) => {
+        const profileQuery = query(
+          collection(db, "profile"),
+          where("uid", "==", uid),
+          limit(1)
+        );
+        const profileSnapshot = await getDocs(profileQuery);
+
+        if (!profileSnapshot.empty) {
+          const profileData = profileSnapshot.docs[0].data();
+          setMyProfile(profileData);
+        }
+      };
+      getMyProfile(userUid);
+    }
+  }, []);
+
+  useEffect(() => {
+    let postsUnsubscribe = null;
+
+    if (myProfile && myProfile.following) {
+      const getPosts = (following) => {
+        const postQuery = query(
+          collection(db, "feed"),
+          where("uid", "in", following),
+          where("type", "!=", null),
+          orderBy("createdAt", "desc"),
+          limit(5)
+        );
+
+        postsUnsubscribe = onSnapshot(postQuery, async (snapshot) => {
+          const postDocs = snapshot.docs;
+
+          const posts = await Promise.all(
+            postDocs.map(async (doc) => {
+              const postData = doc.data();
+
+              const profileQuery = query(
+                collection(db, "profile"),
+                where("uid", "==", postData.uid),
+                limit(1)
+              );
+              const profileSnapshot = await getDocs(profileQuery);
+
+              let profileData = {};
+              if (!profileSnapshot.empty) {
+                profileData = profileSnapshot.docs[0].data();
+              }
+
+              return {
+                id: doc.id,
+                ...postData,
+                profile: profileData,
+              };
+            })
+          );
+          setPostsWithProfiles(posts);
+        });
+      };
+      getPosts(myProfile.following);
+    }
+
+    return () => {
+      if (postsUnsubscribe) {
+        postsUnsubscribe();
+      }
+    };
+  }, [myProfile]);
+
   return (
     <Wrapper>
-      <MyPostContainer>
-        <MyPostBox>
-          <MyPostItem
-            url={"/images/postImgs/user1/post1.jpg"}
-            onClick={onClick}
-          />
-          {isClicked ? <ClickFeed onClick={onClick} /> : null}
-          <MyPostItem url={"/images/postImgs/user1/post2.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post3.jpg"} />
-          {/* {imgArr.map((it) => (
-            <MyPostItem key={it.id} url={it.url} />
-          ))} */}
-        </MyPostBox>
-        <MyPostBox>
-          <MyPostItem url={"/images/postImgs/user1/post4.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post5.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post6.jpg"} />
-        </MyPostBox>
-        <MyPostBox>
-          <MyPostItem url={"/images/postImgs/user1/post7.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post8.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post9.jpg"} />
-        </MyPostBox>
-        <MyPostBox>
-          <MyPostItem url={"/images/postImgs/user1/post10.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post11.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post12.jpg"} />
-        </MyPostBox>
-        <MyPostBox>
-          <MyPostItem url={"/images/postImgs/user1/post13.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post14.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post15.jpg"} />
-        </MyPostBox>
-        <MyPostBox>
-          <MyPostItem url={"/images/postImgs/user1/post16.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post18.jpg"} />
-          <MyPostItem url={"/images/postImgs/user1/post19.jpg"} />
-        </MyPostBox>
-      </MyPostContainer>
+      <TimeLine />
     </Wrapper>
   );
 };

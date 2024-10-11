@@ -37,20 +37,28 @@ const ReplyBtn = styled.button`
   font-weight: var(--font-bold);
 `;
 
-const CommentItem = ({ onClick }) => {
-
+const CommentItem = ({ onClick, myProfile, feedDetail }) => {
   const focusingInput = () => {
     onClick();
   };
+
+  console.log(feedDetail, myProfile);
   return (
     <div>
       <UserBox>
-        <ProfileImg size={"40"} url={"/images/newPostIcon.svg"} />
+        <ProfileImg
+          size={"40"}
+          url={feedDetail.profile.profilePhoto}
+          feedDetail={feedDetail}
+          myProfile={myProfile}
+        />
         <Userinfo>
           <UserId
             userNickname={"bbok"}
-            content={"대관령 파티"}
+            content={"메롱이야"}
             btn={"heart"}
+            feedDetail={feedDetail}
+            myProfile={myProfile}
           />
           <DateAndReply>
             <Date>2023년 12월 25일</Date>
