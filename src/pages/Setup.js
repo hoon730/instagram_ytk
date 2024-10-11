@@ -189,7 +189,6 @@ const Setup = ({ onClick }) => {
               <LuCamera />
             </ChangePicBtn>
             {editProfile ? <Pic src={editProfile} /> : <Pic />}
-            {/* <Pic /> */}
             <ChangePicInput
               type="file"
               id="file"
