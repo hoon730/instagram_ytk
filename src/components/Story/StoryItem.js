@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3px;
+  gap: 5px;
 `;
 
 const UserNameSection = styled.div`

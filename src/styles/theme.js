@@ -18,7 +18,7 @@ export const darkTheme = {
   fontColor: "#FFFFFF", // White
   mainColor: "linear-gradient(-75deg, #F9CE34, #EE2A7B, #6228D7)",
   subColor: "#EE2A7B", // Pink
-  borderColor: "#7E7E7E", //  dark-gray
+  borderColor: "#444444", //  deep-dark-gray
   buttonHoverColor: "#CF236A", //darkPink
   nonActiveBtnColor: "#7E7E7E", // dark-gray
   nonActiveBtnHoverColor: "#666666", //light-black

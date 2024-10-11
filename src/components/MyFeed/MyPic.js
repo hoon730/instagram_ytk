@@ -34,7 +34,8 @@ const ProfileImgBox = styled.div`
   border-radius: 50%;
 
   .storyFirstCircle {
-    border: transparent;
+    width: 185px;
+    height: 185px;
   }
 
   .storySecondCircle {
@@ -43,7 +44,7 @@ const ProfileImgBox = styled.div`
     border: 7px solid var(--bg-white-color);
   }
 
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 900px) {
     width: 150px;
     height: 150px;
     top: 190px;
@@ -51,6 +52,11 @@ const ProfileImgBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .storyFirstCircle {
+      width: 160px;
+      height: 160px;
+    }
 
     .storySecondCircle {
       width: 150px;
@@ -72,6 +78,11 @@ const ProfileImgBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .storyFirstCircle {
+      width: 130px;
+      height: 130px;
+    }
 
     .storySecondCircle {
       width: 120px;
@@ -95,12 +106,12 @@ const MyFeedDesc = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 0 10px;
+  padding: 20px 0px 10px;
   margin-left: 250px;
   margin-right: 70px;
 
-  @media screen and (max-width: 1000px) {
-    margin-left: 150px;
+  @media screen and (max-width: 900px) {
+    margin-left: 190px;
     margin-right: 30px;
 
     .post_follow {
@@ -113,12 +124,12 @@ const MyFeedDesc = styled.div`
     margin-right: 30px;
 
     .post_follow {
-      padding: 0;
+      padding: 0px;
     }
   }
 
-  @media screen and (max-width: 430px) {
-    margin-left: 150px;
+  @media screen and (max-width: 500px) {
+    margin-left: 160px;
     margin-right: 0px;
   }
 `;
@@ -130,7 +141,7 @@ const MyPic = () => {
         <ProfileBg />
         <ProfileImgBox>
           <ProfileImg
-            type={"INactive"}
+            type={"active"}
             size={170}
             url={"/images/postImgs/user1/profile.jpg"}
             hover={true}

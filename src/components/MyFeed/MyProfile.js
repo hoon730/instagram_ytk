@@ -15,10 +15,14 @@ const NameBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 70px 0;
+  padding: 20px 70px 0px;
 
-  @media screen and (max-width: 1024px) {
-    padding: 20px 50px 0;
+  @media screen and (max-width: 900px) {
+    padding: 20px 50px 0px;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 20px 20px 0px 50px;
   }
 `;
 
@@ -51,7 +55,7 @@ const EditBtn = styled.div`
     color: #fff;
   }
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1000px) {
     width: 30px;
     height: 30px;
     svg {
@@ -66,7 +70,7 @@ const MyIntro = styled.div`
   padding: 10px 70px;
   font-size: var(--font-size-16);
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 900px) {
     padding: 10px 50px 10px;
   }
 `;

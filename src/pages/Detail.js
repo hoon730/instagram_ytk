@@ -13,9 +13,9 @@ const Wrapper = styled.div`
 const Detail = () => {
   return (
     <Wrapper>
-      <MyFeed />
-      {/* <MbDetail /> */}
-      {/* <Clickdetail/> */}
+      {/* <MyFeed /> */}
+      <MbDetail />
+      {/* <Clickdetail /> */}
     </Wrapper>
   );
 };

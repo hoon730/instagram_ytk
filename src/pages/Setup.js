@@ -34,7 +34,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.form`
-  padding: 0 20px;
+  /* padding: 0 20px; */
   width: 600px;
   height: 610px;
   border: 1px solid ${({ theme }) => theme.borderColor};

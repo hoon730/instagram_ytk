@@ -15,6 +15,10 @@ const Wrapper = styled.div`
 
 const ImgSection = styled.div`
   width: fit-content;
+  display: inline-block;
+  position: relative;
+  /* width: 80px; */
+  height: 80px;
   cursor: pointer;
 `;
 
@@ -22,7 +26,7 @@ const GrayLine = styled.span`
   display: inline-block;
   width: 80px;
   height: 80px;
-  background: var(--light-gray-color);
+  background: var(--bg-white-color);
   border-radius: 50%;
   position: relative;
 
@@ -34,14 +38,15 @@ const GrayLine = styled.span`
 
 const WhiteLine = styled.span`
   display: inline-block;
-  width: 74px;
-  height: 74px;
+  width: 80px;
+  height: 80px;
   background: var(--bg-white-color);
   border-radius: 50%;
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: 4px solid var(--bg-gray-color);
 
   @media screen and (max-width: 1000px) {
     width: 65px;
@@ -104,15 +109,13 @@ const AddHighlight = () => {
   return (
     <Wrapper>
       <ImgSection>
-        <GrayLine>
-          <WhiteLine>
-            <AddBox>
-              <AddIcon>
-                <HiOutlinePlus />
-              </AddIcon>
-            </AddBox>
-          </WhiteLine>
-        </GrayLine>
+        <WhiteLine>
+          <AddBox>
+            <AddIcon>
+              <HiOutlinePlus />
+            </AddIcon>
+          </AddBox>
+        </WhiteLine>
       </ImgSection>
       <TextArea>
         <TextBox>
