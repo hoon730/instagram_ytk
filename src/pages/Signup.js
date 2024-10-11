@@ -1,10 +1,13 @@
 // v1. facebook 메시지
-// 2. 전화번호&사용자(id) 한꺼번에 저장-계정 복수생성=복잡해져서 포기. 전화번호||이메일 등록으로 변경=전화번호가 등록이 안됨..
-// v3. FirebaseError+눈모양버튼+구조적 문제
+// v2. 전화번호&사용자(id) 한꺼번에 저장-계정 복수생성=복잡해져서 포기. 전화번호||이메일 등록으로 변경=전화번호가 등록이 안됨..
+// 3. 문자숫자밑줄마침표만 아이디 등록할 때 허용
 // v4. uid 임의로 변환-불가능
 // 5. 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
-// v6. 디자인 좀 더 고민하기
-// Firebase: Error (auth/invalid-credential).
+// 6. Firebase: Error (auth/invalid-credential).파이어베이스 에러들 한글로 바꾸기. 로그인포맛, 같은이메일 존재
+// 7. 눈모양 버튼 앤터 칠 떄 boolean바뀜
+// 8. 로그인 id, 전번, 이메일과 비밀번호로 가능하게끔
+// 9. 로그인 전번간편로그인 기능
+
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +16,11 @@ import { FirebaseError } from "firebase/app";
 import styled from "styled-components";
 import LogoImg from "../components/Login/LogoImg";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import LoginBtn from "../components/Login/LoginBtn";
 import FbBtn from "../components/Login/FbBtn";
+import { db } from "../utils/firebase"; // Import your Firestore instance
+import { doc, setDoc } from "firebase/firestore";
 
 const colors = {
   sub2: "#6228D7",
@@ -141,7 +147,6 @@ const DomainSelect = styled.select`
   color: ${colors.darkGray};
   font-size: 16px;
   outline: none;
-
 `;
 
 const CountrySelect = styled.select`
@@ -154,8 +159,11 @@ const CountrySelect = styled.select`
 `;
 
 const SwitchEmailNPhone = styled.p`
+  display: flex;
+  width: fit-content;
   color: ${(props) => colors[props.color || "sub2"]};
   font-size: 14px;
+  gap: 5px;
   cursor: pointer;
 `;
 
@@ -189,7 +197,8 @@ const Signup = () => {
   const [domain, setDomain] = useState("@gmail.com");
   const [country, setCountry] = useState("+82");
   const [emailError, setEmailError] = useState(false);
-  const [emailPhone, setEmailPhone] = useState(false);
+  const [emailOption, setEmailOption] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const usernameRef = useRef(null);
@@ -241,21 +250,31 @@ const Signup = () => {
     };
 
     const fullTel = () => {
-      return country + tel + "@" + "google" + ".com";
+      return country + tel;
       // return country + tel;
     };
     try {
       const credentials = await createUserWithEmailAndPassword(
         auth,
-        fullEmail() || fullTel(),
+        fullEmail(),
         password
       );
       console.log(credentials.user);
-      await updateProfile(credentials.user, { displayName: name });
+      await updateProfile(credentials.user, { displayName: id });
+      await setDoc(doc(db, "users", credentials.user.uid), {
+        uid: credentials.user.uid,
+        userId: id,
+        userName: name,
+        phone: fullTel(),
+        // email: fullEmail(),
+        nondisclosure: Boolean(false),
+        recommendation: Boolean(false),
+      });
       navigate("/");
     } catch (e) {
       console.log(e);
       if (e instanceof FirebaseError) {
+        setError(e.message);
         if (
           e.message ==
           "Firebase: Password should be at least 6 characters (auth/weak-password)."
@@ -275,7 +294,7 @@ const Signup = () => {
   };
 
   const toggleEmailNPhone = () => {
-    setEmailPhone((prev) => !prev);
+    setEmailOption((prev) => !prev);
   };
 
   const loginLink = () => {
@@ -335,25 +354,33 @@ const Signup = () => {
             />
             <Label>성명</Label>
           </InputBox>
-          {!emailPhone ? (
-            <InputBox>
-              <LoginInput
-                onChange={onChange}
-                type="text"
-                name="email"
-                placeholder=""
-                value={email}
-                required
-                width="65%"
-              />
-              <Label>이메일</Label>
-              <DomainSelect value={domain} onChange={onDomainChange}>
-                <option value="@gmail.com">@gmail.com</option>
-                <option value="@naver.com">@naver.com</option>
-                <option value="@daum.net">@daum.net</option>
-                <option value="custom">직접 입력</option>
-              </DomainSelect>
-            </InputBox>
+          <InputBox>
+            <LoginInput
+              onChange={onChange}
+              type="text"
+              name="email"
+              placeholder=""
+              value={email}
+              required
+              width="65%"
+            />
+            <Label>이메일</Label>
+            <DomainSelect value={domain} onChange={onDomainChange}>
+              <option value="@gmail.com">@gmail.com</option>
+              <option value="@naver.com">@naver.com</option>
+              <option value="@daum.net">@daum.net</option>
+              <option value="custom">직접 입력</option>
+            </DomainSelect>
+          </InputBox>
+
+          {emailError && <Error>{emailError}</Error>}
+          {error !== "" ? <Error>{error}</Error> : null}
+          <SwitchEmailNPhone onClick={toggleEmailNPhone}>
+            전화번호 간편로그인 등록하기
+            {emailOption ? <IoIosArrowDown /> : <IoIosArrowUp />}
+          </SwitchEmailNPhone>
+          {emailOption ? (
+            ""
           ) : (
             <InputBox>
               <CountrySelect value={country} onChange={onCountryChange}>
@@ -374,10 +401,6 @@ const Signup = () => {
               />
             </InputBox>
           )}
-          {emailError && <Error>{emailError}</Error>}
-          <SwitchEmailNPhone onClick={toggleEmailNPhone}>
-            {emailPhone ? "이메일로 가입하기" : "전화번호로 가입하기"}
-          </SwitchEmailNPhone>
           <LoginBtn value="가입" />
         </Form>
         <LoginBlock>
