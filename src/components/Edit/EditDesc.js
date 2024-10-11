@@ -71,6 +71,7 @@ const EditDesc = ({
             name="이름"
             type="textarea"
             id="intro"
+            placeholder=""
             onChange={handleIntro}
           />
         </li>

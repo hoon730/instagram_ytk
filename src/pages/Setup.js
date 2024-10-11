@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../components/Common/Button";
 import EditDesc from "../components/Edit/EditDesc";
@@ -11,6 +11,7 @@ import {
   collection,
   getDocs,
   limit,
+  onSnapshot,
   orderBy,
   query,
   where,
@@ -120,16 +121,90 @@ const Setup = ({ onClick }) => {
     user.photoURL || null || undefined
   );
   const [isEditing, setIsEditing] = useState(false);
-  const [userName, setUserName] = useState(user.displayName ?? "Anonymous");
+  const [editUserName, setEditUserName] = useState(
+    user.displayName ?? "Anonymous"
+  );
   const [intro, setIntro] = useState("");
   const [link, setLink] = useState("");
+
+  const [myProfile, setMyProfile] = useState(null);
+  const [profile, setProfile] = useState({});
+  const [userUid, setUserUid] = useState(null);
+  let profileUnsubscribe = null;
+
+  useEffect(() => {
+    const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        setUserUid(user.uid);
+
+        try {
+          const profileQuery = query(
+            collection(db, "profile"),
+            where("uid", "==", user.uid),
+            limit(1)
+          );
+
+          const profileSnapshot = await getDocs(profileQuery);
+
+          if (!profileSnapshot.empty) {
+            const profileData = profileSnapshot.docs[0].data();
+            setMyProfile(profileData);
+
+            if (profileUnsubscribe) {
+              profileUnsubscribe();
+            }
+
+            profileUnsubscribe = onSnapshot(profileQuery, (snapshot) => {
+              const profile = snapshot.docs.map((doc) => {
+                const {
+                  userId,
+                  userName,
+                  profilePhoto,
+                  introduction,
+                  website,
+                  uid,
+                } = doc.data();
+                return {
+                  id: doc.id,
+                  userId,
+                  userName,
+                  profilePhoto,
+                  introduction,
+                  website,
+                  uid,
+                };
+              });
+              setProfile(profile);
+            });
+          } else {
+            console.error("there is no profile matched with user");
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      } else {
+        setUserUid(null);
+        setProfile({});
+      }
+    });
+
+    return () => {
+      if (unsubscribeAuth) {
+        unsubscribeAuth();
+      }
+
+      if (profileUnsubscribe) {
+        profileUnsubscribe();
+      }
+    };
+  }, []);
 
   const hideSetup = () => {
     onClick();
   };
 
-  const handleUserName = (e) => {
-    setUserName(e.target.value);
+  const handleEditUserName = (e) => {
+    setEditUserName(e.target.value);
   };
   const handleIntro = (e) => {
     setIntro(e.target.value);
@@ -153,13 +228,13 @@ const Setup = ({ onClick }) => {
     }
   };
 
-  const ChangeUserName = async () => {
+  const ChangeEditUserName = async () => {
     if (!user) return;
     setIsEditing((prev) => !prev);
     if (!isEditing) return;
     try {
       await updateProfile(user, {
-        displayName: userName,
+        displayName: editUserName,
       });
     } catch (e) {
       console.error(e);
@@ -197,12 +272,12 @@ const Setup = ({ onClick }) => {
               onChange={editProfileChange}
             />
           </PicBox>
-          <UserNicknam>bbbok</UserNicknam>
+          <UserNicknam>bbok</UserNicknam>
           <UserName>bbo</UserName>
         </EditIntro>
         <EditDesc
-          handleUserName={handleUserName}
-          userName={userName}
+          handleUserName={handleEditUserName}
+          userName={editUserName}
           handleIntro={handleIntro}
           intro={intro}
           handleLink={handleLink}
