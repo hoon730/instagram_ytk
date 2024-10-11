@@ -5,7 +5,6 @@ import Setup from "../../pages/Setup";
 
 const Wrapper = styled.div`
   @media screen and (max-width: 1024px) {
-    border: 1px solid red;
   }
 `;
 
@@ -20,6 +19,10 @@ const NameBox = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px 70px 0;
+
+  @media screen and (max-width: 1024px) {
+    padding: 20px 50px 0;
+  }
 `;
 
 const MyName = styled.div`
@@ -65,6 +68,10 @@ const MyIntro = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   padding: 10px 70px;
   font-size: var(--font-size-16);
+
+  @media screen and (max-width: 1024px) {
+    padding: 10px 50px 10px;
+  }
 `;
 
 const MyProfile = () => {

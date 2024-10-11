@@ -17,6 +17,25 @@ const HighlightBox = styled.div`
   align-items: center;
   gap: 50px;
   margin: 20px 70px;
+
+  @media screen and (max-width: 780px) {
+    margin: 20px 50px;
+
+    .ActivationArea {
+      width: 50px;
+      height: 50px;
+      border: 7px solid var(--bg-white-color);
+    }
+
+    .storyThirdCircle {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  @media screen and (max-width: 430px) {
+    margin: 20px 50px;
+  }
 `;
 
 const storys = [
