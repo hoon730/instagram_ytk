@@ -3,14 +3,11 @@ import styled from "styled-components";
 import { FaGear } from "react-icons/fa6";
 import Setup from "../../pages/Setup";
 
-const Wrapper = styled.div`
-  @media screen and (max-width: 1024px) {
-  }
-`;
+const Wrapper = styled.div``;
 
 const MyProfileBox = styled.div`
   width: 100%;
-  border-top: 1px solid ${({ theme }) => theme.borderColor};
+  /* border-top: 1px solid ${({ theme }) => theme.borderColor}; */
 `;
 
 const NameBox = styled.div`

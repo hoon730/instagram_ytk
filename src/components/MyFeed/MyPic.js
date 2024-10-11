@@ -8,7 +8,6 @@ const Wrapper = styled.div``;
 
 const MyPicBox = styled.div`
   width: 100%;
-  padding-bottom: 10px;
   position: relative;
 `;
 
@@ -44,6 +43,27 @@ const ProfileImgBox = styled.div`
     border: 7px solid var(--bg-white-color);
   }
 
+  @media screen and (max-width: 1000px) {
+    width: 150px;
+    height: 150px;
+    top: 190px;
+    left: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .storySecondCircle {
+      width: 150px;
+      height: 150px;
+      border: 7px solid var(--bg-white-color);
+    }
+
+    .storyThirdCircle {
+      width: 140px;
+      height: 140px;
+    }
+  }
+
   @media screen and (max-width: 780px) {
     width: 120px;
     height: 120px;
@@ -75,13 +95,26 @@ const MyFeedDesc = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding-top: 10px; */
+  padding: 20px 0 10px;
   margin-left: 250px;
   margin-right: 70px;
+
+  @media screen and (max-width: 1000px) {
+    margin-left: 150px;
+    margin-right: 30px;
+
+    .post_follow {
+      padding: 5px;
+    }
+  }
 
   @media screen and (max-width: 780px) {
     margin-left: 150px;
     margin-right: 30px;
+
+    .post_follow {
+      padding: 0;
+    }
   }
 
   @media screen and (max-width: 430px) {
@@ -104,7 +137,12 @@ const MyPic = () => {
           />
         </ProfileImgBox>
         <MyFeedDesc>
-          <PostAndFollow posting={"18"} follower={777} following={333} />
+          <PostAndFollow
+            posting={"18"}
+            follower={777}
+            following={333}
+            padding={"10px 0px"}
+          />
         </MyFeedDesc>
       </MyPicBox>
     </Wrapper>

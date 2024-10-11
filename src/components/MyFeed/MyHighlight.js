@@ -1,35 +1,38 @@
 import React from "react";
 import styled from "styled-components";
-import ProfileImg from "../Profile/ProfileImg";
 import StoryItem from "../Story/StoryItem";
 import AddHighlight from "../Story/AddHighlight";
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
-  /* border: 1px solid purple; */
+`;
+
+const HighlightArea = styled.div`
+  /* border: 1px solid red;
+  width: 100%;
+  margin: 20px 70px; */
 `;
 
 const HighlightBox = styled.div`
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   gap: 50px;
   margin: 20px 70px;
+  /* border: 1px solid blue; */
 
-  @media screen and (max-width: 780px) {
+  @media screen and (max-width: 1000px) {
+    gap: 20px;
     margin: 20px 50px;
 
-    .ActivationArea {
-      width: 50px;
-      height: 50px;
-      border: 7px solid var(--bg-white-color);
+    .storyFirstCircle {
+      width: 68px;
+      height: 68px;
     }
 
     .storyThirdCircle {
-      width: 50px;
-      height: 50px;
+      width: 60px;
+      height: 60px;
     }
   }
 
@@ -39,10 +42,7 @@ const HighlightBox = styled.div`
 `;
 
 const storys = [
-  {
-    userId: "l",
-    imgPath: "/images/postImgs/user1/hicover1.jpg",
-  },
+  { userId: "l", imgPath: "/images/postImgs/user1/hicover1.jpg" },
   { userId: "u", imgPath: "/images/postImgs/user1/hicover2.jpg" },
   { userId: "c", imgPath: "/images/postImgs/user1/hicover3.jpg" },
   { userId: "k", imgPath: "/images/postImgs/user1/hicover4.jpg" },
@@ -51,17 +51,19 @@ const storys = [
 const MyHighlight = () => {
   return (
     <Wrapper>
-      <HighlightBox>
-        {storys.map((it, idx) => (
-          <StoryItem
-            key={idx}
-            userId={it.userId}
-            imgPath={it.imgPath}
-            type={"inactive"}
-          />
-        ))}
-        <AddHighlight size={80} />
-      </HighlightBox>
+      <HighlightArea>
+        <HighlightBox>
+          {storys.map((it, idx) => (
+            <StoryItem
+              key={idx}
+              userId={it.userId}
+              imgPath={it.imgPath}
+              type={"inactive"}
+            />
+          ))}
+          <AddHighlight />
+        </HighlightBox>
+      </HighlightArea>
     </Wrapper>
   );
 };

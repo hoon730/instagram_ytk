@@ -95,6 +95,7 @@ const GlobalStyles = createGlobalStyle`
     --font-28: 28px;
     --font-32: 32px;
     --font-34: 34px;
+    --font-46: 46px;
 
     --font-thin: 100;
     --font-extralight: 200;
