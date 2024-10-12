@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
@@ -6,6 +6,7 @@ import Slide from "./Slide";
 import FeedIcon from "./FeedIcon";
 import FeedText from "./FeedText";
 import CommentInput from "../Common/CommentInput";
+import ClickFeed from "../Detail/ClickFeed";
 
 const Wrapper = styled.div`
   padding-bottom: 50px;
@@ -112,11 +113,12 @@ const FeedDesc = styled.div`
   }
 `;
 
-const FeedItem = ({ myProfile, feedDetail, onClick }) => {
+const FeedItem = ({ myProfile, feedDetail }) => {
+  const [isClicked, setIsClicked] = useState(false);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
-  const showFeed = () => {
-    onClick();
+  const onClick = () => {
+    setIsClicked((current) => !current);
   };
 
   return (
@@ -126,6 +128,8 @@ const FeedItem = ({ myProfile, feedDetail, onClick }) => {
           type={"active"}
           size={"62"}
           url={feedDetail.profile.profilePhoto}
+          feedDetail={feedDetail}
+          myProfile={myProfile}
         />
         <UserInfo>
           <UserId
@@ -135,16 +139,25 @@ const FeedItem = ({ myProfile, feedDetail, onClick }) => {
             createdAt={new Date(parseInt(feedDetail.createdAt))}
             btn={"more"}
             follwed={followResult ? "" : "팔로우"}
+            feedDetail={feedDetail}
+            myProfile={myProfile}
           />
           <UserName>{feedDetail.profile.userName}</UserName>
         </UserInfo>
       </ProfileSection>
-      <PhotoSection onClick={showFeed}>
+      <PhotoSection>
         {feedDetail.type === "reels" ? (
           <Video autoPlay muted loop src={feedDetail.imgPath} />
         ) : (
-          <Slide imgPath={feedDetail.imgPath} />
+          <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}
+        {isClicked ? (
+          <ClickFeed
+            onClick={onClick}
+            feedDetail={feedDetail}
+            myProfile={myProfile}
+          />
+        ) : null}
       </PhotoSection>
       <FeedDescArea>
         <FeedIcon feedDetail={feedDetail} myProfile={myProfile} />

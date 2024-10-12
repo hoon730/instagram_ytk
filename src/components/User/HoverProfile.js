@@ -58,19 +58,13 @@ const Img = styled.img`
 
 const Btns = styled.div`
   display: flex;
-  gap: ${({ followed }) => (followed === "followed" ? "4px" : "0")};
+  gap: ${({ $followed }) => ($followed === "followed" ? "4px" : "0")};
   padding-top: 10px;
 `;
 
-const HoverProfile = ({
-  type,
-  userNickname,
-  userName,
-  createDate,
-  followed,
-  location,
-  top,
-}) => {
+const HoverProfile = ({ type, feedDetail, myProfile, top }) => {
+  const followResult = myProfile.following.find((it) => it === feedDetail.uid);
+
   return (
     <Wrapper
       variants={mouseon}
@@ -83,17 +77,17 @@ const HoverProfile = ({
         <ProfileImg
           size={"54"}
           type={"active"}
-          url={"/images/userImgs/user123456/profile-photo.jpg"}
+          url={feedDetail.profile.profilePhoto}
           hover={true}
         />
         <Userdesc>
           <UserId
             type={"feed"}
-            userNickname={"bbok"}
-            check={"active"}
+            userNickname={feedDetail.profile.userId}
+            check={feedDetail.profile.badge ? "active" : ""}
             hover={true}
           />
-          <Optional type={"feed"}>이젠 앞자리{location}</Optional>
+          <Optional type={"feed"}>{feedDetail.profile.userName}</Optional>
         </Userdesc>
       </Userinfo>
       <div>
@@ -109,11 +103,11 @@ const HoverProfile = ({
             <Img src={"/images/userImgs/user123456/userdetail_3.jpg"} />
           </ImgBox>
         </PostingPics>
-        <Btns followed={"followed"}>
+        <Btns $followed={followResult ? "followed" : null}>
           <Button
             width={"66.66%"}
             height={"40px"}
-            followed={"followed"}
+            followed={followResult ? "followed" : null}
             type={"positive"}
             text={"메시지 보내기"}
           />

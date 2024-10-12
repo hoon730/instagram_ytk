@@ -90,15 +90,19 @@ const Pager = styled.span`
   }
 `;
 
-const Slide = ({ imgPath }) => {
+const Slide = ({ imgPath, onClick }) => {
   const [visible, setVisible] = useState(0);
   const moveSlide = (num) => {
     setVisible(num + visible);
   };
 
+  const showFeed = () => {
+    onClick();
+  };
+
   return (
     <Wrapper>
-      <Slides $visible={visible} $slideLength={imgPath.length}>
+      <Slides $visible={visible} $slideLength={imgPath.length} onClick={showFeed}>
         {imgPath.map((it, idx) => (
           <SlideItem key={idx}>
             <img src={it} />

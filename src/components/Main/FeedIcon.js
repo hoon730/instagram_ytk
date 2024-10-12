@@ -107,6 +107,7 @@ const FeedIcon = ({ feedDetail, myProfile }) => {
   const [fillBookmark, setFillBookmark] = useState(false);
   const [likes, setLikes] = useState(feedDetail.like);
   const [likeUser, setLikeUser] = useState([]);
+  const [showProfile, setShowProfile] = useState(false);
 
   useEffect(() => {
     setFillHeart(likes.includes(myProfile.uid));
@@ -144,38 +145,46 @@ const FeedIcon = ({ feedDetail, myProfile }) => {
   };
 
   const toggleBookmark = () => {
-    setFillBookmark(!fillBookmark);
+    setFillBookmark((prev) => !prev);
   };
 
   const showLikeUserWithFollow = async () => {
-    try {
-      const likeUserQuery = query(
-        collection(db, "profile"),
-        where("uid", "in", feedDetail.like)
-      );
+    if (!showProfile) {
+      try {
+        const likeUserQuery = query(
+          collection(db, "profile"),
+          where("uid", "in", feedDetail.like)
+        );
 
-      const querySnapshot = await getDocs(likeUserQuery);
+        const querySnapshot = await getDocs(likeUserQuery);
 
-      const likeUserInfo = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          uid: data.uid,
-          userId: data.userId,
-          userName: data.userName,
-          badge: data.badge,
-          profilePhoto: data.profilePhoto,
-          follow: myProfile.following.includes(data.uid) ? 1 : 0,
-        };
-      });
+        const likeUserInfo = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            uid: data.uid,
+            userId: data.userId,
+            userName: data.userName,
+            badge: data.badge,
+            profilePhoto: data.profilePhoto,
+            follow:
+              data.uid === myProfile.uid
+                ? 2
+                : myProfile.following.includes(data.uid)
+                ? 1
+                : 0,
+          };
+        });
 
-      const sortedLikeUserInfo = likeUserInfo.sort(
-        (a, b) => b.follow - a.follow
-      );
+        const sortedLikeUserInfo = likeUserInfo.sort(
+          (a, b) => b.follow - a.follow
+        );
 
-      setLikeUser(sortedLikeUserInfo);
-    } catch (error) {
-      console.error("Error fetching profile data:", error);
+        setLikeUser(sortedLikeUserInfo);
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
     }
+    setShowProfile((prev) => !prev);
   };
 
   return (
@@ -208,7 +217,9 @@ const FeedIcon = ({ feedDetail, myProfile }) => {
             좋아요 {feedDetail.like.length}개
           </strong>
         )}
-        <ViewLikes likeUser={likeUser} />
+        {showProfile ? (
+          <ViewLikes likeUser={likeUser} setShowProfile={setShowProfile} />
+        ) : null}
       </LikeSection>
     </Wrapper>
   );

@@ -57,8 +57,8 @@ const CloseBtn = styled.button`
 `;
 
 const Wrapper = styled.div`
-  ${({ isEditing }) =>
-    isEditing
+  ${({ $isEditing }) =>
+    $isEditing
       ? `width: 52%;
   height: 74%;`
       : `width: 80%;
@@ -73,7 +73,7 @@ const Wrapper = styled.div`
 
     .inner {
       width: 100%;
-      height: ${({ isEditing }) => (isEditing ? "auto" : "100%")};
+      height: ${({ $isEditing }) => ($isEditing ? "auto" : "100%")};
     }
   }
 
@@ -102,8 +102,8 @@ const Inner = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  ${({ isEditing }) =>
-    isEditing
+  ${({ $isEditing }) =>
+    $isEditing
       ? `width: 52%;
   height: 74%;`
       : `width: 80%;
@@ -138,15 +138,15 @@ const Container = styled.div`
 const UserContainer = styled.div`
   width: 100%;
   padding: 20px;
-  border-bottom: ${({ isEditing }) =>
-    isEditing ? "none" : `1px solid ${({ theme }) => theme.borderColor}`};
+  border-bottom: ${({ $isEditing }) =>
+    $isEditing ? "none" : `1px solid ${({ theme }) => theme.borderColor}`};
 `;
 
 const UserBox = styled.div`
   width: 100%;
   display: flex;
   gap: 15px;
-  padding-bottom: ${({ isEditing }) => (isEditing ? "20px" : "5px")};
+  padding-bottom: ${({ $isEditing }) => ($isEditing ? "20px" : "5px")};
 `;
 
 const Userinfo = styled.div`
@@ -292,21 +292,11 @@ const EditedTextArea = styled.textarea`
   }
 `;
 
-const Clickdetail = ({
-  location,
-  createdAt,
-  post,
-  photo,
-  video,
-  userId,
-  id,
-  onClick,
-  UserName,
-  fileType,
-}) => {
+const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
   const commentRef = useRef();
   const bgRef = useRef();
   const [comment, setComment] = useState("");
+  const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
   const hideFeed = () => {
     onClick();
@@ -317,7 +307,7 @@ const Clickdetail = ({
   };
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedPost, setEditedPost] = useState(post);
+  const [editedPost, setEditedPost] = useState(feedDetail.content);
   const [editedPhoto, setEditedPhoto] = useState(null);
 
   const onChange = (e) => {
@@ -328,78 +318,78 @@ const Clickdetail = ({
     setIsEditing(false);
   };
 
-  const onClickSetContent = (e) => {
-    const { files } = e.target;
-    if (files && files.length === 1) setEditedPhoto(files[0]);
-  };
+  // const onClickSetContent = (e) => {
+  //   const { files } = e.target;
+  //   if (files && files.length === 1) setEditedPhoto(files[0]);
+  // };
 
-  const user = auth.currentUser;
-  const onDelete = async () => {
-    const ok = window.confirm("정말로 지금 게시물을 삭제하시겠습니까?");
-    if (!ok || user.uid !== userId) return;
-    try {
-      await deleteDoc(doc(db, `contents`, id));
-      if (photo) {
-        const photoRef = ref(storage, `contents/${user.uid}/${id}`);
-        await deleteObject(photoRef);
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  // const user = auth.currentUser;
+  // const onDelete = async () => {
+  //   const ok = window.confirm("정말로 지금 게시물을 삭제하시겠습니까?");
+  //   if (!ok || user.uid !== feedDetail.u) return;
+  //   try {
+  //     await deleteDoc(doc(db, `contents`, id));
+  //     if (photo) {
+  //       const photoRef = ref(storage, `contents/${user.uid}/${id}`);
+  //       await deleteObject(photoRef);
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
 
-  const onUpDate = async () => {
-    try {
-      if (user?.uid !== userId) return;
+  // const onUpDate = async () => {
+  //   try {
+  //     if (user?.uid !== userId) return;
 
-      const postDoc = await getDoc(doc(db, "contents", id));
+  //     const postDoc = await getDoc(doc(db, "contents", id));
 
-      if (!postDoc.exists()) throw new Error("게시글이 존재하지 않습니다");
-      const postData = postDoc.data();
+  //     if (!postDoc.exists()) throw new Error("게시글이 존재하지 않습니다");
+  //     const postData = postDoc.data();
 
-      if (postData) {
-        if (postData.photo) postData.fileType = "image";
-        if (postData.video) postData.fileType = "video";
-      }
+  //     if (postData) {
+  //       if (postData.photo) postData.fileType = "image";
+  //       if (postData.video) postData.fileType = "video";
+  //     }
 
-      const exsitingfileType = postData?.fileType || null;
+  //     const exsitingfileType = postData?.fileType || null;
 
-      if (editedPhoto) {
-        const newFileType = editedPhoto.type.startsWith("image/")
-          ? "image"
-          : "video";
+  //     if (editedPhoto) {
+  //       const newFileType = editedPhoto.type.startsWith("image/")
+  //         ? "image"
+  //         : "video";
 
-        if (exsitingfileType && exsitingfileType !== newFileType) {
-          alert("동일한 컨텐츠만 업로드가 가능합니다.");
-          return;
-        }
+  //       if (exsitingfileType && exsitingfileType !== newFileType) {
+  //         alert("동일한 컨텐츠만 업로드가 가능합니다.");
+  //         return;
+  //       }
 
-        const locationRef = ref(storage, `contents/${user.uid}/${id}`);
-        const uploadTask = uploadBytesResumable(locationRef, editedPhoto);
-        if (editedPhoto.size >= 5 * 1024 * 1024) {
-          uploadTask.cancel();
-          throw new StorageError(
-            StorageErrorCode.CANCELED,
-            "파일의 크기가 5MB를 초과하였습니다."
-          );
-        }
-        const result = await uploadBytes(locationRef, editedPhoto);
-        const url = await getDownloadURL(result.ref);
-        await updateDoc(doc(db, "contents", id), {
-          post: editedPost,
-          photo: newFileType === "image" ? url : "",
-          video: newFileType === "video" ? url : "",
-          fileType: newFileType,
-        });
-      } else {
-        await updateDoc(doc(db, "contents", id), { post: editedPost });
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsEditing(false);
-    }
-  };
+  //       const locationRef = ref(storage, `contents/${user.uid}/${id}`);
+  //       const uploadTask = uploadBytesResumable(locationRef, editedPhoto);
+  //       if (editedPhoto.size >= 5 * 1024 * 1024) {
+  //         uploadTask.cancel();
+  //         throw new StorageError(
+  //           StorageErrorCode.CANCELED,
+  //           "파일의 크기가 5MB를 초과하였습니다."
+  //         );
+  //       }
+  //       const result = await uploadBytes(locationRef, editedPhoto);
+  //       const url = await getDownloadURL(result.ref);
+  //       await updateDoc(doc(db, "contents", id), {
+  //         post: editedPost,
+  //         photo: newFileType === "image" ? url : "",
+  //         video: newFileType === "video" ? url : "",
+  //         fileType: newFileType,
+  //       });
+  //     } else {
+  //       await updateDoc(doc(db, "contents", id), { post: editedPost });
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //   } finally {
+  //     setIsEditing(false);
+  //   }
+  // };
 
   return (
     <>
@@ -414,92 +404,98 @@ const Clickdetail = ({
           }
         }}
       >
-        <Wrapper isEditing={isEditing}>
-          <Inner className="inner" isEditing={isEditing}>
+        <Wrapper $isEditing={isEditing}>
+          <Inner className="inner" $isEditing={isEditing}>
             {isEditing ? (
               <Title>
                 <Button text={"취소"} onClick={handleCancel} />
                 <span>편집 하기</span>
-                <Button text={"완료"} onClick={onUpDate} />
+                <Button text={"완료"} />
+                {/* <Button text={"완료"} onClick={onUpDate} /> */}
               </Title>
             ) : null}
-            <Contents isEditing={isEditing}>
+            <Contents>
               <Slider className="slider">
-                {
-                  isEditing ? (
-                    <SetContentButton htmlFor="edit-content">
-                      <Icon src="/images/newPostIcon.svg" />
-                      <SetContentInputButton
-                        id="edit-content"
-                        type="file"
-                        accept="video/mpk, video/*, image/*"
-                        onChange={onClickSetContent}
+                {isEditing ? (
+                  <SetContentButton htmlFor="edit-content">
+                    <Icon src="/images/newPostIcon.svg" />
+                    <SetContentInputButton
+                      id="edit-content"
+                      type="file"
+                      accept="video/mpk, video/*, image/*"
+                      // onChange={onClickSetContent}
+                    />
+                  </SetContentButton>
+                ) : (
+                  <>
+                    {feedDetail.type === "reels" ? (
+                      <video
+                        autoPlay
+                        muted
+                        loop
+                        src={""}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
                       />
-                    </SetContentButton>
-                  ) : null
-                  // (
-                  //   <>
-                  //     {fileType === "reels" ? (
-                  //       <video
-                  //         autoPlay
-                  //         muted
-                  //         loop
-                  //         src={""}
-                  //         style={{
-                  //           width: "100%",
-                  //           height: "100%",
-                  //           objectFit: "cover",
-                  //         }}
-                  //       />
-                  //     ) : (
-                  //       <Slide/>
-                  //     )}
-                  //   </>
-                  // )
-                }
+                    ) : (
+                      <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
+                    )}
+                  </>
+                )}
               </Slider>
               <Desc className="desc">
                 <Container>
                   <UserContainer
                     className="user_container"
-                    isEditing={isEditing}
+                    $isEditing={isEditing}
                   >
-                    <UserBox isEditing={isEditing}>
-                      <ProfileImg type={"active"} size={"40"} url={""} />
+                    <UserBox $isEditing={isEditing}>
+                      <ProfileImg
+                        type={"active"}
+                        size={"40"}
+                        url={feedDetail.profile.profilePhoto}
+                        feedDetail={feedDetail}
+                        myProfile={myProfile}
+                      />
                       <Userinfo>
                         <UserId
                           type={"feed"}
-                          userNickname={""}
-                          // check={feedProfile.badge ? "active" : ""}
-                          // createdAt={new Date(feedDetail.createDate)}
+                          userNickname={feedDetail.profile.userId}
+                          check={feedDetail.profile.badge ? "active" : ""}
                           btn={"more"}
-                          // follwed={followResult ? "" : "팔로우"}
-                          onClick={onDelete}
+                          follwed={followResult ? "" : "팔로우"}
+                          // onClick={onDelete}
                           setIsEditing={setIsEditing}
+                          feedDetail={feedDetail}
+                          myProfile={myProfile}
                         />
-                        <Location>{location}</Location>
+                        <Location>{feedDetail.location}</Location>
                       </Userinfo>
                     </UserBox>
                     <UserContents>
-                      {
-                        isEditing ? (
-                          <EditedTextArea
-                            value={editedPost}
-                            placeholder={post}
-                            onChange={onChange}
-                          />
-                        ) : null
-                        // (
-                        //   <>
-                        //     <FeedText />
-                        //   </>
-                        // )
-                      }
+                      {isEditing ? (
+                        <EditedTextArea
+                          value={editedPost}
+                          placeholder={feedDetail.content}
+                          onChange={onChange}
+                        />
+                      ) : (
+                        <>
+                          <FeedText feedDetail={feedDetail} />
+                        </>
+                      )}
                     </UserContents>
                   </UserContainer>
                   {isEditing ? null : (
                     <CommentList className="comment_list">
-                      <CommentItem onClick={onFocus} />
+                      <CommentItem
+                        onClick={onFocus}
+                        feedDetail={feedDetail}
+                        myProfile={myProfile}
+                      />
                     </CommentList>
                   )}
                 </Container>
@@ -536,4 +532,4 @@ const Clickdetail = ({
   );
 };
 
-export default Clickdetail;
+export default ClickFeed;

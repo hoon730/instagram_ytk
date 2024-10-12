@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 const Wrapper = styled(motion.div)`
   width: 380px;
@@ -23,6 +24,17 @@ const Header = styled.div`
   border-bottom: 1px solid var(--light-gray-color);
   margin-bottom: 10px;
   padding-bottom: 20px;
+  position: relative;
+`;
+
+const CloseButton = styled(IoIosCloseCircleOutline)`
+  position: absolute;
+  top: -10px;
+  right: 15px;
+  width: 22px;
+  height: 22px;
+  color: var(--gray-color);
+  cursor: pointer;
 `;
 
 const DescSection = styled.div`
@@ -78,11 +90,16 @@ const Follow = styled.span`
   cursor: pointer;
 `;
 
-const ViewLikes = ({ likeUser }) => {
-  console.log(likeUser);
+const ViewLikes = ({ likeUser, setShowProfile }) => {
+  const close = () => {
+    setShowProfile((prev) => !prev);
+  };
   return (
     <Wrapper>
-      <Header>좋아요</Header>
+      <Header>
+        좋아요
+        <CloseButton onClick={close} />
+      </Header>
       <DescSection>
         {likeUser
           ? likeUser.map((it, idx) => (

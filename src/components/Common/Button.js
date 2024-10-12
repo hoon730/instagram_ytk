@@ -9,7 +9,7 @@ const ButtonItem = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: ${({ followed }) => (followed === "unfollowed" ? "0" : "5px")};
+  gap: ${({ $followed }) => ($followed === "unfollowed" ? "0" : "5px")};
   color: var(--bg-white-color);
   border: none;
   border-radius: var(--border-radius-8);
@@ -34,7 +34,7 @@ const ButtonItem = styled.button`
 `;
 
 const MesseageBtn = styled.span`
-  ${({ followed }) => (followed ? `display: flex` : "display: none")};
+  ${({ $followed }) => ($followed ? `display: flex` : "display: none")};
   justify-content: center;
   align-items: center;
 
@@ -45,10 +45,11 @@ const MesseageBtn = styled.span`
 `;
 
 const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
-  
   const handleOnClick = () => {
     onClick();
   };
+
+  //console.log(followed);
 
   return (
     <ButtonItem
@@ -56,10 +57,10 @@ const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
       height={height}
       fontSize={fontSize}
       type={type}
-      onClick={handleOnClick}
-      followed={followed}
+      onClick={onClick ? handleOnClick : null}
+      $followed={followed}
     >
-      <MesseageBtn followed={followed}>
+      <MesseageBtn $followed={followed}>
         {followed === "followed" ? (
           <IoPaperPlaneOutline />
         ) : followed === "unfollowed" ? (
