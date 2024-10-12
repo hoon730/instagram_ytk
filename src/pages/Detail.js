@@ -13,8 +13,8 @@ const Wrapper = styled.div`
 const Detail = () => {
   return (
     <Wrapper>
-      {/* <MyFeed /> */}
-      <MbDetail />
+      <MyFeed />
+      {/* <MbDetail /> */}
       {/* <Clickdetail /> */}
     </Wrapper>
   );

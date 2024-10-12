@@ -11,6 +11,7 @@ import Search from "./pages/Search";
 import Layout from "./components/Layout";
 import New from "./pages/New";
 import Loading from "./components/Common/Loading";
+import ClickStory from "./components/Story/ClickStory";
 
 import { auth } from "./utils/firebase";
 import Setup from "./pages/Setup";
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: "search",
         element: <Search />,
+      },
+      {
+        path: "clickstory",
+        element: <ClickStory />,
       },
     ],
   },

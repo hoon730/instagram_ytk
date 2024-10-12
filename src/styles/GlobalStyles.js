@@ -94,6 +94,7 @@ const GlobalStyles = createGlobalStyle`
     --font-24: 24px;
     --font-26: 26px;
     --font-28: 28px;
+    --font-30: 30px;
     --font-32: 32px;
     --font-34: 34px;
     --font-46: 46px;
