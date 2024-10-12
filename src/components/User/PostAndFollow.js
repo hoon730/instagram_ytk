@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Follower from "../Detail/Follower";
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,6 +19,10 @@ const NumberingBox = styled.div`
   gap: 4px;
   cursor: pointer;
 
+  &:first-child {
+    cursor: auto;
+  }
+
   span {
     text-align: center;
     font-size: var(--font-14);
@@ -30,21 +35,43 @@ const NumberingBox = styled.div`
   }
 `;
 
-const PostAndFollow = ({ posting, follower, following, padding }) => {
+const PostAndFollow = ({
+  posting,
+  follower,
+  following,
+  padding,
+  myProfile,
+}) => {
+  const [onpenFollower, setOpenFollower] = useState(false);
+  const [onpenFollowing, setOpenFollowing] = useState(false);
+
+  const handleOnFollow = () => {
+    setOpenFollower((prev) => !prev);
+  };
+
+  const handleOnFollowing = () => {
+    setOpenFollowing((prev) => !prev);
+  };
+
   return (
     <Wrapper padding={padding}>
       <NumberingBox>
         <span>{posting}</span>
         <span>게시물</span>
       </NumberingBox>
-      <NumberingBox>
+      <NumberingBox onClick={handleOnFollow}>
         <span>{follower}</span>
         <span>팔로워</span>
       </NumberingBox>
-      <NumberingBox>
+      <NumberingBox onClick={handleOnFollowing}>
         <span>{following}</span>
         <span>팔로잉</span>
       </NumberingBox>
+      {onpenFollower ? (
+        <Follower setOpenFollower={setOpenFollower} />
+      ) : onpenFollowing ? (
+        <Follower setOpenFollowing={setOpenFollowing} />
+      ) : null}
     </Wrapper>
   );
 };

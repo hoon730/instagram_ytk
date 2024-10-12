@@ -12,7 +12,6 @@ import {
   getDocs,
   limit,
   onSnapshot,
-  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -48,6 +47,9 @@ const Title = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  & button:first-child {
+    color: ${({ theme }) => theme.nonActiveBtnColor};
+  }
 `;
 
 const Text = styled.h3`
@@ -68,13 +70,14 @@ const EditIntro = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 
 const PicBox = styled.div`
   width: 100px;
   height: 100px;
   position: relative;
+  margin-bottom: 10px;
 `;
 
 const Pic = styled.img`
@@ -96,6 +99,7 @@ const ChangePicBtn = styled.label`
   position: absolute;
   bottom: 0;
   right: 0;
+  cursor: pointer;
 
   svg {
     font-size: var(--font-18);
@@ -109,12 +113,13 @@ const ChangePicInput = styled.input`
 const UserNicknam = styled.div`
   font-size: var(--font-size-24);
   font-weight: var(--font-bold);
+  margin-bottom: 10px;
 `;
 const UserName = styled.div`
   font-size: var(--font-size-16);
 `;
 
-const Setup = ({ onClick }) => {
+const Setup = ({ onClick, myProfile }) => {
   const containerRef = useRef();
   const user = auth.currentUser;
   const [editProfile, setEditProfile] = useState(
@@ -127,7 +132,7 @@ const Setup = ({ onClick }) => {
   const [intro, setIntro] = useState("");
   const [link, setLink] = useState("");
 
-  const [myProfile, setMyProfile] = useState(null);
+  const [onProfile, setOnProfile] = useState(null);
   const [profile, setProfile] = useState({});
   const [userUid, setUserUid] = useState(null);
   let profileUnsubscribe = null;
@@ -148,7 +153,7 @@ const Setup = ({ onClick }) => {
 
           if (!profileSnapshot.empty) {
             const profileData = profileSnapshot.docs[0].data();
-            setMyProfile(profileData);
+            setOnProfile(profileData);
 
             if (profileUnsubscribe) {
               profileUnsubscribe();
@@ -263,7 +268,13 @@ const Setup = ({ onClick }) => {
             <ChangePicBtn htmlFor="file">
               <LuCamera />
             </ChangePicBtn>
-            {editProfile ? <Pic src={editProfile} /> : <Pic />}
+            {editProfile ? (
+              <Pic src={editProfile} />
+            ) : myProfile ? (
+              <Pic src={myProfile?.profilePhoto} />
+            ) : (
+              <Pic />
+            )}
             <ChangePicInput
               type="file"
               id="file"
@@ -271,8 +282,8 @@ const Setup = ({ onClick }) => {
               onChange={editProfileChange}
             />
           </PicBox>
-          <UserNicknam>bbok</UserNicknam>
-          <UserName>bbo</UserName>
+          <UserNicknam>{myProfile?.userId}</UserNicknam>
+          <UserName>{myProfile?.userName}</UserName>
         </EditIntro>
         <EditDesc
           handleUserName={handleEditUserName}
@@ -281,6 +292,7 @@ const Setup = ({ onClick }) => {
           intro={intro}
           handleLink={handleLink}
           link={link}
+          myProfile={myProfile}
         ></EditDesc>
         <EditBtns></EditBtns>
       </Wrapper>

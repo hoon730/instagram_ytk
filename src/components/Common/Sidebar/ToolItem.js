@@ -57,9 +57,6 @@ const ToolItem = ({ name, iconCode, id, clickEvent }) => {
   const onClick = () => {
     if (id === 3) changeDark();
     if (name === "heart" || name === "heartFill") clickEvent();
-  };
-
-  const toggleSetting = () => {
     if (id === 1) {
       setSetting((prev) => !prev);
     }
@@ -69,13 +66,12 @@ const ToolItem = ({ name, iconCode, id, clickEvent }) => {
     <ToolBox
       onClick={() => {
         onClick();
-        toggleSetting();
       }}
       id={id}
       className={darkMode && id === 3 ? "dark" : name}
     >
       {darkMode && id === 3 ? <FaMoon /> : iconCode}
-      {setting ? <Setting /> : null}
+      {setting ? <Setting setSetting={setSetting} /> : null}
     </ToolBox>
   );
 };

@@ -29,13 +29,8 @@ const Wrapper = styled.div`
   /* overflow-y: scroll; */
 `;
 
-const TimeLine = () => {
-  const [isClicked, setIsClicked] = useState(false);
+const TimeLine = ({ myFeeds, myProfile }) => {
   const [posts, setPosts] = useState([]);
-
-  const onClick = () => {
-    setIsClicked((current) => !current);
-  };
 
   useEffect(() => {
     let unsubscribe;
@@ -45,21 +40,19 @@ const TimeLine = () => {
         orderBy("createdAt", "desc"),
         limit(25)
       );
-      unsubscribe = await onSnapshot(postQuery, (snapshot) => {
-        const posts = snapshot.docs.map((doc) => {
-          const { createdAt, photo, video, post, userId, userName } =
-            doc.data();
+      unsubscribe = onSnapshot(postQuery, (snapshot) => {
+        const fetchedPosts = snapshot.docs.map((doc) => {
+          const { content, createdAt, media, userId, uid } = doc.data();
           return {
             id: doc.id,
+            content,
             createdAt,
-            photo,
-            video,
-            post,
+            media,
             userId,
-            userName,
+            uid,
           };
         });
-        setPosts(posts);
+        setPosts(fetchedPosts); // posts 상태 업데이트
       });
     };
     fetchPosts();
@@ -71,8 +64,12 @@ const TimeLine = () => {
   return (
     <Wrapper>
       {posts.map((post) => (
-        <Post key={post.id} {...post} />
+        <Post key={post.id} post={post} /> // post 프롭스로 전달
       ))}
+      {myProfile &&
+        myFeeds.map((myFeed, idx) => (
+          <Post key={idx} myFeed={myFeed} myProfile={myProfile} />
+        ))}
     </Wrapper>
   );
 };

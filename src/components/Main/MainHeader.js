@@ -6,6 +6,7 @@ import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import { GoHeart, GoHeartFill } from "react-icons/go";
 import Notification from "./Notification";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
@@ -84,6 +85,7 @@ const UserName = styled.div`
 
 const MainHeader = () => {
   const [heart, setHeart] = useState(false);
+  const navigate = useNavigate();
 
   const heartChange = () => {
     setHeart((prev) => !prev);
@@ -103,7 +105,7 @@ const MainHeader = () => {
           />
           {heart ? <Notification /> : null}
         </NotificationArea>
-        <Profile>
+        <Profile onClick={() => navigate("/detail")}>
           <UserProfile>
             <ProfileImg
               url={`${process.env.PUBLIC_URL}/images/userImgs/user123456/profile-photo.jpg`}

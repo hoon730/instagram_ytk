@@ -36,23 +36,13 @@ export const menuData = [
   },
   {
     id: 2,
-    name: "릴스",
-    iconCode: <BiMoviePlay />,
-  },
-  {
-    id: 3,
     name: "메시지",
     iconCode: <IoPaperPlaneOutline />,
   },
   {
-    id: 4,
+    id: 3,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
-  },
-  {
-    id: 5,
-    name: "프로필",
-    path: "/detail",
   },
 ];
 

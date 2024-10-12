@@ -5,6 +5,20 @@ import { RxMagnifyingGlass } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoCloseOutline } from "react-icons/io5";
 
+const BgFilter = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 2;
+`;
+
 const Wrapper = styled.div`
   display: ${({ display }) => (display ? "block" : "none")};
   position: fixed;
@@ -16,6 +30,7 @@ const Wrapper = styled.div`
   background: var(--bg-white-color);
   border-radius: var(--border-radius-12);
   box-shadow: var(--box-shadow);
+  z-index: 3;
 
   @media screen and (max-width: 430px) {
     width: 82%;
@@ -122,7 +137,7 @@ const itemArray = [
 
 const SearchList = styled.div``;
 
-const Follower = () => {
+const Follower = ({ setOpenFollower, setOpenFollowing }) => {
   const [isClose, setIsClose] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [getUserNickName, setGetUserNickName] = useState("");
@@ -148,6 +163,8 @@ const Follower = () => {
     setGetUserNickName("");
     setIsActive(false);
   };
+
+  console.log()
 
   return (
     <Wrapper display={isClose}>

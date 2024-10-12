@@ -37,18 +37,19 @@ const ReplyBtn = styled.button`
   font-weight: var(--font-bold);
 `;
 
-const CommentItem = ({ onClick, myProfile, feedDetail }) => {
+const CommentItem = ({ onClick, myProfile, feedDetail, myFeed }) => {
   const focusingInput = () => {
     onClick();
   };
 
-  console.log(feedDetail, myProfile);
+  // console.log(feedDetail);
+
   return (
     <div>
       <UserBox>
         <ProfileImg
           size={"40"}
-          url={feedDetail.profile.profilePhoto}
+          // url={feedDetail.profile.profilePhoto}
           feedDetail={feedDetail}
           myProfile={myProfile}
         />

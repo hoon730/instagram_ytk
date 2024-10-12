@@ -32,6 +32,7 @@ const Wrapper = styled.div`
 
 const MyFeed = () => {
   const [myProfile, setMyProfile] = useState(null);
+  const [myFeeds, setMyFeed] = useState([]);
   const [postsWithProfiles, setPostsWithProfiles] = useState([]);
 
   useEffect(() => {
@@ -50,16 +51,38 @@ const MyFeed = () => {
           setMyProfile(profileData);
         }
       };
+
       getMyProfile(userUid);
     }
   }, []);
+
+  useEffect(() => {
+    if (myProfile) {
+      const getmyFeed = async (myProfile) => {
+        const feedsQuery = query(
+          collection(db, "feed"),
+          where("uid", "==", myProfile.uid),
+          orderBy("createdAt", "desc"),
+          limit(15)
+        );
+
+        const myFeedSnapshot = await getDocs(feedsQuery);
+
+        if (!myFeedSnapshot.empty) {
+          const myFeedData = myFeedSnapshot.docs.map((doc) => doc.data());
+          setMyFeed((prevFeed) => [...prevFeed, ...myFeedData]);
+        }
+      };
+      getmyFeed(myProfile);
+    }
+  }, [myProfile]);
 
   useEffect(() => {
     let postsUnsubscribe = null;
 
     if (myProfile && myProfile.following) {
       const getPosts = (following) => {
-        const postQuery = query(
+        const postsQuery = query(
           collection(db, "feed"),
           where("uid", "in", following),
           where("type", "!=", null),
@@ -67,13 +90,16 @@ const MyFeed = () => {
           limit(5)
         );
 
-        postsUnsubscribe = onSnapshot(postQuery, async (snapshot) => {
+        // 실시간 구독
+        postsUnsubscribe = onSnapshot(postsQuery, async (snapshot) => {
           const postDocs = snapshot.docs;
 
+          // posts 배열에 포함된 uid와 profile의 uid를 맞춰 profile 정보도 가져오기
           const posts = await Promise.all(
             postDocs.map(async (doc) => {
               const postData = doc.data();
 
+              // 각 post의 uid에 맞는 profile 가져오기
               const profileQuery = query(
                 collection(db, "profile"),
                 where("uid", "==", postData.uid),
@@ -89,32 +115,33 @@ const MyFeed = () => {
               return {
                 id: doc.id,
                 ...postData,
-                profile: profileData,
+                profile: profileData, // profile 데이터를 post에 추가
               };
             })
           );
-          setPostsWithProfiles(posts);
+
+          setPostsWithProfiles(posts); // 프로필과 결합된 posts 배열 설정
         });
       };
+
       getPosts(myProfile.following);
     }
 
+    // 컴포넌트 언마운트 시 구독 해제
     return () => {
       if (postsUnsubscribe) {
         postsUnsubscribe();
       }
     };
-  }, [myProfile]);
-
-  console.log(myProfile);
+  }, [myProfile]); // myProfile이 있을 때만 실행
 
   return (
     <Wrapper>
-      <MyPic />
-      <MyProfile />
+      <MyPic myProfile={myProfile} myFeeds={myFeeds} />
+      <MyProfile myProfile={myProfile} />
       <MyHighlight />
       <MyFeedTabBar />
-      <TimeLine />
+      <TimeLine myFeeds={myFeeds} myProfile={myProfile} />
     </Wrapper>
   );
 };

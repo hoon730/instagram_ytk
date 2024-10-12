@@ -1,19 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { IPost } from "./TimeLine";
-import { auth, db, storage } from "../../utils/firebase";
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import {
-  deleteObject,
-  ref,
-  getDownloadURL,
-  StorageError,
-  StorageErrorCode,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
-
-import ClickFeed from "./ClickFeed";
+import ClickMyFeed from "./ClickMyFeed";
 
 const Wrapper = styled.div`
   width: 305px;
@@ -34,7 +21,7 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Post = ({ }) => {
+const Post = ({ myFeed, myProfile, post }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const showFeed = () => {
@@ -43,13 +30,36 @@ const Post = ({ }) => {
 
   return (
     <>
-      <Wrapper onClick={showFeed}>
-       
-      </Wrapper>
+      {myFeed ? (
+        <Wrapper onClick={showFeed}>
+          {myFeed.type === "img" ? (
+            <Img src={myFeed.imgPath} />
+          ) : (
+            <Video src={myFeed.imgPath} muted />
+          )}
+        </Wrapper>
+      ) : (
+        // post와 post.media가 존재하는지 확인 후 처리
+        <Wrapper onClick={showFeed}>
+          {post && post.media ? (
+            post.media.map((item, idx) =>
+              item.type === "img" ? (
+                <Img key={idx} src={item.imgPath} />
+              ) : (
+                <Video key={idx} src={item.imgPath} muted />
+              )
+            )
+          ) : (
+            <p>미디어가 없습니다</p> // post나 media가 없는 경우 처리
+          )}
+        </Wrapper>
+      )}
       {isClicked ? (
-        <ClickFeed
+        <ClickMyFeed
+          myFeed={myFeed}
+          myProfile={myProfile}
+          post={post}
           onClick={showFeed}
-         
         />
       ) : null}
     </>

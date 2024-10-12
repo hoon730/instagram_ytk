@@ -110,11 +110,6 @@ const MenuItem = styled.div`
     color: var(--gray-color);
   }
 
-  &:last-child {
-    padding-left: 22px;
-    gap: 10px;
-  }
-
   @media screen and (max-width: 1024px) {
     width: 55px;
     height: 55px;

@@ -55,31 +55,27 @@ const MyIntro = styled.div`
   font-size: var(--font-size-16);
 `;
 
-const MyProfile = () => {
+const MyProfile = ({ myProfile }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
-    setIsOpen((current) => !current)
-  }
+    setIsOpen((current) => !current);
+  };
 
   return (
     <Wrapper>
       <MyProfileBox>
         <NameBox>
           <MyName>
-            <p>bb_bok</p>
-            <span>복</span>
+            <p>{myProfile?.userId}</p>
+            <span>{myProfile?.userName}</span>
           </MyName>
           <EditBtn onClick={onClick}>
-            {isOpen ? <Setup onClick={onClick} /> : null}
+            {isOpen ? <Setup onClick={onClick} myProfile={myProfile} /> : null}
             <FaGear />
           </EditBtn>
         </NameBox>
-        <MyIntro>
-          ⋆｡˚ ☁︎ ˚｡⋆｡
-          <br />
-          <br />
-        </MyIntro>
+        <MyIntro>{myProfile?.introduction}</MyIntro>
       </MyProfileBox>
     </Wrapper>
   );
