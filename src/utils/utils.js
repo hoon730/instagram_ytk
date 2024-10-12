@@ -1,7 +1,6 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { FaRegCompass } from "react-icons/fa";
 import { BiMoviePlay } from "react-icons/bi";
-import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
@@ -137,7 +136,7 @@ export const click = {
 export const scale = {
   initial: {
     opacity: 0,
-    scale: 0.7,
+    scale: 0.8,
   },
   visible: {
     opacity: 1,
@@ -145,7 +144,7 @@ export const scale = {
   },
   exits: {
     opacity: 0,
-    scale: 0.7,
+    scale: 0.8,
     transition: {
       duration: 0.3,
     },

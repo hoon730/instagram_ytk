@@ -10,7 +10,6 @@ import {
   collection,
   query,
   limit,
-  onSnapshot,
   orderBy,
   where,
   getDocs,
@@ -76,64 +75,6 @@ const MyFeed = () => {
       getmyFeed(myProfile);
     }
   }, [myProfile]);
-
-  useEffect(() => {
-    let postsUnsubscribe = null;
-
-    if (myProfile && myProfile.following) {
-      const getPosts = (following) => {
-        const postsQuery = query(
-          collection(db, "feed"),
-          where("uid", "in", following),
-          where("type", "!=", null),
-          orderBy("createdAt", "desc"),
-          limit(5)
-        );
-
-        // 실시간 구독
-        postsUnsubscribe = onSnapshot(postsQuery, async (snapshot) => {
-          const postDocs = snapshot.docs;
-
-          // posts 배열에 포함된 uid와 profile의 uid를 맞춰 profile 정보도 가져오기
-          const posts = await Promise.all(
-            postDocs.map(async (doc) => {
-              const postData = doc.data();
-
-              // 각 post의 uid에 맞는 profile 가져오기
-              const profileQuery = query(
-                collection(db, "profile"),
-                where("uid", "==", postData.uid),
-                limit(1)
-              );
-              const profileSnapshot = await getDocs(profileQuery);
-
-              let profileData = {};
-              if (!profileSnapshot.empty) {
-                profileData = profileSnapshot.docs[0].data();
-              }
-
-              return {
-                id: doc.id,
-                ...postData,
-                profile: profileData, // profile 데이터를 post에 추가
-              };
-            })
-          );
-
-          setPostsWithProfiles(posts); // 프로필과 결합된 posts 배열 설정
-        });
-      };
-
-      getPosts(myProfile.following);
-    }
-
-    // 컴포넌트 언마운트 시 구독 해제
-    return () => {
-      if (postsUnsubscribe) {
-        postsUnsubscribe();
-      }
-    };
-  }, [myProfile]); // myProfile이 있을 때만 실행
 
   return (
     <Wrapper>

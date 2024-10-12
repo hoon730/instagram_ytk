@@ -54,12 +54,17 @@ const ToolItem = ({ name, iconCode, id, clickEvent }) => {
   const { darkMode } = useContext(ThemeContext);
   const { changeDark } = useContext(ThemeContext);
 
+  const threadUrl = "https://www.threads.net/";
+
   const onClick = () => {
-    if (id === 3) changeDark();
-    if (name === "heart" || name === "heartFill") clickEvent();
     if (id === 1) {
       setSetting((prev) => !prev);
     }
+    if (id === 2) {
+      window.open(threadUrl);
+    }
+    if (id === 3) changeDark();
+    if (name === "heart" || name === "heartFill") clickEvent();
   };
 
   return (

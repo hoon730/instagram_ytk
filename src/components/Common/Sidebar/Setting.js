@@ -2,8 +2,7 @@ import { motion } from "framer-motion";
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import MoreItem from "../More/MoreItem";
-import { click } from "../../../utils/utils";
-import { useNavigate } from "react-router-dom";
+import { scale } from "../../../utils/utils";
 
 const MoreList = styled(motion.div)`
   position: absolute;
@@ -28,7 +27,7 @@ const Setting = ({ setSetting }) => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (moreListRef.current !== event.target) {
+      if (moreListRef.current && !moreListRef.current.contains(event.target)) {
         setSetting((prev) => !prev);
       }
     };
@@ -41,7 +40,7 @@ const Setting = ({ setSetting }) => {
   return (
     <MoreList
       ref={moreListRef}
-      variants={click}
+      variants={scale}
       initial="initial"
       animate="visible"
       exit="exits"

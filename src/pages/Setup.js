@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../components/Common/Button";
 import EditDesc from "../components/Edit/EditDesc";
 import EditBtns from "../components/Edit/EditBtns";
+import { click, scale } from "../utils/utils";
 
 import { auth, storage, db } from "../utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -17,8 +18,9 @@ import {
 } from "firebase/firestore";
 
 import { LuCamera } from "react-icons/lu";
+import { motion } from "framer-motion";
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -32,7 +34,7 @@ const Container = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 
-const Wrapper = styled.form`
+const Wrapper = styled(motion.form)`
   padding: 0 20px;
   width: 600px;
   height: 610px;
@@ -132,78 +134,6 @@ const Setup = ({ onClick, myProfile }) => {
   const [intro, setIntro] = useState("");
   const [link, setLink] = useState("");
 
-  const [onProfile, setOnProfile] = useState(null);
-  const [profile, setProfile] = useState({});
-  const [userUid, setUserUid] = useState(null);
-  let profileUnsubscribe = null;
-
-  useEffect(() => {
-    const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setUserUid(user.uid);
-
-        try {
-          const profileQuery = query(
-            collection(db, "profile"),
-            where("uid", "==", user.uid),
-            limit(1)
-          );
-
-          const profileSnapshot = await getDocs(profileQuery);
-
-          if (!profileSnapshot.empty) {
-            const profileData = profileSnapshot.docs[0].data();
-            setOnProfile(profileData);
-
-            if (profileUnsubscribe) {
-              profileUnsubscribe();
-            }
-
-            profileUnsubscribe = onSnapshot(profileQuery, (snapshot) => {
-              const profile = snapshot.docs.map((doc) => {
-                const {
-                  userId,
-                  userName,
-                  profilePhoto,
-                  introduction,
-                  website,
-                  uid,
-                } = doc.data();
-                return {
-                  id: doc.id,
-                  userId,
-                  userName,
-                  profilePhoto,
-                  introduction,
-                  website,
-                  uid,
-                };
-              });
-              setProfile(profile);
-            });
-          } else {
-            console.error("there is no profile matched with user");
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      } else {
-        setUserUid(null);
-        setProfile({});
-      }
-    });
-
-    return () => {
-      if (unsubscribeAuth) {
-        unsubscribeAuth();
-      }
-
-      if (profileUnsubscribe) {
-        profileUnsubscribe();
-      }
-    };
-  }, []);
-
   const hideSetup = () => {
     onClick();
   };
@@ -250,6 +180,10 @@ const Setup = ({ onClick, myProfile }) => {
 
   return (
     <Container
+      variants={click}
+      initial="initial"
+      animate="visible"
+      exit="exits"
       ref={containerRef}
       onClick={(e) => {
         if (!containerRef.current.contains(e.target)) {
@@ -257,7 +191,13 @@ const Setup = ({ onClick, myProfile }) => {
         }
       }}
     >
-      <Wrapper onClick={(e) => e.stopPropagation()}>
+      <Wrapper
+        variants={scale}
+        initial="initial"
+        animate="visible"
+        exit="exits"
+        onClick={(e) => e.stopPropagation()}
+      >
         <Title>
           <Button text={"취소"} onClick={onClick} />
           <Text>프로필</Text>

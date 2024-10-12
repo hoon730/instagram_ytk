@@ -288,10 +288,8 @@ const New = ({ setOpenNew }) => {
             storage,
             `contents/${user.uid}/${docRef.id}/${item.name}`
           );
-          console.log(`Uploading file: ${item.name}`); // 파일 이름 로그 출력
           const result = await uploadBytes(locationRef, item);
           const url = await getDownloadURL(result.ref);
-          console.log(`File uploaded. URL: ${url}`); // 업로드된 파일의 URL 로그 출력
           const fileType = item.type;
 
           if (fileType.startsWith("image/")) {
@@ -319,7 +317,7 @@ const New = ({ setOpenNew }) => {
       setMedia([]);
       setOpenNew(false);
     } catch (e) {
-      console.error("Error uploading files: ", e);
+      console.error(e);
     } finally {
       setIsLoading(false);
     }

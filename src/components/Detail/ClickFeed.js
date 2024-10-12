@@ -6,6 +6,7 @@ import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import CommentItem from "./CommentItem";
 import FeedText from "../Main/FeedText";
+import { click } from "../../utils/utils";
 
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoHeartOutline } from "react-icons/io5";
@@ -14,8 +15,9 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 
 import { db } from "../../utils/firebase";
 import { collection, limit, query, where, getDocs } from "firebase/firestore";
+import { motion } from "framer-motion";
 
-const BgWrapper = styled.div`
+const BgWrapper = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
@@ -40,7 +42,7 @@ const CloseBtn = styled.button`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   ${({ isEditing }) =>
     isEditing
       ? `width: 52%;
@@ -327,6 +329,10 @@ const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
             <IoIosCloseCircle />
           </CloseBtn>
           <BgWrapper
+            variants={click}
+            initial="initial"
+            animate="visible"
+            exit="exits"
             ref={bgRef}
             onClick={(e) => {
               if (e.target === bgRef.current) {
@@ -334,7 +340,12 @@ const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
               }
             }}
           >
-            <Wrapper>
+            <Wrapper
+              variants={click}
+              initial="initial"
+              animate="visible"
+              exit="exits"
+            >
               <Inner className="inner">
                 <Contents>
                   <Slider className="slider">

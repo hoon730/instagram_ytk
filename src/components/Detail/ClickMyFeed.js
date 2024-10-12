@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import { getFormattedDate } from "../../utils/utils";
 import styled from "styled-components";
 import Slide from "../Main/Slide";
 import ProfileImg from "../Profile/ProfileImg";
@@ -7,6 +6,7 @@ import UserId from "../User/UserId";
 import CommentItem from "./CommentItem";
 import Button from "../Common/Button";
 import FeedText from "../Main/FeedText";
+import { click } from "../../utils/utils";
 
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoHeartOutline } from "react-icons/io5";
@@ -34,8 +34,9 @@ import {
   uploadBytes,
   uploadBytesResumable,
 } from "firebase/storage";
+import { motion } from "framer-motion";
 
-const BgWrapper = styled.div`
+const BgWrapper = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
@@ -60,7 +61,7 @@ const CloseBtn = styled.button`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   ${({ $isEditing }) =>
     $isEditing
       ? `width: 52%;
@@ -435,6 +436,10 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
             <IoIosCloseCircle />
           </CloseBtn>
           <BgWrapper
+            variants={click}
+            initial="initial"
+            animate="visible"
+            exit="exits"
             ref={bgRef}
             onClick={(e) => {
               if (e.target === bgRef.current) {
@@ -442,7 +447,13 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
               }
             }}
           >
-            <Wrapper $isEditing={isEditing}>
+            <Wrapper
+              variants={click}
+              initial="initial"
+              animate="visible"
+              exit="exits"
+              $isEditing={isEditing}
+            >
               <Inner className="inner" $isEditing={isEditing}>
                 {isEditing ? (
                   <Title>
