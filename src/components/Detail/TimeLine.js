@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Post from "./Post";
+
 import {
   collection,
+  query,
   limit,
   onSnapshot,
   orderBy,
-  query,
-  Unsubscribe,
 } from "firebase/firestore";
-import styled from "styled-components";
 import { db } from "../../utils/firebase";
-import Post from "./Post";
 
 export const IPost = {
   id: String,
@@ -24,12 +24,12 @@ export const IPost = {
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 5px;
+  margin-bottom: 5px;
   /* overflow-y: scroll; */
 `;
 
-const TimeLine = () => {
+const TimeLine = ({ myFeeds, myProfile }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -40,21 +40,19 @@ const TimeLine = () => {
         orderBy("createdAt", "desc"),
         limit(25)
       );
-      unsubscribe = await onSnapshot(postQuery, (snapshot) => {
-        const posts = snapshot.docs.map((doc) => {
-          const { createdAt, photo, video, post, userId, userName } =
-            doc.data();
+      unsubscribe = onSnapshot(postQuery, (snapshot) => {
+        const fetchedPosts = snapshot.docs.map((doc) => {
+          const { content, createdAt, media, userId, uid } = doc.data();
           return {
             id: doc.id,
+            content,
             createdAt,
-            photo,
-            video,
-            post,
+            media,
             userId,
-            userName,
+            uid,
           };
         });
-        setPosts(posts);
+        setPosts(fetchedPosts); // posts 상태 업데이트
       });
     };
     fetchPosts();
@@ -66,8 +64,12 @@ const TimeLine = () => {
   return (
     <Wrapper>
       {posts.map((post) => (
-        <Post key={post.id} {...post} />
+        <Post key={post.id} post={post} /> // post 프롭스로 전달
       ))}
+      {myProfile &&
+        myFeeds.map((myFeed, idx) => (
+          <Post key={idx} myFeed={myFeed} myProfile={myProfile} />
+        ))}
     </Wrapper>
   );
 };

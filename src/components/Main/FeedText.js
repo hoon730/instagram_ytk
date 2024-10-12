@@ -64,8 +64,13 @@ const HashTag = styled.span`
   }
 `;
 
-const FeedText = ({ feedDetail }) => {
-  const lines = feedDetail.content.split("\n");
+const FeedText = ({ feedDetail, myFeed, post }) => {
+  const lines = feedDetail
+    ? feedDetail.content.split("\n")
+    : myFeed
+    ? myFeed.content.split("\n")
+    : post.content.split("\n");
+
   const [isEllipsed, setIsEllipsed] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const commentRef = useRef(null);

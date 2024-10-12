@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../components/Common/Button";
 import EditDesc from "../components/Edit/EditDesc";
 import EditBtns from "../components/Edit/EditBtns";
+import { click, scale } from "../utils/utils";
 
 import { auth, storage, db } from "../utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
@@ -12,14 +13,14 @@ import {
   getDocs,
   limit,
   onSnapshot,
-  orderBy,
   query,
   where,
 } from "firebase/firestore";
 
 import { LuCamera } from "react-icons/lu";
+import { motion } from "framer-motion";
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -33,7 +34,7 @@ const Container = styled.div`
   background: rgba(0, 0, 0, 0.5);
 `;
 
-const Wrapper = styled.form`
+const Wrapper = styled(motion.form)`
   padding: 0 20px;
   width: 600px;
   height: 610px;
@@ -48,6 +49,9 @@ const Title = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  & button:first-child {
+    color: ${({ theme }) => theme.nonActiveBtnColor};
+  }
 `;
 
 const Text = styled.h3`
@@ -68,13 +72,14 @@ const EditIntro = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 
 const PicBox = styled.div`
   width: 100px;
   height: 100px;
   position: relative;
+  margin-bottom: 10px;
 `;
 
 const Pic = styled.img`
@@ -96,6 +101,7 @@ const ChangePicBtn = styled.label`
   position: absolute;
   bottom: 0;
   right: 0;
+  cursor: pointer;
 
   svg {
     font-size: var(--font-18);
@@ -109,12 +115,13 @@ const ChangePicInput = styled.input`
 const UserNicknam = styled.div`
   font-size: var(--font-size-24);
   font-weight: var(--font-bold);
+  margin-bottom: 10px;
 `;
 const UserName = styled.div`
   font-size: var(--font-size-16);
 `;
 
-const Setup = ({ onClick }) => {
+const Setup = ({ onClick, myProfile }) => {
   const containerRef = useRef();
   const user = auth.currentUser;
   const [editProfile, setEditProfile] = useState(
@@ -126,78 +133,6 @@ const Setup = ({ onClick }) => {
   );
   const [intro, setIntro] = useState("");
   const [link, setLink] = useState("");
-
-  const [myProfile, setMyProfile] = useState(null);
-  const [profile, setProfile] = useState({});
-  const [userUid, setUserUid] = useState(null);
-  let profileUnsubscribe = null;
-
-  useEffect(() => {
-    const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        setUserUid(user.uid);
-
-        try {
-          const profileQuery = query(
-            collection(db, "profile"),
-            where("uid", "==", user.uid),
-            limit(1)
-          );
-
-          const profileSnapshot = await getDocs(profileQuery);
-
-          if (!profileSnapshot.empty) {
-            const profileData = profileSnapshot.docs[0].data();
-            setMyProfile(profileData);
-
-            if (profileUnsubscribe) {
-              profileUnsubscribe();
-            }
-
-            profileUnsubscribe = onSnapshot(profileQuery, (snapshot) => {
-              const profile = snapshot.docs.map((doc) => {
-                const {
-                  userId,
-                  userName,
-                  profilePhoto,
-                  introduction,
-                  website,
-                  uid,
-                } = doc.data();
-                return {
-                  id: doc.id,
-                  userId,
-                  userName,
-                  profilePhoto,
-                  introduction,
-                  website,
-                  uid,
-                };
-              });
-              setProfile(profile);
-            });
-          } else {
-            console.error("there is no profile matched with user");
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      } else {
-        setUserUid(null);
-        setProfile({});
-      }
-    });
-
-    return () => {
-      if (unsubscribeAuth) {
-        unsubscribeAuth();
-      }
-
-      if (profileUnsubscribe) {
-        profileUnsubscribe();
-      }
-    };
-  }, []);
 
   const hideSetup = () => {
     onClick();
@@ -245,6 +180,10 @@ const Setup = ({ onClick }) => {
 
   return (
     <Container
+      variants={click}
+      initial="initial"
+      animate="visible"
+      exit="exits"
       ref={containerRef}
       onClick={(e) => {
         if (!containerRef.current.contains(e.target)) {
@@ -252,7 +191,13 @@ const Setup = ({ onClick }) => {
         }
       }}
     >
-      <Wrapper onClick={(e) => e.stopPropagation()}>
+      <Wrapper
+        variants={scale}
+        initial="initial"
+        animate="visible"
+        exit="exits"
+        onClick={(e) => e.stopPropagation()}
+      >
         <Title>
           <Button text={"취소"} onClick={onClick} />
           <Text>프로필</Text>
@@ -263,8 +208,13 @@ const Setup = ({ onClick }) => {
             <ChangePicBtn htmlFor="file">
               <LuCamera />
             </ChangePicBtn>
-            {editProfile ? <Pic src={editProfile} /> : <Pic />}
-            {/* <Pic /> */}
+            {editProfile ? (
+              <Pic src={editProfile} />
+            ) : myProfile ? (
+              <Pic src={myProfile?.profilePhoto} />
+            ) : (
+              <Pic />
+            )}
             <ChangePicInput
               type="file"
               id="file"
@@ -272,8 +222,8 @@ const Setup = ({ onClick }) => {
               onChange={editProfileChange}
             />
           </PicBox>
-          <UserNicknam>bbok</UserNicknam>
-          <UserName>bbo</UserName>
+          <UserNicknam>{myProfile?.userId}</UserNicknam>
+          <UserName>{myProfile?.userName}</UserName>
         </EditIntro>
         <EditDesc
           handleUserName={handleEditUserName}
@@ -282,6 +232,7 @@ const Setup = ({ onClick }) => {
           intro={intro}
           handleLink={handleLink}
           link={link}
+          myProfile={myProfile}
         ></EditDesc>
         <EditBtns></EditBtns>
       </Wrapper>

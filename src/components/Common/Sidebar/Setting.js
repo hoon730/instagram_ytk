@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import MoreItem from "../More/MoreItem";
-import { click } from "../../../utils/utils";
-import { useNavigate } from "react-router-dom";
+import { scale } from "../../../utils/utils";
 
 const MoreList = styled(motion.div)`
   position: absolute;
@@ -23,9 +22,29 @@ const MoreList = styled(motion.div)`
   }
 `;
 
-const Setting = () => {
+const Setting = ({ setSetting }) => {
+  const moreListRef = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (moreListRef.current && !moreListRef.current.contains(event.target)) {
+        setSetting((prev) => !prev);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setSetting]);
+
   return (
-    <MoreList variants={click} initial="initial" animate="visible" exit="exits">
+    <MoreList
+      ref={moreListRef}
+      variants={scale}
+      initial="initial"
+      animate="visible"
+      exit="exits"
+    >
       <MoreItem text={"계정 전환"} padding={"10px"} />
       <MoreItem text={"로그아웃"} padding={"10px"} last={"last"} />
     </MoreList>
