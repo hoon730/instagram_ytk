@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   GoHeart,
@@ -10,6 +10,8 @@ import {
   IoPaperPlaneOutline,
   IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
+import { auth, db } from "../../utils/firebase";
+import { collection, limit, query, where, getDocs } from "firebase/firestore";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -90,11 +92,8 @@ const LikeSection = styled.div`
   }
 `;
 
-const FeedIcon = ({ user, feedDetail, myProfile }) => {
-  const likeFollowing = feedDetail.like.filter((it) =>
-    myProfile.following.includes(it)
-  );
-
+const FeedIcon = ({ feedDetail, myProfile }) => {
+  const [followingUser, setFollowingUser] = useState("");
   const [fillHeart, setFillHeart] = useState(false);
   const [fillBookmark, setFillBookmark] = useState(false);
   const toggleHeart = () => {
@@ -103,6 +102,28 @@ const FeedIcon = ({ user, feedDetail, myProfile }) => {
   const toggleBookmark = () => {
     setFillBookmark(!fillBookmark);
   };
+
+  useEffect(() => {
+    const likeFollowing = feedDetail.like.find((it) =>
+      myProfile.following.includes(it)
+    );
+
+    const getFollowingProfile = async (uid) => {
+      const profileQuery = query(
+        collection(db, "profile"),
+        where("uid", "==", uid),
+        limit(1)
+      );
+      const profileSnapshot = await getDocs(profileQuery);
+
+      if (!profileSnapshot.empty) {
+        const profileData = profileSnapshot.docs[0].data();
+        setFollowingUser(profileData);
+      }
+    };
+
+    getFollowingProfile(likeFollowing);
+  }, [feedDetail]);
 
   return (
     <Wrapper>
@@ -123,10 +144,9 @@ const FeedIcon = ({ user, feedDetail, myProfile }) => {
         )}
       </Icons>
       <LikeSection>
-        {likeFollowing.length > 0 ? (
+        {followingUser ? (
           <>
-            {user.find((it) => it.userId === likeFollowing[0]).userNickname}님
-            외 <strong>여러 명</strong>이 좋아합니다
+            {followingUser.userId}님 외 <strong>여러 명</strong>이 좋아합니다
           </>
         ) : (
           <strong>좋아요 {feedDetail.like.length}개</strong>

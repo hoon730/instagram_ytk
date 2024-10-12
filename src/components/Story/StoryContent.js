@@ -18,6 +18,11 @@ const Wrapper = styled.div`
     min-width: 370px;
     gap: 19px;
   }
+
+  @media screen and (max-width: 430px) {
+    min-width: 350px;
+    gap: 5px;
+  }
 `;
 
 const StorySection = styled.div`
@@ -70,7 +75,12 @@ const StoryContent = () => {
       <StorySection>
         <StoryGroup $visible={visible}>
           {storys.map((it, idx) => (
-            <StoryItem key={idx} userId={it.userId} imgPath={it.imgPath} />
+            <StoryItem
+              key={idx}
+              userId={it.userId}
+              imgPath={it.imgPath}
+              type={"active"}
+            />
           ))}
         </StoryGroup>
       </StorySection>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { getFormattedDate } from "../../utils/utils";
 import ProfileImg from "../Profile/ProfileImg";
@@ -7,6 +7,7 @@ import Slide from "./Slide";
 import FeedIcon from "./FeedIcon";
 import FeedText from "./FeedText";
 import CommentInput from "../Common/CommentInput";
+import ClickFeed from "../Detail/ClickFeed";
 
 const Wrapper = styled.div`
   padding-bottom: 50px;
@@ -50,9 +51,22 @@ const UserInfo = styled.div`
   flex-direction: column;
   width: 100%;
   gap: 4px;
+
   @media screen and (max-width: 770px) {
-    font-size: var(--font-12);
     gap: 0px;
+    font-size: var(--font-12);
+    .user-id {
+      font-size: var(--font-12);
+    }
+    .user-check {
+      width: 10px;
+    }
+    .user-date {
+      font-size: var(--font-10);
+    }
+    .user-followed {
+      font-size: var(--font-10);
+    }
   }
 `;
 
@@ -60,7 +74,7 @@ const UserName = styled.p`
   font-size: var(--font-14);
   color: var(--gray-color);
   @media screen and (max-width: 770px) {
-    font-size: var(--font-12);
+    font-size: var(--font-10);
   }
 `;
 
@@ -72,9 +86,21 @@ const PhotoSection = styled.div`
   position: relative;
   overflow: hidden;
   @media screen and (max-width: 770px) {
-    width: 370px;
-    height: 370px;
+    width: 350px;
+    height: 350px;
   }
+`;
+
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;
 
 const FeedDescArea = styled.div`
@@ -105,11 +131,13 @@ const DateText = styled.div`
   }
 `;
 
-const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
-  const feedProfile = profile.find((it) => it.userId === feedUserId);
-  const feedUser = user.find((it) => it.userId === feedUserId);
-  const followResult = myProfile.following.find((it) => it === feedUserId);
-  const dateMB = getFormattedDate(new Date(feedDetail.createDate));
+const FeedItem = ({ myProfile, feedDetail }) => {
+  const [isClicked, setIsClicked] = useState(false);
+  const followResult = myProfile.following.find((it) => it === feedDetail.uid);
+
+  const onClick = () => {
+    setIsClicked((current) => !current);
+  };
 
   return (
     <Wrapper>
@@ -117,18 +145,22 @@ const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
         <ProfileImg
           type={"active"}
           size={"62"}
-          url={feedProfile.profilePhoto}
+          url={feedDetail.profile.profilePhoto}
+          feedDetail={feedDetail}
+          myProfile={myProfile}
         />
         <UserInfo>
           <UserId
             type={"feed"}
-            userNickname={feedUser.userNickname}
-            check={feedProfile.badge ? "active" : ""}
-            createdAt={new Date(feedDetail.createDate)}
+            userNickname={feedDetail.profile.userId}
+            check={feedDetail.profile.badge ? "active" : ""}
+            createdAt={new Date(parseInt(feedDetail.createdAt))}
             btn={"more"}
             follwed={followResult ? "" : "팔로우"}
+            feedDetail={feedDetail}
+            myProfile={myProfile}
           />
-          <UserName>{feedProfile.userName}</UserName>
+          <UserName>{feedDetail.profile.userName}</UserName>
         </UserInfo>
       </ProfileSection>
       <PhotoSection>
@@ -138,20 +170,27 @@ const FeedItem = ({ user, profile, myProfile, feedUserId, feedDetail }) => {
             muted
             loop
             src={feedDetail.imgPath}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            onClick={onClick}
           />
         ) : (
-          <Slide imgPath={feedDetail.imgPath} />
+          <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}
+        {isClicked ? (
+          <ClickFeed
+            onClick={onClick}
+            feedDetail={feedDetail}
+            myProfile={myProfile}
+          />
+        ) : null}
       </PhotoSection>
       <FeedDescArea>
-        <FeedIcon user={user} feedDetail={feedDetail} myProfile={myProfile} />
+        <FeedIcon feedDetail={feedDetail} myProfile={myProfile} />
         <FeedDesc>
           <UserInfo>
             <UserId
               type={"feed"}
-              userNickname={feedUser.userNickname}
-              check={feedProfile.badge ? "active" : ""}
+              userNickname={feedDetail.profile.userId}
+              check={feedDetail.profile.badge ? "active" : ""}
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />

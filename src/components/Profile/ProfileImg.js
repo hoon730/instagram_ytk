@@ -26,9 +26,7 @@ const BoundaryLine = styled.span`
   width: ${({ size }) => `${size - 4 || 91}`}px;
   height: ${({ size }) => `${size - 4 || 91}`}px;
   background: ${({ type, theme }) =>
-    type === "active"
-      ? theme.bgColor
-      : "transparent"};
+    type === "active" ? theme.bgColor : "transparent"};
   border-radius: 50%;
   position: relative;
   top: 50%;
@@ -56,7 +54,16 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const ProfileImg = ({ url, type, size, onClick, hover, top }) => {
+const ProfileImg = ({
+  url,
+  type,
+  size,
+  onClick,
+  hover,
+  top,
+  feedDetail,
+  myProfile,
+}) => {
   const [hoverImg, setHoverImg] = useState(false);
 
   const showProfile = () => {
@@ -73,7 +80,14 @@ const ProfileImg = ({ url, type, size, onClick, hover, top }) => {
       onMouseEnter={showProfile}
       onMouseLeave={hideProfile}
     >
-      {!hover && hoverImg ? <HoverProfile target={"img"} top={"45"} /> : null}
+      {!hover && hoverImg ? (
+        <HoverProfile
+          target={"img"}
+          top={"45"}
+          feedDetail={feedDetail}
+          myProfile={myProfile}
+        />
+      ) : null}
       <ActivationArea className="storyFirstCircle" size={size} type={type}>
         <BoundaryLine className="storySecondCircle" size={size} type={type}>
           <ImgBox className="storyThirdCircle" size={size}>

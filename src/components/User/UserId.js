@@ -43,7 +43,7 @@ const Check = styled.img`
   }
 `;
 
-const Comment = styled.span`
+const Content = styled.span`
   font-size: 13px;
   font-weight: var(--font-medium);
 `;
@@ -63,7 +63,7 @@ const Date = styled.div`
   }
 `;
 
-const IsFollowed = styled.span`
+const IsFollowed = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -130,7 +130,7 @@ const UserId = ({
   type,
   userNickname,
   check,
-  comment,
+  content,
   createdAt,
   follwed,
   btn,
@@ -139,6 +139,8 @@ const UserId = ({
   feed,
   onClick,
   setIsEditing,
+  myProfile,
+  feedDetail,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -164,13 +166,20 @@ const UserId = ({
           onMouseEnter={showProfile}
           onMouseLeave={hideProfile}
         >
-          {!hover && hoverId ? <HoverProfile target={"id"} top={"22"} /> : null}
+          {!hover && hoverId ? (
+            <HoverProfile
+              target={"id"}
+              top={"22"}
+              feedDetail={feedDetail}
+              myProfile={myProfile}
+            />
+          ) : null}
           {userNickname}
         </IdSpan>
         {check === "active" ? (
           <Check className="user-check" src="/images/check.svg" />
         ) : null}
-        {comment ? <Comment>{comment}</Comment> : null}
+        {content ? <Content>{content}</Content> : null}
         {createdAt ? (
           <Date className="user-date" type={type}>
             <span>&middot;</span>

@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   width: 100%;
   justify-content: space-around;
   align-items: center;
-  padding: 25px 0;
+  padding: ${({ padding }) => (padding ? `${padding}` : "10px")};
   color: ${({ theme }) => theme.fontColor};
 `;
 
@@ -30,9 +30,9 @@ const NumberingBox = styled.div`
   }
 `;
 
-const PostAndFollow = ({ posting, follower, following }) => {
+const PostAndFollow = ({ posting, follower, following, padding }) => {
   return (
-    <Wrapper>
+    <Wrapper padding={padding}>
       <NumberingBox>
         <span>{posting}</span>
         <span>게시물</span>
