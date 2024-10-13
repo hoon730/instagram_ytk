@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { StateContext } from "../../App";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ViewLikes from "./ViewLikes";
 import {
@@ -13,7 +12,15 @@ import {
   IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
 import { db } from "../../utils/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  limit,
+  query,
+  where,
+  getDocs,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -93,15 +100,13 @@ const LikeSection = styled.div`
   }
 `;
 
-const FeedIcon = ({ feedDetail }) => {
+const FeedIcon = ({ feedDetail, myProfile }) => {
   const [followingUser, setFollowingUser] = useState("");
   const [fillHeart, setFillHeart] = useState(false);
   const [fillBookmark, setFillBookmark] = useState(false);
   const [likes, setLikes] = useState(feedDetail.like);
   const [likeUser, setLikeUser] = useState([]);
   const [showProfile, setShowProfile] = useState(false);
-  const { myProfile } = useContext(StateContext);
-  const { allProfile } = useContext(StateContext);
 
   useEffect(() => {
     setFillHeart(likes.includes(myProfile.uid));
@@ -113,8 +118,21 @@ const FeedIcon = ({ feedDetail }) => {
       myProfile.following.includes(it)
     );
 
-    const profileData = allProfile.find((it) => it.uid === likeFollowing);
-    setFollowingUser(profileData);
+    const getFollowingProfile = async (uid) => {
+      const profileQuery = query(
+        collection(db, "profile"),
+        where("uid", "==", uid),
+        limit(1)
+      );
+      const profileSnapshot = await getDocs(profileQuery);
+
+      if (!profileSnapshot.empty) {
+        const profileData = profileSnapshot.docs[0].data();
+        setFollowingUser(profileData);
+      }
+    };
+
+    getFollowingProfile(likeFollowing);
   }, [feedDetail]);
 
   const toggleHeart = () => {
@@ -131,25 +149,39 @@ const FeedIcon = ({ feedDetail }) => {
 
   const showLikeUserWithFollow = async () => {
     if (!showProfile) {
-      const likeUserInfo = allProfile
-        .filter((it) => feedDetail.like.includes(it.uid))
-        .map((info) => {
+      try {
+        const likeUserQuery = query(
+          collection(db, "profile"),
+          where("uid", "in", feedDetail.like)
+        );
+
+        const querySnapshot = await getDocs(likeUserQuery);
+
+        const likeUserInfo = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
           return {
-            uid: info.uid,
-            userId: info.userId,
-            userName: info.userName,
-            badge: info.badge,
-            profilePhoto: info.profilePhoto,
+            uid: data.uid,
+            userId: data.userId,
+            userName: data.userName,
+            badge: data.badge,
+            profilePhoto: data.profilePhoto,
             follow:
-              info.uid === myProfile.uid
+              data.uid === myProfile.uid
                 ? 2
-                : myProfile.following.includes(info.uid)
+                : myProfile.following.includes(data.uid)
                 ? 1
                 : 0,
           };
-        })
-        .sort((a, b) => b.follow - a.follow);
-      setLikeUser(likeUserInfo);
+        });
+
+        const sortedLikeUserInfo = likeUserInfo.sort(
+          (a, b) => b.follow - a.follow
+        );
+
+        setLikeUser(sortedLikeUserInfo);
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
     }
     setShowProfile((prev) => !prev);
   };

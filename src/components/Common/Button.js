@@ -34,7 +34,7 @@ const ButtonItem = styled.button`
 `;
 
 const MesseageBtn = styled.span`
-  ${({ followed }) => (followed ? `display: flex` : "display: none")};
+  ${({ $followed }) => ($followed ? `display: flex` : "display: none")};
   justify-content: center;
   align-items: center;
 
@@ -58,7 +58,7 @@ const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
       onClick={onClick ? handleOnClick : null}
       $followed={followed}
     >
-      <MesseageBtn followed={followed}>
+      <MesseageBtn $followed={followed}>
         {followed === "followed" ? (
           <IoPaperPlaneOutline />
         ) : followed === "unfollowed" ? (

@@ -179,6 +179,15 @@
       "email": "minju@gmail.com",
       "userRealName": "조민주",
       "password": "jmj2854"
+    },
+    {
+      "uid": "M0mfslnLo1ZWFAlAjqeUe0pYZWI3",
+      "userId": "A9k3LsWvBqXp7yYt5ZmNb8HrKpL1",
+      "userNickname": "eun_woo",
+      "phone": "01012345678",
+      "email": "chacha@gmail.com",
+      "userRealName": "차은우",
+      "password": "123456789"
     }
   ],
   "profile": [
@@ -1107,8 +1116,8 @@
       "website": "",
       "recommendation": false,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJpf",
-      "bgPhoto": "/images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJbg",
+      "profilePhoto": "/images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJpf.jpg",
+      "bgPhoto": "/images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJbg.jpg",
       "follower": [
         "lualbvqvQmVWkfDU7JUKJRYdqf3",
         "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -1143,6 +1152,19 @@
         "0kW30ovXTfTAwBRyTzHKGvqG398",
         "tePhQ1wQJAwRlEcw1TOWpE4N9JU"
       ]
+    },
+    {
+      "userId": "A9k3LsWvBqXp7yYt5ZmNb8HrKpL1",
+      "userName": "차은우",
+      "gender": "man",
+      "introduction": "배우 차은우 입니다.",
+      "website": "",
+      "recommendation": false,
+      "nondisclosure": false,
+      "profilePhoto": "/images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/profile.jpg",
+      "bgPhoto": "/images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/bg.jpg",
+      "follower": [],
+      "following": []
     }
   ],
   "story": [
@@ -3613,26 +3635,22 @@
           "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/",
           "createDate": "2024-10-16",
           "content": "긍정적인 에너지로 가득한 하루! ☀️",
-          "like": [
-            "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-            "4JhKn3cYHd9dY9muGz1oXiJAruo",
-            "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-            "z7UhehujghvKX02fUj1ig9gfP7n",
-            "bIqUJE0DxQa1HdkLfMqh105VOrQ",
-            "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-            "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-            "0aDoIgvbfsQYBX20nWRnuOkNrNh"
-          ],
-          "isView": [
-            "wAKs9uXSWsTJbbJGg2MaErFaKqE",
-            "4JhKn3cYHd9dY9muGz1oXiJAruo",
-            "BbVEQf8MoEuxL7XREuCVTjUQkSx",
-            "z7UhehujghvKX02fUj1ig9gfP7n",
-            "bIqUJE0DxQa1HdkLfMqh105VOrQ",
-            "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-            "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-            "0aDoIgvbfsQYBX20nWRnuOkNrNh"
-          ]
+          "like": [],
+          "isView": []
+        }
+      ],
+      "storyStorage": []
+    },
+    {
+      "userId": "A9k3LsWvBqXp7yYt5ZmNb8HrKpL1",
+      "storyHistory": [
+        {
+          "storyId": "sh00000075",
+          "imgPath": "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/story1.jpg",
+          "createDate": "2024-10-18",
+          "content": "달밤의 산책",
+          "like": [],
+          "isView": []
         }
       ],
       "storyStorage": []
@@ -15761,6 +15779,104 @@
               "replyId": "rp00000353"
             }
           ]
+        }
+      ]
+    },
+    {
+      "userId": "A9k3LsWvBqXp7yYt5ZmNb8HrKpL1",
+      "feedDetail": [
+        {
+          "feedId": "fd00000136",
+          "createDate": "2024-10-10",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed1.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed2.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed3.jpg"
+          ],
+          "content": "첫 피드 #일상생활, #여행 가는 중",
+          "hashtag": ["#일상생활", "#여행"],
+          "location": "인천공항",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000137",
+          "createDate": "2024-10-13",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed4.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed5.jpg"
+          ],
+          "content": "#악세사리 #광고 찍었어요",
+          "hashtag": ["#악세사리", "#광고"],
+          "location": "상암동 서울",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000138",
+          "createDate": "2024-10-14",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed6.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed7.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed8.jpg"
+          ],
+          "content": "#드라마 #촬영 했어요. 처음 맡아보는 신부님 역할이에요. #일상생활",
+          "hashtag": ["#드라마", "#촬영", "#일상생활"],
+          "location": "일산 고양시",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000139",
+          "createDate": "2024-10-15",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed9.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed10.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed11.jpg"
+          ],
+          "content": "오늘 #여행 와서 #맛집투어 하고 #밤산책 했어요. 마지막 사진은 내가 먹었던 #마라탕",
+          "hashtag": ["#맛집투어", "#밤산책", "#마라탕"],
+          "location": "Singapore Marinabay",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000140",
+          "createDate": "2024-10-18",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed12.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed13.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed14.jpg"
+          ],
+          "content": "#제주도 #서귀포 #감귤농장 앞",
+          "hashtag": ["#제주도", "#서귀포", "#감귤농장"],
+          "location": "제주도 서귀포",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000141",
+          "createDate": "2024-10-18",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed15.jpg"
+          ],
+          "content": "몇일 전 사진 #바이크 #촬영중 #일상생활",
+          "hashtag": ["#바이크", "#촬영중", "#일상생활"],
+          "location": "장기동 김포시",
+          "like": [],
+          "tagUser": [],
+          "reply": []
         }
       ]
     }

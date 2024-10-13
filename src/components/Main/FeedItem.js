@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../../App";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
@@ -113,8 +114,9 @@ const FeedDesc = styled.div`
   }
 `;
 
-const FeedItem = ({ myProfile, feedDetail }) => {
+const FeedItem = ({ feedDetail }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const { myProfile } = useContext(StateContext);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
   const onClick = () => {
@@ -147,13 +149,7 @@ const FeedItem = ({ myProfile, feedDetail }) => {
       </ProfileSection>
       <PhotoSection>
         {feedDetail.type === "reels" ? (
-          <video
-            autoPlay
-            muted
-            loop
-            src={feedDetail.imgPath}
-            onClick={onClick}
-          />
+          <Video autoPlay muted loop src={feedDetail.imgPath} />
         ) : (
           <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}

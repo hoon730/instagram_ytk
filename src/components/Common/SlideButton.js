@@ -20,10 +20,22 @@ const ButtonWrapper = styled.div`
         ? $visible === 0
           ? "hidden"
           : "visible"
-        : $visible === $limit
+        : $visible === $limit - 6
         ? "hidden"
         : "visible"
       : "visible"};
+  @media screen and (max-width: 430px) {
+    visibility: ${({ type, $visible, $limit }) =>
+      type
+        ? type === "left"
+          ? $visible === 0
+            ? "hidden"
+            : "visible"
+          : $visible === $limit - 3
+          ? "hidden"
+          : "visible"
+        : "visible"};
+  }
 `;
 
 function SlideButton({ type, onClick, visible, limit }) {
