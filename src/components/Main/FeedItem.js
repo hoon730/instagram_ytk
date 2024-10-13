@@ -9,6 +9,8 @@ import FeedText from "./FeedText";
 import CommentInput from "../Common/CommentInput";
 import ClickFeed from "../Detail/ClickFeed";
 import CommentLine from "../Common/CommentLine";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 
 const Wrapper = styled.div`
   padding-bottom: 50px;
@@ -85,6 +87,7 @@ const PhotoSection = styled.div`
   border-radius: 8px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
   @media screen and (max-width: 1024px) {
     width: 350px;
     height: 350px;
@@ -125,6 +128,7 @@ const CommentArea = styled.div`
 const FeedItem = ({ feedDetail }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [comments, setComments] = useState([]);
+  const [pushComment, setPushComment] = useState("");
   const { myProfile } = useContext(StateContext);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
@@ -133,8 +137,27 @@ const FeedItem = ({ feedDetail }) => {
   };
 
   useEffect(() => {
-    console.log(comments[comments.length - 1]);
-  }, [comments]);
+    if (pushComment === "") return;
+
+    const addCmt = async () => {
+      try {
+        const docRef = await addDoc(collection(db, "reply"), {
+          content: pushComment,
+          createdAt: Date.now(),
+          feedId: feedDetail.id,
+          type: "rp",
+          uid: myProfile.uid,
+          like: [],
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setPushComment("");
+      }
+    };
+
+    addCmt();
+  }, [pushComment]);
 
   return (
     <Wrapper>
@@ -166,11 +189,7 @@ const FeedItem = ({ feedDetail }) => {
           <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}
         {isClicked ? (
-          <ClickFeed
-            onClick={onClick}
-            feedDetail={feedDetail}
-            myProfile={myProfile}
-          />
+          <ClickFeed onClick={onClick} feedDetail={feedDetail} />
         ) : null}
       </PhotoSection>
       <FeedDescArea>
@@ -200,6 +219,7 @@ const FeedItem = ({ feedDetail }) => {
             height={"50px"}
             comments={comments}
             setComments={setComments}
+            setPushComment={setPushComment}
           />
         </FeedDesc>
       </FeedDescArea>

@@ -105,7 +105,7 @@ const CancelBtn = styled.div`
 
 const HeartBtn = styled.button`
   svg {
-    color: ${({ color }) => (color ? `crimson` : `var(--bg-black-color)`)};
+    color: ${({ $color }) => ($color ? `crimson` : `var(--bg-black-color)`)};
     font-size: var(--font-14);
   }
 `;
@@ -178,7 +178,7 @@ const UserId = ({
         </MoreBtn>
       ) : btn === "heart" ? (
         <HeartBtn
-          color={switchHeart}
+          $color={switchHeart}
           onClick={() => setSwitchHeart((switchHeart) => !switchHeart)}
         >
           {switchHeart ? <IoHeartSharp /> : <IoHeartOutline />}

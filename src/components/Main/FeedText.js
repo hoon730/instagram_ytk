@@ -64,7 +64,7 @@ const HashTag = styled.span`
   }
 `;
 
-const FeedText = ({ feedDetail, myFeed, post }) => {
+const FeedText = ({ feedDetail, myFeed, post, all }) => {
   const lines = feedDetail
     ? feedDetail.content.split("\n")
     : myFeed
@@ -77,6 +77,10 @@ const FeedText = ({ feedDetail, myFeed, post }) => {
   const originalCommentRef = useRef(null);
 
   useEffect(() => {
+    if (all) {
+      setShowMore(true);
+    }
+
     const handleMoreButton = () => {
       if (!originalCommentRef.current || !commentRef.current) return;
       const { clientHeight: originalHeight } = originalCommentRef.current;
@@ -97,7 +101,7 @@ const FeedText = ({ feedDetail, myFeed, post }) => {
   return (
     <Wrapper>
       <EllipsisText $showMore={showMore}>
-        {isEllipsed && <MoreText onClick={moreView}>더보기</MoreText>}
+        {!all && isEllipsed && <MoreText onClick={moreView}>더보기</MoreText>}
         <p ref={commentRef}>
           {lines.map((it, idx) => (
             <React.Fragment key={idx}>

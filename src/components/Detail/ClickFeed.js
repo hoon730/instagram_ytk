@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { getFormattedDate } from "../../utils/utils";
 import styled from "styled-components";
 import Slide from "../Main/Slide";
@@ -14,8 +14,17 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 
 import { db } from "../../utils/firebase";
-import { collection, limit, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  limit,
+  query,
+  where,
+  getDocs,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
 import { motion } from "framer-motion";
+import { StateContext } from "../../App";
 
 const BgWrapper = styled(motion.div)`
   position: fixed;
@@ -123,9 +132,9 @@ const Container = styled.div`
 
 const UserContainer = styled.div`
   width: 100%;
-  padding: 20px;
-  border-bottom: ${({ $isEditing }) =>
-    $isEditing ? "none" : `1px solid ${({ theme }) => theme.borderColor}`};
+  padding: 20px 20px 0px;
+  border-bottom: ${({ $isEditing, theme }) =>
+    $isEditing ? "none" : `1px solid ${theme.borderColor}`};
 `;
 
 const UserBox = styled.div`
@@ -278,38 +287,100 @@ const EditedTextArea = styled.textarea`
   }
 `;
 
-const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
-  const commentRef = useRef();
-  const bgRef = useRef();
+const ClickFeed = ({ feedDetail, onClick }) => {
   const [comment, setComment] = useState("");
   const [followingUser, setFollowingUser] = useState("");
+  const [replyArr, SetReplyArr] = useState([]);
+
+  const commentRef = useRef();
+  const bgRef = useRef();
+
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
 
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
-  const likeFollowing = feedDetail.like.find((it) =>
-    myProfile.following.includes(it)
-  );
 
   useEffect(() => {
     const likeFollowing = feedDetail.like.find((it) =>
       myProfile.following.includes(it)
     );
 
-    const getFollowingProfile = async (uid) => {
-      const profileQuery = query(
-        collection(db, "profile"),
-        where("uid", "==", uid),
-        limit(1)
-      );
-      const profileSnapshot = await getDocs(profileQuery);
+    const profileData = allProfile.find((it) => it.uid === likeFollowing);
+    setFollowingUser(profileData);
 
-      if (!profileSnapshot.empty) {
-        const profileData = profileSnapshot.docs[0].data();
-        setFollowingUser(profileData);
-      }
+    let replyArr = [];
+    let replyUnsubscribe = null;
+    let reReplyUnsubscribe = null; // 여기에 let으로 선언
+
+    const fetchReply = () => {
+      const replyQuery = query(
+        collection(db, "reply"),
+        where("feedId", "==", feedDetail.id),
+        orderBy("createdAt", "desc")
+      );
+
+      replyUnsubscribe = onSnapshot(replyQuery, (snapshot) => {
+        const replyDocs = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        // replyArr 업데이트
+        replyArr = replyDocs;
+        SetReplyArr(replyDocs);
+
+        // 댓글 ID 배열 만들기
+        const replyIdArr = replyDocs.map((it) => it.id);
+
+        // 대댓글 쿼리 실행
+        if (replyIdArr.length > 0) {
+          const reReplyQuery = query(
+            collection(db, "re_reply"),
+            where("replyId", "in", replyIdArr), // ID 배열 사용
+            orderBy("replyId", "asc"),
+            orderBy("createdAt", "desc")
+          );
+
+          // 대댓글 구독
+          reReplyUnsubscribe = onSnapshot(reReplyQuery, (snapshot) => {
+            const reReplyDocs = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+
+            // 대댓글을 기존 댓글에 추가
+            const replyList = replyArr.map((rp) => ({
+              ...rp,
+              reReply: reReplyDocs.filter((rr) => rr.replyId === rp.id),
+            }));
+
+            // 업데이트된 댓글 리스트 설정
+            SetReplyArr(replyList);
+          });
+        } else if (reReplyUnsubscribe) {
+          // 대댓글이 없을 경우 기존 구독 해제
+          reReplyUnsubscribe();
+          reReplyUnsubscribe = null; // 참조 초기화
+        }
+      });
     };
 
-    getFollowingProfile(likeFollowing);
+    fetchReply();
+
+    return () => {
+      // 구독 해제
+      if (replyUnsubscribe) {
+        replyUnsubscribe();
+      }
+      if (reReplyUnsubscribe) {
+        reReplyUnsubscribe();
+      }
+    };
   }, [feedDetail]);
+
+  useEffect(() => {
+    console.log(replyArr);
+  }, [replyArr]);
 
   const hideFeed = () => {
     onClick();
@@ -369,14 +440,13 @@ const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
                               check={feedDetail.profile.badge ? "active" : ""}
                               btn={"more"}
                               follwed={followResult ? "" : "팔로우"}
-                              feedDetail={feedDetail}
-                              myProfile={myProfile}
+                              uid={feedDetail.uid}
                             />
                             <Location>{feedDetail.location}</Location>
                           </Userinfo>
                         </UserBox>
                         <UserContents>
-                          <FeedText feedDetail={feedDetail} />
+                          <FeedText feedDetail={feedDetail} all={true} />
                         </UserContents>
                       </UserContainer>
 

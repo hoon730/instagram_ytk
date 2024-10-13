@@ -30,11 +30,18 @@ const Submit = styled.input`
   cursor: pointer;
 `;
 
-const CommentInput = ({ width, height, comments, setComments }) => {
+const CommentInput = ({
+  width,
+  height,
+  comments,
+  setComments,
+  setPushComment,
+}) => {
   const [comment, setComment] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
     setComments([...comments, comment]);
+    setPushComment(comment);
     setComment("");
   };
 
