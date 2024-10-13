@@ -44,25 +44,25 @@ const StoryGroup = styled.div`
   transition: transform 0.5s;
 `;
 
-const storys1 = [
-  {
-    userId: "user01",
-    imgPath: "/images/userImgs/user123456/profile-photo.jpg",
-  },
-  { userId: "user02", imgPath: "/images/userImgs/user123456/feedDetail.jpg" },
-  { userId: "user03", imgPath: "/images/userImgs/user123456/followed_1.jpg" },
-  { userId: "user04", imgPath: "/images/userImgs/user123456/followed_2.jpg" },
-  { userId: "user05", imgPath: "/images/userImgs/user123456/followed_3.jpg" },
-  { userId: "user06", imgPath: "/images/userImgs/user123456/followed_4.jpg" },
-  { userId: "user07", imgPath: "/images/userImgs/user123456/followed_5.jpg" },
-  { userId: "user08", imgPath: "/images/userImgs/user123456/userdetail_1.jpg" },
-  { userId: "user09", imgPath: "/images/userImgs/user123456/userdetail_2.jpg" },
-  { userId: "user10", imgPath: "/images/userImgs/user123456/userdetail_3.jpg" },
-  {
-    userId: "user11",
-    imgPath: "/images/userImgs/user123456/profile-photo2.jpg",
-  },
-];
+// const storys1 = [
+//   {
+//     userId: "user01",
+//     imgPath: "/images/userImgs/user123456/profile-photo.jpg",
+//   },
+//   { userId: "user02", imgPath: "/images/userImgs/user123456/feedDetail.jpg" },
+//   { userId: "user03", imgPath: "/images/userImgs/user123456/followed_1.jpg" },
+//   { userId: "user04", imgPath: "/images/userImgs/user123456/followed_2.jpg" },
+//   { userId: "user05", imgPath: "/images/userImgs/user123456/followed_3.jpg" },
+//   { userId: "user06", imgPath: "/images/userImgs/user123456/followed_4.jpg" },
+//   { userId: "user07", imgPath: "/images/userImgs/user123456/followed_5.jpg" },
+//   { userId: "user08", imgPath: "/images/userImgs/user123456/userdetail_1.jpg" },
+//   { userId: "user09", imgPath: "/images/userImgs/user123456/userdetail_2.jpg" },
+//   { userId: "user10", imgPath: "/images/userImgs/user123456/userdetail_3.jpg" },
+//   {
+//     userId: "user11",
+//     imgPath: "/images/userImgs/user123456/profile-photo2.jpg",
+//   },
+// ];
 
 const StoryContent = () => {
   const [visible, setVisible] = useState(0);
@@ -119,7 +119,7 @@ const StoryContent = () => {
       />
       <StorySection>
         <StoryGroup $visible={visible}>
-          {/* {storys.map((it, idx) => (
+          {/* {storys1.map((it, idx) => (
             <StoryItem
               key={idx}
               userId={it.userId}
