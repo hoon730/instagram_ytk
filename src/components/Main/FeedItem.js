@@ -97,12 +97,6 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Video = styled.video`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
 const FeedDescArea = styled.div`
   margin: 0 36px;
   @media screen and (max-width: 770px) {
@@ -131,7 +125,7 @@ const DateText = styled.div`
   }
 `;
 
-const FeedItem = ({ myProfile, feedDetail }) => {
+const FeedItem = ({ myProfile, feedDetail, dateMB }) => {
   const [isClicked, setIsClicked] = useState(false);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
@@ -165,7 +159,7 @@ const FeedItem = ({ myProfile, feedDetail }) => {
       </ProfileSection>
       <PhotoSection>
         {feedDetail.type === "reels" ? (
-          <video
+          <Video
             autoPlay
             muted
             loop

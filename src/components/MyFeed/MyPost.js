@@ -28,7 +28,6 @@ const MyPostContainer = styled.div`
 
 const MyPostBox = styled.div`
   width: 100%;
-  height: 308px;
   display: flex;
   gap: 5px;
 `;

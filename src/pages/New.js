@@ -84,12 +84,14 @@ const ImgMedia = styled.img`
   height: 150px;
   background: #eee;
   object-fit: cover;
+  border-radius: var(--border-radius-8);
 `;
 const VidMedia = styled.video`
   width: 150px;
   height: 150px;
   background: #eee;
   object-fit: cover;
+  border-radius: var(--border-radius-8);
 `;
 
 const StyledSpan = styled.span`

@@ -40,6 +40,7 @@ const Header = styled.div`
   position: fixed;
   top: 85px;
   color: ${({ theme }) => theme.fontColor};
+  z-index: 1;
   @media screen and (max-width: 1170px) {
     width: calc(100% - 20% - 80px);
     height: 80px;
