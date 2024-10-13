@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StateContext } from "../../App";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
@@ -8,6 +8,7 @@ import FeedIcon from "./FeedIcon";
 import FeedText from "./FeedText";
 import CommentInput from "../Common/CommentInput";
 import ClickFeed from "../Detail/ClickFeed";
+import CommentLine from "../Common/CommentLine";
 
 const Wrapper = styled.div`
   padding-bottom: 50px;
@@ -114,14 +115,26 @@ const FeedDesc = styled.div`
   }
 `;
 
+const CommentArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+`;
+
 const FeedItem = ({ feedDetail }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [comments, setComments] = useState([]);
   const { myProfile } = useContext(StateContext);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
   const onClick = () => {
     setIsClicked((current) => !current);
   };
+
+  useEffect(() => {
+    console.log(comments[comments.length - 1]);
+  }, [comments]);
 
   return (
     <Wrapper>
@@ -172,7 +185,22 @@ const FeedItem = ({ feedDetail }) => {
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
-          <CommentInput width={"100%"} height={"50px"} />
+          <CommentArea>
+            {comments.map((it, idx) => (
+              <CommentLine
+                key={idx}
+                userId={myProfile.userId}
+                uid={myProfile.uid}
+                comment={it}
+              />
+            ))}
+          </CommentArea>
+          <CommentInput
+            width={"100%"}
+            height={"50px"}
+            comments={comments}
+            setComments={setComments}
+          />
         </FeedDesc>
       </FeedDescArea>
     </Wrapper>

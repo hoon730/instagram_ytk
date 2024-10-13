@@ -143,7 +143,7 @@ const UserId = ({
   };
 
   return (
-    <Wrapper type={type}>
+    <Wrapper className="user-wrapper" type={type}>
       <StyledSpan type={type}>
         <IdSpan
           className="user-id"
@@ -151,13 +151,7 @@ const UserId = ({
           onMouseLeave={hideProfile}
         >
           {!hover && hoverId ? (
-            <HoverProfile
-              target={"id"}
-              top={"22"}
-              type={type}
-              uid={uid}
-              fix={fix}
-            />
+            <HoverProfile target={"id"} top={"22"} type={type} uid={uid} />
           ) : null}
           {userNickname}
         </IdSpan>

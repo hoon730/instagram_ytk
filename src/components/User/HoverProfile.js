@@ -23,11 +23,9 @@ const Wrapper = styled(motion.div)`
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: var(--border-radius-12);
   box-shadow: 0 0 20px ${({ theme }) => theme.shadowAlpha};
+  position: absolute;
   ${({ top }) => (top ? `top: ${top}px;` : "top: 22px;")}
-  ${({ $fix }) =>
-    $fix
-      ? "position:fixed; top:50%; left:50%; transform:translate(-50%, -50%);"
-      : `position:absolute; left: 0;`};
+  left: 0;
   background: ${({ theme }) => theme.bgColor};
   z-index: 3;
 `;
@@ -80,9 +78,6 @@ const Btns = styled.div`
   display: flex;
   gap: ${({ $followed }) => ($followed === "followed" ? "4px" : "0")};
   padding-top: 10px;
-  & > .followBtn {
-    transition: background 0s !important;
-  }
 `;
 
 const extractExtension = (value) => {
@@ -91,12 +86,13 @@ const extractExtension = (value) => {
   return secondSplit[secondSplit.length - 1].toLowerCase();
 };
 
-const HoverProfile = ({ type, uid, top, fix }) => {
+const HoverProfile = ({ type, uid, top }) => {
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
   const [hoverProfile, setHoverProfile] = useState(null);
   const [hoverFeed, setHoverFeed] = useState(null);
   const [followResult, setFollowResult] = useState(false);
+  const [feedLen, setFeedLen] = useState(0);
   const videoArr = [
     "mp4",
     "avi",
@@ -133,14 +129,19 @@ const HoverProfile = ({ type, uid, top, fix }) => {
       const feedQuery = query(
         collection(db, "feed"),
         where("uid", "==", uid),
-        where("imgPath", "!=", null),
-        orderBy("createdAt", "desc"),
-        limit(3)
+        orderBy("createdAt", "desc")
       );
 
       const feedUnsubscribe = onSnapshot(feedQuery, (snapshot) => {
         const feeds = snapshot.docs.map((doc) => doc.data());
-        setHoverFeed(feeds);
+        setFeedLen(feeds.length);
+        const limitFeeds = [];
+        feeds.map((it) => {
+          if (limitFeeds.length < 3 && it.imgPath) {
+            limitFeeds.push(it);
+          }
+        });
+        setHoverFeed(limitFeeds);
       });
 
       return () => feedUnsubscribe();
@@ -151,12 +152,12 @@ const HoverProfile = ({ type, uid, top, fix }) => {
 
   return (
     <Wrapper
-      // variants={mouseon}
+      className="hover-wrapper"
+      variants={mouseon}
       initial="initial"
       animate="visible"
       exit="exits"
       top={top}
-      $fix={fix}
     >
       <Userinfo>
         <ProfileImg
@@ -177,7 +178,11 @@ const HoverProfile = ({ type, uid, top, fix }) => {
         </Userdesc>
       </Userinfo>
       <div>
-        <PostAndFollow posting={"73"} follower={"255"} following={"358"} />
+        <PostAndFollow
+          posting={feedLen}
+          follower={hoverProfile && hoverProfile.follower.length}
+          following={hoverProfile && hoverProfile.following.length}
+        />
         <PostingPics>
           {hoverFeed &&
             hoverFeed.map((it, idx) => (
@@ -190,25 +195,35 @@ const HoverProfile = ({ type, uid, top, fix }) => {
               </ImgBox>
             ))}
         </PostingPics>
-        <Btns $followed={followResult ? "followed" : null}>
-          {followResult ? (
+        {hoverProfile && hoverProfile.uid === myProfile.uid ? (
+          <Btns $followed={followResult ? "followed" : null}>
             <Button
-              width={"66.66%"}
+              width={"100%"}
               height={"40px"}
-              type={"positive"}
-              text={"메시지 보내기"}
+              type={"negative"}
+              text={"프로필 편집"}
             />
-          ) : null}
+          </Btns>
+        ) : (
+          <Btns $followed={followResult ? "followed" : null}>
+            {followResult ? (
+              <Button
+                width={"66.66%"}
+                height={"40px"}
+                followed={followResult ? "followed" : "unfollowed"}
+                type={"positive"}
+                text={"메시지 보내기"}
+              />
+            ) : null}
 
-          <Button
-            width={followResult ? "33.33%" : "100%"}
-            height={"40px"}
-            followed={followResult ? "followed" : "unfollowed"}
-            type={followResult ? "negative" : "positive"}
-            text={followResult ? "팔로잉" : "팔로우"}
-            className="followBtn"
-          />
-        </Btns>
+            <Button
+              width={followResult ? "33.33%" : "100%"}
+              height={"40px"}
+              type={followResult ? "negative" : "positive"}
+              text={followResult ? "팔로잉" : "팔로우"}
+            />
+          </Btns>
+        )}
       </div>
     </Wrapper>
   );
