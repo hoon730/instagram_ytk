@@ -109,7 +109,7 @@ function App() {
     let allProfileUnsubscribe = null;
     const fetchAllProfile = async () => {
       const profileQuery = query(collection(db, "profile"));
-      allProfileUnsubscribe = await onSnapshot(profileQuery, (snapshot) => {
+      allProfileUnsubscribe = onSnapshot(profileQuery, (snapshot) => {
         const profiles = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
