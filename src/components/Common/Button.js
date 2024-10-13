@@ -4,12 +4,12 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import { HiOutlineUserPlus } from "react-icons/hi2";
 
 const ButtonItem = styled.button`
-  width: ${({ width }) => `${width}` || "auto"};
-  height: ${({ height }) => `${height}` || "45px"};
+  width: ${({ $width }) => `${$width}` || "auto"};
+  height: ${({ $height }) => `${$height}` || "45px"};
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: ${({ followed }) => (followed === "unfollowed" ? "0" : "5px")};
+  gap: ${({ $followed }) => ($followed === "unfollowed" ? "0" : "5px")};
   color: var(--bg-white-color);
   border: none;
   border-radius: var(--border-radius-8);
@@ -34,7 +34,7 @@ const ButtonItem = styled.button`
 `;
 
 const MesseageBtn = styled.span`
-  ${({ followed }) => (followed ? `display: flex` : "display: none")};
+  ${({ $followed }) => ($followed ? `display: flex` : "display: none")};
   justify-content: center;
   align-items: center;
 
@@ -49,18 +49,16 @@ const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
     onClick();
   };
 
-  console.log(followed);
-
   return (
     <ButtonItem
-      width={width}
-      height={height}
+      $width={width}
+      $height={height}
       fontSize={fontSize}
       type={type}
       onClick={onClick ? handleOnClick : null}
-      followed={followed}
+      $followed={followed}
     >
-      <MesseageBtn followed={followed}>
+      <MesseageBtn $followed={followed}>
         {followed === "followed" ? (
           <IoPaperPlaneOutline />
         ) : followed === "unfollowed" ? (

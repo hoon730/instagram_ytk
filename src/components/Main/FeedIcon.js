@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { StateContext } from "../../App";
 import styled from "styled-components";
+import ViewLikes from "./ViewLikes";
 import {
   GoHeart,
   GoHeartFill,
@@ -10,8 +12,8 @@ import {
   IoPaperPlaneOutline,
   IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
-import { auth, db } from "../../utils/firebase";
-import { collection, limit, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../utils/firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -83,6 +85,7 @@ const BookmarkFill = styled(GoBookmarkFill)`
 const LikeSection = styled.div`
   font-size: var(--font-16);
   color: ${({ theme }) => theme.fontColor};
+  position: relative;
   strong {
     font-weight: bold;
     cursor: pointer;
@@ -92,38 +95,66 @@ const LikeSection = styled.div`
   }
 `;
 
-const FeedIcon = ({ feedDetail, myProfile }) => {
+const FeedIcon = ({ feedDetail }) => {
   const [followingUser, setFollowingUser] = useState("");
   const [fillHeart, setFillHeart] = useState(false);
   const [fillBookmark, setFillBookmark] = useState(false);
-  const toggleHeart = () => {
-    setFillHeart(!fillHeart);
-  };
-  const toggleBookmark = () => {
-    setFillBookmark(!fillBookmark);
-  };
+  const [likes, setLikes] = useState(feedDetail.like);
+  const [likeUser, setLikeUser] = useState([]);
+  const [showProfile, setShowProfile] = useState(false);
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
+
+  useEffect(() => {
+    setFillHeart(likes.includes(myProfile.uid));
+    updateDoc(doc(db, "feed", feedDetail.id), { like: likes });
+  }, [likes]);
 
   useEffect(() => {
     const likeFollowing = feedDetail.like.find((it) =>
       myProfile.following.includes(it)
     );
 
-    const getFollowingProfile = async (uid) => {
-      const profileQuery = query(
-        collection(db, "profile"),
-        where("uid", "==", uid),
-        limit(1)
-      );
-      const profileSnapshot = await getDocs(profileQuery);
-
-      if (!profileSnapshot.empty) {
-        const profileData = profileSnapshot.docs[0].data();
-        setFollowingUser(profileData);
-      }
-    };
-
-    getFollowingProfile(likeFollowing);
+    const profileData = allProfile.find((it) => it.uid === likeFollowing);
+    setFollowingUser(profileData);
   }, [feedDetail]);
+
+  const toggleHeart = () => {
+    if (fillHeart) {
+      setLikes(likes.filter((it) => it !== myProfile.uid));
+    } else {
+      setLikes([...likes, myProfile.uid]);
+    }
+  };
+
+  const toggleBookmark = () => {
+    setFillBookmark((prev) => !prev);
+  };
+
+  const showLikeUserWithFollow = async () => {
+    if (!showProfile) {
+      const likeUserInfo = allProfile
+        .filter((it) => feedDetail.like.includes(it.uid))
+        .map((info) => {
+          return {
+            uid: info.uid,
+            userId: info.userId,
+            userName: info.userName,
+            badge: info.badge,
+            profilePhoto: info.profilePhoto,
+            follow:
+              info.uid === myProfile.uid
+                ? 2
+                : myProfile.following.includes(info.uid)
+                ? 1
+                : 0,
+          };
+        })
+        .sort((a, b) => b.follow - a.follow);
+      setLikeUser(likeUserInfo);
+    }
+    setShowProfile((prev) => !prev);
+  };
 
   return (
     <Wrapper>
@@ -146,11 +177,18 @@ const FeedIcon = ({ feedDetail, myProfile }) => {
       <LikeSection>
         {followingUser ? (
           <>
-            {followingUser.userId}님 외 <strong>여러 명</strong>이 좋아합니다
+            {followingUser.userId}님 외{" "}
+            <strong onClick={showLikeUserWithFollow}>여러 명</strong>이
+            좋아합니다
           </>
         ) : (
-          <strong>좋아요 {feedDetail.like.length}개</strong>
+          <strong onClick={showLikeUserWithFollow}>
+            좋아요 {feedDetail.like.length}개
+          </strong>
         )}
+        {showProfile ? (
+          <ViewLikes likeUser={likeUser} setShowProfile={setShowProfile} />
+        ) : null}
       </LikeSection>
     </Wrapper>
   );

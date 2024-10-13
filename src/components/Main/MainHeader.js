@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { ThemeContext } from "../../App";
 import { mobileHeaderMenu } from "../../utils/utils";
 import styled from "styled-components";
@@ -12,6 +12,10 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { LuSunMedium } from "react-icons/lu";
 import { FaMoon } from "react-icons/fa";
 import Notification from "./Notification";
+import { useNavigate } from "react-router-dom";
+
+import { collection, query, limit, where, getDocs } from "firebase/firestore";
+import { auth, db } from "../../utils/firebase";
 
 const Wrapper = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
@@ -26,7 +30,7 @@ const Wrapper = styled.div`
   color: ${({ theme }) => theme.fontColor};
   border-right: 1px solid ${({ theme }) => theme.borderColor};
   position: fixed;
-  z-index: 1;
+  z-index: 2;
   @media screen and (max-width: 1024px) {
     width: calc(100% - 92px);
   }
@@ -230,11 +234,36 @@ const MainHeader = () => {
   const { darkMode } = useContext(ThemeContext);
   const { changeDark } = useContext(ThemeContext);
   const [heart, setHeart] = useState(false);
+  const [myProfile, setMyProfile] = useState(null);
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const heartChange = () => {
     setHeart((prev) => !prev);
   };
+
+  console.log(auth.currentUser);
+
+  useEffect(() => {
+    const userUid = auth.currentUser?.uid;
+    if (userUid) {
+      const getMyProfile = async (uid) => {
+        const profileQuery = query(
+          collection(db, "profile"),
+          where("uid", "==", uid),
+          limit(1)
+        );
+        const profileSnapshot = await getDocs(profileQuery);
+
+        if (!profileSnapshot.empty) {
+          const profileData = profileSnapshot.docs[0].data();
+          setMyProfile(profileData);
+        }
+      };
+
+      getMyProfile(userUid);
+    }
+  }, []);
 
   return (
     <Wrapper>
@@ -250,16 +279,19 @@ const MainHeader = () => {
           />
           {heart ? <Notification /> : null}
         </NotificationArea>
-        <Profile>
+        <Profile onClick={() => navigate("/detail")}>
           <UserProfile>
             <ProfileImg
-              url={`${process.env.PUBLIC_URL}/images/userImgs/user123456/profile-photo.jpg`}
+              url={myProfile ? myProfile.profilePhoto : null}
               size={"45"}
               hover={"noHover"}
             />
             <ProfileText>
-              <UserId userNickname={"burxxxking"} hover={"noHover"} />
-              <UserName>decent</UserName>
+              <UserId
+                userNickname={myProfile ? myProfile.userId : ""}
+                hover={"noHover"}
+              />
+              <UserName>{myProfile ? myProfile.userName : null}</UserName>
             </ProfileText>
           </UserProfile>
         </Profile>

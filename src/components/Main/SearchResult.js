@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 import SearchItem from "../Detail/SearchItem";
 
 const Wrapper = styled.div`
@@ -8,45 +11,16 @@ const Wrapper = styled.div`
   padding: 20px 20px;
   position: absolute;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 8px;
   background: ${({ theme }) => theme.bgColor};
   box-shadow: 0 5px 6px ${({ theme }) => theme.shadowAlpha};
   margin-top: 5px;
+  overflow: hidden;
+  overflow-y: scroll;
   z-index: 1;
 `;
-
-const itemArray = [
-  {
-    userNickName: "lotte_ria",
-    userName: "코드분쇄기",
-    followed: "followed",
-    url: "/images/userImgs/user123456/followed_1.jpg",
-  },
-  {
-    userNickName: "burxxxking",
-    userName: "decent",
-    followed: "followed",
-    url: "/images/userImgs/user123456/followed_2.jpg",
-  },
-  {
-    userNickName: "bas_bg",
-    userName: "marcel",
-    url: "/images/userImgs/user123456/followed_3.jpg",
-  },
-  {
-    userNickName: "westside",
-    userName: "두동강",
-    followed: "followed",
-    url: "/images/userImgs/user123456/followed_4.jpg",
-  },
-  {
-    userNickName: "inner_v",
-    userName: "peace",
-    url: "/images/userImgs/user123456/followed_5.jpg",
-  },
-];
 
 const SearchList = styled.div`
   width: 100%;
@@ -77,17 +51,78 @@ const NoResult = styled.div`
 
 const SearchResult = ({ text }) => {
   const [getUserNickName, setGetUserNickName] = useState(`${text}`);
+  const [getHashtag, setGetHashtag] = useState(`${text}`);
+  const [allUser, setAllUser] = useState([]);
+  const [allHashtag, setAllHashtag] = useState([]);
+  const [hashtagCount, setHashtagCount] = useState({});
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect(() => { 
+    if(text === "") {
+      fetchHashtags();
+      fetchUser();
+    } else {
     setGetUserNickName(text);
+    setGetHashtag(text);
+    }
   }, [text]);
+
+  const fetchHashtags = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'feed'));
+      let allHashtags = [];
+
+      querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        if (data.hashtag) {
+          allHashtags.push(...data.hashtag);
+        }
+      });
+
+      const hashtagCountFun = allHashtags.reduce((accu, curr) => {accu[curr] = (accu[curr] || 0
+      )+1; return accu;}, {});
+      const removeDuplAllHashtags = [...new Set(allHashtags)];
+
+      setHashtagCount(hashtagCountFun);
+      setAllHashtag(removeDuplAllHashtags);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
+
+  const fetchUser = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'profile'));
+      let allUsers = [];
+
+      querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        if (data) {
+          allUsers.push(data);
+        }
+      });
+
+      setAllUser(allUsers);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
+
+  const showHashtag = () => {
+    return getHashtag === "#" || getHashtag === "" ? [] : allHashtag.filter(
+      (it) =>
+        it.toLocaleLowerCase().includes(getHashtag.toLocaleLowerCase())
+    );
+  };
 
   const showUserNickName = () => {
     return getUserNickName === ""
       ? []
-      : itemArray.filter(
+      : allUser.filter(
           (it) =>
-            it.userNickName
+            it.userId
               .toLocaleLowerCase()
               .includes(getUserNickName.toLocaleLowerCase()) ||
             it.userName
@@ -99,14 +134,20 @@ const SearchResult = ({ text }) => {
   return (
     <Wrapper>
       <SearchList>
-        {showUserNickName().map((it, idx) => (
-          <MainSearchItem>
+        {text.startsWith("#") 
+        ? showHashtag().map((it, idx) => (
+          <MainSearchItem onClick={() => navigate(`/search?q=${it.slice(1)}`)}>
+            <SearchItem key={idx} type={"mainSearch"} hashtag={it} hashtagCount={hashtagCount[it]} />
+          </MainSearchItem>
+        ))
+        : showUserNickName().map((it, idx) => (
+          <MainSearchItem onClick={() => navigate("/detail")}>
             <SearchItem key={idx} type={"mainSearch"} {...it} />
           </MainSearchItem>
         ))}
         <NoResult
           className={
-            getUserNickName === "" || showUserNickName().length > 0
+            getUserNickName === "" || showUserNickName().length > 0 || showHashtag().length > 0
               ? "active"
               : ""
           }

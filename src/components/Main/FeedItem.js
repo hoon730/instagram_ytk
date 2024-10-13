@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../../App";
 import styled from "styled-components";
 import { getFormattedDate } from "../../utils/utils";
 import ProfileImg from "../Profile/ProfileImg";
@@ -125,8 +126,9 @@ const DateText = styled.div`
   }
 `;
 
-const FeedItem = ({ myProfile, feedDetail, dateMB }) => {
+const FeedItem = ({ feedDetail, dateMB }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const { myProfile } = useContext(StateContext);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
   const onClick = () => {
@@ -159,13 +161,7 @@ const FeedItem = ({ myProfile, feedDetail, dateMB }) => {
       </ProfileSection>
       <PhotoSection>
         {feedDetail.type === "reels" ? (
-          <Video
-            autoPlay
-            muted
-            loop
-            src={feedDetail.imgPath}
-            onClick={onClick}
-          />
+          <Video autoPlay muted loop src={feedDetail.imgPath} />
         ) : (
           <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}

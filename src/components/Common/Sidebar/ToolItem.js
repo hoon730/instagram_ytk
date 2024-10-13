@@ -54,28 +54,29 @@ const ToolItem = ({ name, iconCode, id, clickEvent }) => {
   const { darkMode } = useContext(ThemeContext);
   const { changeDark } = useContext(ThemeContext);
 
-  const onClick = () => {
-    if (id === 3) changeDark();
-    if (name === "heart" || name === "heartFill") clickEvent();
-  };
+  const threadUrl = "https://www.threads.net/";
 
-  const toggleSetting = () => {
+  const onClick = () => {
     if (id === 1) {
       setSetting((prev) => !prev);
     }
+    if (id === 2) {
+      window.open(threadUrl);
+    }
+    if (id === 3) changeDark();
+    if (name === "heart" || name === "heartFill") clickEvent();
   };
 
   return (
     <ToolBox
       onClick={() => {
         onClick();
-        toggleSetting();
       }}
       id={id}
       className={darkMode && id === 3 ? "dark" : name}
     >
       {darkMode && id === 3 ? <FaMoon /> : iconCode}
-      {setting ? <Setting /> : null}
+      {setting ? <Setting setSetting={setSetting} /> : null}
     </ToolBox>
   );
 };
