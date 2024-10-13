@@ -16,7 +16,6 @@ const ButtonItem = styled.button`
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   font-family: "Noto Sans KR", sans-serif;
   cursor: pointer;
-  transition: background 0.3s;
   ${({ type, theme }) =>
     type === "positive"
       ? `background: ${theme.subColor};`

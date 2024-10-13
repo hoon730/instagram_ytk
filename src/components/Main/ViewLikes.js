@@ -5,8 +5,8 @@ import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
-const Wrapper = styled(motion.div)`
-  width: 380px;
+const ViewSection = styled(motion.div)`
+  width: 350px;
   padding: 20px 0px;
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: var(--border-radius-12);
@@ -95,7 +95,7 @@ const ViewLikes = ({ likeUser, setShowProfile }) => {
     setShowProfile((prev) => !prev);
   };
   return (
-    <Wrapper>
+    <ViewSection>
       <Header>
         좋아요
         <CloseButton onClick={close} />
@@ -110,6 +110,8 @@ const ViewLikes = ({ likeUser, setShowProfile }) => {
                     type={"feed"}
                     userNickname={it.userId}
                     check={it.badge}
+                    uid={it.uid}
+                    fix={true}
                   />
                   <UserName>{it.userName}</UserName>
                 </UserInfo>
@@ -118,7 +120,7 @@ const ViewLikes = ({ likeUser, setShowProfile }) => {
             ))
           : null}
       </DescSection>
-    </Wrapper>
+    </ViewSection>
   );
 };
 

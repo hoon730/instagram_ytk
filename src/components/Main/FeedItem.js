@@ -141,8 +141,7 @@ const FeedItem = ({ feedDetail }) => {
             createdAt={new Date(parseInt(feedDetail.createdAt))}
             btn={"more"}
             follwed={followResult ? "" : "팔로우"}
-            feedDetail={feedDetail}
-            myProfile={myProfile}
+            uid={feedDetail.uid}
           />
           <UserName>{feedDetail.profile.userName}</UserName>
         </UserInfo>
@@ -169,6 +168,7 @@ const FeedItem = ({ feedDetail }) => {
               type={"feed"}
               userNickname={feedDetail.profile.userId}
               check={feedDetail.profile.badge ? "active" : ""}
+              uid={feedDetail.uid}
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />

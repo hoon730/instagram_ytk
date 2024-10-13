@@ -102,17 +102,6 @@ const FeedContent = () => {
               )
               .map(async (doc) => {
                 const postData = doc.data();
-                /*const profileQuery = query(
-                  collection(db, "profile"),
-                  where("uid", "==", postData.uid),
-                  limit(1)
-                );
-                const profileSnapshot = await getDocs(profileQuery);
-
-                let profileData = {};
-                if (!profileSnapshot.empty) {
-                  profileData = profileSnapshot.docs[0].data();
-                }*/
 
                 const profileData = allProfile.find(
                   (it) => it.uid === postData.uid
