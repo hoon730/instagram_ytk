@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import MyFeed from "./MyFeed";
+import MbDetail from "./MbDetail"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -11,7 +12,8 @@ const Wrapper = styled.div`
 const Detail = () => {
   return (
     <Wrapper>
-      <MyFeed />
+      {/* <MyFeed /> */}
+      <MbDetail/>
     </Wrapper>
   );
 };

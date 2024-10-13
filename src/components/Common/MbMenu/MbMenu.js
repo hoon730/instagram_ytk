@@ -2,29 +2,38 @@ import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../../App";
 import styled from "styled-components";
-import { menuData } from "../../../utils/utils";
 import New from "../../../pages/New";
 import { mbMenuData } from "../../../utils/utils";
 import ProfileImg from "../../Profile/ProfileImg";
 
 const MenuList = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   height: 70px;
   padding: 16px;
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
+  z-index: 2;
+
+  @media screen and (max-width: 630px) {
+    display: flex;
+  }
 `;
 
 const MenuItem = styled.div`
-  width: calc(100% / 5);
+  width: 60px;
   height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
+  flex-wrap: nowrap;
   cursor: pointer;
   transition: all 0.2s;
   border-radius: var(--border-radius-12);
@@ -89,10 +98,6 @@ const MbMenu = () => {
     setOpenNew(true);
   };
 
-  const closeNew = () => {
-    setOpenNew(false);
-  };
-
   return (
     <MenuList className="menulist">
       {mbMenuData.map((it, idx) => (
@@ -119,16 +124,7 @@ const MbMenu = () => {
           <MenuText className="text">{it.name}</MenuText>
         </MenuItem>
       ))}
-      {openNew ? (
-        <NewBg
-          ref={newBgRef}
-          onClick={(e) => {
-            if (e.target === newBgRef.current) setOpenNew(false);
-          }}
-        >
-          <New closeNew={closeNew} />
-        </NewBg>
-      ) : null}
+      {openNew ? <New setOpenNew={setOpenNew} /> : null}
     </MenuList>
   );
 };
