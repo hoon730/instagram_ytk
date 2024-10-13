@@ -11,16 +11,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../utils/firebase";
 
-export const IPost = {
-  id: String,
-  createdAt: Number,
-  photo: String,
-  video: String,
-  post: String,
-  userId: String,
-  userName: String,
-};
-
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -28,7 +18,6 @@ const Wrapper = styled.div`
   margin-bottom: 5px;
   /* overflow-y: scroll; */
 `;
-
 const TimeLine = ({ myFeeds, myProfile }) => {
   const [posts, setPosts] = useState([]);
 
@@ -40,16 +29,31 @@ const TimeLine = ({ myFeeds, myProfile }) => {
         orderBy("createdAt", "desc"),
         limit(25)
       );
-      unsubscribe = onSnapshot(postQuery, (snapshot) => {
+
+      unsubscribe = await onSnapshot(postQuery, (snapshot) => {
         const fetchedPosts = snapshot.docs.map((doc) => {
-          const { content, createdAt, media, userId, uid } = doc.data();
+          const {
+            content,
+            createdAt,
+            hastage,
+            like,
+            location,
+            tagUser,
+            uid,
+            imgPath,
+            type,
+          } = doc.data();
           return {
             id: doc.id,
             content,
             createdAt,
-            media,
-            userId,
+            hastage,
+            like,
+            location,
+            tagUser,
             uid,
+            imgPath,
+            type,
           };
         });
         setPosts(fetchedPosts); // posts 상태 업데이트

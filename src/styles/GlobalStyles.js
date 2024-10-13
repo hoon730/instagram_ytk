@@ -26,7 +26,7 @@ const GlobalStyles = createGlobalStyle`
 
   input {
     border: none;
-    padding-left: 10px;
+    /* padding-left: 10px; */
     transition: all 0.3s;
   }
 

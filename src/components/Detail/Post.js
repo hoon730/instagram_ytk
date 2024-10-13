@@ -15,6 +15,7 @@ const Img = styled.img`
   height: 100%;
   object-fit: cover;
 `;
+
 const Video = styled.video`
   width: 100%;
   height: 100%;
@@ -32,25 +33,38 @@ const Post = ({ myFeed, myProfile, post }) => {
     <>
       {myFeed ? (
         <Wrapper onClick={showFeed}>
-          {myFeed.type === "img" ? (
+          {Array.isArray(myFeed.imgPath) ? (
+            myFeed.imgPath.map((item, idx) =>
+              myFeed.type === "img" ? (
+                <Img key={idx} src={item} />
+              ) : myFeed.type === "reels" ? (
+                <Video key={idx} src={item} muted />
+              ) : null
+            )
+          ) : myFeed.type === "img" ? (
             <Img src={myFeed.imgPath} />
-          ) : (
+          ) : myFeed.type === "reels" ? (
             <Video src={myFeed.imgPath} muted />
-          )}
+          ) : null}
         </Wrapper>
       ) : (
-        // post와 post.media가 존재하는지 확인 후 처리
         <Wrapper onClick={showFeed}>
-          {post && post.media ? (
-            post.media.map((item, idx) =>
-              item.type === "img" ? (
-                <Img key={idx} src={item.imgPath} />
-              ) : (
-                <Video key={idx} src={item.imgPath} muted />
+          {post && post.imgPath ? (
+            Array.isArray(post.imgPath) ? (
+              post.imgPath.map((item, idx) =>
+                post.type === "img" ? (
+                  <Img key={idx} src={item} />
+                ) : post.type === "reels" ? (
+                  <Video key={idx} src={item} muted />
+                ) : null
               )
-            )
+            ) : post.type === "img" ? (
+              <Img src={post.imgPath} />
+            ) : post.type === "reels" ? (
+              <Video src={post.imgPath} muted />
+            ) : null
           ) : (
-            <p>미디어가 없습니다</p> // post나 media가 없는 경우 처리
+            <p>미디어가 없습니다</p>
           )}
         </Wrapper>
       )}

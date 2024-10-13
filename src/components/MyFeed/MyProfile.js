@@ -55,7 +55,7 @@ const MyIntro = styled.div`
   font-size: var(--font-size-16);
 `;
 
-const MyProfile = ({ myProfile }) => {
+const MyProfile = ({ myProfile, handleEditphoto }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
@@ -71,7 +71,13 @@ const MyProfile = ({ myProfile }) => {
             <span>{myProfile?.userName}</span>
           </MyName>
           <EditBtn onClick={onClick}>
-            {isOpen ? <Setup onClick={onClick} myProfile={myProfile} /> : null}
+            {isOpen ? (
+              <Setup
+                onClick={onClick}
+                myProfile={myProfile}
+                handleEditphoto={handleEditphoto}
+              />
+            ) : null}
             <FaGear />
           </EditBtn>
         </NameBox>

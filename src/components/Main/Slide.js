@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { videoArr } from "../../utils/utils";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -102,6 +103,14 @@ const Slide = ({ imgPath, onClick }) => {
 
   const imageArray = Array.isArray(imgPath) ? imgPath : [imgPath];
 
+  const extractExtension = (value) => {
+    const firstSplit = value.split("?");
+    const secondSplit = firstSplit[0].split(".");
+    return secondSplit[secondSplit.length - 1].toLowerCase();
+  };
+
+  console.log(videoArr.includes("mp4"));
+
   return (
     <Wrapper>
       <Slides
@@ -111,7 +120,21 @@ const Slide = ({ imgPath, onClick }) => {
       >
         {imageArray.map((it, idx) => (
           <SlideItem key={idx}>
-            <img src={it} />
+            {videoArr.includes(extractExtension(it)) ? (
+              <video
+                src={it}
+                autoPlay
+                muted
+                loop
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            ) : (
+              <img src={it} />
+            )}
           </SlideItem>
         ))}
       </Slides>

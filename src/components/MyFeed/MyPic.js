@@ -47,7 +47,7 @@ const MyFeedDesc = styled.div`
   margin-left: 250px;
 `;
 
-const MyPic = ({ myProfile, myFeeds }) => {
+const MyPic = ({ myProfile, myFeeds, editprofilePhoto, setEditProfilePhoto }) => {
 
   return (
     <Wrapper>
@@ -57,7 +57,7 @@ const MyPic = ({ myProfile, myFeeds }) => {
           <ProfileImg
             type={"INactive"}
             size={170}
-            url={myProfile?.profilePhoto}
+            url={editprofilePhoto ? editprofilePhoto : myProfile?.profilePhoto}
             hover={true}
           />
         </ProfileImgBox>

@@ -63,7 +63,7 @@ const Btns = styled.div`
 `;
 
 const HoverProfile = ({ type, feedDetail, myProfile, top }) => {
-  const followResult = myProfile.following.find((it) => it === feedDetail.uid);
+  const followResult = myProfile?.following.find((it) => it === feedDetail.uid);
 
   return (
     <Wrapper

@@ -32,7 +32,21 @@ const Wrapper = styled.div`
 const MyFeed = () => {
   const [myProfile, setMyProfile] = useState(null);
   const [myFeeds, setMyFeed] = useState([]);
-  const [postsWithProfiles, setPostsWithProfiles] = useState([]);
+  const [editprofilePhoto, setEditProfilePhoto] = useState();
+  const [editProfileName, setEditProfileName] = useState();
+  const [editProfileIntro, setEditProfileIntro] = useState();
+
+  const handleEditphoto = (url) => {
+    setEditProfilePhoto(url);
+  };
+
+  const handleEditName = (userId) => {
+    setEditProfileName(userId);
+  };
+
+  const handleEditIntro = (text) => {
+    setEditProfileIntro(text);
+  };
 
   useEffect(() => {
     const userUid = auth.currentUser?.uid;
@@ -78,8 +92,13 @@ const MyFeed = () => {
 
   return (
     <Wrapper>
-      <MyPic myProfile={myProfile} myFeeds={myFeeds} />
-      <MyProfile myProfile={myProfile} />
+      <MyPic
+        myProfile={myProfile}
+        myFeeds={myFeeds}
+        editprofilePhoto={editprofilePhoto}
+        setEditProfilePhoto={setEditProfilePhoto}
+      />
+      <MyProfile myProfile={myProfile} handleEditphoto={handleEditphoto} />
       <MyHighlight />
       <MyFeedTabBar />
       <TimeLine myFeeds={myFeeds} myProfile={myProfile} />

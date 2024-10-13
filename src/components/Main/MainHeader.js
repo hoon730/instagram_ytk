@@ -95,8 +95,6 @@ const MainHeader = () => {
     setHeart((prev) => !prev);
   };
 
-  console.log(auth.currentUser);
-
   useEffect(() => {
     const userUid = auth.currentUser?.uid;
     if (userUid) {

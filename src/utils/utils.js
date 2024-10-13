@@ -150,3 +150,27 @@ export const scale = {
     },
   },
 };
+
+export const videoArr = [
+  "mp4",
+  "avi",
+  "mkv",
+  "mov",
+  "wmv",
+  "flv",
+  "webm",
+  "m4v",
+  "3gp",
+  "ogv",
+  "m2ts",
+  "mts",
+  "vob",
+  "rmvb",
+  "divx",
+  "f4v",
+  "asf",
+  "swf",
+  "mxf",
+  "dv",
+  "ts",
+];
