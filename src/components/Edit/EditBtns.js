@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import reset from "styled-reset";
 import styled from "styled-components";
 import SlideBtn from "./SlideBtn";
@@ -7,15 +6,21 @@ import SlideBtn from "./SlideBtn";
 const Wrapper = styled.div`
   width: 100%;
   ul {
-    height: 37px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
     li {
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+  }
+
+  @media screen and (max-width: 630px) {
+    ul {
+      gap: 15px;
     }
   }
 `;

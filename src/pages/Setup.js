@@ -35,13 +35,24 @@ const Container = styled(motion.div)`
 `;
 
 const Wrapper = styled(motion.form)`
-  padding: 0 20px;
   width: 600px;
-  height: 610px;
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 20px;
   padding: 30px;
   background: ${({ theme }) => theme.bgColor};
+
+  @media screen and (max-width: 1024px) {
+    width: 500px;
+  }
+
+  @media screen and (max-width: 630px) {
+    width: 430px;
+    font-size: var(--font-14);
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
+  }
 `;
 
 const Title = styled.div`
@@ -49,6 +60,7 @@ const Title = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+
   & button:first-child {
     color: ${({ theme }) => theme.nonActiveBtnColor};
   }

@@ -8,11 +8,21 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
+
+  @media screen and (max-width: 630px) {
+    margin-bottom: 20px;
+  }
+
   ul {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    @media screen and (max-width: 630px) {
+      gap: 15px;
+    }
+
     li {
       width: 100%;
       display: flex;
@@ -27,7 +37,7 @@ const Wrapper = styled.div`
         border-radius: var(--border-radius-8);
         color: ${({ theme }) => theme.fontColor};
         background: ${({ theme }) => theme.bgColor};
-        font-size: var(--font-size-14);
+        font-size: var(--font-16);
         &::placeholder {
           color: var(--gray-color);
           opacity: 1;
@@ -42,6 +52,10 @@ const Wrapper = styled.div`
           & ~ div {
             color: ${({ theme }) => theme.subColor};
           }
+        }
+        @media screen and (max-width: 500px) {
+          height: 38px;
+          font-size: var(--font-14);
         }
       }
       label {
@@ -52,12 +66,17 @@ const Wrapper = styled.div`
         padding-left: 15px;
         flex: 17;
         height: 70px;
-        border: 1px solid ${({ theme }) => theme.borderColor};
+        border: 2px solid ${({ theme }) => theme.borderColor};
         border-radius: var(--border-radius-8);
         color: ${({ theme }) => theme.fontColor};
         background: ${({ theme }) => theme.bgColor};
         font-size: var(--font-size-14);
-        resize: none;
+        /* resize: none; */
+        resize: vertical;
+        /* overflow-y: scroll; */
+        overflow-y: auto;
+        box-sizing: border-box;
+
         &::placeholder {
           color: var(--gray-color);
           opacity: 1;
@@ -72,6 +91,10 @@ const Wrapper = styled.div`
           & ~ div {
             color: ${({ theme }) => theme.subColor};
           }
+        }
+        @media screen and (max-width: 500px) {
+          height: 60px;
+          font-size: var(--font-14);
         }
       }
     }
@@ -104,13 +127,14 @@ const EditDesc = ({
         <li>
           <label htmlFor="intro">소개</label>
           <textarea
+            maxLength={150}
             value={intro}
             name="소개"
             type="textarea"
             id="intro"
             onChange={handleIntro}
             placeholder={myProfile ? myProfile.introduction : "소개"}
-          />
+          ></textarea>
         </li>
         <li>
           <label htmlFor="link">링크</label>
