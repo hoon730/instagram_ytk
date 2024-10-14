@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../../App";
 import styled from "styled-components";
+import { getFormattedDate } from "../../utils/utils";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import Slide from "./Slide";
@@ -15,7 +17,7 @@ const Wrapper = styled.div`
   &:last-child {
     border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   }
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     padding-bottom: 22px;
   }
 `;
@@ -26,9 +28,10 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     margin: 0 20px;
     height: 66px;
+    gap: 10px;
     & .storyFirstCircle {
       width: 46px;
       height: 46px;
@@ -50,7 +53,7 @@ const UserInfo = styled.div`
   width: 100%;
   gap: 4px;
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     gap: 0px;
     font-size: var(--font-12);
     .user-id {
@@ -71,7 +74,7 @@ const UserInfo = styled.div`
 const UserName = styled.p`
   font-size: var(--font-14);
   color: var(--gray-color);
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     font-size: var(--font-10);
   }
 `;
@@ -83,7 +86,7 @@ const PhotoSection = styled.div`
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     width: 350px;
     height: 350px;
   }
@@ -97,14 +100,14 @@ const Video = styled.video`
 
 const FeedDescArea = styled.div`
   margin: 0 36px;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     margin: 0 20px;
   }
 `;
 
 const FeedDesc = styled.div`
   margin-top: 22px;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     margin-top: 13px;
     & input {
       height: 28px;
@@ -113,8 +116,19 @@ const FeedDesc = styled.div`
   }
 `;
 
-const FeedItem = ({ myProfile, feedDetail }) => {
+const DateText = styled.div`
+  display: none;
+  @media screen and (max-width: 770px) {
+    display: block;
+    font-size: var(--font-14);
+    margin-bottom: 12px;
+    color: var(--gray-color);
+  }
+`;
+
+const FeedItem = ({ feedDetail, dateMB }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const { myProfile } = useContext(StateContext);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
   const onClick = () => {
@@ -139,21 +153,14 @@ const FeedItem = ({ myProfile, feedDetail }) => {
             createdAt={new Date(parseInt(feedDetail.createdAt))}
             btn={"more"}
             follwed={followResult ? "" : "팔로우"}
-            feedDetail={feedDetail}
-            myProfile={myProfile}
+            uid={feedDetail.uid}
           />
           <UserName>{feedDetail.profile.userName}</UserName>
         </UserInfo>
       </ProfileSection>
       <PhotoSection>
         {feedDetail.type === "reels" ? (
-          <video
-            autoPlay
-            muted
-            loop
-            src={feedDetail.imgPath}
-            onClick={onClick}
-          />
+          <Video autoPlay muted loop src={feedDetail.imgPath} />
         ) : (
           <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}
@@ -173,9 +180,11 @@ const FeedItem = ({ myProfile, feedDetail }) => {
               type={"feed"}
               userNickname={feedDetail.profile.userId}
               check={feedDetail.profile.badge ? "active" : ""}
+              uid={feedDetail.uid}
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
+          <DateText>{`${dateMB}`}</DateText>
           <CommentInput width={"100%"} height={"50px"} />
         </FeedDesc>
       </FeedDescArea>

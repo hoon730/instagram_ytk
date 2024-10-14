@@ -7,7 +7,7 @@ const Wrapper = styled.div``;
 
 const MyProfileBox = styled.div`
   width: 100%;
-  border-top: 1px solid ${({ theme }) => theme.borderColor};
+  /* border-top: 1px solid ${({ theme }) => theme.borderColor}; */
 `;
 
 const NameBox = styled.div`
@@ -15,7 +15,15 @@ const NameBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 70px 0;
+  padding: 20px 70px 0px;
+
+  @media screen and (max-width: 900px) {
+    padding: 20px 50px 0px;
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 20px 20px 0px 50px;
+  }
 `;
 
 const MyName = styled.div`
@@ -46,6 +54,14 @@ const EditBtn = styled.div`
     font-size: var(--font-22);
     color: #fff;
   }
+
+  @media screen and (max-width: 1000px) {
+    width: 30px;
+    height: 30px;
+    svg {
+      font-size: var(--font-18);
+    }
+  }
 `;
 
 const MyIntro = styled.div`
@@ -53,9 +69,13 @@ const MyIntro = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   padding: 10px 70px;
   font-size: var(--font-size-16);
+
+  @media screen and (max-width: 900px) {
+    padding: 10px 50px 10px;
+  }
 `;
 
-const MyProfile = ({ myProfile, handleEditphoto }) => {
+const MyProfile = ({ myProfile }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
@@ -71,13 +91,7 @@ const MyProfile = ({ myProfile, handleEditphoto }) => {
             <span>{myProfile?.userName}</span>
           </MyName>
           <EditBtn onClick={onClick}>
-            {isOpen ? (
-              <Setup
-                onClick={onClick}
-                myProfile={myProfile}
-                handleEditphoto={handleEditphoto}
-              />
-            ) : null}
+            {isOpen ? <Setup onClick={onClick} myProfile={myProfile} /> : null}
             <FaGear />
           </EditBtn>
         </NameBox>

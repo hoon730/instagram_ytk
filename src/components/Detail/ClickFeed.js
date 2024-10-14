@@ -43,8 +43,8 @@ const CloseBtn = styled.button`
 `;
 
 const Wrapper = styled(motion.div)`
-  ${({ isEditing }) =>
-    isEditing
+  ${({ $isEditing }) =>
+    $isEditing
       ? `width: 52%;
   height: 74%;`
       : `width: 80%;
@@ -59,7 +59,7 @@ const Wrapper = styled(motion.div)`
 
     .inner {
       width: 100%;
-      height: ${({ isEditing }) => (isEditing ? "auto" : "100%")};
+      height: ${({ $isEditing }) => ($isEditing ? "auto" : "100%")};
     }
   }
 
@@ -88,8 +88,8 @@ const Inner = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  ${({ isEditing }) =>
-    isEditing
+  ${({ $isEditing }) =>
+    $isEditing
       ? `width: 52%;
   height: 74%;`
       : `width: 80%;
@@ -124,15 +124,15 @@ const Container = styled.div`
 const UserContainer = styled.div`
   width: 100%;
   padding: 20px;
-  border-bottom: ${({ isEditing }) =>
-    isEditing ? "none" : `1px solid ${({ theme }) => theme.borderColor}`};
+  border-bottom: ${({ $isEditing }) =>
+    $isEditing ? "none" : `1px solid ${({ theme }) => theme.borderColor}`};
 `;
 
 const UserBox = styled.div`
   width: 100%;
   display: flex;
   gap: 15px;
-  padding-bottom: ${({ isEditing }) => (isEditing ? "20px" : "5px")};
+  padding-bottom: ${({ $isEditing }) => ($isEditing ? "20px" : "5px")};
 `;
 
 const Userinfo = styled.div`

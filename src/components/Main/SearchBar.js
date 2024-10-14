@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SearchResult from "./SearchResult";
 import { RxMagnifyingGlass } from "react-icons/rx";
@@ -28,6 +29,7 @@ const ItemArea = styled.div`
     color: var(--gray-color);
   }
   &.deleteBtn {
+    width: 18px;
     display: none;
     background: var(--gray-color);
     border-radius: 50%;
@@ -65,6 +67,7 @@ const SearchBar = () => {
   const [text, setText] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [resultActive, setResultActive] = useState(false);
+  const navigate = useNavigate();
 
   const deleteBtnActive = (e) => {
     setText(e.target.value);
@@ -75,6 +78,14 @@ const SearchBar = () => {
     } else {
       setIsActive(true);
       setResultActive(true);
+    }
+  };
+
+  const moveResult = (e) => {
+    if (e.key === "Enter") {
+      if (text.startsWith("#")) {
+        navigate(`/search?q=${text.toLocaleLowerCase().slice(1)}`);
+      }
     }
   };
 
@@ -92,6 +103,7 @@ const SearchBar = () => {
         </ItemArea>
         <SearchInput
           onChange={deleteBtnActive}
+          onKeyUp={moveResult}
           value={text}
           type="text"
           placeholder="검색"

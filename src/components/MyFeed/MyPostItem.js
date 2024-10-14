@@ -2,20 +2,21 @@ import React from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  width: ${({ size }) => `${size || 308}`}px;
-  height: ${({ size }) => `${size || 308}`}px;
-  border-radius: 10px;
-
-  @media screen and (max-width: 780px) {
-    width: 100%;
-  }
-
-  @media screen and (max-width: 430px) {
-    width: 100%;
-  }
+  position: relative;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  ${({ page }) =>
+    page === "search" || page === "explore"
+      ? "padding-top: 100%;"
+      : "padding-top: 33%;"}
+  background: #000;
 `;
 
 const ImgBox = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 `;
@@ -27,13 +28,13 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const MyPostItem = ({ size, url, onClick }) => {
+const MyPostItem = ({ size, url, onClick, page }) => {
   const showFeed = () => {
     onClick();
   };
 
   return (
-    <Wrapper onClick={showFeed}>
+    <Wrapper onClick={showFeed} page={page}>
       <ImgBox>
         <Img src={url} alt="postphoto" />
       </ImgBox>

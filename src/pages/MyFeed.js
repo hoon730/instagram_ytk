@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
 
-  @media screen and (max-width: 780px) {
+  @media screen and (max-width: 1024px) {
     width: 100%;
   }
   @media screen and (max-width: 630px) {
@@ -35,21 +35,6 @@ const Wrapper = styled.div`
 const MyFeed = () => {
   const [myProfile, setMyProfile] = useState(null);
   const [myFeeds, setMyFeed] = useState([]);
-  const [editprofilePhoto, setEditProfilePhoto] = useState();
-  const [editProfileName, setEditProfileName] = useState();
-  const [editProfileIntro, setEditProfileIntro] = useState();
-
-  const handleEditphoto = (url) => {
-    setEditProfilePhoto(url);
-  };
-
-  const handleEditName = (userId) => {
-    setEditProfileName(userId);
-  };
-
-  const handleEditIntro = (text) => {
-    setEditProfileIntro(text);
-  };
 
   useEffect(() => {
     const userUid = auth.currentUser?.uid;
@@ -95,13 +80,8 @@ const MyFeed = () => {
 
   return (
     <Wrapper>
-      <MyPic
-        myProfile={myProfile}
-        myFeeds={myFeeds}
-        editprofilePhoto={editprofilePhoto}
-        setEditProfilePhoto={setEditProfilePhoto}
-      />
-      <MyProfile myProfile={myProfile} handleEditphoto={handleEditphoto} />
+      <MyPic myProfile={myProfile} myFeeds={myFeeds} />
+      <MyProfile myProfile={myProfile} />
       <MyHighlight />
       <MyFeedTabBar />
       <TimeLine myFeeds={myFeeds} myProfile={myProfile} />

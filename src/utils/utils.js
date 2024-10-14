@@ -7,6 +7,10 @@ import { FaRegSquarePlus } from "react-icons/fa6";
 import { FaGear } from "react-icons/fa6";
 import { BsThreads } from "react-icons/bs";
 import { LuSunMedium } from "react-icons/lu";
+import { GoBookmark } from "react-icons/go";
+import { PiSirenLight } from "react-icons/pi";
+import { LuArrowRightLeft } from "react-icons/lu";
+import { TbArrowRightFromArc } from "react-icons/tb";
 
 import { RxMagnifyingGlass } from "react-icons/rx";
 
@@ -97,6 +101,37 @@ export const toolData = [
     id: 3,
     name: "day",
     iconCode: <LuSunMedium />,
+  },
+];
+
+export const mobileHeaderMenu = [
+  {
+    id: 1,
+    name: "저장됨",
+    iconCode: <GoBookmark />,
+  },
+  {
+    id: 2,
+    name: "문제 신고",
+    iconCode: <PiSirenLight />,
+  },
+  {
+    id: 3,
+    className: "setting",
+    name: "설정",
+    iconCode: <FaGear />,
+  },
+  {
+    id: 4,
+    className: "auth",
+    name: "계정 전환",
+    iconCode: <LuArrowRightLeft />,
+  },
+  {
+    id: 5,
+    className: "logout",
+    name: "로그아웃",
+    iconCode: <TbArrowRightFromArc />,
   },
 ];
 

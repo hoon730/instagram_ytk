@@ -13,6 +13,9 @@ const Wrapper = styled.div`
     font-weight: var(--font-bold);
     color: ${({ theme }) => theme.fontColor};
   }
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 const Text = styled.div`
