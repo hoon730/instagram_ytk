@@ -24,6 +24,10 @@ const StyledSpan = styled.span`
       : type === "hover"
       ? `font-size: var(--font-16); font-weight: var(--font-bold);`
       : `font-size: var(--font-14); font-weight: var(--font-bold);`}
+  @media screen and (max-width: 770px) {
+    gap: 4px;
+    font-size: var(--font-12);
+  }
 `;
 
 const IdSpan = styled.div`
@@ -34,6 +38,9 @@ const IdSpan = styled.div`
 
 const Check = styled.img`
   width: 18px;
+  @media screen and (max-width: 770px) {
+    width: 14px;
+  }
 `;
 
 const Content = styled.span`
@@ -49,6 +56,11 @@ const Date = styled.div`
   font-size: var(--font-14);
   font-weight: var(--font-regular);
   color: var(--gray-color);
+  @media screen and (max-width: 770px) {
+    font-size: var(--font-12);
+    gap: 4px;
+    ${({ type }) => (type === "feed" ? "display: none;" : "")}
+  }
 `;
 
 const IsFollowed = styled.div`
@@ -58,8 +70,12 @@ const IsFollowed = styled.div`
   gap: 8px;
   font-size: var(--font-14);
   font-weight: var(--font-bold);
-  color: var(--sub-purple-color);
+  color: ${({ theme }) => theme.subColor};
   cursor: pointer;
+  @media screen and (max-width: 770px) {
+    font-size: var(--font-12);
+    gap: 4px;
+  }
 `;
 
 const MoreBtn = styled.button`
@@ -80,7 +96,7 @@ const MoreBackground = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 5;
 `;
 
 const MoreList = styled.div`
@@ -123,8 +139,8 @@ const UserId = ({
   feed,
   onClick,
   setIsEditing,
-  myProfile,
-  feedDetail,
+  uid,
+  fix,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -154,8 +170,9 @@ const UserId = ({
             <HoverProfile
               target={"id"}
               top={"22"}
-              feedDetail={feedDetail}
-              myProfile={myProfile}
+              type={type}
+              uid={uid}
+              fix={fix}
             />
           ) : null}
           {userNickname}
@@ -165,9 +182,9 @@ const UserId = ({
         ) : null}
         {content ? <Content>{content}</Content> : null}
         {createdAt ? (
-          <Date className="user-date">
+          <Date className="user-date" type={type}>
             <span>&middot;</span>
-            {getFormattedDate(createdAt)}
+            <span>{getFormattedDate(createdAt)}</span>
           </Date>
         ) : null}
         {follwed ? (

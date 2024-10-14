@@ -23,26 +23,55 @@ const Wrapper = styled.div`
         padding-left: 15px;
         flex: 17;
         height: 45px;
-        border: 1px solid ${({ theme }) => theme.borderColor};
+        border: 2px solid ${({ theme }) => theme.borderColor};
         border-radius: var(--border-radius-8);
+        color: ${({ theme }) => theme.fontColor};
+        background: ${({ theme }) => theme.bgColor};
         font-size: var(--font-size-14);
+        &::placeholder {
+          color: var(--gray-color);
+          opacity: 1;
+          transition: opacity 0.3s;
+        }
         &:focus {
+          &::placeholder {
+            opacity: 0;
+          }
           outline: none;
+          border-color: ${({ theme }) => theme.subColor};
+          & ~ div {
+            color: ${({ theme }) => theme.subColor};
+          }
         }
       }
       label {
         flex: 2;
       }
       textarea {
+        padding-top: 8px;
         padding-left: 15px;
         flex: 17;
         height: 70px;
         border: 1px solid ${({ theme }) => theme.borderColor};
         border-radius: var(--border-radius-8);
+        color: ${({ theme }) => theme.fontColor};
+        background: ${({ theme }) => theme.bgColor};
         font-size: var(--font-size-14);
         resize: none;
+        &::placeholder {
+          color: var(--gray-color);
+          opacity: 1;
+          transition: opacity 0.3s;
+        }
         &:focus {
+          &::placeholder {
+            opacity: 0;
+          }
           outline: none;
+          border-color: ${({ theme }) => theme.subColor};
+          & ~ div {
+            color: ${({ theme }) => theme.subColor};
+          }
         }
       }
     }
@@ -56,6 +85,7 @@ const EditDesc = ({
   userName,
   intro,
   link,
+  myProfile,
 }) => {
   return (
     <Wrapper>
@@ -68,6 +98,7 @@ const EditDesc = ({
             type="text"
             id="name"
             onChange={handleUserName}
+            placeholder={myProfile ? myProfile.userId : "이름"}
           />
         </li>
         <li>
@@ -77,8 +108,8 @@ const EditDesc = ({
             name="소개"
             type="textarea"
             id="intro"
-            placeholder=""
             onChange={handleIntro}
+            placeholder={myProfile ? myProfile.introduction : "소개"}
           />
         </li>
         <li>
@@ -89,6 +120,7 @@ const EditDesc = ({
             type="url"
             id="link"
             onChange={handleLink}
+            placeholder={myProfile ? myProfile.website : "주소"}
           />
         </li>
       </ul>

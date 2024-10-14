@@ -75,7 +75,7 @@ const MyIntro = styled.div`
   }
 `;
 
-const MyProfile = () => {
+const MyProfile = ({ myProfile }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClick = () => {
@@ -87,19 +87,15 @@ const MyProfile = () => {
       <MyProfileBox>
         <NameBox>
           <MyName>
-            <p>bb_bok</p>
-            <span>복</span>
+            <p>{myProfile?.userId}</p>
+            <span>{myProfile?.userName}</span>
           </MyName>
           <EditBtn onClick={onClick}>
-            {isOpen ? <Setup onClick={onClick} /> : null}
+            {isOpen ? <Setup onClick={onClick} myProfile={myProfile} /> : null}
             <FaGear />
           </EditBtn>
         </NameBox>
-        <MyIntro>
-          ⋆｡˚ ☁︎ ˚｡⋆｡
-          <br />
-          <br />
-        </MyIntro>
+        <MyIntro>{myProfile?.introduction}</MyIntro>
       </MyProfileBox>
     </Wrapper>
   );

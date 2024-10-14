@@ -1,4 +1,3 @@
-import { style } from "framer-motion/client";
 import React from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
@@ -11,10 +10,10 @@ const MyPicBox = styled.div`
   position: relative;
 `;
 
-const ProfileBg = styled.div`
+const ProfileBg = styled.img`
   width: 100%;
   height: 270px;
-  background: url(/images/postImgs/user1/bg.jpg) center/ cover no-repeat;
+  object-fit: cover;
 
   @media screen and (max-width: 780px) {
     width: 100%;
@@ -134,25 +133,25 @@ const MyFeedDesc = styled.div`
   }
 `;
 
-const MyPic = () => {
+const MyPic = ({ myProfile, myFeeds }) => {
   return (
     <Wrapper>
       <MyPicBox>
-        <ProfileBg />
+        <ProfileBg src={myProfile?.bgPhoto} />
         <ProfileImgBox>
           <ProfileImg
             type={"active"}
             size={170}
-            url={"/images/postImgs/user1/profile.jpg"}
+            url={myProfile?.profilePhoto}
             hover={true}
           />
         </ProfileImgBox>
         <MyFeedDesc>
           <PostAndFollow
-            posting={"18"}
-            follower={777}
-            following={333}
-            padding={"10px 0px"}
+            posting={myFeeds?.length}
+            follower={myProfile?.follower.length}
+            following={myProfile?.following.length}
+            myProfile={myProfile}
           />
         </MyFeedDesc>
       </MyPicBox>

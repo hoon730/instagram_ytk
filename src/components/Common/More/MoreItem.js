@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { auth } from "../../../utils/firebase";
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
@@ -8,19 +9,19 @@ const Wrapper = styled.div`
   text-align: center;
   transition: all 0.3s;
   cursor: pointer;
-  border-bottom: ${({ last, theme }) =>
-    last === "last" ? null : `1px solid ${theme.borderColor};`};
-  padding: ${({ padding }) => (padding ? `${padding}` : "auto")};
+  border-bottom: ${({ $last, theme }) =>
+    $last === "last" ? null : `1px solid ${theme.borderColor};`};
+  padding: ${({ $padding }) => ($padding ? `${$padding}` : "auto")};
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   cursor: pointer;
-  ${({ text }) =>
-    text === "신고" || text === "삭제"
+  ${({ $text }) =>
+    $text === "신고" || $text === "삭제"
       ? `color: var(--warning-color); font-weight: var(--font-bold);`
       : ""};
 
   &:hover {
-    ${({ text }) =>
-      text === "신고"
+    ${({ $text }) =>
+      $text === "신고"
         ? `color: #ED4816; font-weight: var(--font-bold);`
         : `color: var(--gray-color);`};
   }
@@ -37,13 +38,18 @@ const MoreItem = ({
 }) => {
   const navigate = useNavigate();
 
-  const goLogin = () => {
-    navigate("/login");
+  const logOut = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    const ask = confirm("로그아웃 하시겠습니다?");
+    if (ask) {
+      await auth.signOut();
+      navigate("/login");
+    }
   };
 
   const handleOnClick = () => {
     if (text === "로그아웃") {
-      goLogin();
+      logOut();
     } else if (text === "수정") {
       setIsEditing(true);
       setOpenMore(false);
@@ -54,10 +60,10 @@ const MoreItem = ({
 
   return (
     <Wrapper
-      padding={padding}
+      $padding={padding}
       fontSize={fontSize}
-      text={text}
-      last={last}
+      $text={text}
+      $last={last}
       onClick={handleOnClick}
     >
       {text}

@@ -3,27 +3,44 @@ import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 
+import { GoHash } from "react-icons/go";
 import { IoCloseOutline } from "react-icons/io5";
 
-const UserProfile = styled.div`
+const Container = styled.div`
   display: flex;
   justify-content: space-between;
   ${({ type }) => (type === "mainSearch" ? "" : "padding-top: 15px;")}
   position: relative;
 `;
 
-const UserDetail = styled.div`
+const HashtagIcon = styled.div`
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: ${({ theme }) => theme.nonActiveBtnColor};
+  border: 1px solid ${({ theme }) => theme.nonActiveBtnColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HashtagName = styled.div`
+  font-size: var(--font-14); 
+  font-weight: var(--font-bold);
+`;
+
+const Detail = styled.div`
   display: flex;
   gap: 8px;
 `;
-const Userinfo = styled.div`
+const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 4px;
 `;
-const UserName = styled.span`
-  font-size: var(--font-size-14);
+const Desc = styled.span`
+  font-size: var(--font-14);
   color: var(--gray-color);
 `;
 
@@ -34,7 +51,7 @@ const Btns = styled.div`
 `;
 
 const FollowBtn = styled.button`
-  font-size: var(--font-size-14);
+  font-size: var(--font-14);
   font-weight: var(--font-bold);
   color: var(--sub-purple-color);
   transition: all 0.3s;
@@ -56,23 +73,33 @@ const CloseBtn = styled.button`
   }
 `;
 
-const SearchItem = ({ type, userName, userNickName, followed, url }) => {
-
+const SearchItem = ({ type, userName, userId, followed, profilePhoto, hashtag, hashtagCount }) => {
   return (
-    <UserProfile type={type}>
-      <UserDetail>
+    <Container type={type}>
+      {type === "mainSearch" && hashtag
+      ? <Detail>
+        <HashtagIcon>
+          <GoHash size={20} />
+        </HashtagIcon>
+        <Info>
+          <HashtagName>{hashtag}</HashtagName>
+          <Desc>게시물 {hashtagCount}만</Desc>
+        </Info>
+      </Detail>
+      : <Detail>
         <ProfileImg
           type={type === "mainSearch" ? null : "active"}
           size={type === "mainSearch" ? "60" : "44"}
-          url={url}
+          url={profilePhoto}
           hover={type === "mainSearch" ? "noHover" : null}
         />
-        <Userinfo>
-          <UserId userNickname={userNickName} hover={type === "mainSearch" ? "noHover" : null} />
-          <UserName>{userName}</UserName>
-        </Userinfo>
-      </UserDetail>
-      {type === "mainSearch" ? null : (
+        <Info>
+          <UserId userNickname={userId} hover={type === "mainSearch" ? "noHover" : null} />
+          <Desc>{userName}</Desc>
+        </Info>
+      </Detail>
+      }
+      {type === "mainSearch" || hashtag ? null : (
         <Btns>
           <FollowBtn>{followed ? "팔로우" : null}</FollowBtn>
           <CloseBtn>
@@ -80,7 +107,7 @@ const SearchItem = ({ type, userName, userNickName, followed, url }) => {
           </CloseBtn>
         </Btns>
       )}
-    </UserProfile>
+    </Container>
   );
 };
 

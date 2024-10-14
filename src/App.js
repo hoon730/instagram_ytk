@@ -13,11 +13,21 @@ import New from "./pages/New";
 import Loading from "./components/Common/Loading";
 import ClickStory from "./components/Story/ClickStory";
 
-import { auth } from "./utils/firebase";
 import Setup from "./pages/Setup";
 import Signup from "./pages/Signup";
 import ProtectedPage from "./components/ProtectedPage";
 import SetStorage from "./pages/SetStorage";
+
+import { auth, db } from "./utils/firebase";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+  limit,
+  getDocs,
+} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -63,7 +73,11 @@ const router = createBrowserRouter([
       },
       {
         path: "search",
-        element: <Search />,
+        element: <Search page={"search"} />,
+      },
+      {
+        path: "explore",
+        element: <Search page={"explore"} />,
       },
       {
         path: "clickstory",
@@ -86,6 +100,8 @@ const router = createBrowserRouter([
 ]);
 
 export const ThemeContext = React.createContext();
+export const StateContext = React.createContext();
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const init = async () => {
@@ -93,9 +109,62 @@ function App() {
     await setIsLoading(false);
   };
   const [darkMode, setDarkMode] = useState(false);
+  const [allProfile, setAllProfile] = useState(null);
+  const [myProfile, setMyProfile] = useState(null);
 
   useEffect(() => {
     init();
+
+    let allProfileUnsubscribe = null;
+    const fetchAllProfile = async () => {
+      const profileQuery = query(collection(db, "profile"));
+      allProfileUnsubscribe = onSnapshot(profileQuery, (snapshot) => {
+        const profiles = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAllProfile(profiles);
+      });
+    };
+    fetchAllProfile();
+    return () => {
+      allProfileUnsubscribe && allProfileUnsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    let myProfileUnsubscribe = null;
+
+    const fetchMyProfile = async (uid) => {
+      const myProfileQuery = query(
+        collection(db, "profile"),
+        where("uid", "==", uid),
+        limit(1)
+      );
+
+      myProfileUnsubscribe = onSnapshot(myProfileQuery, (snapshot) => {
+        const profile = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMyProfile(profile[0]);
+      });
+    };
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchMyProfile(user.uid);
+      } else {
+        setMyProfile(null);
+      }
+    });
+
+    return () => {
+      if (myProfileUnsubscribe) {
+        myProfileUnsubscribe();
+      }
+      unsubscribe();
+    };
   }, []);
 
   const changeDark = () => {
@@ -112,7 +181,9 @@ function App() {
               <Loading />
             </Wrapper>
           ) : (
-            <RouterProvider router={router} />
+            <StateContext.Provider value={{ allProfile, myProfile }}>
+              <RouterProvider router={router} />
+            </StateContext.Provider>
           )}
         </ThemeContext.Provider>
       </ThemeProvider>

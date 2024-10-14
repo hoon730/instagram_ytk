@@ -1,10 +1,15 @@
 // v1. facebook 메시지
-// 2. 전화번호&사용자(id) 한꺼번에 저장-계정 복수생성=복잡해져서 포기. 전화번호||이메일 등록으로 변경=전화번호가 등록이 안됨..
-// v3. FirebaseError+눈모양버튼+구조적 문제
+// v2. 전화번호&사용자(id) 한꺼번에 저장-계정 복수생성=복잡해져서 포기. 전화번호||이메일 등록으로 변경=전화번호가 등록이 안됨. 이메일 필수.
+// 3. 문자숫자밑줄마침표만 아이디 등록할 때 허용. 아이디 추천 기능.
 // v4. uid 임의로 변환-불가능
-// 5. 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
-// v6. 디자인 좀 더 고민하기
-// Firebase: Error (auth/invalid-credential).
+// v5. 리아님이 말씀하신대로 데이타베이스에 올라가는 거 수정.
+// v6. Firebase: Error (auth/invalid-credential).파이어베이스 에러들 한글로 바꾸기. 로그인포맷, 같은이메일 존재
+// 7. 눈모양 버튼 앤터 칠 떄 boolean 안바뀌도록
+// v8. 로그인 id, 전번, 이메일과 비밀번호로 가능하게끔
+// 9. 반응형. 370, 780
+// 10. 로그인 전번간편로그인 기능
+// . 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
+
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +18,11 @@ import { FirebaseError } from "firebase/app";
 import styled from "styled-components";
 import LogoImg from "../components/Login/LogoImg";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import LoginBtn from "../components/Login/LoginBtn";
 import FbBtn from "../components/Login/FbBtn";
+import { db } from "../utils/firebase"; // Import your Firestore instance
+import { doc, setDoc } from "firebase/firestore";
 
 const colors = {
   sub2: "#6228D7",
@@ -27,16 +35,16 @@ const colors = {
 };
 
 const countries = [
-  { name: "대한민국", code: "+82" },
-  { name: "가나", code: "+233" },
-  { name: "미국", code: "+1" },
-  { name: "필리핀", code: "+63" },
-  { name: "일본", code: "+81" },
-  { name: "중국", code: "+86" },
-  { name: "러시아", code: "+7" },
-  { name: "독일", code: "+49" },
-  { name: "프랑스", code: "+33" },
-  { name: "영국", code: "+44" },
+  { name: "+82", code: "+82" },
+  { name: "+233", code: "+233" },
+  { name: "+1", code: "+1" },
+  { name: "+63", code: "+63" },
+  { name: "+81", code: "+81" },
+  { name: "+86", code: "+86" },
+  { name: "+7", code: "+7" },
+  { name: "+49", code: "+49" },
+  { name: "+33", code: "+33" },
+  { name: "+44", code: "+44" },
 ];
 
 const Wrapper = styled.div`
@@ -51,11 +59,15 @@ const Block = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 480px;
   padding: 40px;
   gap: 40px;
-  border: 1px solid;
-  border-color: var(--gray-color);
+  border: 1px solid var(--gray-color);
   border-radius: 10px;
+  @media (max-width: 780px) {
+    border-color: transparent;
+  }
 `;
 
 const PleaseSignUp = styled.p`
@@ -66,12 +78,13 @@ const PleaseSignUp = styled.p`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 15px;
 `;
 
 const InputBox = styled.div`
   position: relative;
-  width: 400px;
+  width: 100%;
   display: flex;
   border: 1px solid #bfbfbf;
   border-radius: 5px;
@@ -101,6 +114,9 @@ const LoginInput = styled.input`
     font-size: 12px;
     color: ${colors.sub2};
   }
+  &:not(:focus):not(:placeholder-shown) ~ label {
+    color: ${colors.darkGray};
+  }
 `;
 
 const Label = styled.label`
@@ -113,6 +129,9 @@ const Label = styled.label`
   color: ${colors.darkGray};
   pointer-events: none;
   transition: 0.2s ease all;
+  @media (max-width: 370px) {
+    font-size: 13px;
+  }
 `;
 
 const Error = styled.p`
@@ -141,7 +160,6 @@ const DomainSelect = styled.select`
   color: ${colors.darkGray};
   font-size: 16px;
   outline: none;
-
 `;
 
 const CountrySelect = styled.select`
@@ -154,8 +172,11 @@ const CountrySelect = styled.select`
 `;
 
 const SwitchEmailNPhone = styled.p`
+  display: flex;
+  width: fit-content;
   color: ${(props) => colors[props.color || "sub2"]};
   font-size: 14px;
+  gap: 5px;
   cursor: pointer;
 `;
 
@@ -167,14 +188,20 @@ const LoginBlock = styled.div`
 
 const AccountLogin = styled.div`
   display: flex;
+  position: relative;
   justify-content: space-between;
   width: 100%;
   font-size: 14px;
 `;
 
-const AccountQ = styled.p``;
+const AccountQ = styled.p`
+  color: ${colors.darkGray};
+`;
 const AccountLink = styled.a`
-  color: ${colors.warning};
+  position: absolute;
+  right: 0;
+  top: 33%;
+  color: ${colors.darkGray};
   cursor: pointer;
 `;
 
@@ -189,7 +216,8 @@ const Signup = () => {
   const [domain, setDomain] = useState("@gmail.com");
   const [country, setCountry] = useState("+82");
   const [emailError, setEmailError] = useState(false);
-  const [emailPhone, setEmailPhone] = useState(false);
+  const [emailOption, setEmailOption] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const usernameRef = useRef(null);
@@ -241,17 +269,34 @@ const Signup = () => {
     };
 
     const fullTel = () => {
-      return country + tel + "@" + "google" + ".com";
+      return country + tel;
       // return country + tel;
     };
     try {
       const credentials = await createUserWithEmailAndPassword(
         auth,
-        fullEmail() || fullTel(),
+        fullEmail(),
         password
       );
       console.log(credentials.user);
-      await updateProfile(credentials.user, { displayName: name });
+      await updateProfile(credentials.user, { displayName: id });
+      await setDoc(doc(db, "profile", credentials.user.uid), {
+        uid: credentials.user.uid,
+        userId: id,
+        userName: name,
+        phone: fullTel(),
+        email: fullEmail(),
+        badge: Boolean(false),
+        bgPhoto: "",
+        profilePhoto: "",
+        website: "",
+        gender: "",
+        introduction: "",
+        follower: [],
+        following: [],
+        nondisclosure: Boolean(false),
+        recommendation: Boolean(false),
+      });
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -262,7 +307,13 @@ const Signup = () => {
         ) {
           setPasswordError("* 비밀번호는 6자 이상으로 설정해주세요.");
         } else if (e.message == "Firebase: Error (auth/invalid-email).") {
-          setEmailError("* 이메일란에 '@'가 있어야합니다.");
+          setEmailError("* 이메일 형식이 잘못되었습니다.");
+        } else if (
+          e.message == "Firebase: Error (auth/email-already-in-use)."
+        ) {
+          setEmailError("* 이미 사용중인 이메일입니다.");
+        } else {
+          setError(e.message);
         }
       }
       /* } finally { */
@@ -275,7 +326,7 @@ const Signup = () => {
   };
 
   const toggleEmailNPhone = () => {
-    setEmailPhone((prev) => !prev);
+    setEmailOption((prev) => !prev);
   };
 
   const loginLink = () => {
@@ -335,26 +386,31 @@ const Signup = () => {
             />
             <Label>성명</Label>
           </InputBox>
-          {!emailPhone ? (
-            <InputBox>
-              <LoginInput
-                onChange={onChange}
-                type="text"
-                name="email"
-                placeholder=""
-                value={email}
-                required
-                width="65%"
-              />
-              <Label>이메일</Label>
-              <DomainSelect value={domain} onChange={onDomainChange}>
-                <option value="@gmail.com">@gmail.com</option>
-                <option value="@naver.com">@naver.com</option>
-                <option value="@daum.net">@daum.net</option>
-                <option value="custom">직접 입력</option>
-              </DomainSelect>
-            </InputBox>
-          ) : (
+          <InputBox>
+            <LoginInput
+              onChange={onChange}
+              type="text"
+              name="email"
+              placeholder=""
+              value={email}
+              required
+              width="65%"
+            />
+            <Label>이메일</Label>
+            <DomainSelect value={domain} onChange={onDomainChange}>
+              <option value="@gmail.com">@gmail.com</option>
+              <option value="@naver.com">@naver.com</option>
+              <option value="@daum.net">@daum.net</option>
+              <option value="custom">직접 입력</option>
+            </DomainSelect>
+          </InputBox>
+          {emailError && <Error>{emailError}</Error>}
+          {error !== "" ? <Error>{error}</Error> : null}
+          <SwitchEmailNPhone onClick={toggleEmailNPhone}>
+            전화번호 간편로그인 등록하기
+            {emailOption ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          </SwitchEmailNPhone>
+          {emailOption ? (
             <InputBox>
               <CountrySelect value={country} onChange={onCountryChange}>
                 {sortedCountries.map((country) => (
@@ -373,19 +429,17 @@ const Signup = () => {
                 pattern="[0-9]{10,11}"
               />
             </InputBox>
+          ) : (
+            ""
           )}
-          {emailError && <Error>{emailError}</Error>}
-          <SwitchEmailNPhone onClick={toggleEmailNPhone}>
-            {emailPhone ? "이메일로 가입하기" : "전화번호로 가입하기"}
-          </SwitchEmailNPhone>
           <LoginBtn value="가입" />
         </Form>
         <LoginBlock>
           <AccountLogin>
-            <AccountQ>계정이 이미 있으신가요?</AccountQ>
-            <AccountLink onClick={loginLink}>로그인 하러가기</AccountLink>
+            {/* <AccountQ>계정이 이미 있으신가요?</AccountQ> */}
+            <FbBtn />
+            <AccountLink onClick={loginLink}>로그인하기</AccountLink>
           </AccountLogin>
-          <FbBtn />
         </LoginBlock>
       </Block>
     </Wrapper>

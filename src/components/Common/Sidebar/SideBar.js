@@ -23,7 +23,7 @@ const StyledAside = styled.aside`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   border-right: 1px solid ${({ theme }) => theme.borderColor};
-  z-index: 1;
+  z-index: 3;
 
   @media screen and (max-width: 1024px) {
     width: 92px;
@@ -108,11 +108,6 @@ const MenuItem = styled.div`
 
   &:hover {
     color: var(--gray-color);
-  }
-
-  &:last-child {
-    padding-left: 22px;
-    gap: 10px;
   }
 
   @media screen and (max-width: 1024px) {

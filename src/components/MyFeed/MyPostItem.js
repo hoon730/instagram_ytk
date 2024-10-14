@@ -5,8 +5,12 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 0;
-  padding-top: 33%;
   overflow: hidden;
+  ${({ page }) =>
+    page === "search" || page === "explore"
+      ? "padding-top: 100%;"
+      : "padding-top: 33%;"}
+  background: #000;
 `;
 
 const ImgBox = styled.div`
@@ -24,13 +28,13 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const MyPostItem = ({ size, url, onClick }) => {
+const MyPostItem = ({ size, url, onClick, page }) => {
   const showFeed = () => {
     onClick();
   };
 
   return (
-    <Wrapper onClick={showFeed}>
+    <Wrapper onClick={showFeed} page={page}>
       <ImgBox>
         <Img src={url} alt="postphoto" />
       </ImgBox>
