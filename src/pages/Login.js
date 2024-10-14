@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import LogoImg from "../components/Login/LogoImg.js";
 import LoginBtn from "../components/Login/LoginBtn.js";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
 import FbBtn from "../components/Login/FbBtn.js";
-import { auth } from "../utils/firebase.js";
+import { auth, db } from "../utils/firebase.js";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const colors = {
   sub2: "#6228D7",
@@ -31,22 +32,28 @@ const Block = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 480px;
   padding: 40px;
   gap: 40px;
   border: 1px solid;
   border-color: var(--gray-color);
   border-radius: 10px;
+  @media (max-width: 780px) {
+    border-color: transparent;
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 15px;
 `;
 
 const InputBox = styled.div`
   position: relative;
-  width: 400px;
+  width: 100%;
   display: flex;
   border: 1px solid #bfbfbf;
   border-radius: 5px;
@@ -75,6 +82,9 @@ const LoginInput = styled.input`
     font-size: 12px;
     color: ${colors.sub2};
   }
+  &:not(:focus):not(:placeholder-shown) ~ label {
+    color: ${colors.darkGray};
+  }
 `;
 
 const Label = styled.label`
@@ -87,6 +97,9 @@ const Label = styled.label`
   color: ${colors.darkGray};
   pointer-events: none;
   transition: 0.2s ease all;
+  @media (max-width: 370px) {
+    font-size: 13px;
+  }
 `;
 
 const Error = styled.p`
@@ -124,7 +137,7 @@ const SignUpLink = styled.a`
 
 const Login = () => {
   const [error, setError] = useState("");
-  const [email, setEmail] = useState("");
+  const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -142,23 +155,63 @@ const Login = () => {
       target: { name, value },
     } = e;
 
-    if (name === "email") setEmail(value);
+    if (name === "identity") setIdentity(value);
     else if (name === "password") setPassword(value);
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (email === "" || password === "") return;
+    if (identity === "" || password === "") return;
     try {
-      // setIsLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
+      let emailToLogin = identity;
+      const isEmail = identity.includes("@");
+
+      if (!isEmail) {
+        const userRef = collection(db, "pprofile");
+        let userDoc = null;
+
+        const userIdQuery = query(userRef, where("userId", "==", identity));
+        const userIdSnapshot = await getDocs(userIdQuery);
+        if (!userIdSnapshot.empty) {
+          userDoc = userIdSnapshot.docs[0].data();
+        }
+
+        if (!userDoc) {
+          const phoneQuery = query(userRef, where("phone", "==", identity));
+          const phoneSnapshot = await getDocs(phoneQuery);
+          if (!phoneSnapshot.empty) {
+            userDoc = phoneSnapshot.docs[0].data();
+          }
+        }
+
+        if (userDoc) {
+          emailToLogin = userDoc.email; // Get email from Firestore data
+        } else {
+          setError("No user found with the provided ID or phone number");
+          return;
+        }
+      }
+
+      // Attempt sign-in with email and password
+      await signInWithEmailAndPassword(auth, emailToLogin, password);
+      console.log("Login successful, navigating...");
       navigate("/");
     } catch (e) {
       console.error(e);
       if (e instanceof FirebaseError) {
-        setError(e.message);
-        if (e.message == "Firebase: Error (auth/invalid-credential).") {
-          setError("이메일 혹은 비밀번호가 틀렸습니다.");
+        if (e.message == "Firebase: Error (auth/invalid-email).") {
+          setError("이메일 형식이 잘못되었습니다.");
+        } else if (e.message == "Firebase: Error (auth/invalid-credential).") {
+          setError("입력한 정보를 다시 확인해 주세요.");
+        } else if (
+          e.message ==
+          "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
+        ) {
+          setError(
+            "다수의 로그인 시도로 인해 계정이 잠겼습니다. 잠시뒤 다시 시도해주세요."
+          );
+        } else {
+          setError(e.message);
         }
       }
     }
@@ -185,13 +238,13 @@ const Login = () => {
             <LoginInput
               onChange={onChange}
               type="text"
-              name="email"
+              name="identity"
               placeholder=""
-              value={email}
+              value={identity}
               ref={userRef}
               required
             />
-            <Label>이메일 또는 전화번호</Label>
+            <Label>사용자이름, 전화번호 또는 이메일주소</Label>
           </InputBox>
           <InputBox>
             <LoginInput

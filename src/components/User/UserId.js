@@ -139,8 +139,8 @@ const UserId = ({
   feed,
   onClick,
   setIsEditing,
-  myProfile,
-  feedDetail,
+  uid,
+  fix,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -170,8 +170,9 @@ const UserId = ({
             <HoverProfile
               target={"id"}
               top={"22"}
-              feedDetail={feedDetail}
-              myProfile={myProfile}
+              type={type}
+              uid={uid}
+              fix={fix}
             />
           ) : null}
           {userNickname}
