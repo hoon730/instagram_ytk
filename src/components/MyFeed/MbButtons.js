@@ -3,7 +3,12 @@ import styled from "styled-components";
 import Button from "../Common/Button";
 import MbRecommend from "../Detail/MbRecommend";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: none;
+  @media screen and (max-width: 630px) {
+    display: block;
+  }
+`;
 
 const Buttons = styled.div`
   padding: 20px 10px 0;
