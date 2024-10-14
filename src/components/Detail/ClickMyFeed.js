@@ -14,12 +14,7 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 
 import { auth, db, storage } from "../../utils/firebase";
-import {
-  deleteDoc,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import {
   deleteObject,
   ref,
@@ -305,17 +300,13 @@ const EditedTextArea = styled.textarea`
   }
 `;
 
-const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
+const ClickMyFeed = ({ onClick, myProfile, post }) => {
   const commentRef = useRef();
   const bgRef = useRef();
   const [comment, setComment] = useState("");
-  const [followingUser, setFollowingUser] = useState("");
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedPost, setEditedPost] = useState(
-    myFeed?.content || post?.content || ""
-  );
-  const [editedPhoto, setEditedPhoto] = useState(null);
+  const [editedPost, setEditedPost] = useState(post?.content || "");
 
   const [preview, setPreview] = useState([]);
   const [file, setFile] = useState([]);
@@ -374,9 +365,9 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
     const ok = window.confirm("정말로 지금 게시물을 삭제하시겠습니까?");
     if (!ok || user.uid !== post.uid) return;
     try {
-      await deleteDoc(doc(db, `contents`, post.id));
+      await deleteDoc(doc(db, `feed`, post.id));
       if (post.media) {
-        const mediaRef = ref(storage, `contents/${user.uid}/${post.id}`);
+        const mediaRef = ref(storage, `feed/${user.uid}/${post.id}`);
         await deleteObject(mediaRef);
       }
     } catch (e) {
@@ -387,41 +378,45 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
   const onUpDate = async () => {
     try {
       if (user?.uid !== post.uid) return; // 권한 확인
-  
+
       // Firestore에서 현재 게시물 데이터를 가져옴
-      const postDoc = await getDoc(doc(db, "contents", post.id));
+      const postDoc = await getDoc(doc(db, "feed", post.id));
       const postData = postDoc.data();
-  
+
       // 기존의 imgPath 배열을 가져옴 (기존 이미지를 유지하기 위함)
       let updatedMedia = postData.imgPath || [];
-  
+
       // 이미지나 동영상 파일이 수정된 경우
-      if (file.length > 0) { // 여러 파일을 처리할 수 있도록 file 배열 사용
+      if (file.length > 0) {
+        // 여러 파일을 처리할 수 있도록 file 배열 사용
         for (const editedFile of file) {
           const newFileType = editedFile.type.startsWith("image/")
             ? "img"
             : "video"; // 파일 타입을 구분
-  
+
           // Firebase Storage에 새 파일 업로드
-          const locationRef = ref(storage, `contents/${user.uid}/${post.id}/${editedFile.name}`);
+          const locationRef = ref(
+            storage,
+            `feed/${user.uid}/${post.id}/${editedFile.name}`
+          );
           const uploadTask = uploadBytesResumable(locationRef, editedFile);
-  
+
           // 파일 크기 확인 (10MB 초과 시 에러)
           if (editedFile.size >= maxFileSize) {
             uploadTask.cancel();
             alert("업로드 할 수 있는 최대용량은 10MB입니다.");
             return;
           }
-  
+
           // 파일 업로드 완료 후 URL 가져오기
           const result = await uploadBytes(locationRef, editedFile);
           const url = await getDownloadURL(result.ref);
-  
+
           // 기존 이미지/동영상에 새 URL 추가
           updatedMedia = [...updatedMedia, url];
         }
       }
-  
+
       // Firestore에 업데이트할 데이터
       const updatedData = {
         content: editedPost, // 수정된 포스트 내용
@@ -430,20 +425,19 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
           ? "reels"
           : "img", // 동영상이 포함된 경우 타입을 "reels"로 설정
       };
-  
+
       // Firestore에 업데이트
-      await updateDoc(doc(db, "contents", post.id), updatedData);
-  
+      await updateDoc(doc(db, "feed", post.id), updatedData);
     } catch (e) {
       console.error(e);
     } finally {
       setIsEditing(false); // 편집 모드 해제
     }
   };
-  
+
   return (
     <>
-      {!myFeed && !post ? (
+      {!post ? (
         <p>피드를 불러오는 중입니다...</p>
       ) : (
         <>
@@ -502,24 +496,24 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                       </SetContentButton>
                     ) : (
                       <>
-                        {myFeed && myFeed?.type === "reels" ? (
+                        {post && post?.type === "reels" ? (
                           <Video
                             autoPlay
                             muted
                             loop
-                            src={myFeed?.imgPath}
+                            src={post?.imgPath}
                             style={{
                               width: "100%",
                               height: "100%",
                               objectFit: "cover",
                             }}
                           />
-                        ) : myFeed?.type === "img" ? (
+                        ) : post?.type === "img" ? (
                           <Slide
                             imgPath={
-                              Array.isArray(myFeed.imgPath)
-                                ? myFeed.imgPath
-                                : [myFeed.imgPath]
+                              Array.isArray(post.imgPath)
+                                ? post.imgPath
+                                : [post.imgPath]
                             }
                             onClick={onClick}
                           />
@@ -558,7 +552,7 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                               feed={"myfeed"}
                             />
                             <Location>
-                              {myFeed ? myFeed?.location : myProfile?.userName}
+                              {post ? post?.location : myProfile?.userName}
                             </Location>
                           </Userinfo>
                         </UserBox>
@@ -570,13 +564,7 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                               onChange={onChange}
                             />
                           ) : (
-                            <>
-                              {myFeed ? (
-                                <FeedText myFeed={myFeed} />
-                              ) : (
-                                <FeedText post={post} />
-                              )}
-                            </>
+                            <>{post && <FeedText post={post} />}</>
                           )}
                         </UserContents>
                       </UserContainer>
@@ -585,7 +573,7 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                           {post ? null : (
                             <CommentItem
                               onClick={onFocus}
-                              myFeed={myFeed}
+                              post={post}
                               // myProfile={myProfile}
                             />
                           )}
@@ -597,16 +585,12 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                         <Top>
                           <Notification>
                             <IoHeartOutline />
-                            {post ? null : (
+                            {post ? (
                               <span>
-                                {myFeed ? (
-                                  <>
-                                    {myFeed.userId}님 외{" "}
-                                    <b> {myFeed.like.length}명</b>이 좋아합니다
-                                  </>
-                                ) : null}
+                                {post.userId}님 외 <b> {post.like.length}명</b>
+                                이 좋아합니다
                               </span>
-                            )}
+                            ) : null}
                           </Notification>
                           <IconBtns>
                             <IoPaperPlaneOutline />

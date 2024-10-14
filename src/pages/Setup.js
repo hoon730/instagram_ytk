@@ -114,7 +114,7 @@ const UserName = styled.div`
   font-size: var(--font-size-16);
 `;
 
-const Setup = ({ onClick, myProfile, handleEditphoto }) => {
+const Setup = ({ onClick, myProfile }) => {
   const containerRef = useRef();
   const user = auth.currentUser;
 
@@ -145,11 +145,10 @@ const Setup = ({ onClick, myProfile, handleEditphoto }) => {
     const { files } = e.target;
     if (!user || !files || files.length === 0) return;
     const file = files[0];
-    const locationRef = ref(storage, `newProfile/${user.uid}`);
+    const locationRef = ref(storage, `profile/${user.uid}`);
     const result = await uploadBytes(locationRef, file);
     const editProfileUrl = await getDownloadURL(result.ref);
     setEditProfile(editProfileUrl);
-    handleEditphoto(editProfileUrl);
     await updateProfile(user, { photoURL: editProfileUrl });
   };
 
@@ -158,10 +157,10 @@ const Setup = ({ onClick, myProfile, handleEditphoto }) => {
     if (!user) return;
 
     try {
-      const userDocRef = doc(db, "newProfile", user.uid);
+      const userDocRef = doc(db, "profile", user.uid);
       await setDoc(userDocRef, {
         userId: editUserName,
-        userName: user?.displayName || "이름 없음",
+        userName: myProfile?.userName || "이름 없음",
         introduction: intro,
         website: link,
         profilePhoto: editProfile,
@@ -172,6 +171,7 @@ const Setup = ({ onClick, myProfile, handleEditphoto }) => {
         following: 0,
         bgPhoto: "",
         badge: "",
+        uid: user.uid,
       });
 
       await updateProfile(user, { displayName: editUserName });
@@ -229,7 +229,11 @@ const Setup = ({ onClick, myProfile, handleEditphoto }) => {
             <ChangePicBtn htmlFor="file">
               <LuCamera />
             </ChangePicBtn>
-            {editProfile ? <Pic src={editProfile} /> : <Pic />}
+            {editProfile ? (
+              <Pic src={editProfile} />
+            ) : (
+              <Pic src={myProfile.profilePhoto} />
+            )}
             <ChangePicInput
               type="file"
               id="file"

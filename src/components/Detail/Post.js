@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ClickMyFeed from "./ClickMyFeed";
+import { extractExtension, videoArr } from "../../utils/utils";
 
 const Wrapper = styled.div`
   width: 305px;
@@ -22,7 +23,7 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Post = ({ myFeed, myProfile, post }) => {
+const Post = ({ myProfile, post }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const showFeed = () => {
@@ -31,50 +32,25 @@ const Post = ({ myFeed, myProfile, post }) => {
 
   return (
     <>
-      {myFeed ? (
-        <Wrapper onClick={showFeed}>
-          {Array.isArray(myFeed.imgPath) ? (
-            myFeed.imgPath.map((item, idx) =>
-              myFeed.type === "img" ? (
-                <Img key={idx} src={item} />
-              ) : myFeed.type === "reels" ? (
+      <Wrapper onClick={showFeed}>
+        {post && post.imgPath ? (
+          Array.isArray(post.imgPath) ? (
+            post.imgPath.map((item, idx) =>
+              videoArr.includes(extractExtension(item)) ? (
                 <Video key={idx} src={item} muted />
-              ) : null
-            )
-          ) : myFeed.type === "img" ? (
-            <Img src={myFeed.imgPath} />
-          ) : myFeed.type === "reels" ? (
-            <Video src={myFeed.imgPath} muted />
-          ) : null}
-        </Wrapper>
-      ) : (
-        <Wrapper onClick={showFeed}>
-          {post && post.imgPath ? (
-            Array.isArray(post.imgPath) ? (
-              post.imgPath.map((item, idx) =>
-                post.type === "img" ? (
-                  <Img key={idx} src={item} />
-                ) : post.type === "reels" ? (
-                  <Video key={idx} src={item} muted />
-                ) : null
+              ) : (
+                <Img key={idx} src={item} />
               )
-            ) : post.type === "img" ? (
-              <Img src={post.imgPath} />
-            ) : post.type === "reels" ? (
-              <Video src={post.imgPath} muted />
-            ) : null
-          ) : (
-            <p>미디어가 없습니다</p>
-          )}
-        </Wrapper>
-      )}
+            )
+          ) : null
+        ) : post.type === "img" ? (
+          <Img src={post.imgPath} />
+        ) : post.type === "reels" ? (
+          <Video src={post.imgPath} muted />
+        ) : null}
+      </Wrapper>
       {isClicked ? (
-        <ClickMyFeed
-          myFeed={myFeed}
-          myProfile={myProfile}
-          post={post}
-          onClick={showFeed}
-        />
+        <ClickMyFeed myProfile={myProfile} post={post} onClick={showFeed} />
       ) : null}
     </>
   );

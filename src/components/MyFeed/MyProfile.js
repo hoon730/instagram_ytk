@@ -82,6 +82,8 @@ const MyProfile = ({ myProfile }) => {
     setIsOpen((current) => !current);
   };
 
+  console.log(myProfile);
+
   return (
     <Wrapper>
       <MyProfileBox>

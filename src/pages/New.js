@@ -199,8 +199,6 @@ const New = ({ setOpenNew }) => {
   const [textValueLength, setTextValueLength] = useState(0);
   const [pushUrl, setPushUrl] = useState([]);
 
-  console.log(setOpenNew);
-
   const maxFileSize = 10 * 1024 * 1024;
 
   const fileAdd = (e) => {
@@ -246,7 +244,7 @@ const New = ({ setOpenNew }) => {
 
     try {
       setIsLoading(true);
-      const docRef = await addDoc(collection(db, "contents"), {
+      const docRef = await addDoc(collection(db, "feed"), {
         content,
         createdAt: Date.now(),
         hastage: "",
@@ -261,7 +259,7 @@ const New = ({ setOpenNew }) => {
       // 파일이 여러 개일 경우 처리
       if (file.length > 1) {
         for (const item of file) {
-          const locationRef = ref(storage, `contents/${user.uid}/${item.name}`);
+          const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
           const result = await uploadBytes(locationRef, item);
           const url = await getDownloadURL(result.ref);
 
@@ -276,10 +274,7 @@ const New = ({ setOpenNew }) => {
       } else if (file.length === 1) {
         // 파일이 한 개일 경우 처리
         const item = file[0];
-        const locationRef = ref(
-          storage,
-          `contents/${docRef.id}/${user.uid}/${item.name}`
-        );
+        const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
         const result = await uploadBytes(locationRef, item);
         const url = await getDownloadURL(result.ref);
         const fileType = item.type;

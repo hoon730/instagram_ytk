@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import MyPic from "../components/MyFeed/MyPic";
 import MyProfile from "../components/MyFeed/MyProfile";
 import MyHighlight from "../components/MyFeed/MyHighlight";
 import MyFeedTabBar from "../components/MyFeed/MyFeedTabBar";
 import TimeLine from "../components/Detail/TimeLine";
+import { StateContext } from "../App";
 
 import {
   collection,
@@ -33,29 +34,9 @@ const Wrapper = styled.div`
 `;
 
 const MyFeed = () => {
-  const [myProfile, setMyProfile] = useState(null);
   const [myFeeds, setMyFeed] = useState([]);
 
-  useEffect(() => {
-    const userUid = auth.currentUser?.uid;
-    if (userUid) {
-      const getMyProfile = async (uid) => {
-        const profileQuery = query(
-          collection(db, "profile"),
-          where("uid", "==", uid),
-          limit(1)
-        );
-        const profileSnapshot = await getDocs(profileQuery);
-
-        if (!profileSnapshot.empty) {
-          const profileData = profileSnapshot.docs[0].data();
-          setMyProfile(profileData);
-        }
-      };
-
-      getMyProfile(userUid);
-    }
-  }, []);
+  const { myProfile } = useContext(StateContext);
 
   useEffect(() => {
     if (myProfile) {

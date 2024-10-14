@@ -7,6 +7,7 @@ import {
   query,
   limit,
   onSnapshot,
+  where,
   orderBy,
 } from "firebase/firestore";
 import { db } from "../../utils/firebase";
@@ -18,14 +19,19 @@ const Wrapper = styled.div`
   margin-bottom: 5px;
   /* overflow-y: scroll; */
 `;
-const TimeLine = ({ myFeeds, myProfile }) => {
+const TimeLine = ({ myProfile }) => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
+    if (!myProfile || !myProfile.uid) {
+      return;
+    }
+
     let unsubscribe;
     const fetchPosts = async () => {
       const postQuery = query(
-        collection(db, "contents"),
+        collection(db, "feed"),
+        where("uid", "==", myProfile.uid),
         orderBy("createdAt", "desc"),
         limit(25)
       );
@@ -68,12 +74,8 @@ const TimeLine = ({ myFeeds, myProfile }) => {
   return (
     <Wrapper>
       {posts.map((post) => (
-        <Post key={post.id} post={post} /> // post 프롭스로 전달
+        <Post key={post.id} post={post} myProfile={myProfile} /> // post 프롭스로 전달
       ))}
-      {myProfile &&
-        myFeeds.map((myFeed, idx) => (
-          <Post key={idx} myFeed={myFeed} myProfile={myProfile} />
-        ))}
     </Wrapper>
   );
 };
