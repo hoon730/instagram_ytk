@@ -11,8 +11,8 @@ const Wrapper = styled.div`
 
 const MainHeaderMargin = styled.div`
   height: 85px;
-  @media screen and (max-width: 1170px) {
-    display: none;
+  @media screen and (max-width: 630px) {
+    height: 74px;
   }
 `;
 
@@ -52,7 +52,7 @@ const Main = () => {
         <MainHeaderMargin />
         <MainContent>
           <FeedSection>
-            <StoryContent />
+            {/* <StoryContent /> */}
             <FeedContent />
           </FeedSection>
           <HotHashtag />

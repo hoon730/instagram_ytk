@@ -23,10 +23,9 @@ const FeedArea = styled.div`
   width: 680px;
   margin: 0 auto;
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 770px) {
     width: 430px;
   }
-
   @media screen and (max-width: 430px) {
     width: 100%;
   }
@@ -42,6 +41,9 @@ const FeedTabBar = styled.div`
 const FeedTabBtn = styled.div`
   display: flex;
   height: 60px;
+  @media screen and (max-width: 630px) {
+    height: 50px;
+  }
 `;
 
 const ActiveBorderArea = styled.div`

@@ -12,7 +12,7 @@ const storys = Data.story;
 const Wrapper = styled.div`
   width: 68%;
   min-width: 680px;
-  height: 180px;
+  height: 140px;
   margin: 0 auto;
   padding: 8px 0;
   display: flex;
