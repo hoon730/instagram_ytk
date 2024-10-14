@@ -10,6 +10,10 @@ const Wrapper = styled.div`
   height: 70px;
   border-radius: 10px;
   margin-bottom: 10px;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 const ActiveBorderArea = styled.div`

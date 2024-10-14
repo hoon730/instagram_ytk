@@ -24,7 +24,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
 
-  @media screen and (max-width: 780px) {
+  @media screen and (max-width: 1024px) {
     width: 100%;
   }
 `;

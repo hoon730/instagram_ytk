@@ -68,7 +68,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   :root {
-    --main-color: linear-gradient(-75deg, #F9CE34, #EE2A7B, #6228D7);
+    --main-color: linear-gradient(-75deg, #F9CE34, #E5317C, #6228D7);
     --sub-purple-color: #6228D7;
     --sub-pink-color: #EE2A7B;
     --warning-color: #FF5C2B;
@@ -77,6 +77,7 @@ const GlobalStyles = createGlobalStyle`
     --light-gray-color: #EEEEEE;
     --gray-color: #BFBFBF;
     --dark-gray-color: #7E7E7E;
+    --deep-dark-gray-color: #444444;
     --font-black-color: #2B2B2B;
 
     --border-radius-12: 12px;
@@ -93,8 +94,10 @@ const GlobalStyles = createGlobalStyle`
     --font-24: 24px;
     --font-26: 26px;
     --font-28: 28px;
+    --font-30: 30px;
     --font-32: 32px;
     --font-34: 34px;
+    --font-46: 46px;
 
     --font-thin: 100;
     --font-extralight: 200;
