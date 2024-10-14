@@ -77,8 +77,8 @@ const ProfileImg = ({
   return (
     <ImgSection
       onClick={onClick}
-      onMouseEnter={showProfile}
-      onMouseLeave={hideProfile}
+      // onMouseEnter={showProfile}
+      // onMouseLeave={hideProfile}
     >
       {!hover && hoverImg ? (
         <HoverProfile

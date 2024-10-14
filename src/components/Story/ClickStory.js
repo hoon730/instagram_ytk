@@ -1,17 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 import StoryHeader from "./StoryHeader";
-import StoryFooter from "./StoryFooter";
+import StoryFooterDm from "./StoryFooterDm";
 
 const Wrapper = styled.div`
   width: ${({ size }) => `${size || 501}`}px;
-  height: ${({ size }) => `${size || 891}`}px;
+  /* height: ${({ size }) => `${size || 891}`}px; */
+  height: 891px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-radius: 10px;
-  border: 1px solid red;
   background: pink;
 `;
 
-const StoryMedia = styled.div``;
+const StoryHeadFoot = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const StoryMedia = styled.img``;
 
 const ClickStory = ({ url, onClick }) => {
   // const showStory = () => {
@@ -19,9 +30,11 @@ const ClickStory = ({ url, onClick }) => {
   // };
   return (
     <Wrapper>
-      <StoryHeader />
-      <StoryMedia src={url} alt="storymedia"></StoryMedia>
-      <StoryFooter />
+      <StoryHeadFoot>
+        <StoryHeader />
+        <StoryMedia src={url} alt="storymedia"></StoryMedia>
+        <StoryFooterDm />
+      </StoryHeadFoot>
     </Wrapper>
   );
 };

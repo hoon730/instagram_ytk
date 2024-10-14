@@ -103,11 +103,11 @@ const HoverProfile = ({ type, feedDetail, myProfile, top }) => {
             <Img src={"/images/userImgs/user123456/userdetail_3.jpg"} />
           </ImgBox>
         </PostingPics>
-        <Btns follwed={followResult ? "followed" : null}>
+        <Btns followed={followResult ? "followed" : null}>
           <Button
             width={"66.66%"}
             height={"40px"}
-            follwed={followResult ? "followed" : null}
+            followed={followResult ? "followed" : null}
             type={"positive"}
             text={"메시지 보내기"}
           />

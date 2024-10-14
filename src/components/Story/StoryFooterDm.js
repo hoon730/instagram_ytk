@@ -6,17 +6,16 @@ import { FiSend } from "react-icons/fi";
 
 const Wrapper = styled.div`
   width: ${({ size }) => `${size || 501}`}px;
-  height: 102px;
-  position: absolute;
-  bottom: 0px;
+  /* position: absolute; */
+  bottom: 28px;
 `;
 
 const FooterArea = styled.div`
   border-radius: 0px 0px 10px 10px;
   background: linear-gradient(rgba(255, 255, 255, 0), rgba(50, 50, 50, 0.8));
+  padding: 20px 0;
+  background-position: center 160px;
 `;
-
-const ViewerArea = styled.div``;
 
 const TextIconArea = styled.div``;
 
@@ -47,11 +46,10 @@ const IconBox = styled.div`
   }
 `;
 
-const StoryFooter = () => {
+const StoryFooterDm = () => {
   return (
     <Wrapper>
       <FooterArea>
-        {/* <ViewerArea>00명</ViewerArea> */}
         <TextIconArea>
           <DmArea>
             <DmTextBox></DmTextBox>
@@ -67,4 +65,4 @@ const StoryFooter = () => {
   );
 };
 
-export default StoryFooter;
+export default StoryFooterDm;
