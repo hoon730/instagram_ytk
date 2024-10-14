@@ -24,6 +24,7 @@ const CommentAndProfile = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 5px;
+  display: none; // 작업 후 삭제
 `;
 
 const CommentAndHeart = styled.div`
