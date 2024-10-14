@@ -123,6 +123,8 @@ const UserId = ({
   feed,
   onClick,
   setIsEditing,
+  uid,
+  fix,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -148,7 +150,15 @@ const UserId = ({
           onMouseEnter={showProfile}
           onMouseLeave={hideProfile}
         >
-          {!hover && hoverId ? <HoverProfile target={"id"} top={"22"} /> : null}
+          {!hover && hoverId ? (
+            <HoverProfile
+              target={"id"}
+              top={"22"}
+              type={type}
+              uid={uid}
+              fix={fix}
+            />
+          ) : null}
           {userNickname}
         </IdSpan>
         {check === "active" ? (

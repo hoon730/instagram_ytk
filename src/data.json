@@ -179,6 +179,15 @@
       "email": "minju@gmail.com",
       "userRealName": "조민주",
       "password": "jmj2854"
+    },
+    {
+      "uid": "M0mfslnLo1ZWFAlAjqeUe0pYZWI3",
+      "userId": "A9k3LsWvBqXp7yYt5ZmNb8HrKpL1",
+      "userNickname": "eun_woo",
+      "phone": "01012345678",
+      "email": "chacha@gmail.com",
+      "userRealName": "차은우",
+      "password": "123456789"
     }
   ],
   "profile": [
@@ -1143,6 +1152,19 @@
         "0kW30ovXTfTAwBRyTzHKGvqG398",
         "tePhQ1wQJAwRlEcw1TOWpE4N9JU"
       ]
+    },
+    {
+      "userId": "A9k3LsWvBqXp7yYt5ZmNb8HrKpL1",
+      "userName": "차은우",
+      "gender": "man",
+      "introduction": "배우 차은우 입니다.",
+      "website": "",
+      "recommendation": false,
+      "nondisclosure": false,
+      "profilePhoto": "/images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/profile.jpg",
+      "bgPhoto": "/images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/bg.jpg",
+      "follower": [],
+      "following": []
     }
   ],
   "story": [
@@ -6292,7 +6314,7 @@
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                   "content": "나도 낄래",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": ["lualbvqvQmVWkfDU7JUKJRYdqf3"],
                   "reReplyId": "rr00000121"
                 }
@@ -6302,13 +6324,13 @@
             {
               "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
               "content": "바다 가고싶다...",
-              "createDate": "2024-10-19",
+              "createDate": "2024-10-18",
               "like": ["EnweBLflxt3pYRGLy8hfJ18MeOm"],
               "reReply": [
                 {
                   "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
                   "content": "나두 나두 !",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": [
                     "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
                     "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -6319,7 +6341,7 @@
                 {
                   "userId": "0kW30ovXTfTAwBRyTzHKGvqG398",
                   "content": "추워지기전에 가보자",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000123"
                 }
@@ -6330,7 +6352,7 @@
         },
         {
           "feedId": "fd00000032",
-          "createDate": "2024-10-19",
+          "createDate": "2024-10-18",
           "type": "img",
           "imgPath": [
             "images/userImgs/4JhKn3cYHd9dY9muGz1oXiJAruo/feed8.jpg",
@@ -6362,7 +6384,7 @@
             {
               "userId": "wAKs9uXSWsTJbbJGg2MaErFaKqE",
               "content": "축구 보는 여자 !!",
-              "createDate": "2024-10-19",
+              "createDate": "2024-10-18",
               "like": [
                 "0kW30ovXTfTAwBRyTzHKGvqG398",
                 "z7UhehujghvKX02fUj1ig9gfP7n",
@@ -6372,7 +6394,7 @@
                 {
                   "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                   "content": "바로 나 !!",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": [
                     "EnweBLflxt3pYRGLy8hfJ18MeOm",
                     "VA2MxTOE2O9mN4nVQy4Fw2glB2h"
@@ -6382,7 +6404,7 @@
                 {
                   "userId": "0kW30ovXTfTAwBRyTzHKGvqG398",
                   "content": "생제르망 팬이였다니..!",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": ["UtcsfzZbJYxJ0qzD6P6nvqXGFM1"],
                   "reReplyId": "rr00000125"
                 }
@@ -6392,7 +6414,7 @@
             {
               "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
               "content": "유니폼 잘 어울린다 ㅎ",
-              "createDate": "2024-10-20",
+              "createDate": "2024-10-18",
               "like": [
                 "KWUUuqMImhcKDZ822gc2InH4vSN",
                 "wAKs9uXSWsTJbbJGg2MaErFaKqE"
@@ -6401,7 +6423,7 @@
                 {
                   "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                   "content": "고마워! 사길 잘햇다 ",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [
                     "KWUUuqMImhcKDZ822gc2InH4vSN",
                     "FNUEoSKu7equPIpWvLcKumRz7Pc"
@@ -6414,20 +6436,20 @@
             {
               "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
               "content": "축구도 해??",
-              "createDate": "2024-10-20",
+              "createDate": "2024-10-18",
               "like": ["tePhQ1wQJAwRlEcw1TOWpE4N9JU"],
               "reReply": [
                 {
                   "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
                   "content": "나랑 저번에 같이 찼지롱~",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000129"
                 },
                 {
                   "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
                   "content": "야 나두 !!!!",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [
                     "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
                     "FNUEoSKu7equPIpWvLcKumRz7Pc",
@@ -6441,7 +6463,7 @@
             {
               "userId": "KWUUuqMImhcKDZ822gc2InH4vSN",
               "content": "누구 팬이야?!",
-              "createDate": "2024-10-20",
+              "createDate": "2024-10-18",
               "like": [
                 "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                 "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
@@ -6451,7 +6473,7 @@
                 {
                   "userId": "0kW30ovXTfTAwBRyTzHKGvqG398",
                   "content": "음바페라고 써져있네ㅎ",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [
                     "kdGgFnRk8TyyUVeXQji7vZybpQ1",
                     "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
@@ -6462,7 +6484,7 @@
                 {
                   "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                   "content": "슈퍼스타~",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000132"
                 }
@@ -6473,7 +6495,7 @@
         },
         {
           "feedId": "fd00000033",
-          "createDate": "2024-10-19",
+          "createDate": "2024-10-18",
           "type": "img",
           "imgPath": ["images/userImgs/4JhKn3cYHd9dY9muGz1oXiJAruo/feed11.jpg"],
           "content": "나의 favorite 😍",
@@ -6502,7 +6524,7 @@
             {
               "userId": "Rwkuz4I5TDjog8sfK3rzUCI4Ik6",
               "content": "저도 여기 갔다왔어요 언니!",
-              "createDate": "2024-10-19",
+              "createDate": "2024-10-18",
               "like": [],
               "reReply": [],
               "replyId": "rp00000074"
@@ -6510,13 +6532,13 @@
             {
               "userId": "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
               "content": "어제 왔다감 ㅋ",
-              "createDate": "2024-10-19",
+              "createDate": "2024-10-18",
               "like": [],
               "reReply": [
                 {
                   "userId": "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                   "content": "나는 오늘 왔는데!",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": [
                     "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                     "kdGgFnRk8TyyUVeXQji7vZybpQ1"
@@ -6526,7 +6548,7 @@
                 {
                   "userId": "kdGgFnRk8TyyUVeXQji7vZybpQ1",
                   "content": "다음에 같이 가면 좋겠네요!",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [
                     "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                     "hCTuFAf5A87ZG7mhWx1poHaNF3Q",
@@ -6537,7 +6559,7 @@
                 {
                   "userId": "BbVEQf8MoEuxL7XREuCVTjUQkSx",
                   "content": "정말 예쁘세요!",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000135"
                 }
@@ -6547,20 +6569,20 @@
             {
               "userId": "FNUEoSKu7equPIpWvLcKumRz7Pc",
               "content": "아는 곳이다 ㅎ",
-              "createDate": "2024-10-19",
+              "createDate": "2024-10-18",
               "like": [],
               "reReply": [
                 {
                   "userId": "EnweBLflxt3pYRGLy8hfJ18MeOm",
                   "content": "너가 제일 좋아하는 곳이네",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000136"
                 },
                 {
                   "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
                   "content": "또 가고 싶어지네ㅠ",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000137"
                 }
@@ -6571,7 +6593,7 @@
         },
         {
           "feedId": "fd00000034",
-          "createDate": "2024-10-20",
+          "createDate": "2024-10-18",
           "type": "img",
           "imgPath": ["images/userImgs/4JhKn3cYHd9dY9muGz1oXiJAruo/feed12.jpg"],
           "content": "온 세상이 하얗게 물들었다 ☃️",
@@ -6597,7 +6619,7 @@
             {
               "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
               "content": "너무 이쁘다.. 겨울 좋아",
-              "createDate": "2024-10-20",
+              "createDate": "2024-10-18",
               "like": [
                 "EnweBLflxt3pYRGLy8hfJ18MeOm",
                 "Af4BexYzzRIvqtGjSeYEG3pqZHw",
@@ -6923,7 +6945,7 @@
             {
               "userId": "lualbvqvQmVWkfDU7JUKJRYdqf3",
               "content": "다시 가고 싶어지네..",
-              "createDate": "2024-10-19",
+              "createDate": "2024-10-18",
               "like": [
                 "UtcsfzZbJYxJ0qzD6P6nvqXGFM1",
                 "Af4BexYzzRIvqtGjSeYEG3pqZHw"
@@ -6932,14 +6954,14 @@
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
                   "content": "다음에 같이 가면 좋겠네요!",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000151"
                 },
                 {
                   "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
                   "content": "다음에 같이 가봐요!",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [
                     "FNUEoSKu7equPIpWvLcKumRz7Pc",
                     "bIqUJE0DxQa1HdkLfMqh105VOrQ",
@@ -7002,7 +7024,7 @@
                 {
                   "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
                   "content": "비틀즈 포레버",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": [
                     "kdGgFnRk8TyyUVeXQji7vZybpQ1",
                     "KWUUuqMImhcKDZ822gc2InH4vSN"
@@ -7015,7 +7037,7 @@
             {
               "userId": "VA2MxTOE2O9mN4nVQy4Fw2glB2h",
               "content": "롱다리들~",
-              "createDate": "2024-10-19",
+              "createDate": "2024-10-18",
               "like": [
                 "z7UhehujghvKX02fUj1ig9gfP7n",
                 "KWUUuqMImhcKDZ822gc2InH4vSN"
@@ -7024,14 +7046,14 @@
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                   "content": "ㅋㅋ몇명은 아닌데~",
-                  "createDate": "2024-10-19",
+                  "createDate": "2024-10-18",
                   "like": ["BbVEQf8MoEuxL7XREuCVTjUQkSx"],
                   "reReplyId": "rr00000156"
                 },
                 {
                   "userId": "bIqUJE0DxQa1HdkLfMqh105VOrQ",
                   "content": "악마다 악마ㅋㅋ",
-                  "createDate": "2024-10-20",
+                  "createDate": "2024-10-18",
                   "like": [],
                   "reReplyId": "rr00000157"
                 }
@@ -7432,7 +7454,7 @@
           "feedId": "fd00000042",
           "createDate": "2024-09-30",
           "type": "reels",
-          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed05.mp4"],
+          "imgPath": ["images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed5.mp4"],
           "content": "격식있게 데킬라 한잔 ✅",
           "hashtag": ["#데킬라", "#시어서커", "#호텔"],
           "location": "용산",
@@ -7462,7 +7484,7 @@
           "createDate": "2024-10-01",
           "type": "img",
           "imgPath": [
-            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed06.jpg",
+            "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed6.jpg",
             "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed7.jpg",
             "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed8.jpg",
             "images/userImgs/UtcsfzZbJYxJ0qzD6P6nvqXGFM1/feed9.jpg"
@@ -8101,10 +8123,10 @@
           "createDate": "2024-10-09",
           "type": "img",
           "imgPath": [
-            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd13.jpg",
-            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd14.jpg",
-            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd15.jpg",
-            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/fedd16.jpg"
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed13.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed14.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed15.jpg",
+            "images/userImgs/FNUEoSKu7equPIpWvLcKumRz7Pc/feed16.jpg"
           ],
           "content": "즐거운 내집 마련의 꿈!!",
           "hashtag": ["#캠핑", "#글램핑", "#일상"],
@@ -15761,6 +15783,104 @@
               "replyId": "rp00000353"
             }
           ]
+        }
+      ]
+    },
+    {
+      "userId": "A9k3LsWvBqXp7yYt5ZmNb8HrKpL1",
+      "feedDetail": [
+        {
+          "feedId": "fd00000136",
+          "createDate": "2024-10-10",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed1.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed2.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed3.jpg"
+          ],
+          "content": "첫 피드 #일상생활, #여행 가는 중",
+          "hashtag": ["#일상생활", "#여행"],
+          "location": "인천공항",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000137",
+          "createDate": "2024-10-13",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed4.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed5.jpg"
+          ],
+          "content": "#악세사리 #광고 찍었어요",
+          "hashtag": ["#악세사리", "#광고"],
+          "location": "상암동 서울",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000138",
+          "createDate": "2024-10-14",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed6.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed7.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed8.jpg"
+          ],
+          "content": "#드라마 #촬영 했어요. 처음 맡아보는 신부님 역할이에요. #일상생활",
+          "hashtag": ["#드라마", "#촬영", "#일상생활"],
+          "location": "일산 고양시",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000139",
+          "createDate": "2024-10-15",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed9.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed10.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed11.jpg"
+          ],
+          "content": "오늘 #여행 와서 #맛집투어 하고 #밤산책 했어요. 마지막 사진은 내가 먹었던 #마라탕",
+          "hashtag": ["#맛집투어", "#밤산책", "#마라탕"],
+          "location": "Singapore Marinabay",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000140",
+          "createDate": "2024-10-18",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed12.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed13.jpg",
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed14.jpg"
+          ],
+          "content": "#제주도 #서귀포 #감귤농장 앞",
+          "hashtag": ["#제주도", "#서귀포", "#감귤농장"],
+          "location": "제주도 서귀포",
+          "like": [],
+          "tagUser": [],
+          "reply": []
+        },
+        {
+          "feedId": "fd00000141",
+          "createDate": "2024-10-18",
+          "type": "img",
+          "imgPath": [
+            "images/userImgs/A9k3LsWvBqXp7yYt5ZmNb8HrKpL1/feed15.jpg"
+          ],
+          "content": "몇일 전 사진 #바이크 #촬영중 #일상생활",
+          "hashtag": ["#바이크", "#촬영중", "#일상생활"],
+          "location": "장기동 김포시",
+          "like": [],
+          "tagUser": [],
+          "reply": []
         }
       ]
     }

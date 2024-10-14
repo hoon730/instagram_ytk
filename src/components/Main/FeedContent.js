@@ -1,30 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import TabBarBtn from "../Common/TabBarBtn";
 import { FaRegStar } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import FeedItem from "./FeedItem";
 import Loading from "../Common/Loading";
-import { auth, db } from "../../utils/firebase";
+import { db } from "../../utils/firebase";
 import {
   collection,
-  limit,
   onSnapshot,
   orderBy,
   query,
   where,
-  Unsubscribe,
-  getDocs,
 } from "firebase/firestore";
 import ClickFeed from "../Detail/ClickFeed";
-
-// 파이어 스토어 연결하면 지울 목업 데이터
-import Data from "../../data.json";
-const user = Data.user;
-const profile = Data.profile;
-const feed = Data.feed;
-const userId = "lualbvqvQmVWkfDU7JUKJRYdqf3";
-const myProfile = profile.find((it) => it.userId === userId);
+import WelcomFeed from "./WelcomFeed";
+import { StateContext } from "../../App";
 
 const Wrapper = styled.div``;
 
@@ -73,102 +64,9 @@ const FeedContent = () => {
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
   const [$tabChange, setTabChange] = useState("recommend");
-  // const [userUid, setUserUid] = useState(null); // 사용자 UID 상태 관리
-  // const [myProfile, setMyProfile] = useState(null); // 프로필 상태 관리
-  // const [posts, setPosts] = useState([]); // 포스트 상태 관리
-  // let postsUnsubscribe = null; // postsQuery 구독 해제 변수
-
-  // useEffect(() => {
-  //   // Firebase 인증 상태 변화를 감지
-  //   const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
-  //     if (user) {
-  //       // 로그인된 사용자가 있을 때 userUid 설정
-  //       setUserUid(user.uid);
-
-  //       try {
-  //         // 프로필 쿼리
-  //         const profileQuery = query(
-  //           collection(db, "profile"),
-  //           where("uid", "==", user.uid),
-  //           limit(1)
-  //         );
-  //         const profileSnapshot = await getDocs(profileQuery);
-
-  //         if (!profileSnapshot.empty) {
-  //           const profileData = profileSnapshot.docs[0].data();
-  //           setMyProfile(profileData);
-
-  //           // Firestore 구독 시작
-  //           const postsQuery = query(
-  //             collection(db, "feed"),
-  //             where("uid", "in", profileData.following),
-  //             where("type", "!=", null),
-  //             orderBy("createdAt", "desc"),
-  //             limit(5)
-  //           );
-
-  //           // 기존에 존재하는 postsQuery 구독이 있다면 해제
-  //           if (postsUnsubscribe) {
-  //             postsUnsubscribe();
-  //           }
-
-  //           // 새로운 postsQuery 구독 시작
-  //           postsUnsubscribe = onSnapshot(postsQuery, (snapshot) => {
-  //             const posts = snapshot.docs.map((doc) => {
-  //               const {
-  //                 content,
-  //                 createdAt,
-  //                 hashtag,
-  //                 imgPath,
-  //                 like,
-  //                 location,
-  //                 tagUser,
-  //                 type,
-  //                 uid,
-  //               } = doc.data();
-  //               return {
-  //                 id: doc.id,
-  //                 content,
-  //                 createdAt,
-  //                 hashtag,
-  //                 imgPath,
-  //                 like,
-  //                 location,
-  //                 tagUser,
-  //                 type,
-  //                 uid,
-  //               };
-  //             });
-  //             setPosts(posts);
-  //           });
-  //         } else {
-  //           console.error("Profile not found for user.");
-  //         }
-  //       } catch (error) {
-  //         console.error(error);
-  //       }
-  //     } else {
-  //       setUserUid(null); // 로그아웃되거나 사용자가 없는 경우 처리
-  //       setPosts([]); // 로그아웃 시 포스트 초기화
-  //     }
-  //   });
-
-  //   // 컴포넌트가 언마운트될 때 구독 해제
-  //   return () => {
-  //     // Firebase 인증 구독 해제
-  //     if (unsubscribeAuth) {
-  //       unsubscribeAuth();
-  //     }
-  //     // postsQuery 구독 해제
-  //     if (postsUnsubscribe) {
-  //       postsUnsubscribe();
-  //     }
-  //   };
-  // }, []);
-
-  // console.log(myProfile);
-  // console.log(posts);
-  const [isClicked, setIsClicked] = useState(false);
+  const [postsWithProfiles, setPostsWithProfiles] = useState([]);
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
 
   const recommendActive = () => {
     setRecommend(true);
@@ -181,9 +79,53 @@ const FeedContent = () => {
     setTabChange("follow");
   };
 
-  const onClick = () => {
-    setIsClicked((current) => !current);
-  };
+  useEffect(() => {
+    let postsUnsubscribe = null;
+
+    if (myProfile && myProfile.following) {
+      const getPosts = () => {
+        const postsQuery = query(
+          collection(db, "feed"),
+          where("type", "!=", null),
+          orderBy("createdAt", "desc")
+        );
+
+        postsUnsubscribe = onSnapshot(postsQuery, async (snapshot) => {
+          const postDocs = snapshot.docs;
+
+          const posts = await Promise.all(
+            postDocs
+              .filter((doc) =>
+                doc.data().uid !== myProfile.uid && recommend
+                  ? !myProfile.following.includes(doc.data().uid)
+                  : myProfile.following.includes(doc.data().uid)
+              )
+              .map(async (doc) => {
+                const postData = doc.data();
+
+                const profileData = allProfile.find(
+                  (it) => it.uid === postData.uid
+                );
+                return {
+                  id: doc.id,
+                  ...postData,
+                  profile: profileData,
+                };
+              })
+          );
+
+          setPostsWithProfiles(posts);
+        });
+      };
+
+      getPosts();
+    }
+    return () => {
+      if (postsUnsubscribe) {
+        postsUnsubscribe();
+      }
+    };
+  }, [myProfile, recommend]);
 
   return (
     <Wrapper>
@@ -209,28 +151,15 @@ const FeedContent = () => {
             />
           </FeedTabBtn>
         </FeedTabBar>
-        {feed[3].feedDetail.map((it, idx) => (
-          <FeedItem
-            key={idx}
-            user={user}
-            profile={profile}
-            myProfile={myProfile}
-            feedUserId={feed[3].userId}
-            feedDetail={it}
-            onClick={onClick}
-          />
-        ))}
-        {/* {posts.length > 0
-          ? posts.map((post) => (
-              <FeedItem
-                key={post.id}
-                myProfile={myProfile}
-                feedProfile={feedProfile}
-                feedDetail={post}
-              />
-            ))
-          : null} */}
-        {isClicked ? <ClickFeed onClick={onClick} /> : null}
+        {postsWithProfiles && postsWithProfiles.length > 0 ? (
+          postsWithProfiles.map((post) => (
+            <FeedItem key={post.id} feedDetail={post} />
+          ))
+        ) : recommend ? (
+          <WelcomFeed recommend={true} />
+        ) : (
+          <WelcomFeed recommend={false} />
+        )}
       </FeedArea>
     </Wrapper>
   );

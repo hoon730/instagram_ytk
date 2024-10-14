@@ -9,19 +9,19 @@ const Wrapper = styled.div`
   text-align: center;
   transition: all 0.3s;
   cursor: pointer;
-  border-bottom: ${({ last, theme }) =>
-    last === "last" ? null : `1px solid ${theme.borderColor};`};
-  padding: ${({ padding }) => (padding ? `${padding}` : "auto")};
+  border-bottom: ${({ $last, theme }) =>
+    $last === "last" ? null : `1px solid ${theme.borderColor};`};
+  padding: ${({ $padding }) => ($padding ? `${$padding}` : "auto")};
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : "16px")};
   cursor: pointer;
-  ${({ text }) =>
-    text === "신고" || text === "삭제"
+  ${({ $text }) =>
+    $text === "신고" || $text === "삭제"
       ? `color: var(--warning-color); font-weight: var(--font-bold);`
       : ""};
 
   &:hover {
-    ${({ text }) =>
-      text === "신고"
+    ${({ $text }) =>
+      $text === "신고"
         ? `color: #ED4816; font-weight: var(--font-bold);`
         : `color: var(--gray-color);`};
   }
@@ -60,10 +60,10 @@ const MoreItem = ({
 
   return (
     <Wrapper
-      padding={padding}
+      $padding={padding}
       fontSize={fontSize}
-      text={text}
-      last={last}
+      $text={text}
+      $last={last}
       onClick={handleOnClick}
     >
       {text}

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { StateContext } from "../../App";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
@@ -6,6 +7,7 @@ import Slide from "./Slide";
 import FeedIcon from "./FeedIcon";
 import FeedText from "./FeedText";
 import CommentInput from "../Common/CommentInput";
+import ClickFeed from "../Detail/ClickFeed";
 
 const Wrapper = styled.div`
   padding-bottom: 50px;
@@ -88,6 +90,12 @@ const PhotoSection = styled.div`
   }
 `;
 
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const FeedDescArea = styled.div`
   margin: 0 36px;
   @media screen and (max-width: 1024px) {
@@ -106,20 +114,13 @@ const FeedDesc = styled.div`
   }
 `;
 
-const FeedItem = ({
-  user,
-  profile,
-  myProfile,
-  feedUserId,
-  feedDetail,
-  onClick,
-}) => {
-  const feedProfile = profile.find((it) => it.userId === feedUserId);
-  const feedUser = user.find((it) => it.userId === feedUserId);
-  const followResult = myProfile.following.find((it) => it === feedUserId);
+const FeedItem = ({ feedDetail }) => {
+  const [isClicked, setIsClicked] = useState(false);
+  const { myProfile } = useContext(StateContext);
+  const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
-  const showFeed = () => {
-    onClick();
+  const onClick = () => {
+    setIsClicked((current) => !current);
   };
 
   return (
@@ -128,41 +129,46 @@ const FeedItem = ({
         <ProfileImg
           type={"active"}
           size={"62"}
-          url={feedProfile.profilePhoto}
+          url={feedDetail.profile.profilePhoto}
+          feedDetail={feedDetail}
+          myProfile={myProfile}
         />
         <UserInfo>
           <UserId
             type={"feed"}
-            userNickname={feedUser.userNickname}
-            check={feedProfile.badge ? "active" : ""}
-            createdAt={new Date(feedDetail.createDate)}
+            userNickname={feedDetail.profile.userId}
+            check={feedDetail.profile.badge ? "active" : ""}
+            createdAt={new Date(parseInt(feedDetail.createdAt))}
             btn={"more"}
             follwed={followResult ? "" : "팔로우"}
+            uid={feedDetail.uid}
           />
-          <UserName>{feedProfile.userName}</UserName>
+          <UserName>{feedDetail.profile.userName}</UserName>
         </UserInfo>
       </ProfileSection>
-      <PhotoSection onClick={showFeed}>
+      <PhotoSection>
         {feedDetail.type === "reels" ? (
-          <video
-            autoPlay
-            muted
-            loop
-            src={feedDetail.imgPath}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+          <Video autoPlay muted loop src={feedDetail.imgPath} />
         ) : (
-          <Slide imgPath={feedDetail.imgPath} />
+          <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}
+        {isClicked ? (
+          <ClickFeed
+            onClick={onClick}
+            feedDetail={feedDetail}
+            myProfile={myProfile}
+          />
+        ) : null}
       </PhotoSection>
       <FeedDescArea>
-        <FeedIcon user={user} feedDetail={feedDetail} myProfile={myProfile} />
+        <FeedIcon feedDetail={feedDetail} myProfile={myProfile} />
         <FeedDesc>
           <UserInfo>
             <UserId
               type={"feed"}
-              userNickname={feedUser.userNickname}
-              check={feedProfile.badge ? "active" : ""}
+              userNickname={feedDetail.profile.userId}
+              check={feedDetail.profile.badge ? "active" : ""}
+              uid={feedDetail.uid}
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
