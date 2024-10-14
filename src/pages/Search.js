@@ -130,7 +130,7 @@ const ItemArea = styled.div`
   }
 `;
 
-const Search = () => {
+const Search = ({ page }) => {
   const [moreBtn, setMoreBtn] = useState(false);
   const [postList, setPostList] = useState([]);
   const [keyword] = useSearchParams();
@@ -147,8 +147,11 @@ const Search = () => {
 
   const fetchFeeds = async () => {
     try {
-      const q = await query(collection(db, 'feed'), where("hashtag", "array-contains", `#${getQuery}`));
-      const querySnapshot = await getDocs(q);
+      const s = await query(
+        collection(db, "feed"),
+        where("hashtag", "array-contains", `#${getQuery}`)
+      );
+      const querySnapshot = await getDocs(s);
       let feeds = [];
 
       querySnapshot.docs.map((doc) => {
@@ -159,38 +162,46 @@ const Search = () => {
       });
 
       setPostList(feeds);
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   return (
     <Wrapper>
       <MainHeader />
-      {getQuery === "" ? <NoResult><WarningText>유효하지 않은 접근입니다.</WarningText></NoResult> : postList.length === 0 ? <NoResult><WarningText>검색결과가 없습니다.</WarningText></NoResult> : <><Margin /><Container>
-        <Header>
-          <Keyword>#{getQuery}</Keyword>
-          <MoreIconArea>
-            <MoreIcon onClick={handleMoreBtn}>
-              <LuMoreHorizontal size={22} />
-            </MoreIcon>
-            <MorePopup className={moreBtn ? "active" : ""}>
-              <PiSirenLight size={20} />
-              신고하기
-            </MorePopup>
-          </MoreIconArea>
-        </Header>
-        <ItemArea>
-          {postList.map((it, index) => (
-            <MyPostItem
-              key={index}
-              type={"search"}
-              url={it.imgPath}
-            />
-          ))}
-        </ItemArea>
-      </Container></>}
+      {page === "search" && getQuery === "" ? (
+        <NoResult>
+          <WarningText>유효하지 않은 접근입니다.</WarningText>
+        </NoResult>
+      ) : postList.length === 0 ? (
+        <NoResult>
+          <WarningText>검색결과가 없습니다.</WarningText>
+        </NoResult>
+      ) : (
+        <>
+          <Margin />
+          <Container>
+            <Header>
+              <Keyword>{page === "search" ? `#${getQuery}` : "탐색"}</Keyword>
+              <MoreIconArea>
+                <MoreIcon onClick={handleMoreBtn}>
+                  <LuMoreHorizontal size={22} />
+                </MoreIcon>
+                <MorePopup className={moreBtn ? "active" : ""}>
+                  <PiSirenLight size={20} />
+                  신고하기
+                </MorePopup>
+              </MoreIconArea>
+            </Header>
+            <ItemArea>
+              {postList.map((it, index) => (
+                <MyPostItem key={index} page={page} url={it.imgPath} />
+              ))}
+            </ItemArea>
+          </Container>
+        </>
+      )}
     </Wrapper>
   );
 };

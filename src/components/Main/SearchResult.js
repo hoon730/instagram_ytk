@@ -57,19 +57,19 @@ const SearchResult = ({ text }) => {
   const [hashtagCount, setHashtagCount] = useState({});
   const navigate = useNavigate();
 
-  useEffect(() => { 
-    if(text === "") {
+  useEffect(() => {
+    if (text === "") {
       fetchHashtags();
       fetchUser();
     } else {
-    setGetUserNickName(text);
-    setGetHashtag(text);
+      setGetUserNickName(text);
+      setGetHashtag(text);
     }
   }, [text]);
 
   const fetchHashtags = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'feed'));
+      const querySnapshot = await getDocs(collection(db, "feed"));
       let allHashtags = [];
 
       querySnapshot.docs.map((doc) => {
@@ -79,21 +79,22 @@ const SearchResult = ({ text }) => {
         }
       });
 
-      const hashtagCountFun = allHashtags.reduce((accu, curr) => {accu[curr] = (accu[curr] || 0
-      )+1; return accu;}, {});
+      const hashtagCountFun = allHashtags.reduce((accu, curr) => {
+        accu[curr] = (accu[curr] || 0) + 1;
+        return accu;
+      }, {});
       const removeDuplAllHashtags = [...new Set(allHashtags)];
 
       setHashtagCount(hashtagCountFun);
       setAllHashtag(removeDuplAllHashtags);
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   const fetchUser = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'profile'));
+      const querySnapshot = await getDocs(collection(db, "profile"));
       let allUsers = [];
 
       querySnapshot.docs.map((doc) => {
@@ -104,17 +105,17 @@ const SearchResult = ({ text }) => {
       });
 
       setAllUser(allUsers);
-    }
-    catch (err) {
+    } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   const showHashtag = () => {
-    return getHashtag === "#" || getHashtag === "" ? [] : allHashtag.filter(
-      (it) =>
-        it.toLocaleLowerCase().includes(getHashtag.toLocaleLowerCase())
-    );
+    return getHashtag === "#" || getHashtag === ""
+      ? []
+      : allHashtag.filter((it) =>
+          it.toLocaleLowerCase().includes(getHashtag.toLocaleLowerCase())
+        );
   };
 
   const showUserNickName = () => {
@@ -134,20 +135,31 @@ const SearchResult = ({ text }) => {
   return (
     <Wrapper>
       <SearchList>
-        {text.startsWith("#") 
-        ? showHashtag().map((it, idx) => (
-          <MainSearchItem onClick={() => navigate(`/search?q=${it.slice(1)}`)}>
-            <SearchItem key={idx} type={"mainSearch"} hashtag={it} hashtagCount={hashtagCount[it]} />
-          </MainSearchItem>
-        ))
-        : showUserNickName().map((it, idx) => (
-          <MainSearchItem onClick={() => navigate("/detail")}>
-            <SearchItem key={idx} type={"mainSearch"} {...it} />
-          </MainSearchItem>
-        ))}
+        {text.startsWith("#")
+          ? showHashtag().map((it, idx) => (
+              <MainSearchItem
+                key={idx}
+                onClick={() =>
+                  navigate(`/search?q=${it.toLocaleLowerCase().slice(1)}`)
+                }
+              >
+                <SearchItem
+                  type={"mainSearch"}
+                  hashtag={it}
+                  hashtagCount={hashtagCount[it]}
+                />
+              </MainSearchItem>
+            ))
+          : showUserNickName().map((it, idx) => (
+              <MainSearchItem key={idx} onClick={() => navigate("/detail")}>
+                <SearchItem type={"mainSearch"} {...it} />
+              </MainSearchItem>
+            ))}
         <NoResult
           className={
-            getUserNickName === "" || showUserNickName().length > 0 || showHashtag().length > 0
+            getUserNickName === "" ||
+            showUserNickName().length > 0 ||
+            showHashtag().length > 0
               ? "active"
               : ""
           }

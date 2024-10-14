@@ -82,8 +82,12 @@ const SearchBar = () => {
   };
 
   const moveResult = (e) => {
-    if (e.key === "Enter") navigate(`/search?q=${text.slice(1)}`);
-  }
+    if (e.key === "Enter") {
+      if (text.startsWith("#")) {
+        navigate(`/search?q=${text.toLocaleLowerCase().slice(1)}`);
+      }
+    }
+  };
 
   const inputReset = () => {
     setText("");

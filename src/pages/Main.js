@@ -52,7 +52,7 @@ const Main = () => {
         <MainHeaderMargin />
         <MainContent>
           <FeedSection>
-            <StoryContent />
+            {/* <StoryContent /> */}
             <FeedContent />
           </FeedSection>
           <HotHashtag />
