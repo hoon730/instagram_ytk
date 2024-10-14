@@ -8,6 +8,7 @@ import Detail from "./pages/Detail";
 import MyFeed from "./pages/MyFeed";
 import Login from "./pages/Login";
 import Search from "./pages/Search";
+import Reels from "./pages/Reels";
 import Layout from "./components/Layout";
 import New from "./pages/New";
 import Loading from "./components/Common/Loading";
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "explore",
         element: <Search page={"explore"} />,
+      },
+      {
+        path: "reels",
+        element: <Reels />,
       },
     ],
   },

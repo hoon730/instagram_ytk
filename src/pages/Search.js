@@ -135,37 +135,65 @@ const Search = ({ page }) => {
   const [postList, setPostList] = useState([]);
   const [keyword] = useSearchParams();
 
-  const getQuery = keyword.get("q") || "";
+  let getQuery = keyword.get("q") || "";
 
   const handleMoreBtn = () => {
     setMoreBtn((prev) => !prev);
   };
 
   useEffect(() => {
-    fetchFeeds();
-  }, [keyword]);
+    if (getQuery !== "" && page === "search") {
+      const fetchHashtag = async () => {
+        try {
+          const q = await query(
+            collection(db, "feed"),
+            where("hashtag", "array-contains", `#${getQuery}`)
+          );
+          const querySnapshot = await getDocs(q);
+          let feeds = [];
 
-  const fetchFeeds = async () => {
-    try {
-      const s = await query(
-        collection(db, "feed"),
-        where("hashtag", "array-contains", `#${getQuery}`)
-      );
-      const querySnapshot = await getDocs(s);
-      let feeds = [];
+          querySnapshot.docs.map((doc) => {
+            const data = doc.data();
+            if (data) {
+              feeds.push(data);
+            }
+          });
 
-      querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        if (data) {
-          feeds.push(data);
+          setPostList(feeds);
+        } catch (err) {
+          console.error(err);
         }
-      });
+      };
 
-      setPostList(feeds);
-    } catch (err) {
-      console.error(err);
+      fetchHashtag();
+    } else {
+      const fetchFeeds = async () => {
+        try {
+          const querySnapshot = await getDocs(collection(db, "feed"));
+          let feeds = [];
+
+          querySnapshot.docs.map((doc) => {
+            const data = doc.data();
+            if (data) {
+              feeds.push(data);
+            }
+          });
+
+          const randomFeeds = feeds.sort(() => 0.5 - Math.random());
+
+          const selectFeeds = randomFeeds.slice(0, 24);
+
+          console.log(selectFeeds);
+
+          setPostList(selectFeeds);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      fetchFeeds();
     }
-  };
+  }, [getQuery, page]);
 
   return (
     <Wrapper>

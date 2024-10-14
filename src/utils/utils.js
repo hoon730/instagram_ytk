@@ -36,6 +36,7 @@ export const menuData = [
     id: 1,
     name: "탐색",
     iconCode: <FaRegCompass />,
+    path: "/explore",
   },
   {
     id: 2,
@@ -60,6 +61,7 @@ export const mbMenuData = [
     id: 1,
     name: "검색",
     iconCode: <RxMagnifyingGlass />,
+    path: "/explore",
   },
   {
     id: 2,

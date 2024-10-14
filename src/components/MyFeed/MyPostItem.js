@@ -9,11 +9,12 @@ const Wrapper = styled.div`
   ${({ page }) =>
     page === "search" || page === "explore"
       ? "padding-top: 100%;"
+      : page === "reels"
+      ? "padding-top: 178%"
       : "padding-top: 33%;"}
-  background: #000;
 `;
 
-const ImgBox = styled.div`
+const Box = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -28,6 +29,14 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  object-fit: contain;
+  background: #000;
+`;
+
 const MyPostItem = ({ size, url, onClick, page }) => {
   const showFeed = () => {
     onClick();
@@ -35,9 +44,13 @@ const MyPostItem = ({ size, url, onClick, page }) => {
 
   return (
     <Wrapper onClick={showFeed} page={page}>
-      <ImgBox>
-        <Img src={url} alt="postphoto" />
-      </ImgBox>
+      <Box>
+        {page === "reels" ? (
+          <Video src={url} alt="postvideo" />
+        ) : (
+          <Img src={url} alt="postphoto" />
+        )}
+      </Box>
     </Wrapper>
   );
 };
