@@ -56,7 +56,6 @@ const MoreText = styled.span`
 `;
 
 const HashTag = styled.span`
-  margin-right: 4px;
   color: ${({ theme }) => theme.subColor};
   cursor: pointer;
   @media screen and (max-width: 1024px) {
@@ -64,7 +63,7 @@ const HashTag = styled.span`
   }
 `;
 
-const FeedText = ({ feedDetail, myFeed, post }) => {
+const FeedText = ({ feedDetail, myFeed, post, all }) => {
   const lines = feedDetail
     ? feedDetail.content.split("\n")
     : myFeed
@@ -77,6 +76,10 @@ const FeedText = ({ feedDetail, myFeed, post }) => {
   const originalCommentRef = useRef(null);
 
   useEffect(() => {
+    if (all) {
+      setShowMore(true);
+    }
+
     const handleMoreButton = () => {
       if (!originalCommentRef.current || !commentRef.current) return;
       const { clientHeight: originalHeight } = originalCommentRef.current;
@@ -97,7 +100,7 @@ const FeedText = ({ feedDetail, myFeed, post }) => {
   return (
     <Wrapper>
       <EllipsisText $showMore={showMore}>
-        {isEllipsed && <MoreText onClick={moreView}>더보기</MoreText>}
+        {!all && isEllipsed && <MoreText onClick={moreView}>더보기</MoreText>}
         <p ref={commentRef}>
           {lines.map((it, idx) => (
             <React.Fragment key={idx}>
@@ -105,9 +108,9 @@ const FeedText = ({ feedDetail, myFeed, post }) => {
                 .split(" ")
                 .map((word, idx) =>
                   word.startsWith("#") ? (
-                    <HashTag key={idx}>{word}</HashTag>
+                    <HashTag key={idx}>{word} </HashTag>
                   ) : (
-                    <React.Fragment key={idx}>{word}</React.Fragment>
+                    <React.Fragment key={idx}>{word} </React.Fragment>
                   )
                 )}
               <br />
