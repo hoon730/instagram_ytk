@@ -147,7 +147,7 @@
     {
       "uid": "h8miz5Z5rdeDliBIJenoxVZ8MDa2",
       "userId": "Af4BexYzzRIvqtGjSeYEG3pqZHw",
-      "userNickname": "dIn92",
+      "userNickname": "din92",
       "phone": "01096787592",
       "email": "handain@gmail.com",
       "userRealName": "한다인",
@@ -156,7 +156,7 @@
     {
       "uid": "6n7cKaOELcP85PfnTNEDFN74qKl2",
       "userId": "0kW30ovXTfTAwBRyTzHKGvqG398",
-      "userNickname": "Heam13",
+      "userNickname": "heam13",
       "phone": "01072963213",
       "email": "seonmi@gmail.com",
       "userRealName": "하선미",
@@ -165,7 +165,7 @@
     {
       "uid": "8nwd1FWTzrc0zyATexbVkgaNaRb2",
       "userId": "tePhQ1wQJAwRlEcw1TOWpE4N9JU",
-      "userNickname": "JY72",
+      "userNickname": "jy72",
       "phone": "01094931072",
       "email": "jiyoung@gmail.com",
       "userRealName": "박지영",
@@ -174,7 +174,7 @@
     {
       "uid": "SJ75PnGrrVMap4p9c7XIb6bQSDq2",
       "userId": "1JaMETkLKPzcOLuDpbmRoTpKbgt",
-      "userNickname": "MJ54",
+      "userNickname": "mj54",
       "phone": "01088532854",
       "email": "minju@gmail.com",
       "userRealName": "조민주",
@@ -1026,8 +1026,8 @@
       "website": "",
       "recommendation": false,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/0kW30ovXTfTAwBRyTzHKGvqG398/heamPf",
-      "bgPhoto": "/images/userImgs/0kW30ovXTfTAwBRyTzHKGvqG398/heamBg",
+      "profilePhoto": "/images/userImgs/0kW30ovXTfTAwBRyTzHKGvqG398/heamPf.jpg",
+      "bgPhoto": "/images/userImgs/0kW30ovXTfTAwBRyTzHKGvqG398/heamBg.jpg",
       "follower": [
         "lualbvqvQmVWkfDU7JUKJRYdqf3",
         "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -1107,8 +1107,8 @@
       "website": "",
       "recommendation": false,
       "nondisclosure": false,
-      "profilePhoto": "/images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJpf",
-      "bgPhoto": "/images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJbg",
+      "profilePhoto": "/images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJpf.jpg",
+      "bgPhoto": "/images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJbg.jpg",
       "follower": [
         "lualbvqvQmVWkfDU7JUKJRYdqf3",
         "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -3513,7 +3513,7 @@
       "storyHistory": [
         {
           "storyId": "sh00000071",
-          "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/",
+          "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJPlan.jpg",
           "createDate": "2024-10-13",
           "content": "하나하나 천천히 ⏳",
           "like": [
@@ -3547,9 +3547,9 @@
         },
         {
           "storyId": "sh00000072",
-          "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/",
+          "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJSun.jpg",
           "createDate": "2024-10-15",
-          "content": "산책 후 기분이 좋아졌어 🌇",
+          "content": "노을 이쁘다 🌇",
           "like": [
             "lualbvqvQmVWkfDU7JUKJRYdqf3",
             "KWUUuqMImhcKDZ822gc2InH4vSN",
@@ -3581,9 +3581,9 @@
         },
         {
           "storyId": "sh00000073",
-          "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/",
+          "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJYoga.jpg",
           "createDate": "2024-10-15",
-          "content": "나 자신을 위한 시간, 너무 중요해 🧘‍♀️",
+          "content": "요가 수업 첫날! 힘들었다;; 🧘‍♀️",
           "like": [
             "wAKs9uXSWsTJbbJGg2MaErFaKqE",
             "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -3610,9 +3610,9 @@
         },
         {
           "storyId": "sh00000074",
-          "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/",
+          "imgPath": "images/userImgs/1JaMETkLKPzcOLuDpbmRoTpKbgt/MJCoffee.jpg",
           "createDate": "2024-10-16",
-          "content": "긍정적인 에너지로 가득한 하루! ☀️",
+          "content": "매일 아침 커피 한잔!☀️",
           "like": [
             "wAKs9uXSWsTJbbJGg2MaErFaKqE",
             "4JhKn3cYHd9dY9muGz1oXiJAruo",
@@ -13551,7 +13551,7 @@
           "createDate": "2024-10-05",
           "type": "img",
           "imgPath": [
-            "images/userImgs/Af4BexYzzRIvqtGjSeYEG3pqZHw/dainJejuDog"
+            "images/userImgs/Af4BexYzzRIvqtGjSeYEG3pqZHw/dainJejuDog.jpg"
           ],
           "content": "하..우리집 강아지가 진짜 세상에서 젤 귀여워 🐶 #반려동물 #소확행 #힐링",
           "hashtag": ["#반려동물", "#소확행", "#힐링"],
