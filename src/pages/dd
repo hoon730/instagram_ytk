@@ -6,7 +6,6 @@
 // v6. Firebase: Error (auth/invalid-credential).파이어베이스 에러들 한글로 바꾸기. 로그인포맷, 같은이메일 존재
 // 7. 눈모양 버튼 앤터 칠 떄 boolean 안바뀌도록
 // v8. 로그인 id, 전번, 이메일과 비밀번호로 가능하게끔
-// 9. 반응형. 370, 780
 // 10. 로그인 전번간편로그인 기능
 // . 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
 
@@ -59,15 +58,11 @@ const Block = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 480px;
   padding: 40px;
   gap: 40px;
-  border: 1px solid var(--gray-color);
+  border: 1px solid;
+  border-color: var(--gray-color);
   border-radius: 10px;
-  @media (max-width: 780px) {
-    border-color: transparent;
-  }
 `;
 
 const PleaseSignUp = styled.p`
@@ -78,7 +73,6 @@ const PleaseSignUp = styled.p`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 100%;
   gap: 15px;
 `;
 
@@ -129,9 +123,6 @@ const Label = styled.label`
   color: ${colors.darkGray};
   pointer-events: none;
   transition: 0.2s ease all;
-  @media (max-width: 370px) {
-    font-size: 13px;
-  }
 `;
 
 const Error = styled.p`
@@ -280,7 +271,7 @@ const Signup = () => {
       );
       console.log(credentials.user);
       await updateProfile(credentials.user, { displayName: id });
-      await setDoc(doc(db, "profile", credentials.user.uid), {
+      await setDoc(doc(db, "users", credentials.user.uid), {
         uid: credentials.user.uid,
         userId: id,
         userName: name,
@@ -438,7 +429,7 @@ const Signup = () => {
           <AccountLogin>
             {/* <AccountQ>계정이 이미 있으신가요?</AccountQ> */}
             <FbBtn />
-            <AccountLink onClick={loginLink}>로그인하기</AccountLink>
+            <AccountLink onClick={loginLink}>로그인 하러가기</AccountLink>
           </AccountLogin>
         </LoginBlock>
       </Block>
