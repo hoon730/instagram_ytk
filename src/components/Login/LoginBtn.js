@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Submit = styled.input`
-  width: 400px;
+  width: 100%;
   border-radius: 5px;
   padding: 15px 20px;
   background: var(--sub-purple-color);

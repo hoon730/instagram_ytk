@@ -30,15 +30,15 @@ const Icons = styled.div`
 
 const LeftIcons = styled.span`
   display: flex;
-  gap: 30px;
+  gap: 20px;
   @media screen and (max-width: 1024px) {
     gap: 18px;
   }
 `;
 
 const icon = `
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   &:hover{
     color: var(--gray-color);
@@ -56,8 +56,10 @@ const Heart = styled(GoHeart)`
 
 const HeartFill = styled(GoHeartFill)`
   ${icon}
-  fill: crimson;
-  color: ${({ theme }) => theme.iconColor};
+  color: var(--sub-pink-color);
+  &:hover {
+    color: #cf236a;
+  }
 `;
 
 const Reply = styled(IoChatbubbleEllipsesOutline)`

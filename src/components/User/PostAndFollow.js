@@ -54,7 +54,7 @@ const PostAndFollow = ({
   };
 
   return (
-    <Wrapper padding={padding}>
+    <Wrapper padding={padding} className="post_follow">
       <NumberingBox>
         <span>{posting}</span>
         <span>게시물</span>

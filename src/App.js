@@ -11,6 +11,7 @@ import Search from "./pages/Search";
 import Layout from "./components/Layout";
 import New from "./pages/New";
 import Loading from "./components/Common/Loading";
+import ClickStory from "./components/Story/ClickStory";
 
 import Setup from "./pages/Setup";
 import Signup from "./pages/Signup";
@@ -72,7 +73,15 @@ const router = createBrowserRouter([
       },
       {
         path: "search",
-        element: <Search />,
+        element: <Search page={"search"} />,
+      },
+      {
+        path: "explore",
+        element: <Search page={"explore"} />,
+      },
+      {
+        path: "clickstory",
+        element: <ClickStory />,
       },
     ],
   },

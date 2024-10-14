@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { auth } from "../../../utils/firebase";
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
@@ -37,13 +38,18 @@ const MoreItem = ({
 }) => {
   const navigate = useNavigate();
 
-  const goLogin = () => {
-    navigate("/login");
+  const logOut = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    const ask = confirm("로그아웃 하시겠습니다?");
+    if (ask) {
+      await auth.signOut();
+      navigate("/login");
+    }
   };
 
   const handleOnClick = () => {
     if (text === "로그아웃") {
-      goLogin();
+      logOut();
     } else if (text === "수정") {
       setIsEditing(true);
       setOpenMore(false);
