@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { getFormattedDate } from "../../utils/utils";
 import styled from "styled-components";
 import Slide from "../Main/Slide";
 import ProfileImg from "../Profile/ProfileImg";
@@ -16,10 +15,8 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import { db } from "../../utils/firebase";
 import {
   collection,
-  limit,
   query,
   where,
-  getDocs,
   orderBy,
   onSnapshot,
 } from "firebase/firestore";
@@ -60,6 +57,7 @@ const Wrapper = styled(motion.div)`
   height: 93%;`}
   border-radius: var(--border-radius-12);
   transition: all 0.3s;
+  cursor: default;
 
   @media screen and (max-width: 1400px) {
     position: relative;
@@ -127,7 +125,9 @@ const Desc = styled.div`
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 100px);
+  display: flex;
+  flex-direction: column;
 `;
 
 const UserContainer = styled.div`
@@ -175,9 +175,11 @@ const Date = styled.span`
 
 const CommentList = styled.div`
   padding: 20px;
+  overflow-y: scroll;
 `;
 
 const WritingComment = styled.div`
+  height: 100px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -308,7 +310,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     const profileData = allProfile.find((it) => it.uid === likeFollowing);
     setFollowingUser(profileData);
 
-    let replyArr = [];
     let replyUnsubscribe = null;
     let reReplyUnsubscribe = null; // 여기에 let으로 선언
 
@@ -324,10 +325,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
           id: doc.id,
           ...doc.data(),
         }));
-
-        // replyArr 업데이트
-        replyArr = replyDocs;
-        SetReplyArr(replyDocs);
 
         // 댓글 ID 배열 만들기
         const replyIdArr = replyDocs.map((it) => it.id);
@@ -349,7 +346,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
             }));
 
             // 대댓글을 기존 댓글에 추가
-            const replyList = replyArr.map((rp) => ({
+            const replyList = replyDocs.map((rp) => ({
               ...rp,
               reReply: reReplyDocs.filter((rr) => rr.replyId === rp.id),
             }));
@@ -357,10 +354,13 @@ const ClickFeed = ({ feedDetail, onClick }) => {
             // 업데이트된 댓글 리스트 설정
             SetReplyArr(replyList);
           });
-        } else if (reReplyUnsubscribe) {
-          // 대댓글이 없을 경우 기존 구독 해제
-          reReplyUnsubscribe();
-          reReplyUnsubscribe = null; // 참조 초기화
+        } else {
+          SetReplyArr(replyDocs);
+          if (reReplyUnsubscribe) {
+            // 대댓글이 없을 경우 기존 구독 해제
+            reReplyUnsubscribe();
+            reReplyUnsubscribe = null; // 참조 초기화
+          }
         }
       });
     };
@@ -377,10 +377,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
       }
     };
   }, [feedDetail]);
-
-  useEffect(() => {
-    console.log(replyArr);
-  }, [replyArr]);
 
   const hideFeed = () => {
     onClick();
@@ -465,7 +461,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                           <span>
                             {followingUser ? (
                               <>
-                                {followingUser.userId}님 외{" "}
+                                {followingUser.userId}님 외
                                 <b> {feedDetail.like.length}명</b>이 좋아합니다
                               </>
                             ) : (

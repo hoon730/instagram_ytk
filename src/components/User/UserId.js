@@ -124,7 +124,6 @@ const UserId = ({
   onClick,
   setIsEditing,
   uid,
-  fix,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);

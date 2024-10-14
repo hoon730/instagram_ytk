@@ -29,7 +29,7 @@ const CommentLine = ({ userId, uid, comment }) => {
     setHoverId(false);
   };
   return (
-    <CommentBox>
+    <CommentBox className="comment-box">
       <IdSpan onMouseEnter={showProfile} onMouseLeave={hideProfile}>
         {userId}
       </IdSpan>

@@ -56,7 +56,6 @@ const MoreText = styled.span`
 `;
 
 const HashTag = styled.span`
-  margin-right: 4px;
   color: ${({ theme }) => theme.subColor};
   cursor: pointer;
   @media screen and (max-width: 1024px) {
@@ -109,9 +108,9 @@ const FeedText = ({ feedDetail, myFeed, post, all }) => {
                 .split(" ")
                 .map((word, idx) =>
                   word.startsWith("#") ? (
-                    <HashTag key={idx}>{word}</HashTag>
+                    <HashTag key={idx}>{word} </HashTag>
                   ) : (
-                    <React.Fragment key={idx}>{word}</React.Fragment>
+                    <React.Fragment key={idx}>{word} </React.Fragment>
                   )
                 )}
               <br />

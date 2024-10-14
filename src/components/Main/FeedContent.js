@@ -12,7 +12,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import ClickFeed from "../Detail/ClickFeed";
 import WelcomFeed from "./WelcomFeed";
 import { StateContext } from "../../App";
 
@@ -59,7 +58,7 @@ const ActiveBorder = styled.div`
       : `transform: translateX(100%);`}
 `;
 
-const Test = styled.div`
+const LoadingScreen = styled.div`
   width: 100%;
   height: 100vh;
   background: ${({ theme }) => theme.bgColor};
@@ -124,7 +123,7 @@ const FeedContent = () => {
 
           setPostsWithProfiles(posts);
 
-          await setIsLoading(false);
+          setIsLoading(false);
         });
       };
 
@@ -162,7 +161,7 @@ const FeedContent = () => {
           </FeedTabBtn>
         </FeedTabBar>
         {isLoading ? (
-          <Test />
+          <LoadingScreen />
         ) : (
           <>
             {postsWithProfiles && postsWithProfiles.length > 0 ? (
