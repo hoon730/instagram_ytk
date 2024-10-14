@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { FaGear } from "react-icons/fa6";
 import Setup from "../../pages/Setup";
+import MbButtons from "./MbButtons";
 
 const Wrapper = styled.div``;
 
@@ -21,8 +22,8 @@ const NameBox = styled.div`
     padding: 20px 50px 0px;
   }
 
-  @media screen and (max-width: 500px) {
-    padding: 20px 20px 0px 50px;
+  @media screen and (max-width: 630px) {
+    padding: 0 15px;
   }
 `;
 
@@ -37,6 +38,15 @@ const MyName = styled.div`
   span {
     font-size: var(--font-16);
     font-weight: var(--font-bold);
+  }
+
+  @media screen and (max-width: 630px) {
+    p {
+      font-size: var(--font-16);
+    }
+    span {
+      font-size: var(--font-14);
+    }
   }
 `;
 
@@ -62,16 +72,30 @@ const EditBtn = styled.div`
       font-size: var(--font-18);
     }
   }
+  @media screen and (max-width: 630px) {
+    display: none;
+  }
 `;
 
 const MyIntro = styled.div`
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
   padding: 10px 70px;
-  font-size: var(--font-size-16);
+  font-size: var(--font-16);
 
   @media screen and (max-width: 900px) {
     padding: 10px 50px 10px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 10px 20px 0 20px;
+    font-size: var(--font-14);
+  }
+
+  @media screen and (max-width: 630px) {
+    padding: 20px 0 0 15px;
+    font-size: var(--font-14);
+    border-bottom: none;
   }
 `;
 
@@ -81,8 +105,6 @@ const MyProfile = ({ myProfile }) => {
   const onClick = () => {
     setIsOpen((current) => !current);
   };
-
-  console.log(myProfile);
 
   return (
     <Wrapper>
@@ -98,6 +120,7 @@ const MyProfile = ({ myProfile }) => {
           </EditBtn>
         </NameBox>
         <MyIntro>{myProfile?.introduction}</MyIntro>
+        <MbButtons/>
       </MyProfileBox>
     </Wrapper>
   );

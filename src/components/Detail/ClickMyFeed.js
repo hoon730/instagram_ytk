@@ -202,6 +202,14 @@ const Notification = styled.div`
   svg {
     font-size: var(--font-20);
   }
+
+  @media screen and (max-width: 1000px) {
+    font-size: var(--font-12);
+
+    svg {
+      font-size: var(--font-18);
+    }
+  }
 `;
 const IconBtns = styled.div`
   display: flex;
@@ -224,6 +232,11 @@ const StyledInput = styled.input`
   &::placeholder {
     color: var(--gray-color);
     font-weight: var(--font-regular);
+  }
+
+  @media screen and (max-width: 1000px) {
+    font-size: var(--font-12);
+    height: 30px;
   }
 `;
 
@@ -311,6 +324,8 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
   const [preview, setPreview] = useState([]);
   const [file, setFile] = useState([]);
 
+
+
   const hideFeed = () => {
     onClick();
   };
@@ -343,17 +358,15 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
         }
         newFiles.push(item);
 
-        // FileReader를 사용해 미리보기 URL 생성
         const reader = new FileReader();
         reader.readAsDataURL(item);
 
         reader.onload = (event) => {
           newPreviews.push(event.target.result);
 
-          // 모든 파일이 로드된 후 상태 업데이트
           if (newPreviews.length === files.length) {
-            setPreview((prevPreview) => [...prevPreview, ...newPreviews]); // 미리보기용 URL 배열
-            setFile((prevFile) => [...prevFile, ...newFiles]); // 파일 배열
+            setPreview((prevPreview) => [...prevPreview, ...newPreviews]);
+            setFile((prevFile) => [...prevFile, ...newFiles]);
           }
         };
       }
@@ -377,63 +390,55 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
 
   const onUpDate = async () => {
     try {
-      if (user?.uid !== post.uid) return; // 권한 확인
+      if (user?.uid !== post.uid) return;
 
-      // Firestore에서 현재 게시물 데이터를 가져옴
       const postDoc = await getDoc(doc(db, "feed", post.id));
       const postData = postDoc.data();
 
-      // 기존의 imgPath 배열을 가져옴 (기존 이미지를 유지하기 위함)
       let updatedMedia = postData.imgPath || [];
 
-      // 이미지나 동영상 파일이 수정된 경우
       if (file.length > 0) {
-        // 여러 파일을 처리할 수 있도록 file 배열 사용
         for (const editedFile of file) {
           const newFileType = editedFile.type.startsWith("image/")
             ? "img"
-            : "video"; // 파일 타입을 구분
+            : "video";
 
-          // Firebase Storage에 새 파일 업로드
           const locationRef = ref(
             storage,
             `feed/${user.uid}/${post.id}/${editedFile.name}`
           );
           const uploadTask = uploadBytesResumable(locationRef, editedFile);
 
-          // 파일 크기 확인 (10MB 초과 시 에러)
           if (editedFile.size >= maxFileSize) {
             uploadTask.cancel();
             alert("업로드 할 수 있는 최대용량은 10MB입니다.");
             return;
           }
 
-          // 파일 업로드 완료 후 URL 가져오기
           const result = await uploadBytes(locationRef, editedFile);
           const url = await getDownloadURL(result.ref);
 
-          // 기존 이미지/동영상에 새 URL 추가
           updatedMedia = [...updatedMedia, url];
         }
       }
 
-      // Firestore에 업데이트할 데이터
       const updatedData = {
-        content: editedPost, // 수정된 포스트 내용
-        imgPath: updatedMedia, // 기존 이미지에 새로운 이미지를 추가한 imgPath
+        content: editedPost,
+        imgPath: updatedMedia,
         type: updatedMedia.find((item) => item.endsWith(".mp4"))
           ? "reels"
-          : "img", // 동영상이 포함된 경우 타입을 "reels"로 설정
+          : "img",
       };
 
-      // Firestore에 업데이트
       await updateDoc(doc(db, "feed", post.id), updatedData);
     } catch (e) {
       console.error(e);
     } finally {
-      setIsEditing(false); // 편집 모드 해제
+      setIsEditing(false);
     }
   };
+
+
 
   return (
     <>
@@ -545,6 +550,7 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
                               type={"feed"}
                               userNickname={myProfile?.userId}
                               check={myProfile?.badge ? "active" : ""}
+                              // createdAt={new Date(parseInt(post.createdAt))}
                               btn={"more"}
                               onClick={onDelete}
                               setIsEditing={setIsEditing}

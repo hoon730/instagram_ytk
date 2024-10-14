@@ -164,13 +164,13 @@ const Setup = ({ onClick, myProfile }) => {
         introduction: intro,
         website: link,
         profilePhoto: editProfile,
-        recommendation: "",
-        nondisclosure: "",
-        gender: "",
-        follower: 0,
-        following: 0,
-        bgPhoto: "",
-        badge: "",
+        recommendation: myProfile.recommendation,
+        nondisclosure: myProfile.nondisclosure,
+        gender: myProfile.gender,
+        follower: myProfile.follower,
+        following: myProfile.following,
+        bgPhoto: myProfile.bgPhoto,
+        badge: myProfile.badge,
         uid: user.uid,
       });
 
@@ -185,7 +185,7 @@ const Setup = ({ onClick, myProfile }) => {
   useEffect(() => {
     const fetchProfile = async () => {
       if (!user) return;
-      const userDocRef = doc(db, "newProfile", user.uid);
+      const userDocRef = doc(db, "profile", user.uid);
       const userProfile = await getDoc(userDocRef);
       if (userProfile.exists()) {
         const data = userProfile.data();

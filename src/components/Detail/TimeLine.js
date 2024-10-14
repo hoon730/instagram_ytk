@@ -17,7 +17,6 @@ const Wrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
   margin-bottom: 5px;
-  /* overflow-y: scroll; */
 `;
 const TimeLine = ({ myProfile }) => {
   const [posts, setPosts] = useState([]);
@@ -69,7 +68,7 @@ const TimeLine = ({ myProfile }) => {
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, []);
+  }, [myProfile]);
 
   return (
     <Wrapper>

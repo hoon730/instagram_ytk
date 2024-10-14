@@ -199,6 +199,9 @@ const New = ({ setOpenNew }) => {
   const [textValueLength, setTextValueLength] = useState(0);
   const [pushUrl, setPushUrl] = useState([]);
 
+  console.log("setOpenNew:", setOpenNew);
+
+
   const maxFileSize = 10 * 1024 * 1024;
 
   const fileAdd = (e) => {
@@ -308,6 +311,7 @@ const New = ({ setOpenNew }) => {
   const handleOnClick = () => {
     setOpenNew(false);
   };
+
 
   return (
     <NewBg

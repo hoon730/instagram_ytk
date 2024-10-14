@@ -16,6 +16,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { auth, db } from "../utils/firebase";
+import MbHeader from "../components/Detail/MbHeader";
 
 const Wrapper = styled.div`
   width: 934px;
@@ -29,7 +30,8 @@ const Wrapper = styled.div`
     width: 100%;
   }
   @media screen and (max-width: 630px) {
-    display: none;
+    /* display: none; */
+    width: 430px;
   }
 `;
 
@@ -61,6 +63,7 @@ const MyFeed = () => {
 
   return (
     <Wrapper>
+      <MbHeader/>
       <MyPic myProfile={myProfile} myFeeds={myFeeds} />
       <MyProfile myProfile={myProfile} />
       <MyHighlight />

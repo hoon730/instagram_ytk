@@ -13,7 +13,7 @@ const Detail = () => {
   return (
     <Wrapper>
       <MyFeed />
-      <MbDetail/>
+      {/* <MbDetail/> */}
     </Wrapper>
   );
 };
