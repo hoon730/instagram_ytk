@@ -21,6 +21,12 @@ export const getFormattedDate = (targetDate) => {
   return `${year}-${month}-${date}`;
 };
 
+export const extractExtension = (value) => {
+  const firstSplit = value.split("?");
+  const secondSplit = firstSplit[0].split(".");
+  return secondSplit[secondSplit.length - 1].toLowerCase();
+};
+
 export const menuData = [
   {
     id: 0,

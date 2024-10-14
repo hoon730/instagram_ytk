@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../../App";
 import styled from "styled-components";
@@ -62,22 +62,8 @@ const IconWrapper = styled.div`
   }
 `;
 
-const NewBg = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-`;
-
 const MbMenu = () => {
   const navigate = useNavigate();
-  const newBgRef = useRef();
   const { darkMode } = useContext(ThemeContext);
   const [openNew, setOpenNew] = useState(false);
   const [currentNum, setCurrentNum] = useState(0);

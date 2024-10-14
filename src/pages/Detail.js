@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 const Detail = () => {
   return (
     <Wrapper>
-      {/* <MyFeed /> */}
+      <MyFeed />
       <MbDetail/>
     </Wrapper>
   );

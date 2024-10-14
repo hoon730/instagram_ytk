@@ -434,9 +434,8 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
       // Firestore에 업데이트
       await updateDoc(doc(db, "contents", post.id), updatedData);
   
-      console.log("게시물이 성공적으로 업데이트되었습니다.");
     } catch (e) {
-      console.error("업데이트 중 오류 발생:", e);
+      console.error(e);
     } finally {
       setIsEditing(false); // 편집 모드 해제
     }

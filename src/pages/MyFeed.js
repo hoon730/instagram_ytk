@@ -27,6 +27,9 @@ const Wrapper = styled.div`
   @media screen and (max-width: 780px) {
     width: 100%;
   }
+  @media screen and (max-width: 630px) {
+    display: none;
+  }
 `;
 
 const MyFeed = () => {
