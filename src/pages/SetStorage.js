@@ -49,6 +49,7 @@ import React from "react";
       uid: user.uid,
       userId: user.userNickname,
       userName: item.userName,
+      email:user.email,
       gender: item.gender,
       introduction: item.introduction,
       website: item.website,
