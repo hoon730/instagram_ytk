@@ -5,6 +5,7 @@ import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import CommentItem from "./CommentItem";
 import FeedText from "../Main/FeedText";
+import CommentInput from "../Common/CommentInput";
 import { click } from "../../utils/utils";
 
 import { IoIosCloseCircle } from "react-icons/io";
@@ -14,6 +15,7 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 
 import { db } from "../../utils/firebase";
 import {
+  addDoc,
   collection,
   query,
   where,
@@ -166,15 +168,11 @@ const Content = styled.span`
   font-size: var(--font-14);
 `;
 
-const Date = styled.span`
-  display: flex;
-  align-items: flex-end;
-  font-size: var(--font-12);
-  color: var(--gray-color);
-`;
-
 const CommentList = styled.div`
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   overflow-y: scroll;
 `;
 
@@ -290,11 +288,11 @@ const EditedTextArea = styled.textarea`
 `;
 
 const ClickFeed = ({ feedDetail, onClick }) => {
-  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
+  const [pushComment, setPushComment] = useState("");
   const [followingUser, setFollowingUser] = useState("");
   const [replyArr, SetReplyArr] = useState([]);
 
-  const commentRef = useRef();
   const bgRef = useRef();
 
   const { myProfile } = useContext(StateContext);
@@ -311,7 +309,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     setFollowingUser(profileData);
 
     let replyUnsubscribe = null;
-    let reReplyUnsubscribe = null; // 여기에 let으로 선언
+    let reReplyUnsubscribe = null;
 
     const fetchReply = () => {
       const replyQuery = query(
@@ -326,40 +324,34 @@ const ClickFeed = ({ feedDetail, onClick }) => {
           ...doc.data(),
         }));
 
-        // 댓글 ID 배열 만들기
         const replyIdArr = replyDocs.map((it) => it.id);
 
-        // 대댓글 쿼리 실행
         if (replyIdArr.length > 0) {
           const reReplyQuery = query(
             collection(db, "re_reply"),
-            where("replyId", "in", replyIdArr), // ID 배열 사용
+            where("replyId", "in", replyIdArr),
             orderBy("replyId", "asc"),
             orderBy("createdAt", "desc")
           );
 
-          // 대댓글 구독
           reReplyUnsubscribe = onSnapshot(reReplyQuery, (snapshot) => {
             const reReplyDocs = snapshot.docs.map((doc) => ({
               id: doc.id,
               ...doc.data(),
             }));
 
-            // 대댓글을 기존 댓글에 추가
             const replyList = replyDocs.map((rp) => ({
               ...rp,
               reReply: reReplyDocs.filter((rr) => rr.replyId === rp.id),
             }));
 
-            // 업데이트된 댓글 리스트 설정
             SetReplyArr(replyList);
           });
         } else {
           SetReplyArr(replyDocs);
           if (reReplyUnsubscribe) {
-            // 대댓글이 없을 경우 기존 구독 해제
             reReplyUnsubscribe();
-            reReplyUnsubscribe = null; // 참조 초기화
+            reReplyUnsubscribe = null;
           }
         }
       });
@@ -378,12 +370,31 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     };
   }, [feedDetail]);
 
+  useEffect(() => {
+    if (pushComment === "") return;
+
+    const addCmt = async () => {
+      try {
+        const docRef = await addDoc(collection(db, "reply"), {
+          content: pushComment,
+          createdAt: Date.now(),
+          feedId: feedDetail.id,
+          type: "rp",
+          uid: myProfile.uid,
+          like: [],
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setPushComment("");
+      }
+    };
+
+    addCmt();
+  }, [pushComment]);
+
   const hideFeed = () => {
     onClick();
-  };
-
-  const onFocus = () => {
-    commentRef.current.focus();
   };
 
   return (
@@ -426,13 +437,12 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             type={"active"}
                             size={"40"}
                             url={feedDetail.profile.profilePhoto}
-                            feedDetail={feedDetail}
-                            myProfile={myProfile}
                           />
                           <Userinfo>
                             <UserId
                               type={"feed"}
                               userNickname={feedDetail.profile.userId}
+                              createdAt={new Date(feedDetail.createdAt)}
                               check={feedDetail.profile.badge ? "active" : ""}
                               btn={"more"}
                               follwed={followResult ? "" : "팔로우"}
@@ -447,11 +457,11 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                       </UserContainer>
 
                       <CommentList className="comment_list">
-                        <CommentItem
-                          onClick={onFocus}
-                          feedDetail={feedDetail}
-                          myProfile={myProfile}
-                        />
+                        {replyArr.length > 0
+                          ? replyArr.map((it, idx) => (
+                              <CommentItem key={idx} reply={it} />
+                            ))
+                          : null}
                       </CommentList>
                     </Container>
                     <WritingComment className="writing_comment">
@@ -474,14 +484,13 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                           <FaRegBookmark />
                         </IconBtns>
                       </Top>
-                      <Form>
-                        <StyledInput
-                          ref={commentRef}
-                          value={comment}
-                          placeholder="댓글 달기... "
-                          onChange={(e) => setComment(e.target.value)}
-                        />
-                      </Form>
+                      <CommentInput
+                        width={"100%"}
+                        height={"35px"}
+                        comments={comments}
+                        setComments={setComments}
+                        setPushComment={setPushComment}
+                      />
                     </WritingComment>
                   </Desc>
                 </Contents>
