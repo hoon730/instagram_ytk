@@ -1,11 +1,12 @@
 // v1. facebook 메시지
 // v2. 전화번호&사용자(id) 한꺼번에 저장-계정 복수생성=복잡해져서 포기. 전화번호||이메일 등록으로 변경=전화번호가 등록이 안됨. 이메일 필수.
-// 3. 문자숫자밑줄마침표만 아이디 등록할 때 허용. 아이디 추천 기능.
+// 3. 문자숫자밑줄마침표만 아이디 등록할 때 허용. 아이디 추천 기능. <FaCheck /> <FaXmark /> <IoReload />
 // v4. uid 임의로 변환-불가능
 // v5. 리아님이 말씀하신대로 데이타베이스에 올라가는 거 수정.
 // v6. Firebase: Error (auth/invalid-credential).파이어베이스 에러들 한글로 바꾸기. 로그인포맷, 같은이메일 존재
 // 7. 눈모양 버튼 앤터 칠 떄 boolean 안바뀌도록
 // v8. 로그인 id, 전번, 이메일과 비밀번호로 가능하게끔
+// v9. 반응형. 370, 780
 // 10. 로그인 전번간편로그인 기능
 // . 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
 
@@ -34,16 +35,12 @@ const colors = {
 };
 
 const countries = [
-  { name: "+82", code: "+82" },
-  { name: "+233", code: "+233" },
-  { name: "+1", code: "+1" },
-  { name: "+63", code: "+63" },
-  { name: "+81", code: "+81" },
-  { name: "+86", code: "+86" },
-  { name: "+7", code: "+7" },
-  { name: "+49", code: "+49" },
-  { name: "+33", code: "+33" },
-  { name: "+44", code: "+44" },
+  { name: "대한민국", code: "+82" },
+  { name: "United States", code: "+1" },
+  { name: "Canada", code: "+1" },
+  { name: "United Kingdom", code: "+44" },
+  { name: "Germany", code: "+49" },
+  { name: "Australia", code: "+61" },
 ];
 
 const Wrapper = styled.div`
@@ -58,11 +55,15 @@ const Block = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 480px;
   padding: 40px;
   gap: 40px;
-  border: 1px solid;
-  border-color: var(--gray-color);
+  border: 1px solid var(--gray-color);
   border-radius: 10px;
+  @media (max-width: 780px) {
+    border-color: transparent;
+  }
 `;
 
 const PleaseSignUp = styled.p`
@@ -73,6 +74,7 @@ const PleaseSignUp = styled.p`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 15px;
 `;
 
@@ -123,6 +125,9 @@ const Label = styled.label`
   color: ${colors.darkGray};
   pointer-events: none;
   transition: 0.2s ease all;
+  @media (max-width: 370px) {
+    font-size: 13px;
+  }
 `;
 
 const Error = styled.p`
@@ -151,6 +156,9 @@ const DomainSelect = styled.select`
   color: ${colors.darkGray};
   font-size: 16px;
   outline: none;
+  @media (max-width: 370px) {
+    font-size: 13px;
+  }
 `;
 
 const CountrySelect = styled.select`
@@ -160,6 +168,41 @@ const CountrySelect = styled.select`
   color: ${colors.darkGray};
   font-size: 16px;
   outline: none;
+  @media (max-width: 370px) {
+    font-size: 13px;
+  }
+`;
+
+// Styled Components
+const Container = styled.div`
+  position: relative;
+  width: fit-content;
+`;
+
+const SelectedCountry = styled.div`
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+`;
+
+const CountryDropdown = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  width: fit-content;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  z-index: 10;
+`;
+
+const CountryOption = styled.li`
+  padding: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f0f0;
+  }
 `;
 
 const SwitchEmailNPhone = styled.p`
@@ -209,13 +252,41 @@ const Signup = () => {
   const [emailError, setEmailError] = useState(false);
   const [emailOption, setEmailOption] = useState(false);
   const [error, setError] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState({
+    name: "대한민국",
+    code: "+82",
+  });
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const navigate = useNavigate();
-  const usernameRef = useRef(null);
+  const userIdRef = useRef(null);
+
+  const handleCountrySelect = (country) => {
+    setSelectedCountry(country);
+    setIsDropdownOpen(false); // Close dropdown after selection
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
-    if (usernameRef.current) {
-      usernameRef.current.focus();
+    if (userIdRef.current) {
+      userIdRef.current.focus();
     }
   }, []);
 
@@ -271,7 +342,7 @@ const Signup = () => {
       );
       console.log(credentials.user);
       await updateProfile(credentials.user, { displayName: id });
-      await setDoc(doc(db, "users", credentials.user.uid), {
+      await setDoc(doc(db, "profile", credentials.user.uid), {
         uid: credentials.user.uid,
         userId: id,
         userName: name,
@@ -343,7 +414,7 @@ const Signup = () => {
               name="id"
               value={id}
               placeholder=" "
-              ref={usernameRef}
+              ref={userIdRef}
               required
             />
             <Label>사용자 이름</Label>
@@ -403,13 +474,23 @@ const Signup = () => {
           </SwitchEmailNPhone>
           {emailOption ? (
             <InputBox>
-              <CountrySelect value={country} onChange={onCountryChange}>
-                {sortedCountries.map((country) => (
-                  <option key={country.code} value={country.code}>
-                    {country.name}
-                  </option>
-                ))}
-              </CountrySelect>
+              <Container ref={dropdownRef}>
+                <SelectedCountry onClick={toggleDropdown}>
+                  {selectedCountry.code}
+                </SelectedCountry>
+                {isDropdownOpen && (
+                  <CountryDropdown>
+                    {countries.map((country, index) => (
+                      <CountryOption
+                        key={index}
+                        onClick={() => handleCountrySelect(country)}
+                      >
+                        {country.name}
+                      </CountryOption>
+                    ))}
+                  </CountryDropdown>
+                )}
+              </Container>
               <LoginInput
                 onChange={onChange}
                 type="tel"
@@ -429,7 +510,7 @@ const Signup = () => {
           <AccountLogin>
             {/* <AccountQ>계정이 이미 있으신가요?</AccountQ> */}
             <FbBtn />
-            <AccountLink onClick={loginLink}>로그인 하러가기</AccountLink>
+            <AccountLink onClick={loginLink}>로그인하기</AccountLink>
           </AccountLogin>
         </LoginBlock>
       </Block>

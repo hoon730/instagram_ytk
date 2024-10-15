@@ -167,7 +167,7 @@ const Login = () => {
       const isEmail = identity.includes("@");
 
       if (!isEmail) {
-        const userRef = collection(db, "pprofile");
+        const userRef = collection(db, "profile");
         let userDoc = null;
 
         const userIdQuery = query(userRef, where("userId", "==", identity));
