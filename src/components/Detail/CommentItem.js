@@ -126,15 +126,23 @@ const IdSpan = styled.span`
   font-weight: bold;
 `;
 
-const Textarea = styled.textarea`
+const TextareaBg = styled.div`
   width: 100%;
   height: 100px;
   padding: 10px;
-  resize: none;
   background: ${({ theme }) => theme.borderColor};
   border: 1px solid transparent;
   border-radius: 8px;
+  overflow: hidden;
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background: transparent;
   color: ${({ theme }) => theme.fontColor};
+  border: 1px solid transparent;
   overflow-y: scroll;
   &:focus {
     outline: none;
@@ -194,11 +202,13 @@ const CommentItem = ({ onClick }) => {
               <TextareaBtn>취소</TextareaBtn>
             </RightBtns>
           </EditAreaHeader>
-          <Textarea
-            value={
-              "메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야"
-            }
-          />
+          <TextareaBg>
+            <Textarea
+              value={
+                "메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야"
+              }
+            />
+          </TextareaBg>
         </EditArea>
       </CommentSection>
     </div>

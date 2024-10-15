@@ -115,56 +115,52 @@ function App() {
   useEffect(() => {
     init();
 
-    let allProfileUnsubscribe = null;
-    const fetchAllProfile = async () => {
-      const profileQuery = query(collection(db, "profile"));
-      allProfileUnsubscribe = onSnapshot(profileQuery, (snapshot) => {
-        const profiles = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setAllProfile(profiles);
-      });
-    };
-    fetchAllProfile();
-    return () => {
-      allProfileUnsubscribe && allProfileUnsubscribe();
-    };
+    // let allProfileUnsubscribe = null;
+    // const fetchAllProfile = async () => {
+    //   const profileQuery = query(collection(db, "profile"));
+    //   allProfileUnsubscribe = onSnapshot(profileQuery, (snapshot) => {
+    //     const profiles = snapshot.docs.map((doc) => ({
+    //       id: doc.id,
+    //       ...doc.data(),
+    //     }));
+    //     setAllProfile(profiles);
+    //   });
+    // };
+    // fetchAllProfile();
+    // return () => {
+    //   allProfileUnsubscribe && allProfileUnsubscribe();
+    // };
   }, []);
 
   useEffect(() => {
-    let myProfileUnsubscribe = null;
-
-    const fetchMyProfile = async (uid) => {
-      const myProfileQuery = query(
-        collection(db, "profile"),
-        where("uid", "==", uid),
-        limit(1)
-      );
-
-      myProfileUnsubscribe = onSnapshot(myProfileQuery, (snapshot) => {
-        const profile = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setMyProfile(profile[0]);
-      });
-    };
-
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        fetchMyProfile(user.uid);
-      } else {
-        setMyProfile(null);
-      }
-    });
-
-    return () => {
-      if (myProfileUnsubscribe) {
-        myProfileUnsubscribe();
-      }
-      unsubscribe();
-    };
+    // let myProfileUnsubscribe = null;
+    // const fetchMyProfile = async (uid) => {
+    //   const myProfileQuery = query(
+    //     collection(db, "profile"),
+    //     where("uid", "==", uid),
+    //     limit(1)
+    //   );
+    //   myProfileUnsubscribe = onSnapshot(myProfileQuery, (snapshot) => {
+    //     const profile = snapshot.docs.map((doc) => ({
+    //       id: doc.id,
+    //       ...doc.data(),
+    //     }));
+    //     setMyProfile(profile[0]);
+    //   });
+    // };
+    // const unsubscribe = onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     fetchMyProfile(user.uid);
+    //   } else {
+    //     setMyProfile(null);
+    //   }
+    // });
+    // return () => {
+    //   if (myProfileUnsubscribe) {
+    //     myProfileUnsubscribe();
+    //   }
+    //   unsubscribe();
+    // };
   }, []);
 
   const changeDark = () => {
@@ -181,9 +177,9 @@ function App() {
               <Loading />
             </Wrapper>
           ) : (
-            <StateContext.Provider value={{ allProfile, myProfile }}>
-              <RouterProvider router={router} />
-            </StateContext.Provider>
+            // <StateContext.Provider value={{ allProfile, myProfile }}>
+            <RouterProvider router={router} />
+            // </StateContext.Provider>
           )}
         </ThemeContext.Provider>
       </ThemeProvider>
