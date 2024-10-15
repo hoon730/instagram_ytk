@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { videoArr } from "../../utils/utils";
+import { extractExtension } from "../../utils/utils";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -111,7 +113,22 @@ const Slide = ({ imgPath, onClick }) => {
       >
         {imageArray.map((it, idx) => (
           <SlideItem key={idx}>
-            <img src={it} />
+            {videoArr.includes(extractExtension(it)) ? (
+              <video
+                src={it}
+                autoPlay
+                muted
+                loop
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  background: "#000",
+                }}
+              />
+            ) : (
+              <img src={it} />
+            )}
           </SlideItem>
         ))}
       </Slides>

@@ -195,7 +195,7 @@ const SideBar = () => {
                 handleOnClick(it.path);
                 showNew(it.name);
                 isActive(it.id);
-                if (it.name === "메시지") dontReady();
+                if (it.name === "메시지" || it.name === "저장됨") dontReady();
               }}
             >
               <IconWrapper>

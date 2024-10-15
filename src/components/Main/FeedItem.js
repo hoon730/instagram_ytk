@@ -99,7 +99,8 @@ const PhotoSection = styled.div`
 const Video = styled.video`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #000;
 `;
 
 const FeedDescArea = styled.div`
@@ -137,7 +138,7 @@ const DateText = styled.div`
   }
 `;
 
-const FeedItem = ({ feedDetail, dateMB }) => {
+const FeedItem = ({ feedDetail }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [comments, setComments] = useState([]);
   const [pushComment, setPushComment] = useState("");

@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { StateContext } from "../App";
 import { useSearchParams } from "react-router-dom";
 import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import styled from "styled-components";
 import MyPostItem from "../components/MyFeed/MyPostItem";
 import MainHeader from "../components/Main/MainHeader";
+import ClickFeed from "../components/Detail/ClickFeed";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { PiSirenLight } from "react-icons/pi";
 
@@ -134,8 +136,11 @@ const ItemArea = styled.div`
 
 const Search = ({ page }) => {
   const [moreBtn, setMoreBtn] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const [postList, setPostList] = useState([]);
+  const [clickedFeed, setClickedFeed] = useState({});
   const [keyword] = useSearchParams();
+  const { allProfile } = useContext(StateContext);
 
   let getQuery = keyword.get("q") || "";
 
@@ -143,11 +148,16 @@ const Search = ({ page }) => {
     setMoreBtn((prev) => !prev);
   };
 
+  const onClick = (feedDetail) => {
+    setIsClicked(true);
+    setClickedFeed(feedDetail);
+  };
+
   useEffect(() => {
-    if (getQuery !== "" && page === "search") {
+    if (getQuery && getQuery.trim() !== "" && page === "search" && allProfile) {
       const fetchHashtag = async () => {
         try {
-          const q = await query(
+          const q = query(
             collection(db, "feed"),
             where("hashtag", "array-contains", `#${getQuery}`)
           );
@@ -156,11 +166,11 @@ const Search = ({ page }) => {
 
           querySnapshot.docs.forEach((doc) => {
             const data = doc.data();
+            const feedProfile = allProfile.find((it) => it.uid === data.uid);
             if (data) {
-              feeds.push(data);
+              feeds.push({ ...data, profile: feedProfile, id: doc.id });
             }
           });
-
           setPostList(feeds);
         } catch (err) {
           console.error(err);
@@ -176,16 +186,15 @@ const Search = ({ page }) => {
 
           querySnapshot.docs.forEach((doc) => {
             const data = doc.data();
+            const feedProfile = allProfile.find((it) => it.uid === data.uid);
             if (data) {
-              feeds.push(data);
+              feeds.push({ ...data, profile: feedProfile, id: doc.id });
             }
           });
 
           const randomFeeds = feeds.sort(() => 0.5 - Math.random());
 
           const selectFeeds = randomFeeds.slice(0, 24);
-
-          console.log(selectFeeds);
 
           setPostList(selectFeeds);
         } catch (err) {
@@ -206,8 +215,9 @@ const Search = ({ page }) => {
 
           querySnapshot.docs.forEach((doc) => {
             const data = doc.data();
+            const feedProfile = allProfile.find((it) => it.uid === data.uid);
             if (data) {
-              reels.push(data);
+              reels.push({ ...data, profile: feedProfile, id: doc.id });
             }
           });
 
@@ -255,9 +265,20 @@ const Search = ({ page }) => {
             </Header>
             <ItemArea>
               {postList.map((it, index) => (
-                <MyPostItem key={index} page={page} url={it.imgPath} />
+                <MyPostItem
+                  key={index}
+                  onClick={() => onClick(it)}
+                  page={page}
+                  url={it.imgPath}
+                />
               ))}
             </ItemArea>
+            {isClicked && clickedFeed ? (
+              <ClickFeed
+                onClick={() => setIsClicked(false)}
+                feedDetail={clickedFeed}
+              />
+            ) : null}
           </Container>
         </>
       )}
