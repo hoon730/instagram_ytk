@@ -71,34 +71,112 @@ const Wrapper = styled(motion.div)`
   transition: all 0.3s;
   cursor: default;
 
-  @media screen and (max-width: 1400px) {
+  @media screen and (max-width: 1024px) {
     position: relative;
+    width: 70%;
     height: 0;
     padding-top: 56.25%;
 
     .inner {
       width: 100%;
-      height: ${({ $isEditing }) => ($isEditing ? "auto" : "100%")};
+      height: ${({ $isEditing }) => ($isEditing ? "88%" : "100%")};
     }
-  }
-
-  @media screen and (max-width: 1000px) {
     .slider {
       width: 55%;
     }
     .desc {
       width: 45%;
 
-      .user_container {
-        padding: 10px;
-      }
       .comment_list {
         padding: 10px;
       }
       .writing_comment {
         padding: 10px;
       }
+      .notification {
+        span {
+          font-size: var(--font-12);
+        }
+      }
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    .editing_img {
+      gap: 15px;
+    }
+
+    .media_box {
+      width: 80%;
+      height: 80%;
+    }
+
+    .user_container {
+      padding: 20px 20px 0 0;
+    }
+    .setcontent_button {
+      width: 170px;
+      height: 35px;
+    }
+
+    textarea {
+      font-size: var(--font-14);
+    }
+  }
+
+  @media screen and (max-width: 630px) {
+    width: 430px;
+    height: ${({ $isEditing }) => ($isEditing ? "78%" : "100%")};
+
+    .inner {
+      height: ${({ $isEditing }) => ($isEditing ? "100%" : "100%")};
+    }
+
+    .contents {
+      flex-direction: column;
+      align-items: center;
+      border-radius: var(--border-radius-12);
+      overflow: hidden;
+    }
+
+    .slider {
+      width: 100%;
+      height: ${({ $isEditing }) => ($isEditing ? "40%" : "60%")};
+      border-radius: 0;
+
+      .editing_img {
+        height: auto;
+        justify-content: start;
+        gap: 20px;
+        margin-top: 20px;
+
+        .media_box {
+          width: 65%;
+          height: 65%;
+        }
+
+        label {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .desc {
+      width: 100%;
+      height: ${({ $isEditing }) => ($isEditing ? "60%" : "40%")};
+    }
+
+    .user_container {
+      padding: 20px 20px 0;
+    }
+
+    textarea {
+      height: 100%;
+    }
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
   }
 `;
 
@@ -109,14 +187,20 @@ const Inner = styled.div`
   transform: translate(-50%, -50%);
   ${({ $isEditing }) =>
     $isEditing
-      ? `width: 52%;
-  height: 74%;`
+      ? `width: 800px;
+  height: 450px;`
       : `width: 80%;
   height: 93%;`}
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   border-radius: var(--border-radius-12);
   transition: all 0.3s;
+`;
+
+const Contents = styled.div`
+  width: 100%;
+  height: ${({ $isEditing }) => ($isEditing ? "calc(100% - 53px)" : "100%")};
+  display: flex;
 `;
 
 const Slider = styled.div`
@@ -133,7 +217,7 @@ const EditingImg = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
-  height: 88%;
+  height: 100%;
 `;
 
 const MediaWrapper = styled.div`
@@ -143,6 +227,8 @@ const MediaWrapper = styled.div`
 `;
 
 const MediaBox = styled.div`
+  width: 90%;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -157,21 +243,28 @@ const Video = styled.video`
 const Desc = styled.div`
   width: 40%;
   height: 100%;
-  display: flex;
+  ${({ $isEditing }) =>
+    $isEditing
+      ? `display: block;`
+      : `display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between;`}
 `;
 
 const Container = styled.div`
   width: 100%;
-  height: calc(100% - 100px);
+  ${({ $isEditing }) =>
+    $isEditing
+      ? `display: block; height: 100%;`
+      : `height: calc(100% - 100px);
   display: flex;
-  flex-direction: column;
+  flex-direction: column;`}
 `;
 
 const UserContainer = styled.div`
   width: 100%;
-  padding: 20px 20px 0px;
+  height: ${({ $isEditing }) => ($isEditing ? "100%" : "auto")};
+  padding: 20px 30px 0px 0px;
   border-bottom: ${({ $isEditing, theme }) =>
     $isEditing ? "none" : `1px solid ${theme.borderColor}`};
 `;
@@ -197,7 +290,10 @@ const Location = styled.span`
 const UserContents = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-left: 15px;
+  ${({ $isEditing }) =>
+    $isEditing
+      ? `width: 100%; height: calc(100% - 100px); margin-left: 0; position: relative;`
+      : `margin-left: 15px; position: static;`}
 `;
 
 const Content = styled.span`
@@ -237,6 +333,8 @@ const Notification = styled.div`
   gap: 8px;
 
   svg {
+    display: flex;
+    align-items: center;
     font-size: var(--font-20);
   }
 `;
@@ -270,7 +368,7 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  padding: 15px 30px;
 
   span {
     font-weight: var(--font-bold);
@@ -278,12 +376,6 @@ const Title = styled.div`
   & button:first-child {
     color: ${({ theme }) => theme.nonActiveBtnColor};
   }
-`;
-
-const Contents = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
 `;
 
 const SetContentButton = styled.label`
@@ -321,8 +413,12 @@ const SetContentInputButton = styled.input`
 `;
 
 const EditedTextArea = styled.textarea`
+  position: absolute;
+  top: 5%;
   width: 100%;
-  height: 40vh;
+  height: 75%;
+  padding-top: 10px;
+  padding-left: 10px;
   border: 2px solid var(--light-gray-color);
   border-radius: var(--border-radius-12);
   color: var(--bg-black-color);
@@ -579,6 +675,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
               initial="initial"
               animate="visible"
               exit="exits"
+              $isEditing={isEditing}
             >
               <Inner className="inner" $isEditing={isEditing}>
                 {isEditing ? (
@@ -588,12 +685,12 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                     <Button text={"완료"} onClick={onUpDate} />
                   </Title>
                 ) : null}
-                <Contents>
+                <Contents $isEditing={isEditing} className="contents">
                   <Slider className="slider">
                     {isEditing ? (
-                      <EditingImg>
+                      <EditingImg className="editing_img">
                         <MediaWrapper>
-                          <MediaBox>
+                          <MediaBox className="media_box">
                             {preview.length > 0 ? (
                               preview.map((item, idx) => (
                                 <PreviewImage
@@ -607,7 +704,10 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             )}
                           </MediaBox>
                         </MediaWrapper>
-                        <SetContentButton htmlFor="edit-content">
+                        <SetContentButton
+                          htmlFor="edit-content"
+                          className="setcontent_button"
+                        >
                           {file.length > 0
                             ? "업로드 완료 / 추가"
                             : "사진 및 동영상 찾기"}
@@ -659,8 +759,8 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                       </>
                     )}
                   </Slider>
-                  <Desc className="desc">
-                    <Container>
+                  <Desc className="desc" $isEditing={isEditing}>
+                    <Container $isEditing={isEditing}>
                       <UserContainer
                         className="user_container"
                         $isEditing={isEditing}
@@ -678,10 +778,16 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                               type={"feed"}
                               userNickname={feedDetail.profile.userId}
                               check={feedDetail.profile.badge ? "active" : ""}
-                              btn={"more"}
+                              btn={isEditing ? null : "more"}
                               onClick={onDelete}
                               setIsEditing={setIsEditing}
-                              follwed={followResult ? "" : "팔로우"}
+                              follwed={
+                                feedDetail.uid === myProfile.uid
+                                  ? ""
+                                  : followResult
+                                  ? ""
+                                  : "팔로우"
+                              }
                               uid={feedDetail.uid}
                               feed={
                                 feedDetail.uid === myProfile.uid
@@ -692,7 +798,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             <Location>{feedDetail.location}</Location>
                           </Userinfo>
                         </UserBox>
-                        <UserContents>
+                        <UserContents $isEditing={isEditing}>
                           {isEditing ? (
                             <EditedTextArea
                               value={editedFeedDetail}
@@ -720,7 +826,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                     {isEditing ? null : (
                       <WritingComment className="writing_comment">
                         <Top>
-                          <Notification>
+                          <Notification className="notification">
                             <IoHeartOutline />
                             <span>
                               {feedDetail ? (

@@ -121,10 +121,6 @@ const ProfileImgBox = styled.div`
   }
 
 
-  @media screen and (max-width: 430px) {
-    top: 135px;
-    left: 50px;
-  }
 `;
 
 const MyFeedDesc = styled.div`

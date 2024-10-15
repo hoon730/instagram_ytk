@@ -83,7 +83,16 @@ const MbRecommend = () => {
         exit="exits"
       >
         <Title>회원님을 위한 추천</Title>
-        <RecommendList drag="x" dragSnapToOrigin>
+        <RecommendList
+          drag="x"
+          dragConstraints={{ left: -300, right: 0 }}
+          whileTap={{ cursor: "grabbing" }}
+          onDragEnd={(event, info) => {
+            if (info.point.x < -300) {
+            } else if (info.point.x > 0) {
+            }
+          }}
+        >
           {userData.map((it, idx) => (
             <RecommendItem key={idx}>
               <ProfileImg size={"75"} url={it.imgPath} hover={true} />
