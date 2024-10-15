@@ -1,6 +1,7 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { FaRegCompass } from "react-icons/fa";
 import { BiMoviePlay } from "react-icons/bi";
+import { LuBookmark } from "react-icons/lu";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
@@ -45,11 +46,21 @@ export const menuData = [
   },
   {
     id: 2,
+    name: "릴스",
+    iconCode: <BiMoviePlay />,
+  },
+  {
+    id: 3,
+    name: "저장됨",
+    iconCode: <LuBookmark />,
+  },
+  {
+    id: 4,
     name: "메시지",
     iconCode: <IoPaperPlaneOutline />,
   },
   {
-    id: 3,
+    id: 5,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
   },

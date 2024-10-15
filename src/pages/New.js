@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { click, scale } from "../utils/utils";
 import Button from "../components/Common/Button";
@@ -199,8 +199,6 @@ const New = ({ setOpenNew }) => {
   const [textValueLength, setTextValueLength] = useState(0);
   const [pushUrl, setPushUrl] = useState([]);
 
-  console.log("setOpenNew:", setOpenNew);
-
 
   const maxFileSize = 10 * 1024 * 1024;
 
@@ -311,7 +309,6 @@ const New = ({ setOpenNew }) => {
   const handleOnClick = () => {
     setOpenNew(false);
   };
-
 
   return (
     <NewBg

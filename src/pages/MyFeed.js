@@ -29,9 +29,13 @@ const Wrapper = styled.div`
   @media screen and (max-width: 1024px) {
     width: 100%;
   }
+
   @media screen and (max-width: 630px) {
-    /* display: none; */
     width: 430px;
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
   }
 `;
 

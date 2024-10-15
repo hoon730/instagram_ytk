@@ -5,6 +5,7 @@ import styled from "styled-components";
 import New from "../../../pages/New";
 import { mbMenuData } from "../../../utils/utils";
 import ProfileImg from "../../Profile/ProfileImg";
+import { StateContext } from "../../../App";
 
 const MenuList = styled.div`
   position: fixed;
@@ -65,8 +66,10 @@ const IconWrapper = styled.div`
 const MbMenu = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
-  const [openNew, setOpenNew] = useState(false); 
+  const [openNew, setOpenNew] = useState(false);
   const [currentNum, setCurrentNum] = useState(0);
+
+  const { myProfile } = useContext(StateContext);
 
   const handleOnClick = (path) => {
     if (path) navigate(`${path}`);
@@ -84,6 +87,8 @@ const MbMenu = () => {
     setOpenNew(true);
   };
 
+  console.log(myProfile)
+
   return (
     <MenuList className="menulist">
       {mbMenuData.map((it, idx) => (
@@ -100,7 +105,7 @@ const MbMenu = () => {
             {idx === 4 ? (
               <ProfileImg
                 size={"38"}
-                url={"/images/userImgs/user123456/feedDetail.jpg"}
+                url={myProfile?.profilePhoto}
                 hover={true}
               />
             ) : (

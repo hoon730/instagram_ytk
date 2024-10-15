@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { mouseon } from "../../utils/utils";
 
 const Wrapper = styled(motion.div)`
-  padding: 20px 16px;
+  padding: 20px 15px;
   overflow: hidden;
   padding-bottom: 0;
 `;

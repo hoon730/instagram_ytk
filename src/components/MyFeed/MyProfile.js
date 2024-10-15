@@ -120,7 +120,7 @@ const MyProfile = ({ myProfile }) => {
           </EditBtn>
         </NameBox>
         <MyIntro>{myProfile?.introduction}</MyIntro>
-        <MbButtons/>
+        <MbButtons myProfile={myProfile} />
       </MyProfileBox>
     </Wrapper>
   );

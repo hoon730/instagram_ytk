@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../Common/Button";
 import MbRecommend from "../Detail/MbRecommend";
+import Setup from "../../pages/Setup";
 
 const Wrapper = styled.div`
   display: none;
@@ -16,8 +17,13 @@ const Buttons = styled.div`
   justify-content: space-between;
 `;
 
-const MbButtons = () => {
+const MbButtons = ({ myProfile }) => {
   const [isRecommend, setIsRecommend] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onClick = () => {
+    setIsOpen((current) => !current);
+  };
 
   return (
     <Wrapper>
@@ -28,7 +34,9 @@ const MbButtons = () => {
           fontSize={"14"}
           type={"negative"}
           text={"프로필 편집"}
+          onClick={onClick}
         />
+        {isOpen ? <Setup onClick={onClick} myProfile={myProfile} /> : null}
         <Button
           width={"42%"}
           height={"40px"}
