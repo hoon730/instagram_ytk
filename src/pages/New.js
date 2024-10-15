@@ -248,10 +248,10 @@ const New = ({ setOpenNew }) => {
       const docRef = await addDoc(collection(db, "feed"), {
         content,
         createdAt: Date.now(),
-        hastage: "",
-        like: "",
+        hastage: [],
+        like: [],
         location: "",
-        tagUser: "",
+        tagUser: [],
         uid: user.uid,
       });
 
@@ -392,3 +392,4 @@ const New = ({ setOpenNew }) => {
 };
 
 export default New;
+

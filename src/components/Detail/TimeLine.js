@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import Post from "./Post";
 
@@ -11,6 +11,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import { db } from "../../utils/firebase";
+import { StateContext } from "../../App";
 
 const Wrapper = styled.div`
   display: grid;
@@ -18,8 +19,10 @@ const Wrapper = styled.div`
   gap: 5px;
   margin-bottom: 5px;
 `;
-const TimeLine = ({ myProfile }) => {
+const TimeLine = () => {
   const [posts, setPosts] = useState([]);
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
 
   useEffect(() => {
     if (!myProfile || !myProfile.uid) {
@@ -37,6 +40,7 @@ const TimeLine = ({ myProfile }) => {
 
       unsubscribe = await onSnapshot(postQuery, (snapshot) => {
         const fetchedPosts = snapshot.docs.map((doc) => {
+          const feedProfile = allProfile.find((it) => it.uid === doc.data().uid);
           const {
             content,
             createdAt,
@@ -59,6 +63,7 @@ const TimeLine = ({ myProfile }) => {
             uid,
             imgPath,
             type,
+            profile: feedProfile
           };
         });
         setPosts(fetchedPosts); // posts 상태 업데이트
@@ -69,11 +74,10 @@ const TimeLine = ({ myProfile }) => {
       unsubscribe && unsubscribe();
     };
   }, [myProfile]);
-
   return (
     <Wrapper>
       {posts.map((post) => (
-        <Post key={post.id} post={post} myProfile={myProfile} /> // post 프롭스로 전달
+        <Post key={post.id} post={post} /> // post 프롭스로 전달
       ))}
     </Wrapper>
   );
