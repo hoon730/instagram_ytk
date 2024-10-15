@@ -76,6 +76,12 @@ const UserInfo = styled.div`
   .user-check {
     width: 14px;
   }
+  .hover-wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const UserName = styled.p`
@@ -111,7 +117,6 @@ const ViewLikes = ({ likeUser, setShowProfile }) => {
                     userNickname={it.userId}
                     check={it.badge}
                     uid={it.uid}
-                    fix={true}
                   />
                   <UserName>{it.userName}</UserName>
                 </UserInfo>

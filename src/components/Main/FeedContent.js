@@ -4,7 +4,6 @@ import TabBarBtn from "../Common/TabBarBtn";
 import { FaRegStar } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import FeedItem from "./FeedItem";
-import Loading from "../Common/Loading";
 import { db } from "../../utils/firebase";
 import {
   collection,
@@ -13,7 +12,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import ClickFeed from "../Detail/ClickFeed";
 import WelcomFeed from "./WelcomFeed";
 import { StateContext } from "../../App";
 
@@ -62,7 +60,14 @@ const ActiveBorder = styled.div`
       : `transform: translateX(100%);`}
 `;
 
+const LoadingScreen = styled.div`
+  width: 100%;
+  height: 100vh;
+  background: ${({ theme }) => theme.bgColor};
+`;
+
 const FeedContent = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
   const [$tabChange, setTabChange] = useState("recommend");
@@ -71,11 +76,13 @@ const FeedContent = () => {
   const { allProfile } = useContext(StateContext);
 
   const recommendActive = () => {
+    setIsLoading(true);
     setRecommend(true);
     setFollow(false);
     setTabChange("recommend");
   };
   const followActive = () => {
+    setIsLoading(true);
     setRecommend(false);
     setFollow(true);
     setTabChange("follow");
@@ -117,6 +124,8 @@ const FeedContent = () => {
           );
 
           setPostsWithProfiles(posts);
+
+          setIsLoading(false);
         });
       };
 
@@ -153,14 +162,20 @@ const FeedContent = () => {
             />
           </FeedTabBtn>
         </FeedTabBar>
-        {postsWithProfiles && postsWithProfiles.length > 0 ? (
-          postsWithProfiles.map((post) => (
-            <FeedItem key={post.id} feedDetail={post} />
-          ))
-        ) : recommend ? (
-          <WelcomFeed recommend={true} />
+        {isLoading ? (
+          <LoadingScreen />
         ) : (
-          <WelcomFeed recommend={false} />
+          <>
+            {postsWithProfiles && postsWithProfiles.length > 0 ? (
+              postsWithProfiles.map((post) => (
+                <FeedItem key={post.id} feedDetail={post} />
+              ))
+            ) : recommend ? (
+              <WelcomFeed recommend={true} />
+            ) : (
+              <WelcomFeed recommend={false} />
+            )}
+          </>
         )}
       </FeedArea>
     </Wrapper>

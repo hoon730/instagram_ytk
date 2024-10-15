@@ -44,9 +44,11 @@ const WarningText = styled.div`
 const Container = styled.div`
   width: 936px;
   margin: 0 auto;
+  padding-bottom: 80px;
   @media screen and (max-width: 1170px) {
     width: 100%;
     padding: 0 40px;
+    padding-bottom: 80px;
   }
 `;
 
@@ -152,7 +154,7 @@ const Search = ({ page }) => {
           const querySnapshot = await getDocs(q);
           let feeds = [];
 
-          querySnapshot.docs.map((doc) => {
+          querySnapshot.docs.forEach((doc) => {
             const data = doc.data();
             if (data) {
               feeds.push(data);
@@ -166,13 +168,13 @@ const Search = ({ page }) => {
       };
 
       fetchHashtag();
-    } else {
+    } else if (page === "explore") {
       const fetchFeeds = async () => {
         try {
           const querySnapshot = await getDocs(collection(db, "feed"));
           let feeds = [];
 
-          querySnapshot.docs.map((doc) => {
+          querySnapshot.docs.forEach((doc) => {
             const data = doc.data();
             if (data) {
               feeds.push(data);
@@ -192,6 +194,29 @@ const Search = ({ page }) => {
       };
 
       fetchFeeds();
+    } else {
+      const fetchReels = async () => {
+        try {
+          const r = await query(
+            collection(db, "feed"),
+            where("type", "==", "reels")
+          );
+          const querySnapshot = await getDocs(r);
+          let reels = [];
+
+          querySnapshot.docs.forEach((doc) => {
+            const data = doc.data();
+            if (data) {
+              reels.push(data);
+            }
+          });
+
+          setPostList(reels);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchReels();
     }
   }, [getQuery, page]);
 
@@ -211,7 +236,13 @@ const Search = ({ page }) => {
           <Margin />
           <Container>
             <Header>
-              <Keyword>{page === "search" ? `#${getQuery}` : "탐색"}</Keyword>
+              <Keyword>
+                {page === "search"
+                  ? `#${getQuery}`
+                  : page === "explore"
+                  ? "탐색"
+                  : "릴스"}
+              </Keyword>
               <MoreIconArea>
                 <MoreIcon onClick={handleMoreBtn}>
                   <LuMoreHorizontal size={22} />

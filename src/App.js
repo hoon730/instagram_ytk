@@ -8,10 +8,10 @@ import Detail from "./pages/Detail";
 import MyFeed from "./pages/MyFeed";
 import Login from "./pages/Login";
 import Search from "./pages/Search";
-import Reels from "./pages/Reels";
 import Layout from "./components/Layout";
 import New from "./pages/New";
 import Loading from "./components/Common/Loading";
+import ClickStory from "./components/Story/ClickStory";
 
 import Setup from "./pages/Setup";
 import Signup from "./pages/Signup";
@@ -81,7 +81,11 @@ const router = createBrowserRouter([
       },
       {
         path: "reels",
-        element: <Reels />,
+        element: <Search page={"reels"} />,
+      },
+      {
+        path: "clickstory",
+        element: <ClickStory />,
       },
     ],
   },

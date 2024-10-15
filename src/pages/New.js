@@ -67,6 +67,7 @@ const Inner = styled.div`
 const H3 = styled.h3`
   font-size: var(--font-20);
   font-weight: var(--font-bold);
+  text-align: center;
   padding: 20px 0;
   margin-bottom: 20px;
 `;
@@ -81,14 +82,21 @@ const Form = styled.form`
 
 const MediaBox = styled.div`
   width: 100%;
+  margin-bottom: 15px;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  overflow: hidden;
 `;
 
 const Icon = styled.img`
   width: 150px;
+`;
+
+const MediaArea = styled(motion.div)`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 `;
 
 const ImgMedia = styled.img`
@@ -353,14 +361,16 @@ const New = ({ setOpenNew }) => {
           <Form onSubmit={onSubmit}>
             <MediaBox>
               {preview.length > 0 ? (
-                preview.map((src, idx) => {
-                  const fileType = file[idx].type;
-                  if (fileType.startsWith("image/")) {
-                    return <ImgMedia key={idx} src={src} />;
-                  } else {
-                    return <VidMedia key={idx} src={src} />;
-                  }
-                })
+                <MediaArea drag="x" dragSnapToOrigin dragPropagation>
+                  {preview.map((src, idx) => {
+                    const fileType = file[idx].type;
+                    if (fileType.startsWith("image/")) {
+                      return <ImgMedia key={idx} src={src} />;
+                    } else {
+                      return <VidMedia key={idx} src={src} />;
+                    }
+                  })}
+                </MediaArea>
               ) : (
                 <Icon
                   src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`}
@@ -369,7 +379,7 @@ const New = ({ setOpenNew }) => {
             </MediaBox>
             <StyledSpan>사진이나 동영상을 업로드 해주세요</StyledSpan>
             <SearchBtn htmlFor="file">
-              {file ? "업로드 완료" : "사진 및 동영상 찾기"}
+              {file.length > 0 ? "업로드 완료" : "사진 및 동영상 찾기"}
             </SearchBtn>
             <SearchInput
               type="file"

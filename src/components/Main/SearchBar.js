@@ -85,6 +85,7 @@ const SearchBar = () => {
     if (e.key === "Enter") {
       if (text.startsWith("#")) {
         navigate(`/search?q=${text.toLocaleLowerCase().slice(1)}`);
+        inputReset();
       }
     }
   };
