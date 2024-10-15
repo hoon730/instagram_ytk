@@ -121,7 +121,7 @@ const CancelBtn = styled.div`
 
 const HeartBtn = styled.button`
   svg {
-    color: ${({ color }) => (color ? `crimson` : `var(--bg-black-color)`)};
+    color: ${({ $color }) => ($color ? `crimson` : `var(--bg-black-color)`)};
     font-size: var(--font-14);
   }
 `;
@@ -140,7 +140,6 @@ const UserId = ({
   onClick,
   setIsEditing,
   uid,
-  fix,
 }) => {
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
@@ -159,7 +158,7 @@ const UserId = ({
   };
 
   return (
-    <Wrapper type={type}>
+    <Wrapper className="user-wrapper" type={type}>
       <StyledSpan type={type}>
         <IdSpan
           className="user-id"
@@ -167,13 +166,7 @@ const UserId = ({
           onMouseLeave={hideProfile}
         >
           {!hover && hoverId ? (
-            <HoverProfile
-              target={"id"}
-              top={"22"}
-              type={type}
-              uid={uid}
-              fix={fix}
-            />
+            <HoverProfile target={"id"} top={"22"} type={type} uid={uid} />
           ) : null}
           {userNickname}
         </IdSpan>
@@ -200,7 +193,7 @@ const UserId = ({
         </MoreBtn>
       ) : btn === "heart" ? (
         <HeartBtn
-          color={switchHeart}
+          $color={switchHeart}
           onClick={() => setSwitchHeart((switchHeart) => !switchHeart)}
         >
           {switchHeart ? <IoHeartSharp /> : <IoHeartOutline />}
