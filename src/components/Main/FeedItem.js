@@ -216,7 +216,9 @@ const FeedItem = ({ feedDetail, dateMB }) => {
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
-          <DateText>{`${dateMB}`}</DateText>
+          <DateText>{`${getFormattedDate(
+            new Date(parseInt(feedDetail.createdAt))
+          )}`}</DateText>
           <CommentArea>
             {comments.map((it, idx) => (
               <CommentLine

@@ -84,7 +84,7 @@ const MediaBox = styled.div`
   width: 100%;
   margin-bottom: 15px;
   display: flex;
-  justify-content: center;
+  justify-content: ${({ length }) => (length > 3 ? "flex-start" : "center")};
   overflow: hidden;
 `;
 
@@ -95,7 +95,7 @@ const Icon = styled.img`
 const MediaArea = styled(motion.div)`
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: ${({ length }) => (length > 3 ? "flex-start" : "center")};
   gap: 10px;
 `;
 
@@ -208,6 +208,7 @@ const SubmitBtn = styled.input`
 
 const New = ({ setOpenNew }) => {
   const newBgRef = useRef();
+  const mediaRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
   const [file, setFile] = useState([]);
@@ -215,6 +216,7 @@ const New = ({ setOpenNew }) => {
   const [textValueLength, setTextValueLength] = useState(0);
   const [myProfile, setMyProfile] = useState(null);
   const [media, setMedia] = useState([]);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
 
   const maxFileSize = 10 * 1024 * 1024;
 
@@ -250,25 +252,38 @@ const New = ({ setOpenNew }) => {
   };
 
   useEffect(() => {
-    const userUid = auth.currentUser?.uid;
-    if (userUid) {
-      const getMyProfile = async (uid) => {
-        const profileQuery = query(
-          collection(db, "profile"),
-          where("uid", "==", uid),
-          limit(1)
-        );
-        const profileSnapshot = await getDocs(profileQuery);
+    if (preview.length === 0) {
+      const userUid = auth.currentUser?.uid;
+      if (userUid) {
+        const getMyProfile = async (uid) => {
+          const profileQuery = query(
+            collection(db, "profile"),
+            where("uid", "==", uid),
+            limit(1)
+          );
+          const profileSnapshot = await getDocs(profileQuery);
 
-        if (!profileSnapshot.empty) {
-          const profileData = profileSnapshot.docs[0].data();
-          setMyProfile(profileData);
-        }
-      };
+          if (!profileSnapshot.empty) {
+            const profileData = profileSnapshot.docs[0].data();
+            setMyProfile(profileData);
+          }
+        };
 
-      getMyProfile(userUid);
+        getMyProfile(userUid);
+      }
+    } else {
+      if (mediaRef.current) {
+        const containerWidth = mediaRef.current.offsetWidth;
+        const contentWidth = preview.length * 160;
+
+        const maxDrag = contentWidth - containerWidth;
+        setConstraints({
+          left: -maxDrag > 0 ? 0 : -maxDrag,
+          right: 0,
+        });
+      }
     }
-  }, []);
+  }, [preview]);
 
   const onChange = (e) => {
     setContent(e.target.value);
@@ -337,8 +352,6 @@ const New = ({ setOpenNew }) => {
     setOpenNew(false);
   };
 
-  useEffect(() => {}, [content]);
-
   return (
     <NewBg
       variants={click}
@@ -359,9 +372,15 @@ const New = ({ setOpenNew }) => {
         <Inner className="inner">
           <H3>새 게시물 만들기</H3>
           <Form onSubmit={onSubmit}>
-            <MediaBox>
+            <MediaBox length={preview.length}>
               {preview.length > 0 ? (
-                <MediaArea drag="x" dragSnapToOrigin dragPropagation>
+                <MediaArea
+                  ref={mediaRef}
+                  drag="x"
+                  dragConstraints={constraints}
+                  dragPropagation
+                  length={preview.length}
+                >
                   {preview.map((src, idx) => {
                     const fileType = file[idx].type;
                     if (fileType.startsWith("image/")) {
