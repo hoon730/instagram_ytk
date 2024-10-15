@@ -6,9 +6,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { mouseon } from "../../utils/utils";
 
 const Wrapper = styled(motion.div)`
-  padding: 16px;
+  padding: 20px 15px;
   overflow: hidden;
-  padding-top: 0;
+  padding-bottom: 0;
 `;
 const Title = styled.h3`
   font-size: var(--font-14);
@@ -29,14 +29,15 @@ const RecommendItem = styled.div`
   border-radius: var(--border-radius-8);
 `;
 const Id = styled.span`
-  font-size: var(--font-8);
+  font-size: var(--font-12);
   font-weight: var(--font-bold);
+  padding-bottom: 5px;
 `;
 const Desc = styled.p`
   width: 74px;
   padding-bottom: 8px;
   text-align: center;
-  font-size: var(--font-8);
+  font-size: var(--font-10);
 `;
 
 const userData = [

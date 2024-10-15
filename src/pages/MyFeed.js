@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import MyPic from "../components/MyFeed/MyPic";
 import MyProfile from "../components/MyFeed/MyProfile";
 import MyHighlight from "../components/MyFeed/MyHighlight";
 import MyFeedTabBar from "../components/MyFeed/MyFeedTabBar";
 import TimeLine from "../components/Detail/TimeLine";
+import { StateContext } from "../App";
 
 import {
   collection,
@@ -15,6 +16,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { auth, db } from "../utils/firebase";
+import MbHeader from "../components/Detail/MbHeader";
 
 const Wrapper = styled.div`
   width: 934px;
@@ -27,33 +29,20 @@ const Wrapper = styled.div`
   @media screen and (max-width: 1024px) {
     width: 100%;
   }
+
+  @media screen and (max-width: 630px) {
+    width: 430px;
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
+  }
 `;
 
 const MyFeed = () => {
-  const [myProfile, setMyProfile] = useState(null);
   const [myFeeds, setMyFeed] = useState([]);
-  const [postsWithProfiles, setPostsWithProfiles] = useState([]);
 
-  useEffect(() => {
-    const userUid = auth.currentUser?.uid;
-    if (userUid) {
-      const getMyProfile = async (uid) => {
-        const profileQuery = query(
-          collection(db, "profile"),
-          where("uid", "==", uid),
-          limit(1)
-        );
-        const profileSnapshot = await getDocs(profileQuery);
-
-        if (!profileSnapshot.empty) {
-          const profileData = profileSnapshot.docs[0].data();
-          setMyProfile(profileData);
-        }
-      };
-
-      getMyProfile(userUid);
-    }
-  }, []);
+  const { myProfile } = useContext(StateContext);
 
   useEffect(() => {
     if (myProfile) {
@@ -78,6 +67,7 @@ const MyFeed = () => {
 
   return (
     <Wrapper>
+      <MbHeader/>
       <MyPic myProfile={myProfile} myFeeds={myFeeds} />
       <MyProfile myProfile={myProfile} />
       <MyHighlight />

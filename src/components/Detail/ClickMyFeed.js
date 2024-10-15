@@ -14,23 +14,11 @@ import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 
 import { auth, db, storage } from "../../utils/firebase";
-import {
-  deleteDoc,
-  doc,
-  getDoc,
-  updateDoc,
-  collection,
-  limit,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import {
   deleteObject,
   ref,
   getDownloadURL,
-  StorageError,
-  StorageErrorCode,
   uploadBytes,
   uploadBytesResumable,
 } from "firebase/storage";
@@ -127,6 +115,12 @@ const Slider = styled.div`
   overflow: hidden;
 `;
 
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const Desc = styled.div`
   width: 40%;
   height: 100%;
@@ -208,6 +202,14 @@ const Notification = styled.div`
   svg {
     font-size: var(--font-20);
   }
+
+  @media screen and (max-width: 1000px) {
+    font-size: var(--font-12);
+
+    svg {
+      font-size: var(--font-18);
+    }
+  }
 `;
 const IconBtns = styled.div`
   display: flex;
@@ -230,6 +232,11 @@ const StyledInput = styled.input`
   &::placeholder {
     color: var(--gray-color);
     font-weight: var(--font-regular);
+  }
+
+  @media screen and (max-width: 1000px) {
+    font-size: var(--font-12);
+    height: 30px;
   }
 `;
 
@@ -261,6 +268,15 @@ const SetContentButton = styled.label`
   align-items: center;
   padding: 20px;
   cursor: pointer;
+  flex-wrap: wrap;
+`;
+
+const PreviewImage = styled.img`
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  object-fit: cover;
+  border-radius: 10px;
 `;
 
 const Icon = styled.img`
@@ -297,20 +313,18 @@ const EditedTextArea = styled.textarea`
   }
 `;
 
-const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
+const ClickMyFeed = ({ onClick, myProfile, post }) => {
   const commentRef = useRef();
   const bgRef = useRef();
   const [comment, setComment] = useState("");
-  const [followingUser, setFollowingUser] = useState("");
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedPost, setEditedPost] = useState(
-    myFeed?.content || post?.content || ""
-  );
-  const [editedPhoto, setEditedPhoto] = useState(null);
+  const [editedPost, setEditedPost] = useState(post?.content || "");
 
   const [preview, setPreview] = useState([]);
   const [file, setFile] = useState([]);
+
+
 
   const hideFeed = () => {
     onClick();
@@ -344,14 +358,12 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
         }
         newFiles.push(item);
 
-        // FileReader를 사용해 미리보기 URL 생성
         const reader = new FileReader();
         reader.readAsDataURL(item);
 
         reader.onload = (event) => {
           newPreviews.push(event.target.result);
 
-          // 모든 파일이 로드된 후 상태 업데이트
           if (newPreviews.length === files.length) {
             setPreview((prevPreview) => [...prevPreview, ...newPreviews]);
             setFile((prevFile) => [...prevFile, ...newFiles]);
@@ -362,14 +374,13 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
   };
 
   const user = auth.currentUser;
-  console.log(user);
   const onDelete = async () => {
     const ok = window.confirm("정말로 지금 게시물을 삭제하시겠습니까?");
     if (!ok || user.uid !== post.uid) return;
     try {
-      await deleteDoc(doc(db, `contents`, post.id));
+      await deleteDoc(doc(db, `feed`, post.id));
       if (post.media) {
-        const mediaRef = ref(storage, `contents/${user.uid}/${post.id}`);
+        const mediaRef = ref(storage, `feed/${user.uid}/${post.id}`);
         await deleteObject(mediaRef);
       }
     } catch (e) {
@@ -379,56 +390,59 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
 
   const onUpDate = async () => {
     try {
-      if (user?.uid !== post.uid) return; // 사용자가 맞는지 확인
+      if (user?.uid !== post.uid) return;
 
-      const postDoc = await getDoc(doc(db, "contents", post.id));
-
-      if (!postDoc.exists()) throw new Error("게시글이 존재하지 않습니다");
-
+      const postDoc = await getDoc(doc(db, "feed", post.id));
       const postData = postDoc.data();
-      const updatedMedia = postData.media; // 기존 미디어 데이터 가져오기
 
-      if (editedPhoto) {
-        // 사진을 새로 업로드하고 업데이트
-        const newFileType = editedPhoto.type.startsWith("image/")
-          ? "image"
-          : "video";
+      let updatedMedia = postData.imgPath || [];
 
-        const locationRef = ref(storage, `contents/${user.uid}/${post.id}`);
-        const uploadTask = uploadBytesResumable(locationRef, editedPhoto);
+      if (file.length > 0) {
+        for (const editedFile of file) {
+          const newFileType = editedFile.type.startsWith("image/")
+            ? "img"
+            : "video";
 
-        if (editedPhoto.size >= 7 * 1024 * 1024) {
-          uploadTask.cancel();
-          throw new StorageError(
-            StorageErrorCode.CANCELED,
-            "파일의 크기가 7MB를 초과하였습니다."
+          const locationRef = ref(
+            storage,
+            `feed/${user.uid}/${post.id}/${editedFile.name}`
           );
+          const uploadTask = uploadBytesResumable(locationRef, editedFile);
+
+          if (editedFile.size >= maxFileSize) {
+            uploadTask.cancel();
+            alert("업로드 할 수 있는 최대용량은 10MB입니다.");
+            return;
+          }
+
+          const result = await uploadBytes(locationRef, editedFile);
+          const url = await getDownloadURL(result.ref);
+
+          updatedMedia = [...updatedMedia, url];
         }
-
-        const result = await uploadBytes(locationRef, editedPhoto);
-        const url = await getDownloadURL(result.ref);
-
-        updatedMedia.push({
-          imgPath: url,
-          type: newFileType,
-        });
       }
 
-      // Firestore에 post.content 및 media 업데이트
-      await updateDoc(doc(db, "contents", post.id), {
-        content: editedPost, // 수정된 포스트 내용
-        media: updatedMedia, // 수정된 미디어 데이터
-      });
+      const updatedData = {
+        content: editedPost,
+        imgPath: updatedMedia,
+        type: updatedMedia.find((item) => item.endsWith(".mp4"))
+          ? "reels"
+          : "img",
+      };
+
+      await updateDoc(doc(db, "feed", post.id), updatedData);
     } catch (e) {
-      console.error("업데이트 중 오류 발생:", e);
+      console.error(e);
     } finally {
-      setIsEditing(false); // 편집 모드 해제
+      setIsEditing(false);
     }
   };
 
+
+
   return (
     <>
-      {!myFeed && !post ? (
+      {!post ? (
         <p>피드를 불러오는 중입니다...</p>
       ) : (
         <>
@@ -466,7 +480,17 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                   <Slider className="slider">
                     {isEditing ? (
                       <SetContentButton htmlFor="edit-content">
-                        <Icon src="/images/newPostIcon.svg" />
+                        {preview.length > 0 ? (
+                          preview.map((item, idx) => (
+                            <PreviewImage
+                              key={idx}
+                              src={item}
+                              alt={`미리보기 ${idx + 1}`}
+                            />
+                          ))
+                        ) : (
+                          <Icon src="/images/newPostIcon.svg" />
+                        )}
                         <SetContentInputButton
                           id="edit-content"
                           type="file"
@@ -477,28 +501,34 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                       </SetContentButton>
                     ) : (
                       <>
-                        {myFeed && myFeed?.type === "reels" ? (
-                          <video
+                        {post && post?.type === "reels" ? (
+                          <Video
                             autoPlay
                             muted
                             loop
-                            src={myFeed?.imgPath}
+                            src={post?.imgPath}
                             style={{
                               width: "100%",
                               height: "100%",
                               objectFit: "cover",
                             }}
                           />
-                        ) : myFeed?.type === "img" ? (
+                        ) : post?.type === "img" ? (
                           <Slide
-                            imgPath={myFeed.imgPath || []}
+                            imgPath={
+                              Array.isArray(post.imgPath)
+                                ? post.imgPath
+                                : [post.imgPath]
+                            }
                             onClick={onClick}
                           />
-                        ) : (
-                          post?.media.map((item) => (
-                            <Slide imgPath={item.imgPath} onClick={onClick} />
-                          ))
-                        )}
+                        ) : Array.isArray(post.imgPath) ? (
+                          <Slide imgPath={post.imgPath} onClick={onClick} />
+                        ) : post.type === "img" ? (
+                          <Slide imgPath={[post.imgPath]} onClick={onClick} />
+                        ) : post.type === "reels" ? (
+                          <Video src={post.imgPath} muted />
+                        ) : null}
                       </>
                     )}
                   </Slider>
@@ -520,6 +550,7 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                               type={"feed"}
                               userNickname={myProfile?.userId}
                               check={myProfile?.badge ? "active" : ""}
+                              // createdAt={new Date(parseInt(post.createdAt))}
                               btn={"more"}
                               onClick={onDelete}
                               setIsEditing={setIsEditing}
@@ -527,7 +558,7 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                               feed={"myfeed"}
                             />
                             <Location>
-                              {myFeed ? myFeed?.location : myProfile?.userName}
+                              {post ? post?.location : myProfile?.userName}
                             </Location>
                           </Userinfo>
                         </UserBox>
@@ -539,13 +570,7 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                               onChange={onChange}
                             />
                           ) : (
-                            <>
-                              {myFeed ? (
-                                <FeedText myFeed={myFeed} />
-                              ) : (
-                                <FeedText post={post} />
-                              )}
-                            </>
+                            <>{post && <FeedText post={post} />}</>
                           )}
                         </UserContents>
                       </UserContainer>
@@ -554,7 +579,7 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                           {post ? null : (
                             <CommentItem
                               onClick={onFocus}
-                              myFeed={myFeed}
+                              post={post}
                               // myProfile={myProfile}
                             />
                           )}
@@ -566,18 +591,12 @@ const ClickMyFeed = ({ onClick, myFeed, myProfile, post }) => {
                         <Top>
                           <Notification>
                             <IoHeartOutline />
-                            {post ? null : (
+                            {post ? (
                               <span>
-                                {/* {followingUser ? (
-                              <>
-                                {followingUser.userId}님 외{" "}
-                                <b> {feedDetail.like.length}명</b>이 좋아합니다
-                              </>
-                            ) : (
-                              <b>좋아요 {feedDetail.like.length}개</b>
-                            )} */}
+                                {post.userId}님 외 <b> {post.like.length}명</b>
+                                이 좋아합니다
                               </span>
-                            )}
+                            ) : null}
                           </Notification>
                           <IconBtns>
                             <IoPaperPlaneOutline />

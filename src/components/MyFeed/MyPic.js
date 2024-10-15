@@ -20,10 +20,11 @@ const ProfileBg = styled.img`
     height: 230px;
   }
 
-  @media screen and (max-width: 430px) {
+  @media screen and (max-width: 630px) {
     width: 100%;
-    height: 200px;
+    height: 150px;
   }
+
 `;
 
 const ProfileImgBox = styled.div`
@@ -94,6 +95,31 @@ const ProfileImgBox = styled.div`
       height: 110px;
     }
   }
+  
+  @media screen and (max-width: 630px) {
+    width: 70px;
+    height: 70px;
+    top: 162px;
+    left: 15px;
+  
+
+    .storyFirstCircle {
+      width: 70px;
+      height: 70px;
+    }
+
+    .storySecondCircle {
+      width: 65px;
+      height: 65px;
+      border: 3px solid var(--bg-white-color);
+    }
+
+    .storyThirdCircle {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
 
   @media screen and (max-width: 430px) {
     top: 135px;
@@ -127,10 +153,16 @@ const MyFeedDesc = styled.div`
     }
   }
 
-  @media screen and (max-width: 500px) {
-    margin-left: 160px;
-    margin-right: 0px;
+  @media screen and (max-width: 630px) {
+    margin-left: 120px;
+    margin-right: 0;
+    padding: 0 15px 0 20px;
+    height: 90px;
+    .post_follow {
+      justify-content: space-between;
+    }
   }
+
 `;
 
 const MyPic = ({ myProfile, myFeeds }) => {

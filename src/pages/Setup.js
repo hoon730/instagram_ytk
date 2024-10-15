@@ -8,14 +8,7 @@ import { click, scale } from "../utils/utils";
 import { auth, storage, db } from "../utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
-import {
-  collection,
-  getDocs,
-  limit,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 import { LuCamera } from "react-icons/lu";
 import { motion } from "framer-motion";
@@ -124,15 +117,13 @@ const UserName = styled.div`
 const Setup = ({ onClick, myProfile }) => {
   const containerRef = useRef();
   const user = auth.currentUser;
-  const [editProfile, setEditProfile] = useState(
-    user.photoURL || null || undefined
-  );
-  const [isEditing, setIsEditing] = useState(false);
+
+  const [editProfile, setEditProfile] = useState(user?.photoURL || "");
   const [editUserName, setEditUserName] = useState(
-    user.displayName ?? "Anonymous"
+    user?.displayName || "사용자 이름 없음"
   );
-  const [intro, setIntro] = useState("");
-  const [link, setLink] = useState("");
+  const [intro, setIntro] = useState(myProfile?.introduction || "");
+  const [link, setLink] = useState(myProfile?.website || "");
 
   const hideSetup = () => {
     onClick();
@@ -141,42 +132,71 @@ const Setup = ({ onClick, myProfile }) => {
   const handleEditUserName = (e) => {
     setEditUserName(e.target.value);
   };
+
   const handleIntro = (e) => {
     setIntro(e.target.value);
   };
+
   const handleLink = (e) => {
     setLink(e.target.value);
   };
 
   const editProfileChange = async (e) => {
     const { files } = e.target;
+    if (!user || !files || files.length === 0) return;
+    const file = files[0];
+    const locationRef = ref(storage, `profile/${user.uid}`);
+    const result = await uploadBytes(locationRef, file);
+    const editProfileUrl = await getDownloadURL(result.ref);
+    setEditProfile(editProfileUrl);
+    await updateProfile(user, { photoURL: editProfileUrl });
+  };
+
+  const saveProfile = async (e) => {
+    e.preventDefault();
     if (!user) return;
-    if (files && files.length === 1) {
-      const file = files[0];
-      const locationRef = ref(storage, `editProfile/${user.uid}`);
-      const result = await uploadBytes(locationRef, file);
-      const editProfileUrl = await getDownloadURL(result, ref);
-      setEditProfile(editProfileUrl);
-      await updateProfile(user, {
-        photoURL: editProfileUrl,
+
+    try {
+      const userDocRef = doc(db, "profile", user.uid);
+      await setDoc(userDocRef, {
+        userId: editUserName,
+        userName: myProfile?.userName || "이름 없음",
+        introduction: intro,
+        website: link,
+        profilePhoto: editProfile,
+        recommendation: myProfile.recommendation,
+        nondisclosure: myProfile.nondisclosure,
+        gender: myProfile.gender,
+        follower: myProfile.follower,
+        following: myProfile.following,
+        bgPhoto: myProfile.bgPhoto,
+        badge: myProfile.badge,
+        uid: user.uid,
       });
+
+      await updateProfile(user, { displayName: editUserName });
+      alert("프로필이 성공적으로 저장되었습니다.");
+      onClick();
+    } catch (e) {
+      console.error(e);
     }
   };
 
-  const ChangeEditUserName = async () => {
-    if (!user) return;
-    setIsEditing((prev) => !prev);
-    if (!isEditing) return;
-    try {
-      await updateProfile(user, {
-        displayName: editUserName,
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsEditing(false);
-    }
-  };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user) return;
+      const userDocRef = doc(db, "profile", user.uid);
+      const userProfile = await getDoc(userDocRef);
+      if (userProfile.exists()) {
+        const data = userProfile.data();
+        setEditUserName(data.userId || "");
+        setIntro(data.introduction || "");
+        setLink(data.website || "");
+        setEditProfile(data.profilePhoto || "");
+      }
+    };
+    fetchProfile();
+  }, [user]);
 
   return (
     <Container
@@ -197,6 +217,7 @@ const Setup = ({ onClick, myProfile }) => {
         animate="visible"
         exit="exits"
         onClick={(e) => e.stopPropagation()}
+        onSubmit={saveProfile}
       >
         <Title>
           <Button text={"취소"} onClick={onClick} />
@@ -210,10 +231,8 @@ const Setup = ({ onClick, myProfile }) => {
             </ChangePicBtn>
             {editProfile ? (
               <Pic src={editProfile} />
-            ) : myProfile ? (
-              <Pic src={myProfile?.profilePhoto} />
             ) : (
-              <Pic />
+              <Pic src={myProfile.profilePhoto} />
             )}
             <ChangePicInput
               type="file"
@@ -222,8 +241,8 @@ const Setup = ({ onClick, myProfile }) => {
               onChange={editProfileChange}
             />
           </PicBox>
-          <UserNicknam>{myProfile?.userId}</UserNicknam>
-          <UserName>{myProfile?.userName}</UserName>
+          <UserNicknam>{editUserName}</UserNicknam>
+          <UserName>{user?.displayName || "이름 없음"}</UserName>
         </EditIntro>
         <EditDesc
           handleUserName={handleEditUserName}
@@ -232,9 +251,8 @@ const Setup = ({ onClick, myProfile }) => {
           intro={intro}
           handleLink={handleLink}
           link={link}
-          myProfile={myProfile}
-        ></EditDesc>
-        <EditBtns></EditBtns>
+        />
+        <EditBtns />
       </Wrapper>
     </Container>
   );

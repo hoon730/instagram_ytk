@@ -11,6 +11,8 @@ const firebaseConfig = {
   messagingSenderId: "938815740201",
   appId: "1:938815740201:web:99541068728ed2900f7f38",
 };
+
+// 지선님꺼
 // const firebaseConfig = {
 //   apiKey: "AIzaSyB5f9tIwQ3_s_yTTxedSrrolATrsmoJjlQ",
 //   authDomain: "ins-loginpg.firebaseapp.com",
@@ -20,6 +22,7 @@ const firebaseConfig = {
 //   appId: "1:389855710537:web:bca6060c85eb04213d5e98",
 //   measurementId: "G-84EN6XKL1V",
 // };
+
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
 export const storage = getStorage(app);
