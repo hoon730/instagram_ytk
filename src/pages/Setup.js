@@ -9,7 +9,7 @@ import { click, scale } from "../utils/utils";
 import { auth, storage, db } from "../utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 import { LuCamera } from "react-icons/lu";
 import { motion } from "framer-motion";
@@ -188,7 +188,7 @@ const Setup = ({ onClick, myProfile }) => {
       };
 
       // 전체 문서를 덮어쓰려면 setDoc을 사용
-      await setDoc(doc(db, "profile", user.uid), profileData);
+      await updateDoc(doc(db, "profile", myProfile.id), profileData);
       await updateProfile(user, { displayName: editUserName });
       alert("프로필이 성공적으로 저장되었습니다.");
       onClick();
@@ -200,7 +200,7 @@ const Setup = ({ onClick, myProfile }) => {
   useEffect(() => {
     const fetchProfile = async () => {
       if (!user) return;
-      const userDocRef = doc(db, "profile", user.uid);
+      const userDocRef = doc(db, "profile", myProfile.id);
       const userProfile = await getDoc(userDocRef);
       if (userProfile.exists()) {
         const data = userProfile.data();

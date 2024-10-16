@@ -1,19 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { click, scale } from "../utils/utils";
 import Button from "../components/Common/Button";
 import styled from "styled-components";
 import { auth, db, storage } from "../utils/firebase";
-import {
-  addDoc,
-  collection,
-  updateDoc,
-  query,
-  where,
-  limit,
-  getDocs,
-} from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { OpenContext } from "../App";
 
 const NewBg = styled(motion.div)`
   position: fixed;
@@ -42,25 +35,10 @@ const Wrapper = styled(motion.div)`
   padding: 30px 50px;
   background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
-  /* 
-  @media screen and (max-width: 1024px) {
-    position: relative;
-    height: 0;
-    padding-top: 56.25%;
-    width: 67%;
-  } */
 `;
 
 const Inner = styled.div`
   width: 100%;
-  /* @media screen and (max-width: 1024px) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    padding: 30px 50px;
-  } */
 `;
 
 const H3 = styled.h3`
@@ -206,7 +184,7 @@ const SubmitBtn = styled.input`
   }
 `;
 
-const New = ({ setOpenNew }) => {
+const New = () => {
   const newBgRef = useRef();
   const mediaRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -218,6 +196,7 @@ const New = ({ setOpenNew }) => {
 
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
 
+  const { setOpenNew } = useContext(OpenContext);
   const maxFileSize = 10 * 1024 * 1024;
 
   const fileAdd = (e) => {
@@ -331,9 +310,9 @@ const New = ({ setOpenNew }) => {
     }
   };
 
-  const handleOnClick = () => {
-    setOpenNew(false);
-  };
+  // const handleOnClick = () => {
+  //   setOpenNew(false);
+  // };
 
   return (
     <NewBg
@@ -410,7 +389,7 @@ const New = ({ setOpenNew }) => {
                 type={"negative"}
                 text={"취소하기"}
                 width={"50%"}
-                onClick={handleOnClick}
+                // onClick={handleOnClick}
               />
               <SubmitBtn
                 type="submit"

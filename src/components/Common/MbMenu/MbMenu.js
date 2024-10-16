@@ -6,6 +6,7 @@ import New from "../../../pages/New";
 import { mbMenuData } from "../../../utils/utils";
 import ProfileImg from "../../Profile/ProfileImg";
 import { StateContext } from "../../../App";
+import { OpenContext } from "../../../App";
 
 const MenuList = styled.div`
   position: fixed;
@@ -64,9 +65,9 @@ const IconWrapper = styled.div`
 const MbMenu = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
-  const [openNew, setOpenNew] = useState(false);
   const [currentNum, setCurrentNum] = useState(0);
 
+  const { setOpenNew, openNew } = useContext(OpenContext);
   const { myProfile } = useContext(StateContext);
 
   const handleOnClick = (path) => {

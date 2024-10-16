@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { HiOutlineUserPlus } from "react-icons/hi2";
+import { OpenContext } from "../../App";
 
 const ButtonItem = styled.button`
   width: ${({ $width }) => `${$width}` || "auto"};
@@ -44,9 +45,10 @@ const MesseageBtn = styled.span`
 `;
 
 const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
-  const handleOnClick = () => {
-    onClick();
-  };
+  // const handleOnClick = () => {
+  //   onClick();
+  // };
+  const { setOpenNew } = useContext(OpenContext);
 
   return (
     <ButtonItem
@@ -54,7 +56,7 @@ const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
       $height={height}
       fontSize={fontSize}
       type={type}
-      onClick={onClick ? handleOnClick : null}
+      onClick={() => setOpenNew(false)}
       $followed={followed}
     >
       <MesseageBtn $followed={followed}>

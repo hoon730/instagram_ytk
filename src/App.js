@@ -25,7 +25,6 @@ import {
   query,
   where,
   limit,
-  getDocs,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import NotLoggedIn from "./components/NotLoggedIn";
@@ -114,6 +113,7 @@ const router = createBrowserRouter([
 
 export const ThemeContext = React.createContext();
 export const StateContext = React.createContext();
+export const OpenContext = React.createContext();
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -122,12 +122,13 @@ function App() {
     await setIsLoading(false);
   };
   const [darkMode, setDarkMode] = useState(false);
+  const [openNew, setOpenNew] = useState(false);
   const [allProfile, setAllProfile] = useState(null);
   const [myProfile, setMyProfile] = useState(null);
 
   useEffect(() => {
     init();
-    
+
     let allProfileUnsubscribe = null;
     const fetchAllProfile = async () => {
       const profileQuery = query(collection(db, "profile"));
@@ -191,7 +192,9 @@ function App() {
             </Wrapper>
           ) : (
             <StateContext.Provider value={{ allProfile, myProfile }}>
-              <RouterProvider router={router} />
+              <OpenContext.Provider value={{ setOpenNew, openNew }}>
+                <RouterProvider router={router} />
+              </OpenContext.Provider>
             </StateContext.Provider>
           )}
         </ThemeContext.Provider>
