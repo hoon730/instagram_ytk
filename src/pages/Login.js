@@ -76,7 +76,8 @@ const LoginInput = styled.input`
   }
 
   &:focus ~ label,
-  &:not(:placeholder-shown) ~ label {
+  &:not(:placeholder-shown) ~ label,
+  &:valid ~ label {
     top: -11px;
     left: 5px;
     font-size: 12px;
@@ -102,11 +103,6 @@ const Label = styled.label`
   }
 `;
 
-const Error = styled.p`
-  color: ${colors.sub2};
-  font-size: 14px;
-`;
-
 const PasswordBtn = styled.button`
   height: 21px;
   width: 45px;
@@ -115,13 +111,21 @@ const PasswordBtn = styled.button`
   display: flex;
   align-items: center;
   padding-left: 20px;
-  /* z-index: 1; */
+  background: none;
+  border: none;
   cursor: pointer;
+`;
+
+const Error = styled.p`
+  color: ${colors.sub2};
+  font-size: 14px;
 `;
 
 const SignUpOrPw = styled.div`
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   margin: 15px 0;
   width: 100%;
   font-size: 14px;
@@ -131,6 +135,12 @@ const SignUpOrPw = styled.div`
 const FindPw = styled.a`
   cursor: pointer;
 `;
+
+const VertLine = styled.div`
+  border-left: 1px solid ${colors.gray};
+  height: 14px;
+`;
+
 const SignUpLink = styled.a`
   cursor: pointer;
 `;
@@ -187,7 +197,7 @@ const Login = () => {
         if (userDoc) {
           emailToLogin = userDoc.email; // Get email from Firestore data
         } else {
-          setError("No user found with the provided ID or phone number");
+          setError("일치하는 정보가 없습니다.");
           return;
         }
       }
@@ -258,8 +268,8 @@ const Login = () => {
             />
             <Label>비밀번호</Label>
             {password && (
-              <PasswordBtn onClick={togglePassword}>
-                {showPassword ? <AiOutlineEyeInvisible /> : <AiFillEye />}
+              <PasswordBtn type="button" onClick={togglePassword}>
+                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
               </PasswordBtn>
             )}
           </InputBox>
@@ -267,6 +277,7 @@ const Login = () => {
           <LoginBtn value="로그인" />
           <SignUpOrPw>
             <FindPw onClick={findPwLink}>비밀번호 찾기</FindPw>
+            <VertLine />
             <SignUpLink onClick={signUpLink}>회원가입 하기</SignUpLink>
           </SignUpOrPw>
           <FbBtn />

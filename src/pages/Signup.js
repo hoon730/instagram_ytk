@@ -1,28 +1,36 @@
 // v1. facebook 메시지
 // v2. 전화번호&사용자(id) 한꺼번에 저장-계정 복수생성=복잡해져서 포기. 전화번호||이메일 등록으로 변경=전화번호가 등록이 안됨. 이메일 필수.
-// 3. 문자숫자밑줄마침표만 아이디 등록할 때 허용. 아이디 추천 기능. <FaCheck /> <FaXmark /> <IoReload />
+// 3. 소문자숫자밑줄마침표만 아이디 등록할 때 허용. 아이디 추천 기능. <FaCheck /> <FaXmark /> <IoReload />
 // v4. uid 임의로 변환-불가능
 // v5. 리아님이 말씀하신대로 데이타베이스에 올라가는 거 수정.
 // v6. Firebase: Error (auth/invalid-credential).파이어베이스 에러들 한글로 바꾸기. 로그인포맷, 같은이메일 존재
-// 7. 눈모양 버튼 앤터 칠 떄 boolean 안바뀌도록
+// v7. 눈모양 버튼 앤터 칠 떄 boolean 안바뀌도록
 // v8. 로그인 id, 전번, 이메일과 비밀번호로 가능하게끔
 // v9. 반응형. 370, 780
-// 10. 로그인 전번간편로그인 기능
+// 10. custum select로 통일
+// 11. 로그인 전번간편로그인 기능, 전번 제대로 들어가는지 확인
 // . 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
 
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../utils/firebase";
+import { auth, db } from "../utils/firebase";
 import { FirebaseError } from "firebase/app";
 import styled from "styled-components";
 import LogoImg from "../components/Login/LogoImg";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { FaXmark } from "react-icons/fa6";
 import LoginBtn from "../components/Login/LoginBtn";
 import FbBtn from "../components/Login/FbBtn";
-import { db } from "../utils/firebase"; // Import your Firestore instance
-import { doc, setDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 
 const colors = {
   sub2: "#6228D7",
@@ -40,28 +48,6 @@ const countries = [
   { name: "Canada", code: "+1" },
   { name: "United Kingdom", code: "+44" },
   { name: "Germany", code: "+49" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
-  { name: "Australia", code: "+61" },
 ];
 
 const Wrapper = styled.div`
@@ -88,7 +74,7 @@ const Block = styled.div`
 `;
 
 const PleaseSignUp = styled.p`
-  color: ${colors.sub2};
+  color: ${colors.darkGray};
   font-size: 14px;
 `;
 
@@ -125,7 +111,8 @@ const LoginInput = styled.input`
   }
 
   &:focus ~ label,
-  &:not(:placeholder-shown) ~ label {
+  &:not(:placeholder-shown) ~ label,
+  &:valid ~ label {
     top: -11px;
     left: 5px;
     font-size: 12px;
@@ -152,9 +139,10 @@ const Label = styled.label`
 `;
 
 const Error = styled.p`
-  color: ${colors.sub2};
-  /* margin: 10px 0 -5px 0; */
-  font-size: 14px;
+  margin-top: -5px;
+  padding-bottom: 10px;
+  color: #e00000;
+  font-size: 12px;
 `;
 
 const PasswordBtn = styled.button`
@@ -165,6 +153,8 @@ const PasswordBtn = styled.button`
   display: flex;
   align-items: center;
   padding-left: 20px;
+  background: none;
+  border: none;
   /* z-index: 1; */
   cursor: pointer;
 `;
@@ -202,20 +192,25 @@ const CountryDropdown = styled.ul`
   padding: 0;
   margin: 0;
   position: absolute;
+  top: 20px;
   width: fit-content;
-  border: 1px solid #ccc;
-  border-radius: 8px;
   background-color: white;
+  box-shadow: 0px 0px 5px ${colors.gray};
   z-index: 10;
   max-height: 200px;
   overflow-y: auto;
 `;
 
 const CountryOption = styled.li`
+  /* color: ${colors.darkGray}; */
+  background-color: ${(props) =>
+    props.isHovered ? colors.darkGray : "transparent"};
+  color: ${(props) => (props.isHovered ? "#fff" : colors.darkGray)};
   padding: 10px;
   cursor: pointer;
   &:hover {
-    background-color: #f0f0f0;
+    color: ${colors.bgLight};
+    background-color: ${colors.darkGray};
   }
 `;
 
@@ -230,14 +225,16 @@ const SwitchEmailNPhone = styled.p`
 
 const LoginBlock = styled.div`
   display: flex;
-  width: 100%;
   flex-direction: column;
+  width: 100%;
+  gap: 15px;
 `;
 
 const AccountLogin = styled.div`
   display: flex;
-  position: relative;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
   width: 100%;
   font-size: 14px;
 `;
@@ -245,10 +242,9 @@ const AccountLogin = styled.div`
 const AccountQ = styled.p`
   color: ${colors.darkGray};
 `;
+
 const AccountLink = styled.a`
-  position: absolute;
-  right: 0;
-  top: 33%;
+  font-weight: 600;
   color: ${colors.darkGray};
   cursor: pointer;
 `;
@@ -256,40 +252,26 @@ const AccountLink = styled.a`
 const Signup = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
+  const [userIdError, setUserIdError] = useState(""); // State for userId error
+  const [isUserIdValid, setIsUserIdValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [tel, setTel] = useState("");
-  const [domain, setDomain] = useState("@gmail.com");
-  const [country, setCountry] = useState("+82");
   const [emailError, setEmailError] = useState(false);
-  const [emailOption, setEmailOption] = useState(false);
+  const [domain, setDomain] = useState("@gmail.com");
+  const [telOption, setTelOption] = useState(false);
+  const [country, setCountry] = useState("+82");
+  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  const [tel, setTel] = useState("");
   const [error, setError] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState({
-    name: "대한민국",
-    code: "+82",
-  });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [hoveredCountry, setHoveredCountry] = useState(null);
+
   const dropdownRef = useRef(null);
 
   const navigate = useNavigate();
   const userIdRef = useRef(null);
-
-  const onCountrySelect = (country) => {
-    setSelectedCountry(country);
-    setIsDropdownOpen(false); // Close dropdown after selection
-  };
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownOpen(false);
-    }
-  };
 
   React.useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -297,7 +279,7 @@ const Signup = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  //마운트 됐을 때 포커스 되도록
   useEffect(() => {
     if (userIdRef.current) {
       userIdRef.current.focus();
@@ -356,11 +338,10 @@ const Signup = () => {
       );
       console.log(credentials.user);
       await updateProfile(credentials.user, { displayName: id });
-      await setDoc(doc(db, "profile", credentials.user.uid), {
+      const data = {
         uid: credentials.user.uid,
         userId: id,
         userName: name,
-        phone: fullTel(),
         email: fullEmail(),
         badge: Boolean(false),
         bgPhoto: "",
@@ -372,7 +353,11 @@ const Signup = () => {
         following: [],
         nondisclosure: Boolean(false),
         recommendation: Boolean(false),
-      });
+      };
+      if (tel) {
+        data.phone = fullTel();
+      }
+      await setDoc(doc(db, "profile", credentials.user.uid), data);
       navigate("/");
     } catch (e) {
       console.log(e);
@@ -381,13 +366,13 @@ const Signup = () => {
           e.message ==
           "Firebase: Password should be at least 6 characters (auth/weak-password)."
         ) {
-          setPasswordError("* 비밀번호는 6자 이상으로 설정해주세요.");
+          setPasswordError(" 비밀번호는 6자 이상으로 설정해주세요.");
         } else if (e.message == "Firebase: Error (auth/invalid-email).") {
-          setEmailError("* 이메일 형식이 잘못되었습니다.");
+          setEmailError("이메일 형식이 잘못되었습니다.");
         } else if (
           e.message == "Firebase: Error (auth/email-already-in-use)."
         ) {
-          setEmailError("* 이미 사용중인 이메일입니다.");
+          setEmailError("이미 사용중인 이메일입니다.");
         } else {
           setError(e.message);
         }
@@ -402,16 +387,40 @@ const Signup = () => {
   };
 
   const toggleEmailNPhone = () => {
-    setEmailOption((prev) => !prev);
+    setTelOption((prev) => !prev);
+  };
+
+  const onCountrySelect = (country) => {
+    setSelectedCountry(country);
+    setIsDropdownOpen(false); // Close dropdown after selection
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prevState) => {
+      if (!prevState) {
+        setHoveredCountry(selectedCountry);
+      }
+      return !prevState;
+    });
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  const handleCountryHover = (country) => {
+    setHoveredCountry(country);
   };
 
   const loginLink = () => {
     navigate("/login");
   };
-
-  const sortedCountries = countries.sort((a, b) =>
-    a.name.localeCompare(b.name, "ko")
-  );
+  //나라 이름 순서대로
+  // const sortedCountries = countries.sort((a, b) =>
+  //   a.name.localeCompare(b.name, "ko")
+  // );
 
   return (
     <Wrapper>
@@ -445,12 +454,17 @@ const Signup = () => {
             />
             <Label>비밀번호</Label>
             {password && (
-              <PasswordBtn onClick={togglePassword}>
-                {showPassword ? <AiOutlineEyeInvisible /> : <AiFillEye />}
+              <PasswordBtn type="button" onClick={togglePassword}>
+                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
               </PasswordBtn>
             )}
           </InputBox>
-          {passwordError && <Error>{passwordError}</Error>}
+          {passwordError && (
+            <Error>
+              <FaXmark />
+              {passwordError}
+            </Error>
+          )}
           <InputBox>
             <LoginInput
               onChange={onChange}
@@ -480,13 +494,23 @@ const Signup = () => {
               <option value="custom">직접 입력</option>
             </DomainSelect>
           </InputBox>
-          {emailError && <Error>{emailError}</Error>}
-          {error !== "" ? <Error>{error}</Error> : null}
+          {emailError && (
+            <Error>
+              <FaXmark />
+              {emailError}
+            </Error>
+          )}
+          {error !== "" ? (
+            <Error>
+              <FaXmark />
+              {error}
+            </Error>
+          ) : null}
           <SwitchEmailNPhone onClick={toggleEmailNPhone}>
             전화번호 간편로그인 등록하기
-            {emailOption ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            {telOption ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </SwitchEmailNPhone>
-          {emailOption ? (
+          {telOption ? (
             <InputBox>
               <CountrySelect ref={dropdownRef}>
                 <SelectedCountry onClick={toggleDropdown}>
@@ -499,6 +523,10 @@ const Signup = () => {
                       <CountryOption
                         key={index}
                         onClick={() => onCountrySelect(country)}
+                        onMouseEnter={() => handleCountryHover(country)}
+                        isHovered={
+                          hoveredCountry && country.name === hoveredCountry.name
+                        }
                       >
                         {country.name}
                       </CountryOption>
@@ -510,23 +538,24 @@ const Signup = () => {
                 onChange={onChange}
                 type="tel"
                 name="tel"
-                placeholder="전화번호"
+                placeholder=""
                 value={tel}
                 required
                 pattern="[0-9]{10,11}"
               />
+              <Label>전화번호</Label>
             </InputBox>
           ) : (
             ""
           )}
-          <LoginBtn value="가입" />
+          <LoginBtn value="회원가입" />
         </Form>
         <LoginBlock>
           <AccountLogin>
-            {/* <AccountQ>계정이 이미 있으신가요?</AccountQ> */}
-            <FbBtn />
-            <AccountLink onClick={loginLink}>로그인하기</AccountLink>
+            <AccountQ>계정이 이미 있으신가요?</AccountQ>
+            <AccountLink onClick={loginLink}>로그인 하러가기</AccountLink>
           </AccountLogin>
+          <FbBtn />
         </LoginBlock>
       </Block>
     </Wrapper>
