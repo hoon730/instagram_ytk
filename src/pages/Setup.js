@@ -8,7 +8,7 @@ import { click, scale } from "../utils/utils";
 import { auth, storage, db } from "../utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 import { LuCamera } from "react-icons/lu";
 import { motion } from "framer-motion";
@@ -162,7 +162,7 @@ const Setup = ({ onClick, myProfile }) => {
 
     try {
       const userDocRef = doc(db, "profile", user.uid);
-      await setDoc(userDocRef, {
+      await updateDoc(userDocRef, {
         userId: editUserName,
         userName: myProfile?.userName || "이름 없음",
         introduction: intro,
