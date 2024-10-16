@@ -224,7 +224,7 @@ const FeedItem = ({ feedDetail }) => {
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
           <DateText>{`${getFormattedDate(
-            new Date(parseInt(feedDetail.createdAt))
+            new Date(feedDetail.createdAt)
           )}`}</DateText>
           <CommentArea>
             {comments.map((it, idx) => (

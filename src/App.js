@@ -138,14 +138,12 @@ function App() {
 
   useEffect(() => {
     let myProfileUnsubscribe = null;
-
     const fetchMyProfile = async (uid) => {
       const myProfileQuery = query(
         collection(db, "profile"),
         where("uid", "==", uid),
         limit(1)
       );
-
       myProfileUnsubscribe = onSnapshot(myProfileQuery, (snapshot) => {
         const profile = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -154,7 +152,6 @@ function App() {
         setMyProfile(profile[0]);
       });
     };
-
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         fetchMyProfile(user.uid);
@@ -162,7 +159,6 @@ function App() {
         setMyProfile(null);
       }
     });
-
     return () => {
       if (myProfileUnsubscribe) {
         myProfileUnsubscribe();
