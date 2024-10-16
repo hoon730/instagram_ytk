@@ -26,7 +26,7 @@ const ActiveBorder = styled.div`
   height: 100%;
   background: ${({ theme }) => theme.fontColor};
   transition: transform 0.3s;
-  ${({ xVal }) => `transform: translateX(${xVal}%);`}
+  ${({ $isOn }) => `transform: translateX(${$isOn}%);`}
 `;
 
 const tabWidth = 312;
@@ -46,31 +46,31 @@ const MyFeedTabBar = () => {
   const [posts, setPosts] = useState(true);
   const [reels, setReels] = useState(false);
   const [tagged, setTagged] = useState(false);
-  const [xVal, setXVal] = useState(0);
+  const [isOn, setIsOn] = useState(0);
 
   const postsActive = () => {
     setPosts(true);
     setReels(false);
     setTagged(false);
-    setXVal(0);
+    setIsOn(0);
   };
   const reelsActive = () => {
     setPosts(false);
     setReels(true);
     setTagged(false);
-    setXVal(100);
+    setIsOn(100);
   };
   const taggedActive = () => {
     setPosts(false);
     setReels(false);
     setTagged(true);
-    setXVal(200);
+    setIsOn(200);
   };
 
   return (
     <Wrapper>
       <ActiveBorderArea>
-        <ActiveBorder xVal={xVal} />
+        <ActiveBorder $isOn={isOn} />
       </ActiveBorderArea>
       <MyPostTabBox>
         <TabBarBtn

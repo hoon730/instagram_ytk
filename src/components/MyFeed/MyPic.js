@@ -40,7 +40,7 @@ const ProfileImgBox = styled.div`
   .storySecondCircle {
     width: 175px;
     height: 175px;
-    border: 7px solid var(--bg-white-color);
+    /* border: 7px solid var(--bg-white-color); */
   }
 
   @media screen and (max-width: 900px) {
@@ -87,6 +87,7 @@ const ProfileImgBox = styled.div`
       width: 120px;
       height: 120px;
       border: 7px solid var(--bg-white-color);
+      /* background: rgba(255, 255, 255, 0); */
     }
 
     .storyThirdCircle {

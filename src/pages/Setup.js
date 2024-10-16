@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../components/Common/Button";
 import EditDesc from "../components/Edit/EditDesc";
+// import EditDesccopy from "../components/Edit/EditDesccopy";
 import EditBtns from "../components/Edit/EditBtns";
 import { click, scale } from "../utils/utils";
 
 import { auth, storage, db } from "../utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
 
 import { LuCamera } from "react-icons/lu";
 import { motion } from "framer-motion";
@@ -28,16 +29,23 @@ const Container = styled(motion.div)`
 `;
 
 const Wrapper = styled(motion.form)`
-  padding: 0 20px;
   width: 600px;
-  height: 610px;
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 20px;
   padding: 30px;
   background: ${({ theme }) => theme.bgColor};
 
+  @media screen and (max-width: 1024px) {
+    width: 500px;
+  }
+
   @media screen and (max-width: 630px) {
-    width: 90%;
+    width: 430px;
+    font-size: var(--font-14);
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
   }
 `;
 
@@ -46,6 +54,7 @@ const Title = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+
   & button:first-child {
     color: ${({ theme }) => theme.nonActiveBtnColor};
   }
@@ -102,6 +111,7 @@ const ChangePicBtn = styled.label`
 
   svg {
     font-size: var(--font-18);
+    color: var(--bg-white-color);
   }
 `;
 
@@ -178,7 +188,7 @@ const Setup = ({ onClick, myProfile }) => {
       };
 
       // 전체 문서를 덮어쓰려면 setDoc을 사용
-      await setDoc(doc(db, "profile", user.uid), profileData);
+      await updateDoc(doc(db, "profile", myProfile.id), profileData);
       await updateProfile(user, { displayName: editUserName });
       alert("프로필이 성공적으로 저장되었습니다.");
       onClick();
@@ -190,7 +200,7 @@ const Setup = ({ onClick, myProfile }) => {
   useEffect(() => {
     const fetchProfile = async () => {
       if (!user) return;
-      const userDocRef = doc(db, "profile", user.uid);
+      const userDocRef = doc(db, "profile", myProfile.id);
       const userProfile = await getDoc(userDocRef);
       if (userProfile.exists()) {
         const data = userProfile.data();

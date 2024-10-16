@@ -42,39 +42,6 @@ const Desc = styled.p`
   font-size: var(--font-10);
 `;
 
-const userData = [
-  {
-    id: 0,
-    userNickName: "melina02",
-    desc: "hk_morgan",
-    imgPath: "/images/userImgs/user123456/followed_1.jpg",
-  },
-  {
-    id: 1,
-    userNickName: "big_sean",
-    desc: "mk_kim02",
-    imgPath: "/images/userImgs/user123456/followed_2.jpg",
-  },
-  {
-    id: 2,
-    userNickName: "westside",
-    desc: "marcell",
-    imgPath: "/images/userImgs/user123456/followed_3.jpg",
-  },
-  {
-    id: 3,
-    userNickName: "fabianluiz",
-    desc: "iker_monza",
-    imgPath: "/images/userImgs/user123456/followed_4.jpg",
-  },
-  {
-    id: 4,
-    userNickName: "inner_v",
-    desc: "peace",
-    imgPath: "/images/userImgs/user123456/followed_5.jpg",
-  },
-];
-
 const MbRecommend = () => {
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);

@@ -5,6 +5,11 @@ import HoverProfile from "../User/HoverProfile";
 const CommentBox = styled.div`
   float: left;
   position: relative;
+  .hover-wrapper {
+    position: fixed;
+    top: 30%;
+    left: 30%;
+  }
 `;
 
 const IdSpan = styled.span`

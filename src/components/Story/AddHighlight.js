@@ -38,6 +38,7 @@ const GrayLine = styled.span`
 
 const WhiteLine = styled.span`
   display: inline-block;
+
   width: 80px;
   height: 80px;
   background: var(--bg-white-color);
@@ -46,7 +47,7 @@ const WhiteLine = styled.span`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 4px solid var(--bg-gray-color);
+  border: 1px solid var(--gray-color);
 
   @media screen and (max-width: 1000px) {
     width: 65px;
@@ -69,7 +70,6 @@ const AddBox = styled.span`
     width: 60px;
     height: 60px;
   }
-
 `;
 
 const AddIcon = styled.div`

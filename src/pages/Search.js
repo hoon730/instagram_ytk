@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { StateContext } from "../App";
 import { useSearchParams } from "react-router-dom";
 import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import styled from "styled-components";
 import MyPostItem from "../components/MyFeed/MyPostItem";
 import MainHeader from "../components/Main/MainHeader";
+import ClickFeed from "../components/Detail/ClickFeed";
+import SearchBar from "../components/Main/SearchBar";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { PiSirenLight } from "react-icons/pi";
 
@@ -44,9 +47,11 @@ const WarningText = styled.div`
 const Container = styled.div`
   width: 936px;
   margin: 0 auto;
+  padding-bottom: 80px;
   @media screen and (max-width: 1170px) {
     width: 100%;
-    padding: 0 40px;
+    padding: 0 30px;
+    padding-bottom: 80px;
   }
 `;
 
@@ -54,7 +59,7 @@ const Header = styled.div`
   width: 936px;
   height: 100px;
   display: flex;
-  padding: 0 40px;
+  padding: 0 30px;
   justify-content: space-between;
   align-items: center;
   background: ${({ theme }) => theme.bgColor};
@@ -63,21 +68,33 @@ const Header = styled.div`
   color: ${({ theme }) => theme.fontColor};
   z-index: 1;
   @media screen and (max-width: 1170px) {
-    width: calc(100% - 20% - 80px);
+    width: calc(100% - 20% - 60px);
     height: 80px;
   }
   @media screen and (max-width: 1024px) {
-    width: calc(100% - 92px - 80px);
+    width: calc(100% - 92px - 60px);
   }
   @media screen and (max-width: 630px) {
-    width: calc(100% - 80px);
+    width: calc(100% - 60px);
     top: 73px;
+    ${({ page }) => page === "explore" && "padding: 0;"}
+  }
+`;
+
+const SearchBarArea = styled.div`
+  display: none;
+  @media screen and (max-width: 630px) {
+    display: block;
+    width: 100%;
   }
 `;
 
 const Keyword = styled.div`
   font-size: var(--font-28);
   font-weight: var(--font-bold);
+  @media screen and (max-width: 630px) {
+    ${({ page }) => page === "explore" && "display: none;"}
+  }
 `;
 
 const MoreIconArea = styled.div`
@@ -87,6 +104,9 @@ const MoreIconArea = styled.div`
   cursor: pointer;
   @media screen and (max-width: 1280px) {
     align-items: flex-end;
+  }
+  @media screen and (max-width: 630px) {
+    ${({ page }) => page === "explore" && "display: none;"}
   }
 `;
 
@@ -132,40 +152,99 @@ const ItemArea = styled.div`
 
 const Search = ({ page }) => {
   const [moreBtn, setMoreBtn] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
   const [postList, setPostList] = useState([]);
+  const [clickedFeed, setClickedFeed] = useState({});
   const [keyword] = useSearchParams();
+  const { allProfile } = useContext(StateContext);
 
-  const getQuery = keyword.get("q") || "";
+  let getQuery = keyword.get("q") || "";
 
   const handleMoreBtn = () => {
     setMoreBtn((prev) => !prev);
   };
 
-  useEffect(() => {
-    fetchFeeds();
-  }, [keyword]);
-
-  const fetchFeeds = async () => {
-    try {
-      const s = await query(
-        collection(db, "feed"),
-        where("hashtag", "array-contains", `#${getQuery}`)
-      );
-      const querySnapshot = await getDocs(s);
-      let feeds = [];
-
-      querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        if (data) {
-          feeds.push(data);
-        }
-      });
-
-      setPostList(feeds);
-    } catch (err) {
-      console.error(err);
-    }
+  const onClick = (feedDetail) => {
+    setIsClicked(true);
+    setClickedFeed(feedDetail);
   };
+
+  useEffect(() => {
+    if (getQuery && getQuery.trim() !== "" && page === "search" && allProfile) {
+      const fetchHashtag = async () => {
+        try {
+          const q = query(
+            collection(db, "feed"),
+            where("hashtag", "array-contains", `#${getQuery}`)
+          );
+          const querySnapshot = await getDocs(q);
+          let feeds = [];
+
+          querySnapshot.docs.forEach((doc) => {
+            const data = doc.data();
+            const feedProfile = allProfile.find((it) => it.uid === data.uid);
+            if (data) {
+              feeds.push({ ...data, profile: feedProfile, id: doc.id });
+            }
+          });
+          setPostList(feeds);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      fetchHashtag();
+    } else if (page === "explore") {
+      const fetchFeeds = async () => {
+        try {
+          const querySnapshot = await getDocs(collection(db, "feed"));
+          let feeds = [];
+
+          querySnapshot.docs.forEach((doc) => {
+            const data = doc.data();
+            const feedProfile = allProfile.find((it) => it.uid === data.uid);
+            if (data) {
+              feeds.push({ ...data, profile: feedProfile, id: doc.id });
+            }
+          });
+
+          const randomFeeds = feeds.sort(() => 0.5 - Math.random());
+
+          const selectFeeds = randomFeeds.slice(0, 24);
+
+          setPostList(selectFeeds);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      fetchFeeds();
+    } else {
+      const fetchReels = async () => {
+        try {
+          const r = await query(
+            collection(db, "feed"),
+            where("type", "==", "reels")
+          );
+          const querySnapshot = await getDocs(r);
+          let reels = [];
+
+          querySnapshot.docs.forEach((doc) => {
+            const data = doc.data();
+            const feedProfile = allProfile.find((it) => it.uid === data.uid);
+            if (data) {
+              reels.push({ ...data, profile: feedProfile, id: doc.id });
+            }
+          });
+
+          setPostList(reels);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchReels();
+    }
+  }, [getQuery, page, allProfile]);
 
   return (
     <Wrapper>
@@ -182,9 +261,20 @@ const Search = ({ page }) => {
         <>
           <Margin />
           <Container>
-            <Header>
-              <Keyword>{page === "search" ? `#${getQuery}` : "탐색"}</Keyword>
-              <MoreIconArea>
+            <Header page={page}>
+              {page === "explore" && (
+                <SearchBarArea>
+                  <SearchBar />
+                </SearchBarArea>
+              )}
+              <Keyword page={page}>
+                {page === "search"
+                  ? `#${getQuery}`
+                  : page === "explore"
+                  ? "탐색"
+                  : "릴스"}
+              </Keyword>
+              <MoreIconArea page={page}>
                 <MoreIcon onClick={handleMoreBtn}>
                   <LuMoreHorizontal size={22} />
                 </MoreIcon>
@@ -196,9 +286,20 @@ const Search = ({ page }) => {
             </Header>
             <ItemArea>
               {postList.map((it, index) => (
-                <MyPostItem key={index} page={page} url={it.imgPath} />
+                <MyPostItem
+                  key={index}
+                  onClick={() => onClick(it)}
+                  page={page}
+                  url={it.imgPath}
+                />
               ))}
             </ItemArea>
+            {isClicked && clickedFeed ? (
+              <ClickFeed
+                onClick={() => setIsClicked(false)}
+                feedDetail={clickedFeed}
+              />
+            ) : null}
           </Container>
         </>
       )}

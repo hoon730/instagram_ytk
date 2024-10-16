@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { click, scale } from "../utils/utils";
 import Button from "../components/Common/Button";
 import styled from "styled-components";
-
 import { auth, db, storage } from "../utils/firebase";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { OpenContext } from "../App";
 
 const NewBg = styled(motion.div)`
   position: fixed;
@@ -35,30 +35,16 @@ const Wrapper = styled(motion.div)`
   padding: 30px 50px;
   background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
-  /* 
-  @media screen and (max-width: 1024px) {
-    position: relative;
-    height: 0;
-    padding-top: 56.25%;
-    width: 67%;
-  } */
 `;
 
 const Inner = styled.div`
   width: 100%;
-  /* @media screen and (max-width: 1024px) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    padding: 30px 50px;
-  } */
 `;
 
 const H3 = styled.h3`
   font-size: var(--font-20);
   font-weight: var(--font-bold);
+  text-align: center;
   padding: 20px 0;
   margin-bottom: 20px;
 `;
@@ -73,14 +59,21 @@ const Form = styled.form`
 
 const MediaBox = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
   margin-bottom: 15px;
+  display: flex;
+  justify-content: ${({ length }) => (length > 3 ? "flex-start" : "center")};
+  overflow: hidden;
 `;
 
 const Icon = styled.img`
   width: 150px;
+`;
+
+const MediaArea = styled(motion.div)`
+  width: 100%;
+  display: flex;
+  justify-content: ${({ length }) => (length > 3 ? "flex-start" : "center")};
+  gap: 10px;
 `;
 
 const ImgMedia = styled.img`
@@ -106,11 +99,11 @@ const StyledSpan = styled.span`
 `;
 
 const SearchBtn = styled.label`
+  width: 180px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 180px;
-  height: 40px;
   background: ${({ theme }) => theme.subColor};
   color: var(--bg-white-color);
   border-radius: var(--border-radius-8);
@@ -128,6 +121,7 @@ const SearchInput = styled.input`
 const TextInputArea = styled.div`
   width: 100%;
   position: relative;
+  border: 1px solid red;
 `;
 
 const TextArea = styled.textarea`
@@ -190,8 +184,9 @@ const SubmitBtn = styled.input`
   }
 `;
 
-const New = ({ setOpenNew }) => {
+const New = () => {
   const newBgRef = useRef();
+  const mediaRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [content, setContent] = useState("");
   const [file, setFile] = useState([]);
@@ -199,6 +194,9 @@ const New = ({ setOpenNew }) => {
   const [textValueLength, setTextValueLength] = useState(0);
   const [pushUrl, setPushUrl] = useState([]);
 
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
+
+  const { setOpenNew } = useContext(OpenContext);
   const maxFileSize = 10 * 1024 * 1024;
 
   const fileAdd = (e) => {
@@ -229,6 +227,19 @@ const New = ({ setOpenNew }) => {
       }
     }
   };
+
+  useEffect(() => {
+    if (mediaRef.current) {
+      const containerWidth = mediaRef.current.offsetWidth;
+      const contentWidth = preview.length * 160;
+
+      const maxDrag = contentWidth - containerWidth;
+      setConstraints({
+        left: -maxDrag > 0 ? 0 : -maxDrag,
+        right: 0,
+      });
+    }
+  }, [preview]);
 
   const onChange = (e) => {
     setContent(e.target.value);
@@ -299,9 +310,9 @@ const New = ({ setOpenNew }) => {
     }
   };
 
-  const handleOnClick = () => {
-    setOpenNew(false);
-  };
+  // const handleOnClick = () => {
+  //   setOpenNew(false);
+  // };
 
   return (
     <NewBg
@@ -323,17 +334,24 @@ const New = ({ setOpenNew }) => {
         <Inner className="inner">
           <H3>새 게시물 만들기</H3>
           <Form onSubmit={onSubmit}>
-            <MediaBox>
+            <MediaBox length={preview.length}>
               {preview.length > 0 ? (
-                preview.map((src, idx) => {
-                  const fileType = file[idx].type;
-                  console.log(fileType);
-                  if (fileType.startsWith("image/")) {
-                    return <ImgMedia key={idx} src={src} />;
-                  } else {
-                    return <VidMedia key={idx} src={src} />;
-                  }
-                })
+                <MediaArea
+                  ref={mediaRef}
+                  drag="x"
+                  dragConstraints={constraints}
+                  dragPropagation
+                  length={preview.length}
+                >
+                  {preview.map((src, idx) => {
+                    const fileType = file[idx].type;
+                    if (fileType.startsWith("image/")) {
+                      return <ImgMedia key={idx} src={src} />;
+                    } else {
+                      return <VidMedia key={idx} src={src} />;
+                    }
+                  })}
+                </MediaArea>
               ) : (
                 <Icon
                   src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`}
@@ -371,7 +389,7 @@ const New = ({ setOpenNew }) => {
                 type={"negative"}
                 text={"취소하기"}
                 width={"50%"}
-                onClick={handleOnClick}
+                // onClick={handleOnClick}
               />
               <SubmitBtn
                 type="submit"

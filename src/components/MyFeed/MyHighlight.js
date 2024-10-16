@@ -9,9 +9,9 @@ const Wrapper = styled.div`
 `;
 
 const HighlightArea = styled.div`
-  /* border: 1px solid red;
-  width: 100%;
-  margin: 20px 70px; */
+  /* border: 1px solid red; */
+  /* width: 100%; */
+  /* margin: 20px 70px; */
 `;
 
 const HighlightBox = styled.div`

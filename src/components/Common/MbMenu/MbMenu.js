@@ -6,6 +6,7 @@ import New from "../../../pages/New";
 import { mbMenuData } from "../../../utils/utils";
 import ProfileImg from "../../Profile/ProfileImg";
 import { StateContext } from "../../../App";
+import { OpenContext } from "../../../App";
 
 const MenuList = styled.div`
   position: fixed;
@@ -18,9 +19,10 @@ const MenuList = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  border-top: 1px solid ${({ theme }) => theme.borderColor};
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
-  z-index: 2;
+  z-index: 3;
 
   @media screen and (max-width: 630px) {
     display: flex;
@@ -28,8 +30,8 @@ const MenuList = styled.div`
 `;
 
 const MenuItem = styled.div`
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,15 +40,12 @@ const MenuItem = styled.div`
   cursor: pointer;
   transition: all 0.2s;
   border-radius: var(--border-radius-12);
+  color: ${({ theme }) => theme.nonActiveBtnColor};
 
   &.active {
-    background: ${({ theme }) => theme.fontColor};
-    color: ${({ theme }) => theme.bgColor};
+    background: ${({ theme }) => theme.borderColor};
+    color: ${({ theme }) => theme.iconColor};
     font-weight: var(--font-bold);
-  }
-
-  &:hover {
-    color: var(--gray-color);
   }
 `;
 
@@ -66,9 +65,9 @@ const IconWrapper = styled.div`
 const MbMenu = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
-  const [openNew, setOpenNew] = useState(false);
   const [currentNum, setCurrentNum] = useState(0);
 
+  const { setOpenNew, openNew } = useContext(OpenContext);
   const { myProfile } = useContext(StateContext);
 
   const handleOnClick = (path) => {
@@ -86,7 +85,6 @@ const MbMenu = () => {
   const onClick = () => {
     setOpenNew(true);
   };
-
 
   return (
     <MenuList className="menulist">

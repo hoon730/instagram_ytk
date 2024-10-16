@@ -25,7 +25,6 @@ import {
   query,
   where,
   limit,
-  getDocs,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -80,6 +79,10 @@ const router = createBrowserRouter([
         element: <Search page={"explore"} />,
       },
       {
+        path: "reels",
+        element: <Search page={"reels"} />,
+      },
+      {
         path: "clickstory",
         element: <ClickStory />,
       },
@@ -101,6 +104,7 @@ const router = createBrowserRouter([
 
 export const ThemeContext = React.createContext();
 export const StateContext = React.createContext();
+export const OpenContext = React.createContext();
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -109,12 +113,13 @@ function App() {
     await setIsLoading(false);
   };
   const [darkMode, setDarkMode] = useState(false);
+  const [openNew, setOpenNew] = useState(false);
   const [allProfile, setAllProfile] = useState(null);
   const [myProfile, setMyProfile] = useState(null);
 
   useEffect(() => {
     init();
-    
+
     let allProfileUnsubscribe = null;
     const fetchAllProfile = async () => {
       const profileQuery = query(collection(db, "profile"));
@@ -134,14 +139,12 @@ function App() {
 
   useEffect(() => {
     let myProfileUnsubscribe = null;
-
     const fetchMyProfile = async (uid) => {
       const myProfileQuery = query(
         collection(db, "profile"),
         where("uid", "==", uid),
         limit(1)
       );
-
       myProfileUnsubscribe = onSnapshot(myProfileQuery, (snapshot) => {
         const profile = snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -150,7 +153,6 @@ function App() {
         setMyProfile(profile[0]);
       });
     };
-
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         fetchMyProfile(user.uid);
@@ -158,7 +160,6 @@ function App() {
         setMyProfile(null);
       }
     });
-
     return () => {
       if (myProfileUnsubscribe) {
         myProfileUnsubscribe();
@@ -182,7 +183,9 @@ function App() {
             </Wrapper>
           ) : (
             <StateContext.Provider value={{ allProfile, myProfile }}>
-              <RouterProvider router={router} />
+              <OpenContext.Provider value={{ setOpenNew, openNew }}>
+                <RouterProvider router={router} />
+              </OpenContext.Provider>
             </StateContext.Provider>
           )}
         </ThemeContext.Provider>
