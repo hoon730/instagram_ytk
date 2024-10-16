@@ -1,16 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { click, scale } from "../utils/utils";
 import Button from "../components/Common/Button";
 import styled from "styled-components";
 
 import { auth, db, storage } from "../utils/firebase";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  updateDoc,
+  query,
+  limit,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-const Wrapper = styled.div`
+const NewBg = styled(motion.div)`
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 3;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
+`;
+
+const Wrapper = styled(motion.div)`
   width: 680px;
   display: flex;
   flex-direction: column;
@@ -19,7 +43,25 @@ const Wrapper = styled.div`
   padding: 30px 50px;
   background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
-  z-index: 1;
+  /* 
+  @media screen and (max-width: 1024px) {
+    position: relative;
+    height: 0;
+    padding-top: 56.25%;
+    width: 67%;
+  } */
+`;
+
+const Inner = styled.div`
+  width: 100%;
+  /* @media screen and (max-width: 1024px) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    padding: 30px 50px;
+  } */
 `;
 
 const H3 = styled.h3`
@@ -154,63 +196,126 @@ const SubmitBtn = styled.input`
   }
 `;
 
-const New = ({ closeNew }) => {
+const New = ({ setOpenNew }) => {
+  const newBgRef = useRef();
   const [isLoading, setIsLoading] = useState(false);
-  const [post, setPost] = useState("");
-  const [file, setFile] = useState(null);
+  const [content, setContent] = useState("");
+  const [file, setFile] = useState([]);
+  const [preview, setPreview] = useState([]);
   const [textValueLength, setTextValueLength] = useState(0);
+  const [myProfile, setMyProfile] = useState(null);
+  const [media, setMedia] = useState([]);
 
-  const maxFileSize = 5 * 1024 * 1024;
+  const maxFileSize = 10 * 1024 * 1024;
 
   const fileAdd = (e) => {
-    console.log(e.target.result);
     const { files } = e.target;
-    console.log(files);
-    if (files && files.length === 1) {
-      if (files[0].size > maxFileSize) {
-        alert("업로드 할 수 있는 최대용량은 5MB입니다.");
-        return;
+
+    if (files) {
+      const newFiles = [];
+      const newPreviews = [];
+
+      for (const item of files) {
+        if (item.size > maxFileSize) {
+          alert("업로드 할 수 있는 최대용량은 10MB입니다.");
+          return;
+        }
+        newFiles.push(item);
+
+        // FileReader를 사용해 미리보기 URL 생성
+        const reader = new FileReader();
+        reader.readAsDataURL(item);
+
+        reader.onload = (event) => {
+          newPreviews.push(event.target.result);
+
+          // 모든 파일이 로드된 후 상태 업데이트
+          if (newPreviews.length === files.length) {
+            setPreview((prevPreview) => [...prevPreview, ...newPreviews]);
+            setFile((prevFile) => [...prevFile, ...newFiles]);
+          }
+        };
       }
-      setFile(files[0]);
     }
   };
 
+  useEffect(() => {
+    const userUid = auth.currentUser?.uid;
+    if (userUid) {
+      const getMyProfile = async (uid) => {
+        const profileQuery = query(
+          collection(db, "profile"),
+          where("uid", "==", uid),
+          limit(1)
+        );
+        const profileSnapshot = await getDocs(profileQuery);
+
+        if (!profileSnapshot.empty) {
+          const profileData = profileSnapshot.docs[0].data();
+          setMyProfile(profileData);
+        }
+      };
+
+      getMyProfile(userUid);
+    }
+  }, []);
+
   const onChange = (e) => {
-    setPost(e.target.value);
+    setContent(e.target.value);
     setTextValueLength(e.target.textLength);
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const user = auth.currentUser;
-    // if (!user || isLoading || post === "" || post.length > 2200) return;
+    if (!user || isLoading || content === "" || content.length > 2200) return;
+
     try {
       setIsLoading(true);
-      const doc = await addDoc(collection(db, "contents"), {
-        post,
+      const docRef = await addDoc(collection(db, "contents"), {
+        content,
         createdAt: Date.now(),
-        userName: user?.displayName || "Anonymous",
-        userId: user?.uid || 1,
+        media: [], // media 초기값으로 빈 배열 설정
+        userId: myProfile?.userId || user?.displayName,
+        uid: user.uid,
       });
-      if (file) {
-        const locationRef = ref(storage, `contents/${user.uid}/${doc.id}`);
-        const result = await uploadBytes(locationRef, file);
-        const url = await getDownloadURL(result.ref);
-        const fileType = file.type;
-        if (fileType.startsWith("image/")) {
-          await updateDoc(doc, {
-            photo: url,
-          });
+
+      const newMedia = [];
+
+      if (file.length > 0) {
+        for (const item of file) {
+          const locationRef = ref(
+            storage,
+            `contents/${user.uid}/${docRef.id}/${item.name}`
+          );
+          const result = await uploadBytes(locationRef, item);
+          const url = await getDownloadURL(result.ref);
+          const fileType = item.type;
+
+          if (fileType.startsWith("image/")) {
+            newMedia.push({
+              type: "img",
+              imgPath: url,
+            });
+          } else if (fileType.startsWith("video/")) {
+            newMedia.push({
+              type: "reels",
+              imgPath: url,
+            });
+          }
         }
-        if (fileType.startsWith("video/")) {
-          await updateDoc(doc, {
-            video: url,
-          });
-        }
+
+        // 미디어 배열을 Firestore에 업데이트
+        await updateDoc(docRef, {
+          media: newMedia,
+        });
       }
-      setPost("");
-      setFile(null);
-      closeNew();
+
+      // 상태 초기화
+      setContent("");
+      setFile([]);
+      setMedia([]);
+      setOpenNew(false);
     } catch (e) {
       console.error(e);
     } finally {
@@ -219,62 +324,89 @@ const New = ({ closeNew }) => {
   };
 
   const handleOnClick = () => {
-    closeNew();
+    setOpenNew(false);
   };
 
+  useEffect(() => {}, [content]);
+
   return (
-    <Wrapper>
-      <H3>새 게시물 만들기</H3>
-      <Form onSubmit={onSubmit}>
-        <MediaBox>
-          {file !== null ? (
-            file.type.startsWith("image/") ? (
-              <ImgMedia />
-            ) : (
-              <VidMedia />
-            )
-          ) : (
-            <Icon src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`} />
-          )}
-        </MediaBox>
-        <StyledSpan>사진이나 동영상을 업로드 해주세요</StyledSpan>
-        <SearchBtn htmlFor="file">
-          {file ? "업로드 완료" : "사진 및 동영상 찾기"}
-        </SearchBtn>
-        <SearchInput
-          type="file"
-          id="file"
-          accept="video/*, image/*"
-          onChange={fileAdd}
-        />
-        <TextInputArea>
-          <TextArea
-            maxLength={2200}
-            value={post}
-            name="contents"
-            id="contents"
-            placeholder="게시글 입력..."
-            onChange={onChange}
-          />
-          <TextCounter>
-            <span>{textValueLength}</span>
-            <span> / 2200</span>
-          </TextCounter>
-        </TextInputArea>
-        <ButtonsBox>
-          <Button
-            type={"negative"}
-            text={"취소하기"}
-            width={"50%"}
-            onClick={handleOnClick}
-          />
-          <SubmitBtn
-            type="submit"
-            value={isLoading ? "업로드중..." : "게시글 업로드하기"}
-          />
-        </ButtonsBox>
-      </Form>
-    </Wrapper>
+    <NewBg
+      variants={click}
+      initial="initial"
+      animate="visible"
+      exit="exits"
+      ref={newBgRef}
+      onClick={(e) => {
+        if (e.target === newBgRef.current) setOpenNew(false);
+      }}
+    >
+      <Wrapper
+        variants={scale}
+        initial="initial"
+        animate="visible"
+        exit="exits"
+      >
+        <Inner className="inner">
+          <H3>새 게시물 만들기</H3>
+          <Form onSubmit={onSubmit}>
+            <MediaBox>
+              {preview.length > 0 ? (
+                preview.map((src, idx) => {
+                  const fileType = file[idx].type;
+                  if (fileType.startsWith("image/")) {
+                    return <ImgMedia key={idx} src={src} />;
+                  } else {
+                    return <VidMedia key={idx} src={src} />;
+                  }
+                })
+              ) : (
+                <Icon
+                  src={`${process.env.PUBLIC_URL}/images/newPostIcon.svg`}
+                />
+              )}
+            </MediaBox>
+            <StyledSpan>사진이나 동영상을 업로드 해주세요</StyledSpan>
+            <SearchBtn htmlFor="file">
+              {file ? "업로드 완료" : "사진 및 동영상 찾기"}
+            </SearchBtn>
+            <SearchInput
+              type="file"
+              id="file"
+              accept="video/*, image/*"
+              onChange={fileAdd}
+              multiple
+            />
+            <TextInputArea>
+              <TextArea
+                maxLength={2200}
+                value={content}
+                name="contents"
+                id="contents"
+                placeholder="게시글 입력..."
+                onChange={onChange}
+              />
+              <TextCounter>
+                <span>{textValueLength}</span>
+                <span> / 2200</span>
+              </TextCounter>
+            </TextInputArea>
+            <ButtonsBox>
+              <Button
+                className="button"
+                type={"negative"}
+                text={"취소하기"}
+                width={"50%"}
+                onClick={handleOnClick}
+              />
+              <SubmitBtn
+                type="submit"
+                value={isLoading ? "업로드중..." : "게시글 업로드하기"}
+              />
+            </ButtonsBox>
+          </Form>
+        </Inner>
+      </Wrapper>
+    </NewBg>
   );
 };
 

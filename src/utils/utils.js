@@ -1,7 +1,6 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { FaRegCompass } from "react-icons/fa";
 import { BiMoviePlay } from "react-icons/bi";
-import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
@@ -36,23 +35,13 @@ export const menuData = [
   },
   {
     id: 2,
-    name: "릴스",
-    iconCode: <BiMoviePlay />,
-  },
-  {
-    id: 3,
     name: "메시지",
     iconCode: <IoPaperPlaneOutline />,
   },
   {
-    id: 4,
+    id: 3,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
-  },
-  {
-    id: 5,
-    name: "프로필",
-    path: "/detail",
   },
 ];
 
@@ -144,23 +133,20 @@ export const click = {
   },
 };
 
-export const slide = {
-  initial: (back) => ({
-    x: back ? -800 : 800,
-  }),
-  visible: {
-    x: 0,
-    transition: {
-      type: "tween",
-      duration: 0.5,
-      ease: [0.42, 0, 0.58, 1],
-    },
+export const scale = {
+  initial: {
+    opacity: 0,
+    scale: 0.8,
   },
-  exit: (back) => ({
-    x: back ? 800 : -800,
+  visible: {
+    opacity: 1,
+    scale: 1,
+  },
+  exits: {
+    opacity: 0,
+    scale: 0.8,
     transition: {
       duration: 0.3,
-      ease: "easeInOut",
     },
-  }),
+  },
 };

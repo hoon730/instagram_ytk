@@ -17,12 +17,12 @@ const BoxBg = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50px;
-  background: var(--light-gray-color);
+  background: ${({ theme }) => theme.borderColor};
   cursor: pointer;
   transition: all 0.3s;
 
   &.active {
-    background: var(--sub-purple-color);
+    background: ${({ theme }) => theme.buttonHoverColor};
   }
 `;
 

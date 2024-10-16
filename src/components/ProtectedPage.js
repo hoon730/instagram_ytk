@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedPage = ({ children }) => {
   const user = auth.currentUser;
-  console.log(user);
+  //console.log(user);
   if (user === null) {
     return <Navigate to="/login" />;
   }

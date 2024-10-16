@@ -90,22 +90,32 @@ const Pager = styled.span`
   }
 `;
 
-const Slide = ({ imgPath }) => {
+const Slide = ({ imgPath, onClick }) => {
   const [visible, setVisible] = useState(0);
   const moveSlide = (num) => {
     setVisible(num + visible);
   };
 
+  const showFeed = () => {
+    onClick();
+  };
+
+  const imageArray = Array.isArray(imgPath) ? imgPath : [imgPath];
+
   return (
     <Wrapper>
-      <Slides $visible={visible} $slideLength={imgPath.length}>
-        {imgPath.map((it, idx) => (
+      <Slides
+        $visible={visible}
+        $slideLength={imageArray.length}
+        onClick={showFeed}
+      >
+        {imageArray.map((it, idx) => (
           <SlideItem key={idx}>
             <img src={it} />
           </SlideItem>
         ))}
       </Slides>
-      {imgPath.length > 1 ? (
+      {imageArray.length > 1 ? (
         <>
           <SlideButtons>
             <SlideButton
@@ -118,14 +128,14 @@ const Slide = ({ imgPath }) => {
             <SlideButton
               className="next"
               $visible={visible}
-              $limit={imgPath.length - 1}
+              $limit={imageArray.length - 1}
               onClick={() => moveSlide(1)}
             >
               <SlideButtonImg />
             </SlideButton>
           </SlideButtons>
           <SlidePager>
-            {imgPath.map((it, idx) => (
+            {imageArray.map((it, idx) => (
               <Pager
                 key={idx}
                 className={idx === visible ? "active" : null}

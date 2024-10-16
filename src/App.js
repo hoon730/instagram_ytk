@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider, styled } from "styled-components";
 import { lightTheme, darkTheme } from "./styles/theme";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GlobalStyles from "./styles/GlobalStyles";
@@ -12,10 +12,31 @@ import Layout from "./components/Layout";
 import New from "./pages/New";
 import Loading from "./components/Common/Loading";
 
-import { auth } from "./utils/firebase";
 import Setup from "./pages/Setup";
 import Signup from "./pages/Signup";
 import ProtectedPage from "./components/ProtectedPage";
+import SetStorage from "./pages/SetStorage";
+
+import { auth, db } from "./utils/firebase";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+  limit,
+  getDocs,
+} from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import NotLoggedIn from "./components/NotLoggedIn";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.bgColor};
+`;
 
 const router = createBrowserRouter([
   {
@@ -58,15 +79,29 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <NotLoggedIn>
+        <Login />
+      </NotLoggedIn>
+    ),
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: (
+      <NotLoggedIn>
+        <Signup />
+      </NotLoggedIn>
+    ),
+  },
+  {
+    path: "/setStorage",
+    element: <SetStorage />,
   },
 ]);
 
 export const ThemeContext = React.createContext();
+export const StateContext = React.createContext();
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const init = async () => {
@@ -74,9 +109,62 @@ function App() {
     await setIsLoading(false);
   };
   const [darkMode, setDarkMode] = useState(false);
+  const [allProfile, setAllProfile] = useState(null);
+  const [myProfile, setMyProfile] = useState(null);
 
   useEffect(() => {
     init();
+
+    let allProfileUnsubscribe = null;
+    const fetchAllProfile = async () => {
+      const profileQuery = query(collection(db, "profile"));
+      allProfileUnsubscribe = onSnapshot(profileQuery, (snapshot) => {
+        const profiles = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAllProfile(profiles);
+      });
+    };
+    fetchAllProfile();
+    return () => {
+      allProfileUnsubscribe && allProfileUnsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    let myProfileUnsubscribe = null;
+
+    const fetchMyProfile = async (uid) => {
+      const myProfileQuery = query(
+        collection(db, "profile"),
+        where("uid", "==", uid),
+        limit(1)
+      );
+
+      myProfileUnsubscribe = onSnapshot(myProfileQuery, (snapshot) => {
+        const profile = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setMyProfile(profile[0]);
+      });
+    };
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        fetchMyProfile(user.uid);
+      } else {
+        setMyProfile(null);
+      }
+    });
+
+    return () => {
+      if (myProfileUnsubscribe) {
+        myProfileUnsubscribe();
+      }
+      unsubscribe();
+    };
   }, []);
 
   const changeDark = () => {
@@ -88,7 +176,15 @@ function App() {
       <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <ThemeContext.Provider value={{ changeDark, darkMode }}>
           <GlobalStyles />
-          {isLoading ? <Loading /> : <RouterProvider router={router} />}
+          {isLoading ? (
+            <Wrapper>
+              <Loading />
+            </Wrapper>
+          ) : (
+            <StateContext.Provider value={{ allProfile, myProfile }}>
+              <RouterProvider router={router} />
+            </StateContext.Provider>
+          )}
         </ThemeContext.Provider>
       </ThemeProvider>
     </>

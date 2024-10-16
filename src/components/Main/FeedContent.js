@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import TabBarBtn from "../Common/TabBarBtn";
 import { FaRegStar } from "react-icons/fa";
 import { FiUser } from "react-icons/fi";
 import FeedItem from "./FeedItem";
 import Loading from "../Common/Loading";
-
-// 파이어 스토어 연결하면 지울 목업 데이터
-import Data from "../../data.json";
-const user = Data.user;
-const profile = Data.profile;
-const feed = Data.feed;
-const userId = "lualbvqvQmVWkfDU7JUKJRYdqf3";
-const myProfile = profile.find((it) => it.userId === userId);
-
-const tabWidth = 340;
+import { db } from "../../utils/firebase";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+import ClickFeed from "../Detail/ClickFeed";
+import WelcomFeed from "./WelcomFeed";
+import { StateContext } from "../../App";
 
 const Wrapper = styled.div``;
 
@@ -23,7 +24,11 @@ const FeedArea = styled.div`
   margin: 0 auto;
 
   @media screen and (max-width: 1024px) {
-    width: 390px;
+    width: 430px;
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
   }
 `;
 
@@ -59,6 +64,9 @@ const FeedContent = () => {
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
   const [$tabChange, setTabChange] = useState("recommend");
+  const [postsWithProfiles, setPostsWithProfiles] = useState([]);
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
 
   const recommendActive = () => {
     setRecommend(true);
@@ -70,6 +78,54 @@ const FeedContent = () => {
     setFollow(true);
     setTabChange("follow");
   };
+
+  useEffect(() => {
+    let postsUnsubscribe = null;
+
+    if (myProfile && myProfile.following) {
+      const getPosts = () => {
+        const postsQuery = query(
+          collection(db, "feed"),
+          where("type", "!=", null),
+          orderBy("createdAt", "desc")
+        );
+
+        postsUnsubscribe = onSnapshot(postsQuery, async (snapshot) => {
+          const postDocs = snapshot.docs;
+
+          const posts = await Promise.all(
+            postDocs
+              .filter((doc) =>
+                doc.data().uid !== myProfile.uid && recommend
+                  ? !myProfile.following.includes(doc.data().uid)
+                  : myProfile.following.includes(doc.data().uid)
+              )
+              .map(async (doc) => {
+                const postData = doc.data();
+
+                const profileData = allProfile.find(
+                  (it) => it.uid === postData.uid
+                );
+                return {
+                  id: doc.id,
+                  ...postData,
+                  profile: profileData,
+                };
+              })
+          );
+
+          setPostsWithProfiles(posts);
+        });
+      };
+
+      getPosts();
+    }
+    return () => {
+      if (postsUnsubscribe) {
+        postsUnsubscribe();
+      }
+    };
+  }, [myProfile, recommend]);
 
   return (
     <Wrapper>
@@ -95,16 +151,15 @@ const FeedContent = () => {
             />
           </FeedTabBtn>
         </FeedTabBar>
-        {feed[3].feedDetail.map((it, idx) => (
-          <FeedItem
-            key={idx}
-            user={user}
-            profile={profile}
-            myProfile={myProfile}
-            feedUserId={feed[3].userId}
-            feedDetail={it}
-          />
-        ))}
+        {postsWithProfiles && postsWithProfiles.length > 0 ? (
+          postsWithProfiles.map((post) => (
+            <FeedItem key={post.id} feedDetail={post} />
+          ))
+        ) : recommend ? (
+          <WelcomFeed recommend={true} />
+        ) : (
+          <WelcomFeed recommend={false} />
+        )}
       </FeedArea>
     </Wrapper>
   );

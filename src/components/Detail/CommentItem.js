@@ -3,6 +3,12 @@ import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 
+import Data from "../../data.json";
+
+const user = Data.user;
+const profile = Data.profile;
+const feed = Data.feed;
+
 const UserBox = styled.div`
   display: flex;
   gap: 15px;
@@ -31,23 +37,29 @@ const ReplyBtn = styled.button`
   font-weight: var(--font-bold);
 `;
 
-const CommentItem = ({ onClick }) => {
-  console.log(onClick);
+const CommentItem = ({ onClick, myProfile, feedDetail, myFeed }) => {
   const focusingInput = () => {
     onClick();
   };
+
+  // console.log(feedDetail);
+
   return (
     <div>
       <UserBox>
         <ProfileImg
           size={"40"}
-          url={"/images/userImgs/user123456/profile-photo.jpg"}
+          // url={feedDetail.profile.profilePhoto}
+          feedDetail={feedDetail}
+          myProfile={myProfile}
         />
         <Userinfo>
           <UserId
             userNickname={"bbok"}
-            comment={"와 진짜 다른 세상같다!"}
+            content={"메롱이야"}
             btn={"heart"}
+            feedDetail={feedDetail}
+            myProfile={myProfile}
           />
           <DateAndReply>
             <Date>2023년 12월 25일</Date>
