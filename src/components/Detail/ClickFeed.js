@@ -1,21 +1,41 @@
-import React, { useRef, useState, useEffect } from "react";
-import { getFormattedDate } from "../../utils/utils";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Slide from "../Main/Slide";
 import ProfileImg from "../Profile/ProfileImg";
 import UserId from "../User/UserId";
 import CommentItem from "./CommentItem";
 import FeedText from "../Main/FeedText";
-import { click } from "../../utils/utils";
+import Button from "../Common/Button";
+import CommentInput from "../Common/CommentInput";
+import { click, getFormattedDate } from "../../utils/utils";
 
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 
-import { db } from "../../utils/firebase";
-import { collection, limit, query, where, getDocs } from "firebase/firestore";
+import { auth, db, storage } from "../../utils/firebase";
+import {
+  deleteDoc,
+  doc,
+  getDoc,
+  updateDoc,
+  addDoc,
+  collection,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
+import {
+  deleteObject,
+  ref,
+  getDownloadURL,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { motion } from "framer-motion";
+import { StateContext } from "../../App";
 
 const BgWrapper = styled(motion.div)`
   position: fixed;
@@ -51,35 +71,127 @@ const Wrapper = styled(motion.div)`
   height: 93%;`}
   border-radius: var(--border-radius-12);
   transition: all 0.3s;
+  cursor: default;
 
   @media screen and (max-width: 1400px) {
+    ${({ $isEditing }) =>
+      $isEditing
+        ? null
+        : `position: relative;
+    height: 0;
+    padding-top: 56.25%;`}
+
+    .inner {
+      ${({ $isEditing }) => ($isEditing ? null : `width: 100%; height: 100%`)}
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
     position: relative;
+    width: 70%;
     height: 0;
     padding-top: 56.25%;
 
     .inner {
       width: 100%;
-      height: ${({ $isEditing }) => ($isEditing ? "auto" : "100%")};
+      height: ${({ $isEditing }) => ($isEditing ? "88%" : "100%")};
     }
-  }
-
-  @media screen and (max-width: 1000px) {
     .slider {
       width: 55%;
     }
     .desc {
       width: 45%;
 
-      .user_container {
-        padding: 10px;
-      }
       .comment_list {
         padding: 10px;
       }
       .writing_comment {
         padding: 10px;
       }
+      .notification {
+        span {
+          font-size: var(--font-12);
+        }
+      }
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    .editing_img {
+      gap: 15px;
+    }
+
+    .media_box {
+      width: 80%;
+      height: 80%;
+    }
+
+    .user_container {
+      padding: 20px 20px 0 0;
+    }
+    .setcontent_button {
+      width: 170px;
+      height: 35px;
+    }
+
+    textarea {
+      font-size: var(--font-14);
+    }
+  }
+
+  @media screen and (max-width: 630px) {
+    width: 430px;
+    height: ${({ $isEditing }) => ($isEditing ? "78%" : "100%")};
+
+    .inner {
+      height: ${({ $isEditing }) => ($isEditing ? "100%" : "100%")};
+    }
+
+    .contents {
+      flex-direction: column;
+      align-items: center;
+      border-radius: var(--border-radius-12);
+      overflow: hidden;
+    }
+
+    .slider {
+      width: 100%;
+      height: ${({ $isEditing }) => ($isEditing ? "40%" : "48%")};
+      border-radius: 0;
+
+      .editing_img {
+        height: auto;
+        justify-content: start;
+        gap: 20px;
+        margin-top: 20px;
+
+        .media_box {
+          width: 65%;
+          height: 65%;
+        }
+
+        label {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .desc {
+      width: 100%;
+      height: ${({ $isEditing }) => ($isEditing ? "60%" : "50%")};
+    }
+
+    .user_container {
+      padding: 20px 20px 0;
+    }
+
+    textarea {
+      height: 100%;
+    }
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
   }
 `;
 
@@ -90,14 +202,20 @@ const Inner = styled.div`
   transform: translate(-50%, -50%);
   ${({ $isEditing }) =>
     $isEditing
-      ? `width: 52%;
-  height: 74%;`
+      ? `width: 800px;
+  height: 450px;`
       : `width: 80%;
   height: 93%;`}
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   border-radius: var(--border-radius-12);
   transition: all 0.3s;
+`;
+
+const Contents = styled.div`
+  width: 100%;
+  height: ${({ $isEditing }) => ($isEditing ? "calc(100% - 53px)" : "100%")};
+  display: flex;
 `;
 
 const Slider = styled.div`
@@ -108,24 +226,62 @@ const Slider = styled.div`
   overflow: hidden;
 `;
 
+const EditingImg = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  height: 100%;
+`;
+
+const MediaWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const MediaBox = styled.div`
+  width: 90%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const Desc = styled.div`
   width: 40%;
   height: 100%;
-  display: flex;
+  ${({ $isEditing }) =>
+    $isEditing
+      ? `display: block;`
+      : `display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between;`}
 `;
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  ${({ $isEditing }) =>
+    $isEditing
+      ? `display: block; height: 100%;`
+      : `height: 100%;
+  display: flex;
+  flex-direction: column;`}
 `;
 
 const UserContainer = styled.div`
   width: 100%;
-  padding: 20px;
-  border-bottom: ${({ $isEditing }) =>
-    $isEditing ? "none" : `1px solid ${({ theme }) => theme.borderColor}`};
+  height: ${({ $isEditing }) => ($isEditing ? "100%" : "auto")};
+  padding: 20px 30px 0px;
+  border-bottom: ${({ $isEditing, theme }) =>
+    $isEditing ? "none" : `1px solid ${theme.borderColor}`};
 `;
 
 const UserBox = styled.div`
@@ -149,7 +305,10 @@ const Location = styled.span`
 const UserContents = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-left: 15px;
+  ${({ $isEditing }) =>
+    $isEditing
+      ? `width: 100%; height: calc(100% - 100px); margin-left: 0; position: relative;`
+      : `margin-left: 15px; position: static;`}
 `;
 
 const Content = styled.span`
@@ -157,18 +316,16 @@ const Content = styled.span`
   font-size: var(--font-14);
 `;
 
-const Date = styled.span`
-  display: flex;
-  align-items: flex-end;
-  font-size: var(--font-12);
-  color: var(--gray-color);
-`;
-
 const CommentList = styled.div`
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: scroll;
 `;
 
 const WritingComment = styled.div`
+  height: 100px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -187,6 +344,8 @@ const Notification = styled.div`
   gap: 8px;
 
   svg {
+    display: flex;
+    align-items: center;
     font-size: var(--font-20);
   }
 `;
@@ -220,7 +379,7 @@ const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  padding: 15px 30px;
 
   span {
     font-weight: var(--font-bold);
@@ -230,18 +389,29 @@ const Title = styled.div`
   }
 `;
 
-const Contents = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-`;
-
 const SetContentButton = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  width: 180px;
+  height: 40px;
+  background: ${({ theme }) => theme.subColor};
+  color: var(--bg-white-color);
+  border-radius: var(--border-radius-8);
   cursor: pointer;
+  margin-bottom: 40px;
+  transition: background 0.3s;
+  &:hover {
+    background: ${({ theme }) => theme.buttonHoverColor};
+  }
+`;
+
+const PreviewImage = styled.img`
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  object-fit: cover;
+  border-radius: 10px;
 `;
 
 const Icon = styled.img`
@@ -254,8 +424,12 @@ const SetContentInputButton = styled.input`
 `;
 
 const EditedTextArea = styled.textarea`
+  position: absolute;
+  top: 5%;
   width: 100%;
-  height: 100%;
+  height: 75%;
+  padding-top: 10px;
+  padding-left: 10px;
   border: 2px solid var(--light-gray-color);
   border-radius: var(--border-radius-12);
   color: var(--bg-black-color);
@@ -278,45 +452,224 @@ const EditedTextArea = styled.textarea`
   }
 `;
 
-const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
-  const commentRef = useRef();
-  const bgRef = useRef();
-  const [comment, setComment] = useState("");
+const ClickFeed = ({ feedDetail, onClick }) => {
+  const [comments, setComments] = useState([]);
+  const [pushComment, setPushComment] = useState("");
   const [followingUser, setFollowingUser] = useState("");
+  const [replyArr, SetReplyArr] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedFeedDetail, setEditedFeedDetail] = useState(
+    feedDetail?.content || ""
+  );
+
+  const [preview, setPreview] = useState([]);
+  const [file, setFile] = useState([]);
+
+  const bgRef = useRef();
+
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
 
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
-  const likeFollowing = feedDetail.like.find((it) =>
-    myProfile.following.includes(it)
-  );
+
+  const onChange = (e) => {
+    setEditedFeedDetail(e.target.value);
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+  };
+
+  const maxFileSize = 10 * 1024 * 1024;
+
+  const onClickSetContent = (e) => {
+    const { files } = e.target;
+
+    if (files) {
+      const newFiles = [];
+      const newPreviews = [];
+
+      for (const item of files) {
+        if (item.size > maxFileSize) {
+          alert("업로드 할 수 있는 최대용량은 10MB입니다.");
+          return;
+        }
+        newFiles.push(item);
+
+        const reader = new FileReader();
+        reader.readAsDataURL(item);
+
+        reader.onload = (event) => {
+          newPreviews.push(event.target.result);
+
+          if (newPreviews.length === files.length) {
+            setPreview((prevPreview) => [...prevPreview, ...newPreviews]);
+            setFile((prevFile) => [...prevFile, ...newFiles]);
+          }
+        };
+      }
+    }
+  };
+
+  const user = auth.currentUser;
+  const onDelete = async () => {
+    const ok = window.confirm("정말로 지금 게시물을 삭제하시겠습니까?");
+    if (!ok || user.uid !== feedDetail.uid) return;
+    try {
+      await deleteDoc(doc(db, `feed`, feedDetail.id));
+      if (feedDetail.media) {
+        const mediaRef = ref(storage, `feed/${user.uid}/${feedDetail.id}`);
+        await deleteObject(mediaRef);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const onUpDate = async () => {
+    try {
+      if (user?.uid !== feedDetail.uid) return;
+
+      const feedDetailDoc = await getDoc(doc(db, "feed", feedDetail.id));
+      const feedDetailData = feedDetailDoc.data();
+
+      let updatedMedia = feedDetailData.imgPath || [];
+
+      if (file.length > 0) {
+        for (const editedFile of file) {
+          const newFileType = editedFile.type.startsWith("image/")
+            ? "img"
+            : "video";
+
+          const locationRef = ref(
+            storage,
+            `feed/${user.uid}/${feedDetail.id}/${editedFile.name}`
+          );
+          const uploadTask = uploadBytesResumable(locationRef, editedFile);
+
+          if (editedFile.size >= maxFileSize) {
+            uploadTask.cancel();
+            alert("업로드 할 수 있는 최대용량은 10MB입니다.");
+            return;
+          }
+
+          const result = await uploadBytes(locationRef, editedFile);
+          const url = await getDownloadURL(result.ref);
+
+          updatedMedia = [...updatedMedia, url];
+        }
+      }
+
+      const updatedData = {
+        content: editedFeedDetail,
+        imgPath: updatedMedia,
+        type: updatedMedia.find((item) => item.endsWith(".mp4"))
+          ? "reels"
+          : "img",
+      };
+
+      await updateDoc(doc(db, "feed", feedDetail.id), updatedData);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsEditing(false);
+    }
+  };
 
   useEffect(() => {
     const likeFollowing = feedDetail.like.find((it) =>
       myProfile.following.includes(it)
     );
 
-    const getFollowingProfile = async (uid) => {
-      const profileQuery = query(
-        collection(db, "profile"),
-        where("uid", "==", uid),
-        limit(1)
-      );
-      const profileSnapshot = await getDocs(profileQuery);
+    const profileData = allProfile.find((it) => it.uid === likeFollowing);
+    setFollowingUser(profileData);
 
-      if (!profileSnapshot.empty) {
-        const profileData = profileSnapshot.docs[0].data();
-        setFollowingUser(profileData);
+    let replyUnsubscribe = null;
+    let reReplyUnsubscribe = null;
+
+    const fetchReply = () => {
+      const replyQuery = query(
+        collection(db, "reply"),
+        where("feedId", "==", feedDetail.id),
+        orderBy("createdAt", "desc")
+      );
+
+      replyUnsubscribe = onSnapshot(replyQuery, (snapshot) => {
+        const replyDocs = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        const replyIdArr = replyDocs.map((it) => it.id);
+
+        if (replyIdArr.length > 0) {
+          const reReplyQuery = query(
+            collection(db, "re_reply"),
+            where("replyId", "in", replyIdArr),
+            orderBy("replyId", "asc"),
+            orderBy("createdAt", "desc")
+          );
+
+          reReplyUnsubscribe = onSnapshot(reReplyQuery, (snapshot) => {
+            const reReplyDocs = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+
+            const replyList = replyDocs.map((rp) => ({
+              ...rp,
+              reReply: reReplyDocs.filter((rr) => rr.replyId === rp.id),
+            }));
+            SetReplyArr(replyList);
+          });
+        } else {
+          SetReplyArr(replyDocs);
+          if (reReplyUnsubscribe) {
+            reReplyUnsubscribe();
+            reReplyUnsubscribe = null;
+          }
+        }
+      });
+    };
+
+    fetchReply();
+
+    return () => {
+      // 구독 해제
+      if (replyUnsubscribe) {
+        replyUnsubscribe();
+      }
+      if (reReplyUnsubscribe) {
+        reReplyUnsubscribe();
+      }
+    };
+  }, [feedDetail]);
+
+  useEffect(() => {
+    if (pushComment === "") return;
+
+    const addCmt = async () => {
+      try {
+        const docRef = await addDoc(collection(db, "reply"), {
+          content: pushComment,
+          createdAt: Date.now(),
+          feedId: feedDetail.id,
+          type: "rp",
+          uid: myProfile.uid,
+          like: [],
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setPushComment("");
       }
     };
 
-    getFollowingProfile(likeFollowing);
-  }, [feedDetail]);
+    addCmt();
+  }, [pushComment]);
 
   const hideFeed = () => {
     onClick();
-  };
-
-  const onFocus = () => {
-    commentRef.current.focus();
   };
 
   return (
@@ -345,47 +698,147 @@ const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
               initial="initial"
               animate="visible"
               exit="exits"
+              $isEditing={isEditing}
             >
-              <Inner className="inner">
-                <Contents>
+              <Inner className="inner" $isEditing={isEditing}>
+                {isEditing ? (
+                  <Title>
+                    <Button text={"취소"} onClick={handleCancel} />
+                    <span>편집 하기</span>
+                    <Button text={"완료"} onClick={onUpDate} />
+                  </Title>
+                ) : null}
+                <Contents $isEditing={isEditing} className="contents">
                   <Slider className="slider">
-                    <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
+                    {isEditing ? (
+                      <EditingImg className="editing_img">
+                        <MediaWrapper>
+                          <MediaBox className="media_box">
+                            {preview.length > 0 ? (
+                              preview.map((item, idx) => (
+                                <PreviewImage
+                                  key={idx}
+                                  src={item}
+                                  alt={`미리보기 ${idx + 1}`}
+                                />
+                              ))
+                            ) : (
+                              <Icon src="/images/newPostIcon.svg" />
+                            )}
+                          </MediaBox>
+                        </MediaWrapper>
+                        <SetContentButton
+                          htmlFor="edit-content"
+                          className="setcontent_button"
+                        >
+                          {file.length > 0
+                            ? "업로드 완료 / 추가"
+                            : "사진 및 동영상 찾기"}
+                        </SetContentButton>
+                        <SetContentInputButton
+                          id="edit-content"
+                          type="file"
+                          accept="video/mpk, video/*, image/*"
+                          onChange={onClickSetContent}
+                          multiple
+                        />
+                      </EditingImg>
+                    ) : (
+                      <>
+                        {feedDetail && feedDetail?.type === "reels" ? (
+                          <Video
+                            autoPlay
+                            muted
+                            loop
+                            src={feedDetail?.imgPath}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : feedDetail?.type === "img" ? (
+                          <Slide
+                            imgPath={
+                              Array.isArray(feedDetail.imgPath)
+                                ? feedDetail.imgPath
+                                : [feedDetail.imgPath]
+                            }
+                            onClick={onClick}
+                          />
+                        ) : Array.isArray(feedDetail.imgPath) ? (
+                          <Slide
+                            imgPath={feedDetail.imgPath}
+                            onClick={onClick}
+                          />
+                        ) : feedDetail.type === "img" ? (
+                          <Slide
+                            imgPath={[feedDetail.imgPath]}
+                            onClick={onClick}
+                          />
+                        ) : feedDetail.type === "reels" ? (
+                          <Video src={feedDetail.imgPath} muted />
+                        ) : null}
+                      </>
+                    )}
                   </Slider>
-                  <Desc className="desc">
-                    <Container>
-                      <UserContainer className="user_container">
-                        <UserBox>
+                  <Desc className="desc" $isEditing={isEditing}>
+                    <Container $isEditing={isEditing}>
+                      <UserContainer
+                        className="user_container"
+                        $isEditing={isEditing}
+                      >
+                        <UserBox $isEditing={isEditing}>
                           <ProfileImg
                             type={"active"}
                             size={"40"}
                             url={feedDetail.profile.profilePhoto}
-                            feedDetail={feedDetail}
-                            myProfile={myProfile}
                           />
                           <Userinfo>
                             <UserId
                               type={"feed"}
                               userNickname={feedDetail.profile.userId}
+                              createdAt={new Date(feedDetail.createdAt)}
                               check={feedDetail.profile.badge ? "active" : ""}
-                              btn={"more"}
-                              follwed={followResult ? "" : "팔로우"}
-                              feedDetail={feedDetail}
-                              myProfile={myProfile}
+                              btn={isEditing ? null : "more"}
+                              onClick={onDelete}
+                              setIsEditing={setIsEditing}
+                              follwed={
+                                feedDetail.uid === myProfile.uid
+                                  ? ""
+                                  : followResult
+                                  ? ""
+                                  : "팔로우"
+                              }
+                              uid={feedDetail.uid}
+                              feed={
+                                feedDetail.uid === myProfile.uid
+                                  ? "myfeed"
+                                  : "feed"
+                              }
                             />
                             <Location>{feedDetail.location}</Location>
                           </Userinfo>
                         </UserBox>
-                        <UserContents>
-                          <FeedText feedDetail={feedDetail} />
+                        <UserContents $isEditing={isEditing}>
+                          {isEditing ? (
+                            <EditedTextArea
+                              value={editedFeedDetail}
+                              placeholder={feedDetail.content}
+                              onChange={onChange}
+                            />
+                          ) : (
+                            <FeedText feedDetail={feedDetail} all={true} />
+                          )}
                         </UserContents>
                       </UserContainer>
 
                       <CommentList className="comment_list">
-                        <CommentItem
-                          onClick={onFocus}
-                          feedDetail={feedDetail}
-                          myProfile={myProfile}
-                        />
+                        {replyArr.length > 0
+                          ? replyArr.map((it, idx) => (
+                              <CommentItem key={idx} reply={it} />
+                            ))
+                          : null}
                       </CommentList>
                     </Container>
                     <WritingComment className="writing_comment">
@@ -395,7 +848,7 @@ const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
                           <span>
                             {followingUser ? (
                               <>
-                                {followingUser.userId}님 외{" "}
+                                {followingUser.userId}님 외
                                 <b> {feedDetail.like.length}명</b>이 좋아합니다
                               </>
                             ) : (
@@ -408,14 +861,13 @@ const ClickFeed = ({ myProfile, feedDetail, onClick }) => {
                           <FaRegBookmark />
                         </IconBtns>
                       </Top>
-                      <Form>
-                        <StyledInput
-                          ref={commentRef}
-                          value={comment}
-                          placeholder="댓글 달기... "
-                          onChange={(e) => setComment(e.target.value)}
-                        />
-                      </Form>
+                      <CommentInput
+                        width={"100%"}
+                        height={"35px"}
+                        comments={comments}
+                        setComments={setComments}
+                        setPushComment={setPushComment}
+                      />
                     </WritingComment>
                   </Desc>
                 </Contents>

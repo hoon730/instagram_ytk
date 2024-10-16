@@ -3,51 +3,73 @@ import styled from "styled-components";
 import { HiOutlinePlus } from "react-icons/hi2";
 
 const Wrapper = styled.div`
-  width: fit-content;
+  /* width: fit-content; */
+  width: 100%;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3px;
+  gap: 5px;
 `;
 
 const ImgSection = styled.div`
   width: fit-content;
+  display: inline-block;
+  position: relative;
+  /* width: 80px; */
+  height: 80px;
   cursor: pointer;
 `;
 
-const ActivationArea = styled.span`
+const GrayLine = styled.span`
   display: inline-block;
-  width: ${({ size }) => `${size || 96}`}px;
-  height: ${({ size }) => `${size || 96}`}px;
-  background: var(--light-gray-color);
+  width: 80px;
+  height: 80px;
+  background: var(--bg-white-color);
   border-radius: 50%;
   position: relative;
+
+  @media screen and (max-width: 1000px) {
+    width: 68px;
+    height: 68px;
+  }
 `;
 
-const BoundaryLine = styled.span`
+const WhiteLine = styled.span`
   display: inline-block;
-  width: ${({ size }) => `${size - 4 || 91}`}px;
-  height: ${({ size }) => `${size - 4 || 91}`}px;
+
+  width: 80px;
+  height: 80px;
   background: var(--bg-white-color);
   border-radius: 50%;
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: 1px solid var(--gray-color);
+
+  @media screen and (max-width: 1000px) {
+    width: 65px;
+    height: 65px;
+  }
 `;
 
 const AddBox = styled.span`
   display: inline-block;
-  width: ${({ size }) => `${size - 8 || 86}`}px;
-  height: ${({ size }) => `${size - 8 || 86}`}px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   overflow: hidden;
+
+  @media screen and (max-width: 1000px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 const AddIcon = styled.div`
@@ -59,8 +81,14 @@ const AddIcon = styled.div`
   align-items: center;
 
   svg {
-    font-size: 45px;
+    font-size: var(--font-46);
     color: var(--bg-white-color);
+  }
+
+  @media screen and (max-width: 1000px) {
+    svg {
+      font-size: var(--font-46);
+    }
   }
 `;
 
@@ -69,7 +97,6 @@ const TextArea = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3px;
 `;
 
 const TextBox = styled.div`
@@ -79,19 +106,17 @@ const TextBox = styled.div`
   }
 `;
 
-const AddHighlight = ({ size }) => {
+const AddHighlight = () => {
   return (
     <Wrapper>
       <ImgSection>
-        <ActivationArea size={size}>
-          <BoundaryLine size={size}>
-            <AddBox size={size}>
-              <AddIcon>
-                <HiOutlinePlus />
-              </AddIcon>
-            </AddBox>
-          </BoundaryLine>
-        </ActivationArea>
+        <WhiteLine>
+          <AddBox>
+            <AddIcon>
+              <HiOutlinePlus />
+            </AddIcon>
+          </AddBox>
+        </WhiteLine>
       </ImgSection>
       <TextArea>
         <TextBox>

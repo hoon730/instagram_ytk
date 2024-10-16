@@ -11,6 +11,11 @@ const BtnBox = styled.div`
   justify-content: center;
   position: relative;
   cursor: pointer;
+
+  @media screen and (max-width: 630px) {
+    width: 65px;
+    height: 35px;
+  }
 `;
 
 const BoxBg = styled.div`
@@ -38,6 +43,11 @@ const BtnPoint = styled.div`
 
   &.active {
     right: -2px;
+  }
+
+  @media screen and (max-width: 630px) {
+    width: 26px;
+    height: 26px;
   }
 `;
 

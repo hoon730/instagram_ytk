@@ -40,7 +40,7 @@ const MoreItem = ({
 
   const logOut = async () => {
     // eslint-disable-next-line no-restricted-globals
-    const ask = confirm("로그아웃 하시겠습니다?");
+    const ask = confirm("로그아웃 하시겠습니까?");
     if (ask) {
       await auth.signOut();
       navigate("/login");

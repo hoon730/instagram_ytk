@@ -20,8 +20,8 @@ const Wrapper = styled.div`
   margin-bottom: 5px;
   background: ${({ theme }) => theme.bgColor};
 
-  @media screen and (max-width: 780px) {
-    width: 780px;
+  @media screen and (max-width: 1000px) {
+    width: 100%;
   }
 
   @media screen and (max-width: 430px) {

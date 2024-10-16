@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SearchResult from "./SearchResult";
 import { RxMagnifyingGlass } from "react-icons/rx";
@@ -20,6 +21,13 @@ const SearchBarr = styled.div`
   align-items: center;
 `;
 
+const SearchArea = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+`;
+
 const ItemArea = styled.div`
   display: flex;
   justify-content: center;
@@ -28,6 +36,7 @@ const ItemArea = styled.div`
     color: var(--gray-color);
   }
   &.deleteBtn {
+    width: 16px;
     display: none;
     background: var(--gray-color);
     border-radius: 50%;
@@ -65,6 +74,7 @@ const SearchBar = () => {
   const [text, setText] = useState("");
   const [isActive, setIsActive] = useState(false);
   const [resultActive, setResultActive] = useState(false);
+  const navigate = useNavigate();
 
   const deleteBtnActive = (e) => {
     setText(e.target.value);
@@ -78,6 +88,15 @@ const SearchBar = () => {
     }
   };
 
+  const moveResult = (e) => {
+    if (e.key === "Enter") {
+      if (text.startsWith("#")) {
+        navigate(`/search?q=${text.toLocaleLowerCase().slice(1)}`);
+        inputReset();
+      }
+    }
+  };
+
   const inputReset = () => {
     setText("");
     setIsActive(false);
@@ -87,15 +106,18 @@ const SearchBar = () => {
   return (
     <Wrapper>
       <SearchBarr>
-        <ItemArea>
-          <RxMagnifyingGlass size="20" />
-        </ItemArea>
-        <SearchInput
-          onChange={deleteBtnActive}
-          value={text}
-          type="text"
-          placeholder="검색"
-        ></SearchInput>
+        <SearchArea>
+          <ItemArea>
+            <RxMagnifyingGlass size="20" />
+          </ItemArea>
+          <SearchInput
+            onChange={deleteBtnActive}
+            onKeyUp={moveResult}
+            value={text}
+            type="text"
+            placeholder="검색"
+          ></SearchInput>
+        </SearchArea>
         <ItemArea
           className={`deleteBtn ${isActive ? "active" : ""}`}
           onClick={inputReset}

@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import MyPic from "../components/MyFeed/MyPic";
 import MyProfile from "../components/MyFeed/MyProfile";
+import NewMyHighlight from "../components/MyFeed/NewMyHighlight";
 import MyHighlight from "../components/MyFeed/MyHighlight";
 import MyFeedTabBar from "../components/MyFeed/MyFeedTabBar";
 import TimeLine from "../components/Detail/TimeLine";
+import { StateContext } from "../App";
 
 import {
   collection,
   query,
   limit,
-  orderBy,
+  onSnapshot,
   where,
-  getDocs,
+  orderBy,
 } from "firebase/firestore";
-import { auth, db } from "../utils/firebase";
+import { db } from "../utils/firebase";
+import MbHeader from "../components/Detail/MbHeader";
 
 const Wrapper = styled.div`
   width: 934px;
@@ -24,65 +27,87 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
 
-  @media screen and (max-width: 780px) {
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 630px) {
+    width: 430px;
+  }
+
+  @media screen and (max-width: 430px) {
     width: 100%;
   }
 `;
 
 const MyFeed = () => {
-  const [myProfile, setMyProfile] = useState(null);
-  const [myFeeds, setMyFeed] = useState([]);
-  const [postsWithProfiles, setPostsWithProfiles] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
+
 
   useEffect(() => {
-    const userUid = auth.currentUser?.uid;
-    if (userUid) {
-      const getMyProfile = async (uid) => {
-        const profileQuery = query(
-          collection(db, "profile"),
-          where("uid", "==", uid),
-          limit(1)
-        );
-        const profileSnapshot = await getDocs(profileQuery);
-
-        if (!profileSnapshot.empty) {
-          const profileData = profileSnapshot.docs[0].data();
-          setMyProfile(profileData);
-        }
-      };
-
-      getMyProfile(userUid);
+    if (!myProfile || !myProfile.uid) {
+      return;
     }
-  }, []);
 
-  useEffect(() => {
-    if (myProfile) {
-      const getmyFeed = async (myProfile) => {
-        const feedsQuery = query(
-          collection(db, "feed"),
-          where("uid", "==", myProfile.uid),
-          orderBy("createdAt", "desc"),
-          limit(15)
-        );
+    let unsubscribe;
+    const fetchPosts = async () => {
+      const postQuery = query(
+        collection(db, "feed"),
+        where("uid", "==", myProfile.uid),
+        orderBy("createdAt", "desc"),
+        limit(25)
+      );
 
-        const myFeedSnapshot = await getDocs(feedsQuery);
-
-        if (!myFeedSnapshot.empty) {
-          const myFeedData = myFeedSnapshot.docs.map((doc) => doc.data());
-          setMyFeed((prevFeed) => [...prevFeed, ...myFeedData]);
-        }
-      };
-      getmyFeed(myProfile);
-    }
+      unsubscribe = await onSnapshot(postQuery, (snapshot) => {
+        const fetchedPosts = snapshot.docs.map((doc) => {
+          const feedProfile = allProfile.find(
+            (it) => it.uid === doc.data().uid
+          );
+          const {
+            content,
+            createdAt,
+            hastage,
+            like,
+            location,
+            tagUser,
+            uid,
+            imgPath,
+            type,
+          } = doc.data();
+          return {
+            id: doc.id,
+            content,
+            createdAt,
+            hastage,
+            like,
+            location,
+            tagUser,
+            uid,
+            imgPath,
+            type,
+            profile: feedProfile,
+          };
+        });
+        setPosts(fetchedPosts); // posts 상태 업데이트
+      });
+    };
+    fetchPosts();
+    return () => {
+      unsubscribe && unsubscribe();
+    };
   }, [myProfile]);
 
   return (
     <Wrapper>
-      <MyPic myProfile={myProfile} myFeeds={myFeeds} />
+      <MbHeader />
+      <MyPic myProfile={myProfile} posts={posts} />
       <MyProfile myProfile={myProfile} />
+      <NewMyHighlight />
       <MyHighlight />
       <MyFeedTabBar />
-      <TimeLine myFeeds={myFeeds} myProfile={myProfile} />
+      <TimeLine posts={posts} />
     </Wrapper>
   );
 };

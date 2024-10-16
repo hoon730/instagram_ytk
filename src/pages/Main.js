@@ -11,8 +11,8 @@ const Wrapper = styled.div`
 
 const MainHeaderMargin = styled.div`
   height: 85px;
-  @media screen and (max-width: 1170px) {
-    display: none;
+  @media screen and (max-width: 630px) {
+    height: 74px;
   }
 `;
 
@@ -25,6 +25,7 @@ const MainSection = styled.div`
 const MainContent = styled.div`
   display: flex;
   background: ${({ theme }) => theme.bgColor};
+  margin-bottom: 70px;
 `;
 
 const FeedSection = styled.div`

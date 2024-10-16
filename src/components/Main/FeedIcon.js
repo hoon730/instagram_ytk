@@ -30,15 +30,15 @@ const Icons = styled.div`
 
 const LeftIcons = styled.span`
   display: flex;
-  gap: 30px;
+  gap: 20px;
   @media screen and (max-width: 1024px) {
     gap: 18px;
   }
 `;
 
 const icon = `
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   &:hover{
     color: var(--gray-color);
@@ -56,8 +56,10 @@ const Heart = styled(GoHeart)`
 
 const HeartFill = styled(GoHeartFill)`
   ${icon}
-  fill: crimson;
-  color: ${({ theme }) => theme.iconColor};
+  color: var(--sub-pink-color);
+  &:hover {
+    color: #cf236a;
+  }
 `;
 
 const Reply = styled(IoChatbubbleEllipsesOutline)`
@@ -90,6 +92,21 @@ const LikeSection = styled.div`
   }
   @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
+  }
+`;
+
+const BgFilter = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  cursor: pointer;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
   }
 `;
 
@@ -185,7 +202,10 @@ const FeedIcon = ({ feedDetail }) => {
           </strong>
         )}
         {showProfile ? (
-          <ViewLikes likeUser={likeUser} setShowProfile={setShowProfile} />
+          <>
+            <ViewLikes likeUser={likeUser} setShowProfile={setShowProfile} />
+            <BgFilter onClick={() => setShowProfile(false)}></BgFilter>
+          </>
         ) : null}
       </LikeSection>
     </Wrapper>
