@@ -9,6 +9,8 @@ import { FiMoreHorizontal } from "react-icons/fi";
 const Wrapper = styled.div`
   width: ${({ size }) => `${size || 501}`}px;
   height: 102px;
+  /* position: absolute;
+  z-index: 2; */
 `;
 
 const HeaderArea = styled.div`
@@ -81,8 +83,8 @@ const StoryHeader = () => {
         <TextIconArea>
           <TextBox>
             <ProfileImg size={32} url={"/images/postImgs/user1/profile.jpg"} />
-            <UserName>bb_bok</UserName>
-            <TimeBox>18시간</TimeBox>
+            <UserName>username or storytitle</UserName>
+            <TimeBox>올린지 지난 시간</TimeBox>
           </TextBox>
           <IconBox>
             <FaPlay />

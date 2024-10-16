@@ -19,7 +19,7 @@ const NameBox = styled.div`
   padding: 20px 70px 0px;
 
   @media screen and (max-width: 900px) {
-    padding: 20px 50px 0px;
+    padding: 10px 50px 0px;
   }
 
   @media screen and (max-width: 630px) {
@@ -32,11 +32,15 @@ const MyName = styled.div`
   gap: 15px;
   align-items: center;
   p {
-    font-size: var(--font-20);
+    font-size: var(--font-22);
     font-weight: var(--font-bold);
+
+    @media screen and (max-width: 780px) {
+      font-size: var(--font-20);
+    }
   }
   span {
-    font-size: var(--font-16);
+    font-size: var(--font-18);
     font-weight: var(--font-bold);
   }
 
