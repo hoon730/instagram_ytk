@@ -75,6 +75,16 @@ const firebaseConfig = {
   appId: "1:311866759989:web:a1529bce2bbe90a708ca7c",
 };
 
+// 8. 동훈 ytg-instagram - 5th
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBAlsXVad-5Q_36EvshQP6FGo8BeM4Xu4Y",
+//   authDomain: "ytg-instagram-5th.firebaseapp.com",
+//   projectId: "ytg-instagram-5th",
+//   storageBucket: "ytg-instagram-5th.appspot.com",
+//   messagingSenderId: "601602727737",
+//   appId: "1:601602727737:web:17dd659de3f365040bd2e8"
+// };
+
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
 export const storage = getStorage(app);
