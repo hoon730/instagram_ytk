@@ -11,6 +11,15 @@
 // 11. 로그인 전번간편로그인 기능, 전번 제대로 들어가는지 확인
 // . 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
 
+// v5. 리아님이 말씀하신대로 데이타베이스에 올라가는 거 수정.
+// v6. Firebase: Error (auth/invalid-credential).파이어베이스 에러들 한글로 바꾸기. 로그인포맷, 같은이메일 존재
+// v7. 눈모양 버튼 앤터 칠 떄 boolean 안바뀌도록
+// v8. 로그인 id, 전번, 이메일과 비밀번호로 가능하게끔
+// v9. 반응형. 370, 780
+// 10. custum select로 통일
+// 11. 로그인 전번간편로그인 기능, 전번 제대로 들어가는지 확인
+// . 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
+
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";

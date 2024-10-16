@@ -35,6 +35,8 @@ const Block = styled.div`
   align-items: center;
   width: 100%;
   max-width: 480px;
+  width: 100%;
+  max-width: 480px;
   padding: 40px;
   gap: 40px;
   border: 1px solid;
@@ -49,11 +51,13 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
+  width: 100%;
   gap: 15px;
 `;
 
 const InputBox = styled.div`
   position: relative;
+  width: 100%;
   width: 100%;
   display: flex;
   border: 1px solid #bfbfbf;
@@ -103,6 +107,7 @@ const Label = styled.label`
   @media (max-width: 370px) {
     font-size: 13px;
   }
+
 `;
 
 const PasswordBtn = styled.button`
@@ -171,6 +176,7 @@ const Login = () => {
       target: { name, value },
     } = e;
 
+    if (name === "identity") setIdentity(value);
     if (name === "identity") setIdentity(value);
     else if (name === "password") setPassword(value);
   };
