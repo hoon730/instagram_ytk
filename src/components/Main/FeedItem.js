@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { StateContext } from "../../App";
 import styled from "styled-components";
 import { getFormattedDate } from "../../utils/utils";
@@ -9,6 +9,9 @@ import FeedIcon from "./FeedIcon";
 import FeedText from "./FeedText";
 import CommentInput from "../Common/CommentInput";
 import ClickFeed from "../Detail/ClickFeed";
+import CommentLine from "../Common/CommentLine";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../utils/firebase";
 
 const Wrapper = styled.div`
   padding-bottom: 50px;
@@ -86,6 +89,7 @@ const PhotoSection = styled.div`
   border-radius: 8px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
   @media screen and (max-width: 770px) {
     width: 350px;
     height: 350px;
@@ -116,6 +120,13 @@ const FeedDesc = styled.div`
   }
 `;
 
+const CommentArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+`;
+
 const DateText = styled.div`
   display: none;
   @media screen and (max-width: 770px) {
@@ -128,12 +139,37 @@ const DateText = styled.div`
 
 const FeedItem = ({ feedDetail, dateMB }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [pushComment, setPushComment] = useState("");
   const { myProfile } = useContext(StateContext);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
   const onClick = () => {
     setIsClicked((current) => !current);
   };
+
+  useEffect(() => {
+    if (pushComment === "") return;
+
+    const addCmt = async () => {
+      try {
+        const docRef = await addDoc(collection(db, "reply"), {
+          content: pushComment,
+          createdAt: Date.now(),
+          feedId: feedDetail.id,
+          type: "rp",
+          uid: myProfile.uid,
+          like: [],
+        });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setPushComment("");
+      }
+    };
+
+    addCmt();
+  }, [pushComment]);
 
   return (
     <Wrapper>
@@ -165,11 +201,7 @@ const FeedItem = ({ feedDetail, dateMB }) => {
           <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}
         {isClicked ? (
-          <ClickFeed
-            onClick={onClick}
-            feedDetail={feedDetail}
-            myProfile={myProfile}
-          />
+          <ClickFeed onClick={onClick} feedDetail={feedDetail} />
         ) : null}
       </PhotoSection>
       <FeedDescArea>
@@ -185,7 +217,24 @@ const FeedItem = ({ feedDetail, dateMB }) => {
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
           <DateText>{`${dateMB}`}</DateText>
-          <CommentInput width={"100%"} height={"50px"} />
+          <CommentArea>
+            {comments.map((it, idx) => (
+              <CommentLine
+                key={idx}
+                userId={myProfile.userId}
+                uid={myProfile.uid}
+                comment={it}
+              />
+            ))}
+          </CommentArea>
+
+          <CommentInput
+            width={"100%"}
+            height={"50px"}
+            comments={comments}
+            setComments={setComments}
+            setPushComment={setPushComment}
+          />
         </FeedDesc>
       </FeedDescArea>
     </Wrapper>

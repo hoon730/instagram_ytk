@@ -114,11 +114,11 @@ const StyledSpan = styled.span`
 `;
 
 const SearchBtn = styled.label`
+  width: 180px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 180px;
-  height: 40px;
   background: ${({ theme }) => theme.subColor};
   color: var(--bg-white-color);
   border-radius: var(--border-radius-8);
@@ -136,6 +136,7 @@ const SearchInput = styled.input`
 const TextInputArea = styled.div`
   width: 100%;
   position: relative;
+  border: 1px solid red;
 `;
 
 const TextArea = styled.textarea`

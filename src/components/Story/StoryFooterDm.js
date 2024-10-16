@@ -6,8 +6,9 @@ import { FiSend } from "react-icons/fi";
 
 const Wrapper = styled.div`
   width: ${({ size }) => `${size || 501}`}px;
-  /* position: absolute; */
   bottom: 28px;
+  position: absolute;
+  /* z-index: 2; */
 `;
 
 const FooterArea = styled.div`

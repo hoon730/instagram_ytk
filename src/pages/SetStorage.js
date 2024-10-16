@@ -1,24 +1,25 @@
 import React from "react";
-import Data from "../data.json";
-//import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db, storage } from "../utils/firebase";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+// import Data from "../data.json";
+// import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+// import { auth, db, storage } from "../utils/firebase";
+// import { addDoc, collection, updateDoc } from "firebase/firestore";
+// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-//console.log("스토리지 세팅 시작");
+// console.log("스토리지 세팅 시작");
+
 // 0. 먼저 주석을 풀기전에 /setStorage를 입력해서 화면이동. 그리고 주석을 한번에 풀어서 저장하지 말고 필요한 것만 풀어서 저장하면 바로 실행 됨.
 // 그리고 반드시 다시 주석처리 해야함 안그러면 중복 데이터가 올라감.. 주의!!!
 
 // 1. 계정 세팅(Authentication에 넣을 때만 풀기.. 이미 계정이 있으면 절대 주석 풀지 말 것)
-/*Data.user.forEach(async (user) => {
-  console.log(user);
-  const credentials = await createUserWithEmailAndPassword(
-    auth,
-    user.email,
-    user.password
-  );
-  await updateProfile(credentials.user, { displayName: user.userRealName });
-});*/
+// Data.user.forEach(async (user) => {
+//   console.log(user);
+//   const credentials = await createUserWithEmailAndPassword(
+//     auth,
+//     user.email,
+//     user.password
+//   );
+//   await updateProfile(credentials.user, { displayName: user.userRealName });
+// });
 
 // 1-1. 제일 중요한 작업 : firebase Authentication에 잘 들어갔으면, data.json의 user의 uid를 firebase의 uid로 바꿔주기..(1번을 했을 시에만...)
 
@@ -49,6 +50,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
       uid: user.uid,
       userId: user.userNickname,
       userName: item.userName,
+      email: user.email,
       gender: item.gender,
       introduction: item.introduction,
       website: item.website,
@@ -235,7 +237,9 @@ setProfile();*/
 setFeed();*/
 
 const SetStorage = () => {
-  return <div>SetStorage</div>;
+  return (
+    <div>SetStorage 돌리다가 중간에 나가면 절대 안됨, 주석 꼭 읽어보기</div>
+  );
 };
 
 export default SetStorage;

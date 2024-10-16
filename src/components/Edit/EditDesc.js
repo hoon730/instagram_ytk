@@ -71,8 +71,8 @@ const Wrapper = styled.div`
         color: ${({ theme }) => theme.fontColor};
         background: ${({ theme }) => theme.bgColor};
         font-size: var(--font-size-14);
-        /* resize: none; */
-        resize: vertical;
+        resize: none;
+        /* resize: vertical; */
         /* overflow-y: scroll; */
         overflow-y: auto;
         box-sizing: border-box;
@@ -134,6 +134,8 @@ const EditDesc = ({
             id="intro"
             onChange={handleIntro}
             placeholder={myProfile ? myProfile.introduction : "소개"}
+            col="150"
+            rows="2"
           ></textarea>
         </li>
         <li>
@@ -144,7 +146,7 @@ const EditDesc = ({
             type="url"
             id="link"
             onChange={handleLink}
-            placeholder={myProfile ? myProfile.website : "주소"}
+            placeholder={myProfile ? myProfile.website : "링크"}
           />
         </li>
       </ul>
