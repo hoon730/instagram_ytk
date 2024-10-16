@@ -15,7 +15,9 @@ import {
 import WelcomFeed from "./WelcomFeed";
 import { StateContext } from "../../App";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  height: 500vh;
+`;
 
 const FeedArea = styled.div`
   width: 680px;
@@ -34,13 +36,14 @@ const FeedTabBar = styled.div`
   display: flex;
   flex-direction: column;
   border-top: 1px solid ${({ theme }) => theme.borderColor};
-  transition: transform 0.3s ease-in-out;
+  transition: ${({ isSticky }) =>
+    isSticky ? "transform 0.3s ease-in-out" : "none"};
   z-index: 1;
   background: ${({ theme }) => theme.bgColor};
   position: ${({ isSticky }) => (isSticky ? "fixed" : "static")};
   top: ${({ isSticky }) => (isSticky ? "85px" : null)};
-  transform: ${({ isVisible }) =>
-    isVisible ? "translateY(0)" : "translateY(-100%)"};
+  transform: ${({ isSticky, isVisible }) =>
+    isSticky && !isVisible ? "translateY(-100%)" : "translateY(0)"};
 `;
 
 const FeedTabBtn = styled.div`
@@ -85,7 +88,7 @@ const FeedContent = () => {
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
 
-  const stickyTriggerHeight = 226;
+  const stickyTriggerHeight = 285;
 
   const recommendActive = () => {
     setIsLoading(true);
@@ -100,29 +103,35 @@ const FeedContent = () => {
     setTabChange("follow");
   };
 
-  useEffect(() => {
-    let postsUnsubscribe = null;
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
 
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > stickyTriggerHeight) {
+    if (currentScrollY > stickyTriggerHeight) {
+      if (!isSticky) {
         setIsSticky(true);
-      } else {
-        setIsSticky(false);
+        setIsVisible(true);
       }
+    } else {
+      setIsSticky(false);
+      setIsVisible(true);
+    }
 
+    if (isSticky) {
       if (currentScrollY > lastScrollY) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
+    }
 
-      setLastScrollY(currentScrollY);
-    };
+    setLastScrollY(currentScrollY);
+  };
 
-    if (myProfile && myProfile.following) {
-      const getPosts = () => {
+  useEffect(() => {
+    let postsUnsubscribe = null;
+
+    const getPosts = () => {
+      if (myProfile && myProfile.following) {
         const postsQuery = query(
           collection(db, "feed"),
           where("type", "!=", null),
@@ -156,10 +165,10 @@ const FeedContent = () => {
           setPostsWithProfiles(posts);
           setIsLoading(false);
         });
-      };
+      }
+    };
 
-      getPosts();
-    }
+    getPosts();
 
     window.addEventListener("scroll", handleScroll);
 
@@ -167,7 +176,6 @@ const FeedContent = () => {
       if (postsUnsubscribe) {
         postsUnsubscribe();
       }
-
       window.removeEventListener("scroll", handleScroll);
     };
   }, [myProfile, recommend, lastScrollY]);

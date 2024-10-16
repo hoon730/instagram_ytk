@@ -1,9 +1,9 @@
-// import React from "react";
-// import Data from "../data.json";
-// import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-// import { auth, db, storage } from "../utils/firebase";
-// import { addDoc, collection, updateDoc } from "firebase/firestore";
-// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import React from "react";
+import Data from "../data.json";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db, storage } from "../utils/firebase";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // console.log("스토리지 세팅 시작");
 
