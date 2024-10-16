@@ -50,7 +50,7 @@ const Container = styled.div`
   padding-bottom: 80px;
   @media screen and (max-width: 1170px) {
     width: 100%;
-    padding: 0 40px;
+    padding: 0 30px;
     padding-bottom: 80px;
   }
 `;
@@ -59,7 +59,7 @@ const Header = styled.div`
   width: 936px;
   height: 100px;
   display: flex;
-  padding: 0 40px;
+  padding: 0 30px;
   justify-content: space-between;
   align-items: center;
   background: ${({ theme }) => theme.bgColor};
@@ -68,14 +68,14 @@ const Header = styled.div`
   color: ${({ theme }) => theme.fontColor};
   z-index: 1;
   @media screen and (max-width: 1170px) {
-    width: calc(100% - 20% - 80px);
+    width: calc(100% - 20% - 60px);
     height: 80px;
   }
   @media screen and (max-width: 1024px) {
-    width: calc(100% - 92px - 80px);
+    width: calc(100% - 92px - 60px);
   }
   @media screen and (max-width: 630px) {
-    width: calc(100% - 80px);
+    width: calc(100% - 60px);
     top: 73px;
     ${({ page }) => page === "explore" && "padding: 0;"}
   }
@@ -93,7 +93,7 @@ const Keyword = styled.div`
   font-size: var(--font-28);
   font-weight: var(--font-bold);
   @media screen and (max-width: 630px) {
-    display: none;
+    ${({ page }) => page === "explore" && "display: none;"}
   }
 `;
 
@@ -106,7 +106,7 @@ const MoreIconArea = styled.div`
     align-items: flex-end;
   }
   @media screen and (max-width: 630px) {
-    display: none;
+    ${({ page }) => page === "explore" && "display: none;"}
   }
 `;
 
