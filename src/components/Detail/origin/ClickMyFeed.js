@@ -1,19 +1,19 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import Slide from "../Main/Slide";
-import ProfileImg from "../Profile/ProfileImg";
-import UserId from "../User/UserId";
-import CommentItem from "./CommentItem";
-import Button from "../Common/Button";
-import FeedText from "../Main/FeedText";
-import { click } from "../../utils/utils";
+import Slide from "../../Main/Slide";
+import ProfileImg from "../../Profile/ProfileImg";
+import UserId from "../../User/UserId";
+import CommentItem from "../CommentItem";
+import Button from "../../Common/Button";
+import FeedText from "../../Main/FeedText";
+import { click } from "../../../utils/utils";
 
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 
-import { auth, db, storage } from "../../utils/firebase";
+import { auth, db, storage } from "../../../utils/firebase";
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import {
   deleteObject,

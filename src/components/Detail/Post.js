@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import ClickMyFeed from "./ClickMyFeed";
 import { extractExtension, videoArr } from "../../utils/utils";
 import { StateContext } from "../../App";
 import ClickFeed from "./ClickFeed";
@@ -85,10 +84,7 @@ const Post = ({ post }) => {
           ) : null}
         </Filter>
       </Wrapper>
-      {isClicked ? (
-        <ClickFeed feedDetail={post} onClick={showFeed} />
-      ) : // <ClickMyFeed myProfile={myProfile} post={post} onClick={showFeed} />
-      null}
+      {isClicked && <ClickFeed feedDetail={post} onClick={showFeed} />}
     </>
   );
 };

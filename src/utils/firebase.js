@@ -40,7 +40,7 @@ import { getApp, getApps } from "firebase/app";
 // export const storage = getStorage(app);
 // export const db = getFirestore(app);
 
-// 동훈  ytg-instagram-2nd
+// 동훈  ytg-instagram - 2nd
 // const firebaseConfig = {
 //   apiKey: "AIzaSyDICinBeRvZCV2OHSfApLsTudugCEc0-jM",
 //   authDomain: "ytg-instagram-2nd.firebaseapp.com",
@@ -50,14 +50,24 @@ import { getApp, getApps } from "firebase/app";
 //   appId: "1:694538495457:web:9aa575fe5cbbbc7fe7dea0"
 // };
 
-// 동훈  ytg-instagram-3rd
+// 동훈  ytg-instagram - 3rd
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDUxtRALmwMwQZrN9DvS0CPUhm71_DEMgo",
+//   authDomain: "ytg-instagram-3rd.firebaseapp.com",
+//   projectId: "ytg-instagram-3rd",
+//   storageBucket: "ytg-instagram-3rd.appspot.com",
+//   messagingSenderId: "718613168797",
+//   appId: "1:718613168797:web:39a51c85254a1c1cf24a74"
+// };
+
+// 동훈  ytg-instagram - 4th
 const firebaseConfig = {
-  apiKey: "AIzaSyDUxtRALmwMwQZrN9DvS0CPUhm71_DEMgo",
-  authDomain: "ytg-instagram-3rd.firebaseapp.com",
-  projectId: "ytg-instagram-3rd",
-  storageBucket: "ytg-instagram-3rd.appspot.com",
-  messagingSenderId: "718613168797",
-  appId: "1:718613168797:web:39a51c85254a1c1cf24a74"
+  apiKey: "AIzaSyB7-oa42RTOaDL3j0fICVWYaoAGloiGe64",
+  authDomain: "ytg-instagram-4th.firebaseapp.com",
+  projectId: "ytg-instagram-4th",
+  storageBucket: "ytg-instagram-4th.appspot.com",
+  messagingSenderId: "311866759989",
+  appId: "1:311866759989:web:a1529bce2bbe90a708ca7c"
 };
 
 
