@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import SideBar from "./Common/Sidebar/SideBar";
 import styled from "styled-components";
+import MbMenu from "./Common/MbMenu/MbMenu";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -37,6 +38,7 @@ const Layout = () => {
     <Wrapper>
       <SideBar />
       <Margin />
+      <MbMenu/>
       <Container>
         <Outlet />
       </Container>

@@ -1,13 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import ClickMyFeed from "./ClickMyFeed";
+import { extractExtension, videoArr } from "../../utils/utils";
+import { StateContext } from "../../App";
+import ClickFeed from "./ClickFeed";
 
 const Wrapper = styled.div`
-  width: 305px;
+  width: 100%;
   height: 305px;
   border-radius: var(--border-radius-8);
+  position: relative;
   overflow: hidden;
+  z-index: 1;
   cursor: pointer;
+
+  @media screen and (max-width: 1024px) {
+    height: 0;
+    padding-top: 100%;
+  }
+`;
+
+const Filter = styled.div`
+  width: 100%;
+  height: 100%;
+
+  @media screen and (max-width: 1024px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const Img = styled.img`
@@ -15,14 +36,29 @@ const Img = styled.img`
   height: 100%;
   object-fit: cover;
 `;
+
 const Video = styled.video`
   width: 100%;
   height: 100%;
   object-fit: cover;
 `;
 
-const Post = ({ myFeed, myProfile, post }) => {
+const Post = ({ post }) => {
+  const [followingUser, setFollowingUser] = useState("");
   const [isClicked, setIsClicked] = useState(false);
+  const { allProfile } = useContext(StateContext);
+  const { myProfile } = useContext(StateContext);
+
+  // useEffect(() => {
+  //   const likeFollowing = post.like.find((it) =>
+  //     myProfile.following.includes(it)
+  //   );
+
+  //   if (likeFollowing) {
+  //     const profileData = allProfile.find((it) => it.uid === likeFollowing);
+  //     setFollowingUser(profileData);
+  //   }
+  // }, [post.like, myProfile.following, allProfile]);
 
   const showFeed = () => {
     setIsClicked((current) => !current);
@@ -30,38 +66,29 @@ const Post = ({ myFeed, myProfile, post }) => {
 
   return (
     <>
-      {myFeed ? (
-        <Wrapper onClick={showFeed}>
-          {myFeed.type === "img" ? (
-            <Img src={myFeed.imgPath} />
-          ) : (
-            <Video src={myFeed.imgPath} muted />
-          )}
-        </Wrapper>
-      ) : (
-        // post와 post.media가 존재하는지 확인 후 처리
-        <Wrapper onClick={showFeed}>
-          {post && post.media ? (
-            post.media.map((item, idx) =>
-              item.type === "img" ? (
-                <Img key={idx} src={item.imgPath} />
-              ) : (
-                <Video key={idx} src={item.imgPath} muted />
+      <Wrapper onClick={showFeed}>
+        <Filter>
+          {post && post.imgPath ? (
+            Array.isArray(post.imgPath) ? (
+              post.imgPath.map((item, idx) =>
+                videoArr.includes(extractExtension(item)) ? (
+                  <Video key={idx} src={item} muted />
+                ) : (
+                  <Img key={idx} src={item} />
+                )
               )
-            )
-          ) : (
-            <p>미디어가 없습니다</p> // post나 media가 없는 경우 처리
-          )}
-        </Wrapper>
-      )}
+            ) : null
+          ) : post.type === "img" ? (
+            <Img src={post.imgPath} />
+          ) : post.type === "reels" ? (
+            <Video src={post.imgPath} muted />
+          ) : null}
+        </Filter>
+      </Wrapper>
       {isClicked ? (
-        <ClickMyFeed
-          myFeed={myFeed}
-          myProfile={myProfile}
-          post={post}
-          onClick={showFeed}
-        />
-      ) : null}
+        <ClickFeed feedDetail={post} onClick={showFeed} />
+      ) : // <ClickMyFeed myProfile={myProfile} post={post} onClick={showFeed} />
+      null}
     </>
   );
 };

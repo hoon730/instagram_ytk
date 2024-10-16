@@ -27,7 +27,11 @@ const Submit = styled.input`
   font-size: 14px;
   color: ${({ theme }) => theme.nonActiveBtnHoverColor};
   background: transparent;
+  transition: color 0.3s;
   cursor: pointer;
+  &:hover {
+    color: ${({ theme }) => theme.subColor};
+  }
 `;
 
 const CommentInput = ({

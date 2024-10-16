@@ -23,6 +23,10 @@ const Text = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  @media screen and (max-width: 1024px) {
+    font-size: var(--font-14);
+    gap: 6px;
+  }
 `;
 
 const TabBarBtn = ({ width, iconCode, text, isActive, onClick }) => {

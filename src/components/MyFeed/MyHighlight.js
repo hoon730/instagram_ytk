@@ -36,8 +36,8 @@ const HighlightBox = styled.div`
     }
   }
 
-  @media screen and (max-width: 430px) {
-    margin: 20px 50px;
+  @media screen and (max-width: 630px) {
+    margin: 20px 10px;
   }
 `;
 

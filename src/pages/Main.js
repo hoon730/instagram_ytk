@@ -25,6 +25,7 @@ const MainSection = styled.div`
 const MainContent = styled.div`
   display: flex;
   background: ${({ theme }) => theme.bgColor};
+  margin-bottom: 70px;
 `;
 
 const FeedSection = styled.div`
@@ -52,7 +53,7 @@ const Main = () => {
         <MainHeaderMargin />
         <MainContent>
           <FeedSection>
-            {/* <StoryContent /> */}
+            <StoryContent />
             <FeedContent />
           </FeedSection>
           <HotHashtag />

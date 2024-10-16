@@ -1,6 +1,7 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { FaRegCompass } from "react-icons/fa";
 import { BiMoviePlay } from "react-icons/bi";
+import { LuBookmark } from "react-icons/lu";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
@@ -17,12 +18,18 @@ import { RxMagnifyingGlass } from "react-icons/rx";
 export const getFormattedDate = (targetDate) => {
   const year = targetDate.getFullYear();
   let month = targetDate.getMonth() + 1;
-  let date = targetDate.getDate();
+  let date = new Date(parseInt(targetDate));
 
   if (month < 10) month = `0${month}`;
   if (date < 10) date = `0${date}`;
 
   return `${year}-${month}-${date}`;
+};
+
+export const extractExtension = (value) => {
+  const firstSplit = value.split("?");
+  const secondSplit = firstSplit[0].split(".");
+  return secondSplit[secondSplit.length - 1].toLowerCase();
 };
 
 export const menuData = [
@@ -36,14 +43,26 @@ export const menuData = [
     id: 1,
     name: "탐색",
     iconCode: <FaRegCompass />,
+    path: "/explore",
   },
   {
     id: 2,
+    name: "릴스",
+    iconCode: <BiMoviePlay />,
+    path: "/reels",
+  },
+  {
+    id: 3,
+    name: "저장됨",
+    iconCode: <LuBookmark />,
+  },
+  {
+    id: 4,
     name: "메시지",
     iconCode: <IoPaperPlaneOutline />,
   },
   {
-    id: 3,
+    id: 5,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
   },
@@ -60,6 +79,7 @@ export const mbMenuData = [
     id: 1,
     name: "검색",
     iconCode: <RxMagnifyingGlass />,
+    path: "/explore",
   },
   {
     id: 2,
@@ -71,6 +91,7 @@ export const mbMenuData = [
     id: 3,
     name: "릴스",
     iconCode: <BiMoviePlay />,
+    path: "/reels",
   },
   {
     id: 4,
@@ -184,4 +205,32 @@ export const scale = {
       duration: 0.3,
     },
   },
+};
+
+export const videoArr = [
+  "mp4",
+  "avi",
+  "mkv",
+  "mov",
+  "wmv",
+  "flv",
+  "webm",
+  "m4v",
+  "3gp",
+  "ogv",
+  "m2ts",
+  "mts",
+  "vob",
+  "rmvb",
+  "divx",
+  "f4v",
+  "asf",
+  "swf",
+  "mxf",
+  "dv",
+  "ts",
+];
+
+export const dontReady = () => {
+  alert("준비 중인 기능입니다.");
 };

@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { StateContext } from "../../App";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import CommentLine from "../Common/CommentLine";
 import Rereply from "./Rereply";
+import { db } from "../../utils/firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
-import { IoHeartOutline, IoHeartSharp, IoTrashOutline } from "react-icons/io5";
-import { GoPencil } from "react-icons/go";
+import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
+import { getFormattedDate } from "../../utils/utils";
 
 const CommentSection = styled.div`
   display: flex;
@@ -24,7 +26,6 @@ const CommentAndProfile = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  display: none; // 작업 후 삭제
 `;
 
 const CommentAndHeart = styled.div`
@@ -37,12 +38,6 @@ const CommentAndHeart = styled.div`
 
 const DateAndButton = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const LeftBtns = styled.div`
-  display: flex;
   align-items: center;
   gap: 10px;
 `;
@@ -53,7 +48,7 @@ const RightBtns = styled.div`
   gap: 10px;
 `;
 
-const Date = styled.span`
+const ReplyDate = styled.span`
   font-size: var(--font-12);
 `;
 
@@ -64,19 +59,22 @@ const ReplyBtn = styled.button`
 `;
 
 const icon = `
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 `;
 
-const DeleteBtn = styled(IoTrashOutline)`
+const Heart = styled(IoHeartOutline)`
   ${icon}
-  color: ${({ theme }) => theme.nonActiveBtnHoverColor};
+  color: ${({ theme }) => theme.iconColor};
 `;
 
-const EditBtn = styled(GoPencil)`
+const HeartFill = styled(IoHeartSharp)`
   ${icon}
-  color: ${({ theme }) => theme.nonActiveBtnHoverColor};
+  color: var(--sub-pink-color);
+  &:hover {
+    color: #cf236a;
+  }
 `;
 
 const MoreComment = styled.div`
@@ -102,6 +100,10 @@ const RereplyGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
+  overflow: hidden;
+  transition: height 0.3s, opacity 0.3s;
+  ${({ $showRereple }) =>
+    $showRereple ? "height:auto; opacity:1;" : "height:0px; opacity:0;"};
 `;
 
 const EditArea = styled.div`
@@ -109,6 +111,7 @@ const EditArea = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  display: none;
 `;
 
 const EditAreaHeader = styled.div`
@@ -126,80 +129,126 @@ const IdSpan = styled.span`
   font-weight: bold;
 `;
 
-const Textarea = styled.textarea`
+const TextareaBg = styled.div`
   width: 100%;
   height: 100px;
   padding: 10px;
-  resize: none;
   background: ${({ theme }) => theme.borderColor};
   border: 1px solid transparent;
   border-radius: 8px;
+  overflow: hidden;
+`;
+
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 100%;
+  resize: none;
+  background: transparent;
   color: ${({ theme }) => theme.fontColor};
+  border: 1px solid transparent;
   overflow-y: scroll;
   &:focus {
     outline: none;
   }
 `;
 
-const TextareaBtn = styled.span`
-  cursor: pointer;
-  font-size: var(--font-12);
-`;
-
-const CommentItem = ({ onClick }) => {
+const CommentItem = ({ reply }) => {
   const { myProfile } = useContext(StateContext);
-  const focusingInput = () => {
-    onClick();
+  const { allProfile } = useContext(StateContext);
+  const [likes, setLikes] = useState(reply.like);
+  const [fillHeart, setFillHeart] = useState(false);
+  const [showRereple, setShowRereple] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [text, setText] = useState("");
+  const textareaRef = useRef();
+
+  useEffect(() => {
+    setFillHeart(likes.includes(myProfile.uid));
+    updateDoc(doc(db, "reply", reply.id), { like: likes });
+  }, [likes]);
+
+  const toggleHeart = () => {
+    if (fillHeart) {
+      setLikes(likes.filter((it) => it !== myProfile.uid));
+    } else {
+      setLikes([...likes, myProfile.uid]);
+    }
   };
 
+  const openEditArea = () => {
+    setShowEdit(true);
+    // if (textareaRef.current) {
+    //   textareaRef.current.focus();
+    // }
+  };
+
+  const updateComment = () => {
+    console.log(text);
+  };
+
+  const replyProfile = allProfile.find((it) => it.uid === reply.uid);
   return (
     <div>
       <CommentSection>
-        <ProfileImg url={myProfile.profilePhoto} size={40} />
-        <CommentAndProfile>
-          <CommentAndHeart>
-            <CommentLine
-              userId={"bbok"}
-              uid={"ngDGV8Z7W2Qe3LvayhCLn1hAeSO2"}
-              comment={
-                "메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야"
-              }
-            />
-            <IoHeartOutline />
-          </CommentAndHeart>
-          <DateAndButton>
-            <LeftBtns>
-              <Date>2023년 12월 25일</Date>
-              <ReplyBtn>좋아요 10개</ReplyBtn>
-              <ReplyBtn onClick={focusingInput}>답글 달기</ReplyBtn>
-            </LeftBtns>
-            <RightBtns>
-              <EditBtn />
-              <DeleteBtn />
-            </RightBtns>
-          </DateAndButton>
-          <MoreComment>
-            <Line></Line> 답글 보기(3개)
-          </MoreComment>
-          <RereplyGroup>
-            <Rereply />
-            <Rereply />
-          </RereplyGroup>
-        </CommentAndProfile>
-        <EditArea>
-          <EditAreaHeader>
-            <IdSpan>{myProfile.userId}</IdSpan>
-            <RightBtns>
-              <TextareaBtn>수정</TextareaBtn>
-              <TextareaBtn>취소</TextareaBtn>
-            </RightBtns>
-          </EditAreaHeader>
-          <Textarea
-            value={
-              "메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야메롱이야"
-            }
-          />
-        </EditArea>
+        <ProfileImg url={replyProfile.profilePhoto} size={40} />
+        {showEdit ? (
+          <EditArea>
+            <EditAreaHeader>
+              <IdSpan>{replyProfile.userId}</IdSpan>
+              <RightBtns>
+                <ReplyBtn onClick={updateComment}>저장</ReplyBtn>
+                <ReplyBtn onClick={() => setShowEdit(false)}>취소</ReplyBtn>
+              </RightBtns>
+            </EditAreaHeader>
+            <TextareaBg>
+              <Textarea
+                value={text}
+                ref={textareaRef}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </TextareaBg>
+          </EditArea>
+        ) : (
+          <CommentAndProfile>
+            <CommentAndHeart>
+              <CommentLine
+                userId={replyProfile.userId}
+                uid={replyProfile.uid}
+                comment={reply.content}
+              />
+              {fillHeart ? (
+                <HeartFill onClick={toggleHeart} />
+              ) : (
+                <Heart onClick={toggleHeart} />
+              )}
+            </CommentAndHeart>
+            <DateAndButton>
+              <ReplyDate>
+                {getFormattedDate(new Date(reply.createdAt))}
+              </ReplyDate>
+              <ReplyBtn>답글 달기</ReplyBtn>
+              {reply.uid === myProfile.uid ? (
+                <>
+                  <ReplyBtn onClick={openEditArea}>수정</ReplyBtn>
+                  <ReplyBtn>삭제</ReplyBtn>
+                </>
+              ) : null}
+            </DateAndButton>
+            {reply.reReply.length > 0 ? (
+              <MoreComment onClick={() => setShowRereple((prev) => !prev)}>
+                <Line /> 답글 보기({reply.reReply.length}개)
+              </MoreComment>
+            ) : null}
+
+            <RereplyGroup $showRereple={showRereple}>
+              {reply.reReply.length > 0
+                ? reply.reReply.map((it, idx) => (
+                    <Rereply key={idx} reply={it} />
+                  ))
+                : null}
+            </RereplyGroup>
+          </CommentAndProfile>
+        )}
       </CommentSection>
     </div>
   );
