@@ -69,6 +69,7 @@ const AddBox = styled.span`
     width: 60px;
     height: 60px;
   }
+
 `;
 
 const AddIcon = styled.div`

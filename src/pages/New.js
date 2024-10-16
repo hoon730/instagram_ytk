@@ -199,7 +199,6 @@ const New = ({ setOpenNew }) => {
   const [textValueLength, setTextValueLength] = useState(0);
   const [pushUrl, setPushUrl] = useState([]);
 
-
   const maxFileSize = 10 * 1024 * 1024;
 
   const fileAdd = (e) => {
@@ -216,14 +215,12 @@ const New = ({ setOpenNew }) => {
         }
         newFiles.push(item);
 
-        // FileReader를 사용해 미리보기 URL 생성
         const reader = new FileReader();
         reader.readAsDataURL(item);
 
         reader.onload = (event) => {
           newPreviews.push(event.target.result);
 
-          // 모든 파일이 로드된 후 상태 업데이트
           if (newPreviews.length === files.length) {
             setPreview((prevPreview) => [...prevPreview, ...newPreviews]);
             setFile((prevFile) => [...prevFile, ...newFiles]);
@@ -257,7 +254,6 @@ const New = ({ setOpenNew }) => {
 
       const newPushUrl = []; // 파일 URL을 저장할 배열
 
-      // 파일이 여러 개일 경우 처리
       if (file.length > 1) {
         for (const item of file) {
           const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
@@ -267,20 +263,17 @@ const New = ({ setOpenNew }) => {
           newPushUrl.push(url); // URL을 배열에 추가
         }
 
-        // Firestore에 업데이트 (모든 파일이 처리된 후 한 번에 업데이트)
         await updateDoc(docRef, {
           imgPath: newPushUrl,
           type: "img",
         });
       } else if (file.length === 1) {
-        // 파일이 한 개일 경우 처리
         const item = file[0];
         const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
         const result = await uploadBytes(locationRef, item);
         const url = await getDownloadURL(result.ref);
         const fileType = item.type;
 
-        // 파일 유형에 따라 Firestore에 업데이트
         if (fileType.startsWith("image/")) {
           await updateDoc(docRef, {
             imgPath: url,
@@ -334,6 +327,7 @@ const New = ({ setOpenNew }) => {
               {preview.length > 0 ? (
                 preview.map((src, idx) => {
                   const fileType = file[idx].type;
+                  console.log(fileType);
                   if (fileType.startsWith("image/")) {
                     return <ImgMedia key={idx} src={src} />;
                   } else {
@@ -392,4 +386,3 @@ const New = ({ setOpenNew }) => {
 };
 
 export default New;
-

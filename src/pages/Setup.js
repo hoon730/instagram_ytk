@@ -35,6 +35,10 @@ const Wrapper = styled(motion.form)`
   border-radius: 20px;
   padding: 30px;
   background: ${({ theme }) => theme.bgColor};
+
+  @media screen and (max-width: 630px) {
+    width: 90%;
+  }
 `;
 
 const Title = styled.div`
