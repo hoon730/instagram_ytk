@@ -105,7 +105,7 @@ const MyFeed = () => {
       <MbHeader myProfile={myProfile}/>
       <MyPic myProfile={myProfile} posts={posts} />
       <MyProfile myProfile={myProfile} />
-      <NewMyHighlight />
+      {/* <NewMyHighlight /> */}
       <MyHighlight />
       <MyFeedTabBar />
       <TimeLine posts={posts} />

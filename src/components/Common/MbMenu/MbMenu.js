@@ -112,7 +112,7 @@ const MbMenu = () => {
           <MenuText className="text">{it.name}</MenuText>
         </MenuItem>
       ))}
-      {openNew ? <New setOpenNew={setOpenNew} /> : null}
+      {openNew ? <New /> : null}
     </MenuList>
   );
 };

@@ -121,7 +121,6 @@ const SearchInput = styled.input`
 const TextInputArea = styled.div`
   width: 100%;
   position: relative;
-  border: 1px solid red;
 `;
 
 const TextArea = styled.textarea`
@@ -310,10 +309,6 @@ const New = () => {
     }
   };
 
-  // const handleOnClick = () => {
-  //   setOpenNew(false);
-  // };
-
   return (
     <NewBg
       variants={click}
@@ -322,7 +317,10 @@ const New = () => {
       exit="exits"
       ref={newBgRef}
       onClick={(e) => {
-        if (e.target === newBgRef.current) setOpenNew(false);
+        if (e.target === newBgRef.current) {
+          console.log("Background clicked, closing modal.");
+          setOpenNew(false); // 모달 닫기
+        }
       }}
     >
       <Wrapper
@@ -330,6 +328,7 @@ const New = () => {
         initial="initial"
         animate="visible"
         exit="exits"
+        onClick={(e) => e.stopPropagation()}
       >
         <Inner className="inner">
           <H3>새 게시물 만들기</H3>
@@ -389,7 +388,6 @@ const New = () => {
                 type={"negative"}
                 text={"취소하기"}
                 width={"50%"}
-                // onClick={handleOnClick}
               />
               <SubmitBtn
                 type="submit"

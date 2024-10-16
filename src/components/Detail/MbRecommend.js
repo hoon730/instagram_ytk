@@ -55,7 +55,11 @@ const MbRecommend = () => {
     followerRecommended.includes(profile.uid)
   );
 
-  console.log(followersProfile);
+  const finalFollowers = followersProfile.map(
+    (profile) => profile.uid !== myProfile.uid
+  );
+
+  console.log(finalFollowers);
 
   return (
     <AnimatePresence>
@@ -76,11 +80,34 @@ const MbRecommend = () => {
             }
           }}
         >
-          {followersProfile.map((profile, idx) => (
-            <RecommendItem key={idx}>
-              <ProfileImg size={"75"} url={profile.profilePhoto} hover={true} />
-              <Id>{profile.userName}</Id>
-              <Desc>{profile.userId}님이 팔로우 합니다</Desc>
+          {finalFollowers.length > 0 ? (
+            finalFollowers.map((profile, idx) => (
+              <RecommendItem key={idx}>
+                <ProfileImg
+                  size={"75"}
+                  url={profile.profilePhoto}
+                  hover={true}
+                />
+                <Id>{profile.userName}</Id>
+                <Desc>{profile.userId}님이 팔로우 합니다</Desc>
+                <Button
+                  width={"80px"}
+                  height={"30px"}
+                  fontSize={"14"}
+                  type={"positive"}
+                  text={"팔로우"}
+                />
+              </RecommendItem>
+            ))
+          ) : (
+            <RecommendItem>
+              <ProfileImg
+                size={"75"}
+                url={finalFollowers.profilePhoto}
+                hover={true}
+              />
+              <Id>{finalFollowers.userName}</Id>
+              <Desc>{finalFollowers.userId}님이 팔로우 합니다</Desc>
               <Button
                 width={"80px"}
                 height={"30px"}
@@ -89,7 +116,7 @@ const MbRecommend = () => {
                 text={"팔로우"}
               />
             </RecommendItem>
-          ))}
+          )}
         </RecommendList>
       </Wrapper>
     </AnimatePresence>

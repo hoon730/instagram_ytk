@@ -1,6 +1,7 @@
 import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../../App";
+import { OpenContext } from "../../../App";
 import styled from "styled-components";
 import { menuData, toolData, dontReady } from "../../../utils/utils";
 import ToolItem from "./ToolItem";
@@ -147,7 +148,7 @@ const ToolList = styled.div`
 const SideBar = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
-  const [openNew, setOpenNew] = useState(false);
+  const { openNew, setOpenNew } = useContext(OpenContext);
   const [currentNum, setCurrentNum] = useState(0);
 
   const handleOnClick = (path) => {
@@ -212,7 +213,7 @@ const SideBar = () => {
               <MenuText className="text">{it.name}</MenuText>
             </MenuItem>
           ))}
-          {openNew ? <New setOpenNew={setOpenNew} /> : null}
+          {openNew ? <New /> : null}
         </MenuList>
       </Wrapper>
       <ToolList className="toollist">

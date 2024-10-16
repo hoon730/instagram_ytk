@@ -45,10 +45,16 @@ const MesseageBtn = styled.span`
 `;
 
 const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
-  // const handleOnClick = () => {
-  //   onClick();
-  // };
   const { setOpenNew } = useContext(OpenContext);
+
+  const handleOnClick = () => {
+    if (onClick) {
+      onClick();
+    }
+    setOpenNew(false);
+  };
+
+  console.log(setOpenNew);
 
   return (
     <ButtonItem
@@ -56,7 +62,7 @@ const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
       $height={height}
       fontSize={fontSize}
       type={type}
-      onClick={() => setOpenNew(false)}
+      onClick={() => setOpenNew((prev) => !prev)}
       $followed={followed}
     >
       <MesseageBtn $followed={followed}>
