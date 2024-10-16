@@ -43,11 +43,13 @@ export const menuData = [
     id: 1,
     name: "탐색",
     iconCode: <FaRegCompass />,
+    path: "/explore",
   },
   {
     id: 2,
     name: "릴스",
     iconCode: <BiMoviePlay />,
+    path: "/reels",
   },
   {
     id: 3,
@@ -77,6 +79,7 @@ export const mbMenuData = [
     id: 1,
     name: "검색",
     iconCode: <RxMagnifyingGlass />,
+    path: "/explore",
   },
   {
     id: 2,
@@ -88,6 +91,7 @@ export const mbMenuData = [
     id: 3,
     name: "릴스",
     iconCode: <BiMoviePlay />,
+    path: "/reels",
   },
   {
     id: 4,
@@ -226,3 +230,7 @@ export const videoArr = [
   "dv",
   "ts",
 ];
+
+export const dontReady = () => {
+  alert("준비 중인 기능입니다.");
+};

@@ -1,19 +1,22 @@
 import React from "react";
 import styled from "styled-components";
+import { extractExtension, videoArr } from "../../utils/utils";
 
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 0;
   overflow: hidden;
+  border-radius: var(--border-radius-8);
   ${({ page }) =>
     page === "search" || page === "explore"
       ? "padding-top: 100%;"
+      : page === "reels"
+      ? "padding-top: 178%"
       : "padding-top: 33%;"}
-  background: #000;
 `;
 
-const ImgBox = styled.div`
+const Box = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -24,20 +27,35 @@ const ImgBox = styled.div`
 const Img = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 5px;
   object-fit: cover;
 `;
 
-const MyPostItem = ({ size, url, onClick, page }) => {
-  const showFeed = () => {
-    onClick();
-  };
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  ${({ page }) =>
+    page === "search" || page === "explore"
+      ? "object-fit: cover;"
+      : "object-fit: contain;"}
+  background: #000;
+`;
 
+const MyPostItem = ({ size, url, page, onClick }) => {
   return (
-    <Wrapper onClick={showFeed} page={page}>
-      <ImgBox>
-        <Img src={url} alt="postphoto" />
-      </ImgBox>
+    <Wrapper page={page}>
+      <Box>
+        {videoArr.includes(extractExtension(url[0])) ? (
+          <Video
+            onClick={onClick}
+            src={url[0]}
+            muted
+            alt="postvideo"
+            page={page}
+          />
+        ) : (
+          <Img onClick={onClick} src={url[0]} alt="postimg" />
+        )}
+      </Box>
     </Wrapper>
   );
 };

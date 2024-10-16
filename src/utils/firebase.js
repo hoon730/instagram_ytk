@@ -57,9 +57,8 @@ const firebaseConfig = {
   projectId: "ytg-instagram-3rd",
   storageBucket: "ytg-instagram-3rd.appspot.com",
   messagingSenderId: "718613168797",
-  appId: "1:718613168797:web:39a51c85254a1c1cf24a74"
+  appId: "1:718613168797:web:39a51c85254a1c1cf24a74",
 };
-
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);

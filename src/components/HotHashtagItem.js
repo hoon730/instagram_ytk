@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -32,8 +33,13 @@ const PostCount = styled.p`
 `;
 
 const HotHashtagItem = ({ keyword, postcount }) => {
+  const navigate = useNavigate();
   return (
-    <Wrapper>
+    <Wrapper
+      onClick={() =>
+        navigate(`/search?q=${keyword.toLocaleLowerCase().slice(1)}`)
+      }
+    >
       <Text>
         <Keyword>{keyword}</Keyword>
         <PostCount>{postcount}</PostCount>

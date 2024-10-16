@@ -30,10 +30,23 @@ const FeedArea = styled.div`
 `;
 
 const FeedTabBar = styled.div`
-  width: 100%;
+  width: ${({ isSticky }) => (isSticky ? "680px" : "100%")};
   display: flex;
   flex-direction: column;
   border-top: 1px solid ${({ theme }) => theme.borderColor};
+  border-bottom: ${({ isSticky, theme }) =>
+    isSticky ? `1px solid ${theme.borderColor}` : "none"};
+  background: ${({ theme }) => theme.bgColor};
+  z-index: 1;
+  position: ${({ isSticky }) => (isSticky ? "fixed" : "static")};
+  top: ${({ isSticky }) => (isSticky ? "85px" : "auto")};
+  @media screen and (max-width: 630px) {
+    top: ${({ isSticky }) => (isSticky ? "74px" : "auto")};
+    width: ${({ isSticky }) => (isSticky ? "430px" : "100%")};
+  }
+  @media screen and (max-width: 430px) {
+    width: 100%;
+  }
 `;
 
 const FeedTabBtn = styled.div`
@@ -60,6 +73,13 @@ const ActiveBorder = styled.div`
       : `transform: translateX(100%);`}
 `;
 
+const PostArea = styled.div`
+  margin-top: ${({ isSticky }) => (isSticky ? "60px" : "0")};
+  @media screen and (max-width: 630px) {
+    margin-top: ${({ isSticky }) => (isSticky ? "50px" : "0")};
+  }
+`;
+
 const LoadingScreen = styled.div`
   width: 100%;
   height: 100vh;
@@ -67,6 +87,7 @@ const LoadingScreen = styled.div`
 `;
 
 const FeedContent = () => {
+  const [isSticky, setIsSticky] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
@@ -74,6 +95,8 @@ const FeedContent = () => {
   const [postsWithProfiles, setPostsWithProfiles] = useState([]);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
+
+  const stickyTriggerHeight = 285;
 
   const recommendActive = () => {
     setIsLoading(true);
@@ -88,11 +111,22 @@ const FeedContent = () => {
     setTabChange("follow");
   };
 
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY > stickyTriggerHeight) {
+      if (!isSticky) {
+        setIsSticky(true);
+      }
+    } else {
+      setIsSticky(false);
+    }
+  };
+
   useEffect(() => {
     let postsUnsubscribe = null;
 
-    if (myProfile && myProfile.following) {
-      const getPosts = () => {
+    const getPosts = () => {
+      if (myProfile && myProfile.following && allProfile) {
         const postsQuery = query(
           collection(db, "feed"),
           where("type", "!=", null),
@@ -124,24 +158,31 @@ const FeedContent = () => {
           );
 
           setPostsWithProfiles(posts);
-
           setIsLoading(false);
         });
-      };
+      } else {
+        setIsLoading(false);
+      }
+    };
 
+    if (myProfile && allProfile) {
       getPosts();
     }
+
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
       if (postsUnsubscribe) {
         postsUnsubscribe();
       }
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [myProfile, recommend]);
+  }, [myProfile, allProfile, recommend]);
 
   return (
     <Wrapper>
       <FeedArea>
-        <FeedTabBar>
+        <FeedTabBar isSticky={isSticky}>
           <ActiveBorderArea>
             <ActiveBorder $tabChange={$tabChange} />
           </ActiveBorderArea>
@@ -165,7 +206,7 @@ const FeedContent = () => {
         {isLoading ? (
           <LoadingScreen />
         ) : (
-          <>
+          <PostArea isSticky={isSticky}>
             {postsWithProfiles && postsWithProfiles.length > 0 ? (
               postsWithProfiles.map((post) => (
                 <FeedItem key={post.id} feedDetail={post} />
@@ -175,7 +216,7 @@ const FeedContent = () => {
             ) : (
               <WelcomFeed recommend={false} />
             )}
-          </>
+          </PostArea>
         )}
       </FeedArea>
     </Wrapper>

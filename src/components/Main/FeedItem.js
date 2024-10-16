@@ -99,7 +99,8 @@ const PhotoSection = styled.div`
 const Video = styled.video`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #000;
 `;
 
 const FeedDescArea = styled.div`
@@ -137,7 +138,7 @@ const DateText = styled.div`
   }
 `;
 
-const FeedItem = ({ feedDetail, dateMB }) => {
+const FeedItem = ({ feedDetail }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [comments, setComments] = useState([]);
   const [pushComment, setPushComment] = useState("");
@@ -196,7 +197,13 @@ const FeedItem = ({ feedDetail, dateMB }) => {
       </ProfileSection>
       <PhotoSection>
         {feedDetail.type === "reels" ? (
-          <Video autoPlay muted loop src={feedDetail.imgPath} />
+          <Video
+            autoPlay
+            muted
+            loop
+            src={feedDetail.imgPath}
+            onClick={onClick}
+          />
         ) : (
           <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
         )}
@@ -216,7 +223,9 @@ const FeedItem = ({ feedDetail, dateMB }) => {
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
-          <DateText>{`${dateMB}`}</DateText>
+          <DateText>{`${getFormattedDate(
+            new Date(parseInt(feedDetail.createdAt))
+          )}`}</DateText>
           <CommentArea>
             {comments.map((it, idx) => (
               <CommentLine

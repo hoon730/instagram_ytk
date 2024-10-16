@@ -80,6 +80,10 @@ const router = createBrowserRouter([
         element: <Search page={"explore"} />,
       },
       {
+        path: "reels",
+        element: <Search page={"reels"} />,
+      },
+      {
         path: "clickstory",
         element: <ClickStory />,
       },

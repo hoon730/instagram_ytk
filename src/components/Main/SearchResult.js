@@ -72,7 +72,7 @@ const SearchResult = ({ text }) => {
       const querySnapshot = await getDocs(collection(db, "feed"));
       let allHashtags = [];
 
-      querySnapshot.docs.map((doc) => {
+      querySnapshot.docs.forEach((doc) => {
         const data = doc.data();
         if (data.hashtag) {
           allHashtags.push(...data.hashtag);
@@ -97,7 +97,7 @@ const SearchResult = ({ text }) => {
       const querySnapshot = await getDocs(collection(db, "profile"));
       let allUsers = [];
 
-      querySnapshot.docs.map((doc) => {
+      querySnapshot.docs.forEach((doc) => {
         const data = doc.data();
         if (data) {
           allUsers.push(data);
