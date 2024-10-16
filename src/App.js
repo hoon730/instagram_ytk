@@ -28,6 +28,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import NotLoggedIn from "./components/NotLoggedIn";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -91,11 +92,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <NotLoggedIn>
+        <Login />
+      </NotLoggedIn>
+    ),
   },
   {
     path: "/signup",
-    element: <Signup />,
+    element: (
+      <NotLoggedIn>
+        <Signup />
+      </NotLoggedIn>
+    ),
   },
   {
     path: "/setStorage",
