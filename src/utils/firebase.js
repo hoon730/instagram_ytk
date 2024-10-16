@@ -3,6 +3,8 @@ import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 import { getApp, getApps } from "firebase/app";
+
+// ytg firebase
 // const firebaseConfig = {
 //   apiKey: "AIzaSyAQZTNSis27AhSHE1MQyYwuaAllNdHuwp0",
 //   authDomain: "ytg-instagram.firebaseapp.com",
@@ -13,14 +15,24 @@ import { getApp, getApps } from "firebase/app";
 // };
 
 // 지선님꺼
+// const firebaseConfig = {
+//   apiKey: "AIzaSyB5f9tIwQ3_s_yTTxedSrrolATrsmoJjlQ",
+//   authDomain: "ins-loginpg.firebaseapp.com",
+//   projectId: "ins-loginpg",
+//   storageBucket: "ins-loginpg.appspot.com",
+//   messagingSenderId: "389855710537",
+//   appId: "1:389855710537:web:bca6060c85eb04213d5e98",
+//   measurementId: "G-84EN6XKL1V",
+// };
+
+// 동훈 2nd sns-platform
 const firebaseConfig = {
-  apiKey: "AIzaSyB5f9tIwQ3_s_yTTxedSrrolATrsmoJjlQ",
-  authDomain: "ins-loginpg.firebaseapp.com",
-  projectId: "ins-loginpg",
-  storageBucket: "ins-loginpg.appspot.com",
-  messagingSenderId: "389855710537",
-  appId: "1:389855710537:web:bca6060c85eb04213d5e98",
-  measurementId: "G-84EN6XKL1V",
+  apiKey: "AIzaSyAIpCx_9U6XSTBGXsR1qMBjDSWrYcOHrfk",
+  authDomain: "sns-platform-5c897.firebaseapp.com",
+  projectId: "sns-platform-5c897",
+  storageBucket: "sns-platform-5c897.appspot.com",
+  messagingSenderId: "458748192605",
+  appId: "1:458748192605:web:f06aa3365f3c309a9c6ab4",
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

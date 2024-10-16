@@ -313,18 +313,18 @@ const EditedTextArea = styled.textarea`
   }
 `;
 
-const ClickMyFeed = ({ onClick, myProfile, post }) => {
+const ClickMyFeed = ({ onClick, myProfile, feedDetail }) => {
   const commentRef = useRef();
   const bgRef = useRef();
   const [comment, setComment] = useState("");
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editedPost, setEditedPost] = useState(post?.content || "");
+  const [editedFeedDetail, setEditedFeedDetail] = useState(
+    feedDetail?.content || ""
+  );
 
   const [preview, setPreview] = useState([]);
   const [file, setFile] = useState([]);
-
-
 
   const hideFeed = () => {
     onClick();
@@ -335,7 +335,7 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
   };
 
   const onChange = (e) => {
-    setEditedPost(e.target.value);
+    setEditedFeedDetail(e.target.value);
   };
 
   const handleCancel = () => {
@@ -376,11 +376,11 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
   const user = auth.currentUser;
   const onDelete = async () => {
     const ok = window.confirm("정말로 지금 게시물을 삭제하시겠습니까?");
-    if (!ok || user.uid !== post.uid) return;
+    if (!ok || user.uid !== feedDetail.uid) return;
     try {
-      await deleteDoc(doc(db, `feed`, post.id));
-      if (post.media) {
-        const mediaRef = ref(storage, `feed/${user.uid}/${post.id}`);
+      await deleteDoc(doc(db, `feed`, feedDetail.id));
+      if (feedDetail.media) {
+        const mediaRef = ref(storage, `feed/${user.uid}/${feedDetail.id}`);
         await deleteObject(mediaRef);
       }
     } catch (e) {
@@ -390,12 +390,12 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
 
   const onUpDate = async () => {
     try {
-      if (user?.uid !== post.uid) return;
+      if (user?.uid !== feedDetail.uid) return;
 
-      const postDoc = await getDoc(doc(db, "feed", post.id));
-      const postData = postDoc.data();
+      const feedDetailDoc = await getDoc(doc(db, "feed", feedDetail.id));
+      const feedDetailData = feedDetailDoc.data();
 
-      let updatedMedia = postData.imgPath || [];
+      let updatedMedia = feedDetailData.imgPath || [];
 
       if (file.length > 0) {
         for (const editedFile of file) {
@@ -405,7 +405,7 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
 
           const locationRef = ref(
             storage,
-            `feed/${user.uid}/${post.id}/${editedFile.name}`
+            `feed/${user.uid}/${feedDetail.id}/${editedFile.name}`
           );
           const uploadTask = uploadBytesResumable(locationRef, editedFile);
 
@@ -423,14 +423,14 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
       }
 
       const updatedData = {
-        content: editedPost,
+        content: editedFeedDetail,
         imgPath: updatedMedia,
         type: updatedMedia.find((item) => item.endsWith(".mp4"))
           ? "reels"
           : "img",
       };
 
-      await updateDoc(doc(db, "feed", post.id), updatedData);
+      await updateDoc(doc(db, "feed", feedDetail.id), updatedData);
     } catch (e) {
       console.error(e);
     } finally {
@@ -438,11 +438,9 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
     }
   };
 
-
-
   return (
     <>
-      {!post ? (
+      {!feedDetail ? (
         <p>피드를 불러오는 중입니다...</p>
       ) : (
         <>
@@ -501,33 +499,39 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
                       </SetContentButton>
                     ) : (
                       <>
-                        {post && post?.type === "reels" ? (
+                        {feedDetail && feedDetail?.type === "reels" ? (
                           <Video
                             autoPlay
                             muted
                             loop
-                            src={post?.imgPath}
+                            src={feedDetail?.imgPath}
                             style={{
                               width: "100%",
                               height: "100%",
                               objectFit: "cover",
                             }}
                           />
-                        ) : post?.type === "img" ? (
+                        ) : feedDetail?.type === "img" ? (
                           <Slide
                             imgPath={
-                              Array.isArray(post.imgPath)
-                                ? post.imgPath
-                                : [post.imgPath]
+                              Array.isArray(feedDetail.imgPath)
+                                ? feedDetail.imgPath
+                                : [feedDetail.imgPath]
                             }
                             onClick={onClick}
                           />
-                        ) : Array.isArray(post.imgPath) ? (
-                          <Slide imgPath={post.imgPath} onClick={onClick} />
-                        ) : post.type === "img" ? (
-                          <Slide imgPath={[post.imgPath]} onClick={onClick} />
-                        ) : post.type === "reels" ? (
-                          <Video src={post.imgPath} muted />
+                        ) : Array.isArray(feedDetail.imgPath) ? (
+                          <Slide
+                            imgPath={feedDetail.imgPath}
+                            onClick={onClick}
+                          />
+                        ) : feedDetail.type === "img" ? (
+                          <Slide
+                            imgPath={[feedDetail.imgPath]}
+                            onClick={onClick}
+                          />
+                        ) : feedDetail.type === "reels" ? (
+                          <Video src={feedDetail.imgPath} muted />
                         ) : null}
                       </>
                     )}
@@ -550,7 +554,7 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
                               type={"feed"}
                               userNickname={myProfile?.userId}
                               check={myProfile?.badge ? "active" : ""}
-                              // createdAt={new Date(parseInt(post.createdAt))}
+                              // createdAt={new Date(parseInt(feedDetail.createdAt))}
                               btn={"more"}
                               onClick={onDelete}
                               setIsEditing={setIsEditing}
@@ -558,29 +562,34 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
                               feed={"myfeed"}
                             />
                             <Location>
-                              {post ? post?.location : myProfile?.userName}
+                              {feedDetail
+                                ? feedDetail?.location
+                                : myProfile?.userName}
                             </Location>
                           </Userinfo>
                         </UserBox>
                         <UserContents>
                           {isEditing ? (
                             <EditedTextArea
-                              value={editedPost}
-                              placeholder={post.content}
+                              value={editedFeedDetail}
+                              placeholder={feedDetail.content}
                               onChange={onChange}
                             />
                           ) : (
-                            <>{post && <FeedText post={post} />}</>
+                            <>
+                              {feedDetail && (
+                                <FeedText feedDetail={feedDetail} />
+                              )}
+                            </>
                           )}
                         </UserContents>
                       </UserContainer>
                       {isEditing ? null : (
                         <CommentList className="comment_list">
-                          {post ? null : (
+                          {feedDetail ? null : (
                             <CommentItem
                               onClick={onFocus}
-                              post={post}
-                              // myProfile={myProfile}
+                              feedDetail={feedDetail}
                             />
                           )}
                         </CommentList>
@@ -591,10 +600,10 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
                         <Top>
                           <Notification>
                             <IoHeartOutline />
-                            {post ? (
+                            {feedDetail ? (
                               <span>
-                                {post.userId}님 외 <b> {post.like.length}명</b>
-                                이 좋아합니다
+                                {feedDetail.userId}님 외{" "}
+                                <b> {feedDetail.like.length}명</b>이 좋아합니다
                               </span>
                             ) : null}
                           </Notification>
@@ -625,3 +634,64 @@ const ClickMyFeed = ({ onClick, myProfile, post }) => {
 };
 
 export default ClickMyFeed;
+
+
+// {isEditing ? (
+//   <SetContentButton htmlFor="edit-content">
+//     {preview.length > 0 ? (
+//       preview.map((item, idx) => (
+//         <PreviewImage
+//           key={idx}
+//           src={item}
+//           alt={`미리보기 ${idx + 1}`}
+//         />
+//       ))
+//     ) : (
+//       <Icon src="/images/newPostIcon.svg" />
+//     )}
+//     <SetContentInputButton
+//       id="edit-content"
+//       type="file"
+//       accept="video/mpk, video/*, image/*"
+//       onChange={onClickSetContent}
+//       multiple
+//     />
+//   </SetContentButton>
+// ) : (
+//   <>
+//     {feedDetail && feedDetail?.type === "reels" ? (
+//       <Video
+//         autoPlay
+//         muted
+//         loop
+//         src={feedDetail?.imgPath}
+//         style={{
+//           width: "100%",
+//           height: "100%",
+//           objectFit: "cover",
+//         }}
+//       />
+//     ) : feedDetail?.type === "img" ? (
+//       <Slide
+//         imgPath={
+//           Array.isArray(feedDetail.imgPath)
+//             ? feedDetail.imgPath
+//             : [feedDetail.imgPath]
+//         }
+//         onClick={onClick}
+//       />
+//     ) : Array.isArray(feedDetail.imgPath) ? (
+//       <Slide
+//         imgPath={feedDetail.imgPath}
+//         onClick={onClick}
+//       />
+//     ) : feedDetail.type === "img" ? (
+//       <Slide
+//         imgPath={[feedDetail.imgPath]}
+//         onClick={onClick}
+//       />
+//     ) : feedDetail.type === "reels" ? (
+//       <Video src={feedDetail.imgPath} muted />
+//     ) : null}
+//   </>
+// )}

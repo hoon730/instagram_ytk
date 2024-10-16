@@ -118,7 +118,7 @@ function App() {
 
   useEffect(() => {
     init();
-
+    
     let allProfileUnsubscribe = null;
     const fetchAllProfile = async () => {
       const profileQuery = query(collection(db, "profile"));

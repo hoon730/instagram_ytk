@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import Button from "../Common/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { mouseon } from "../../utils/utils";
+import { StateContext } from "../../App";
 
 const Wrapper = styled(motion.div)`
   padding: 20px 15px;
@@ -74,6 +75,14 @@ const userData = [
 ];
 
 const MbRecommend = () => {
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
+
+  const allProfileUids = allProfile?.map((profile) => profile.uid);
+  const followerRecommended = allProfileUids?.filter(
+    (allUids) => !myProfile.following.includes(allUids)
+  );
+
   return (
     <AnimatePresence>
       <Wrapper
@@ -83,7 +92,16 @@ const MbRecommend = () => {
         exit="exits"
       >
         <Title>회원님을 위한 추천</Title>
-        <RecommendList drag="x" dragSnapToOrigin>
+        <RecommendList
+          drag="x"
+          dragConstraints={{ left: -300, right: 0 }}
+          whileTap={{ cursor: "grabbing" }}
+          onDragEnd={(event, info) => {
+            if (info.point.x < -300) {
+            } else if (info.point.x > 0) {
+            }
+          }}
+        >
           {userData.map((it, idx) => (
             <RecommendItem key={idx}>
               <ProfileImg size={"75"} url={it.imgPath} hover={true} />

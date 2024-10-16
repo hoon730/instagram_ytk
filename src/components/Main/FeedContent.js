@@ -15,9 +15,7 @@ import {
 import WelcomFeed from "./WelcomFeed";
 import { StateContext } from "../../App";
 
-const Wrapper = styled.div`
-  position: relative;
-`;
+const Wrapper = styled.div``;
 
 const FeedArea = styled.div`
   width: 680px;
@@ -32,13 +30,17 @@ const FeedArea = styled.div`
 `;
 
 const FeedTabBar = styled.div`
-  width: 100%;
+  width: ${({ isSticky }) => (isSticky ? "680px" : "100%")};
   display: flex;
   flex-direction: column;
   border-top: 1px solid ${({ theme }) => theme.borderColor};
   transition: transform 0.3s ease-in-out;
   z-index: 1;
   background: ${({ theme }) => theme.bgColor};
+  position: ${({ isSticky }) => (isSticky ? "fixed" : "static")};
+  top: ${({ isSticky }) => (isSticky ? "85px" : null)};
+  transform: ${({ isVisible }) =>
+    isVisible ? "translateY(0)" : "translateY(-100%)"};
 `;
 
 const FeedTabBtn = styled.div`
@@ -72,6 +74,7 @@ const LoadingScreen = styled.div`
 `;
 
 const FeedContent = () => {
+  const [isSticky, setIsSticky] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -81,6 +84,8 @@ const FeedContent = () => {
   const [postsWithProfiles, setPostsWithProfiles] = useState([]);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
+
+  const stickyTriggerHeight = 226;
 
   const recommendActive = () => {
     setIsLoading(true);
@@ -97,6 +102,24 @@ const FeedContent = () => {
 
   useEffect(() => {
     let postsUnsubscribe = null;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > stickyTriggerHeight) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+
+      if (currentScrollY > lastScrollY) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
 
     if (myProfile && myProfile.following) {
       const getPosts = () => {
@@ -131,28 +154,81 @@ const FeedContent = () => {
           );
 
           setPostsWithProfiles(posts);
-
           setIsLoading(false);
         });
       };
 
       getPosts();
     }
+
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
       if (postsUnsubscribe) {
         postsUnsubscribe();
       }
+
+      window.removeEventListener("scroll", handleScroll);
     };
-  }, [myProfile, recommend]);
+  }, [myProfile, recommend, lastScrollY]);
+  // useEffect(() => {
+  //   let postsUnsubscribe = null;
+
+  //   if (myProfile && myProfile.following) {
+  //     const getPosts = () => {
+  //       const postsQuery = query(
+  //         collection(db, "feed"),
+  //         where("type", "!=", null),
+  //         orderBy("createdAt", "desc")
+  //       );
+
+  //       postsUnsubscribe = onSnapshot(postsQuery, async (snapshot) => {
+  //         const postDocs = snapshot.docs;
+
+  //         const posts = await Promise.all(
+  //           postDocs
+  //             .filter((doc) =>
+  //               doc.data().uid !== myProfile.uid && recommend
+  //                 ? !myProfile.following.includes(doc.data().uid)
+  //                 : myProfile.following.includes(doc.data().uid)
+  //             )
+  //             .map(async (doc) => {
+  //               const postData = doc.data();
+
+  //               const profileData = allProfile.find(
+  //                 (it) => it.uid === postData.uid
+  //               );
+  //               return {
+  //                 id: doc.id,
+  //                 ...postData,
+  //                 profile: profileData,
+  //               };
+  //             })
+  //         );
+
+  //         setPostsWithProfiles(posts);
+
+  //         setIsLoading(false);
+  //       });
+  //     };
+
+  //     getPosts();
+  //   }
+  //   return () => {
+  //     if (postsUnsubscribe) {
+  //       postsUnsubscribe();
+  //     }
+  //   };
+  // }, [myProfile, recommend]);
 
   return (
     <Wrapper>
       <FeedArea>
-        <FeedTabBar>
+        <FeedTabBar isSticky={isSticky} isVisible={isVisible}>
           <ActiveBorderArea>
             <ActiveBorder $tabChange={$tabChange} />
           </ActiveBorderArea>
-          <FeedTabBtn isVisible={isVisible}>
+          <FeedTabBtn>
             <TabBarBtn
               onClick={recommendActive}
               width={340}

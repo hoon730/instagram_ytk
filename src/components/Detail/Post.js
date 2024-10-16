@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ClickMyFeed from "./ClickMyFeed";
 import { extractExtension, videoArr } from "../../utils/utils";
 import { StateContext } from "../../App";
+import ClickFeed from "./ClickFeed";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -42,21 +43,23 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Post = ({ myProfile, post }) => {
+const Post = ({ post }) => {
   const [followingUser, setFollowingUser] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const { allProfile } = useContext(StateContext);
+  const { myProfile } = useContext(StateContext);
 
-  useEffect(() => {
-    const likeFollowing = post.like.find((it) =>
-      myProfile.following.includes(it)
-    );
+  // useEffect(() => {
+  //   const likeFollowing = post.like.find((it) =>
+  //     myProfile.following.includes(it)
+  //   );
 
-    if (likeFollowing) {
-      const profileData = allProfile.find((it) => it.uid === likeFollowing);
-      setFollowingUser(profileData);
-    }
-  }, [post.like, myProfile.following, allProfile]);
+  //   if (likeFollowing) {
+  //     const profileData = allProfile.find((it) => it.uid === likeFollowing);
+  //     setFollowingUser(profileData);
+  //   }
+  // }, [post.like, myProfile.following, allProfile]);
+
   const showFeed = () => {
     setIsClicked((current) => !current);
   };
@@ -83,8 +86,9 @@ const Post = ({ myProfile, post }) => {
         </Filter>
       </Wrapper>
       {isClicked ? (
-        <ClickMyFeed myProfile={myProfile} post={post} onClick={showFeed} />
-      ) : null}
+        <ClickFeed feedDetail={post} onClick={showFeed} />
+      ) : // <ClickMyFeed myProfile={myProfile} post={post} onClick={showFeed} />
+      null}
     </>
   );
 };

@@ -85,8 +85,6 @@ const MbMenu = () => {
     setOpenNew(true);
   };
 
-  console.log(myProfile);
-
   return (
     <MenuList className="menulist">
       {mbMenuData.map((it, idx) => (
