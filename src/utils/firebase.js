@@ -47,18 +47,48 @@ import { getApp, getApps } from "firebase/app";
 //   projectId: "ytg-instagram-2nd",
 //   storageBucket: "ytg-instagram-2nd.appspot.com",
 //   messagingSenderId: "694538495457",
+//   appId: "1:694538495457:web:9aa575fe5cbbbc7fe7dea0"
+// };
+
+// 동훈  ytg-instagram-3rd
+const firebaseConfig = {
+  apiKey: "AIzaSyDUxtRALmwMwQZrN9DvS0CPUhm71_DEMgo",
+  authDomain: "ytg-instagram-3rd.firebaseapp.com",
+  projectId: "ytg-instagram-3rd",
+  storageBucket: "ytg-instagram-3rd.appspot.com",
+  messagingSenderId: "718613168797",
+  appId: "1:718613168797:web:39a51c85254a1c1cf24a74",
+};
+
+// 동훈 2nd sns-platform
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAIpCx_9U6XSTBGXsR1qMBjDSWrYcOHrfk",
+//   authDomain: "sns-platform-5c897.firebaseapp.com",
+//   projectId: "sns-platform-5c897",
+//   storageBucket: "sns-platform-5c897.appspot.com",
+//   messagingSenderId: "458748192605",
+//   appId: "1:458748192605:web:f06aa3365f3c309a9c6ab4"
+// };
+
+// 동훈  ytg-instagram-2nd
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDICinBeRvZCV2OHSfApLsTudugCEc0-jM",
+//   authDomain: "ytg-instagram-2nd.firebaseapp.com",
+//   projectId: "ytg-instagram-2nd",
+//   storageBucket: "ytg-instagram-2nd.appspot.com",
+//   messagingSenderId: "694538495457",
 //   appId: "1:694538495457:web:9aa575fe5cbbbc7fe7dea0",
 // };
 
 // 리아
-const firebaseConfig = {
-  apiKey: "AIzaSyAXO9L2ZpmSS2mVMlLOmURBE2vO8YnA6mE",
-  authDomain: "ria-instagram.firebaseapp.com",
-  projectId: "ria-instagram",
-  storageBucket: "ria-instagram.appspot.com",
-  messagingSenderId: "890530950686",
-  appId: "1:890530950686:web:1618bbd9d011936d57080f",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAXO9L2ZpmSS2mVMlLOmURBE2vO8YnA6mE",
+//   authDomain: "ria-instagram.firebaseapp.com",
+//   projectId: "ria-instagram",
+//   storageBucket: "ria-instagram.appspot.com",
+//   messagingSenderId: "890530950686",
+//   appId: "1:890530950686:web:1618bbd9d011936d57080f",
+// };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);

@@ -21,7 +21,7 @@ const MenuList = styled.div`
   border-top: 1px solid ${({ theme }) => theme.borderColor};
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
-  z-index: 2;
+  z-index: 3;
 
   @media screen and (max-width: 630px) {
     display: flex;
@@ -29,8 +29,8 @@ const MenuList = styled.div`
 `;
 
 const MenuItem = styled.div`
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,15 +39,12 @@ const MenuItem = styled.div`
   cursor: pointer;
   transition: all 0.2s;
   border-radius: var(--border-radius-12);
+  color: ${({ theme }) => theme.nonActiveBtnColor};
 
   &.active {
-    background: ${({ theme }) => theme.fontColor};
-    color: ${({ theme }) => theme.bgColor};
+    background: ${({ theme }) => theme.borderColor};
+    color: ${({ theme }) => theme.iconColor};
     font-weight: var(--font-bold);
-  }
-
-  &:hover {
-    color: var(--gray-color);
   }
 `;
 

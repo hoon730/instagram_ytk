@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
 import styled from "styled-components";
+import { db } from "../utils/firebase";
 import HotHashtagItem from "./HotHashtagItem";
 import Footer from "./Common/Footer/Footer";
 
@@ -29,43 +31,48 @@ const ItemList = styled.div`
   gap: 15px;
 `;
 
-const hotTagInfo = [
-  {
-    keyword: "#여행",
-    postcount: "3.2만",
-  },
-  {
-    keyword: "#맛집투어",
-    postcount: "452만",
-  },
-  {
-    keyword: "#제주도",
-    postcount: "2만",
-  },
-  {
-    keyword: "#서귀포",
-    postcount: "3.7만",
-  },
-  {
-    keyword: "#일상생활",
-    postcount: "110만",
-  },
-  {
-    keyword: "#마라탕",
-    postcount: "8.6만",
-  },
-];
-
 const HotHashtag = () => {
+  const [hotTagInfo, setHotTagInfo] = useState([]);
+
+  useEffect(() => {
+    const fetchHashtags = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "feed"));
+        let allHashtags = [];
+
+        querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          if (data.hashtag) {
+            allHashtags.push(...data.hashtag);
+          }
+        });
+
+        const hashtagCountFun = allHashtags.reduce((accu, curr) => {
+          accu[curr] = (accu[curr] || 0) + 1;
+          return accu;
+        }, {});
+
+        const entries = Object.entries(hashtagCountFun);
+
+        const sortedEntries = entries.sort((a, b) => b[1] - a[1]).slice(0, 6);
+
+        setHotTagInfo(sortedEntries);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchHashtags();
+  }, []);
+
   return (
     <Wrapper>
       <Title>🔥지금 뜨는 #해시태그</Title>
       <ItemList>
-        {hotTagInfo.map((it, idx) => (
+        {hotTagInfo.map(([key, value], idx) => (
           <HotHashtagItem
             key={`hotHashtag${idx}`}
-            keyword={it.keyword}
-            postcount={`게시물 ${it.postcount}개`}
+            keyword={key}
+            postcount={`게시물 ${value}만개`}
           />
         ))}
       </ItemList>

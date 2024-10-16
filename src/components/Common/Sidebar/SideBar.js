@@ -2,8 +2,7 @@ import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../../App";
 import styled from "styled-components";
-import { menuData } from "../../../utils/utils";
-import { toolData } from "../../../utils/utils";
+import { menuData, toolData, dontReady } from "../../../utils/utils";
 import ToolItem from "./ToolItem";
 import New from "../../../pages/New";
 
@@ -167,7 +166,6 @@ const SideBar = () => {
     setOpenNew(true);
   };
 
-
   return (
     <StyledAside>
       <Wrapper>
@@ -197,6 +195,7 @@ const SideBar = () => {
                 handleOnClick(it.path);
                 showNew(it.name);
                 isActive(it.id);
+                if (it.name === "메시지" || it.name === "저장됨") dontReady();
               }}
             >
               <IconWrapper>

@@ -111,6 +111,7 @@ const EditArea = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  display: none;
 `;
 
 const EditAreaHeader = styled.div`
