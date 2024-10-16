@@ -87,7 +87,6 @@ const MbMenu = () => {
     setOpenNew(true);
   };
 
-  console.log(myProfile)
 
   return (
     <MenuList className="menulist">

@@ -24,7 +24,6 @@ const ProfileBg = styled.img`
     width: 100%;
     height: 150px;
   }
-
 `;
 
 const ProfileImgBox = styled.div`
@@ -95,13 +94,12 @@ const ProfileImgBox = styled.div`
       height: 110px;
     }
   }
-  
+
   @media screen and (max-width: 630px) {
     width: 70px;
     height: 70px;
     top: 162px;
     left: 15px;
-  
 
     .storyFirstCircle {
       width: 70px;
@@ -118,12 +116,6 @@ const ProfileImgBox = styled.div`
       width: 60px;
       height: 60px;
     }
-  }
-
-
-  @media screen and (max-width: 430px) {
-    top: 135px;
-    left: 50px;
   }
 `;
 
@@ -162,10 +154,9 @@ const MyFeedDesc = styled.div`
       justify-content: space-between;
     }
   }
-
 `;
 
-const MyPic = ({ myProfile, myFeeds }) => {
+const MyPic = ({ myProfile, posts }) => {
   return (
     <Wrapper>
       <MyPicBox>
@@ -180,7 +171,7 @@ const MyPic = ({ myProfile, myFeeds }) => {
         </ProfileImgBox>
         <MyFeedDesc>
           <PostAndFollow
-            posting={myFeeds?.length}
+            posting={posts?.length}
             follower={myProfile?.follower.length}
             following={myProfile?.following.length}
             myProfile={myProfile}

@@ -1,11 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import MyPic from "../components/MyFeed/MyPic";
-import MyProfile from "../components/MyFeed/MyProfile";
-import MyHighlight from "../components/MyFeed/MyHighlight";
-import MyFeedTabBar from "../components/MyFeed/MyFeedTabBar";
-import TimeLine from "../components/Detail/TimeLine";
-import { StateContext } from "../App";
+import Post from "./Post";
 
 import {
   collection,
@@ -15,35 +10,19 @@ import {
   where,
   orderBy,
 } from "firebase/firestore";
-import { db } from "../utils/firebase";
-import MbHeader from "../components/Detail/MbHeader";
+import { db } from "../../utils/firebase";
+import { StateContext } from "../../App";
 
 const Wrapper = styled.div`
-  width: 934px;
-  min-height: 100vh;
-  height: fit-content;
-  margin: 0 auto;
-  background: ${({ theme }) => theme.bgColor};
-  color: ${({ theme }) => theme.fontColor};
-
-  @media screen and (max-width: 1024px) {
-    width: 100%;
-  }
-
-  @media screen and (max-width: 630px) {
-    width: 430px;
-  }
-
-  @media screen and (max-width: 430px) {
-    width: 100%;
-  }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 5px;
 `;
-
-const MyFeed = () => {
+const TimeLine = () => {
   const [posts, setPosts] = useState([]);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
-
 
   useEffect(() => {
     if (!myProfile || !myProfile.uid) {
@@ -61,9 +40,7 @@ const MyFeed = () => {
 
       unsubscribe = await onSnapshot(postQuery, (snapshot) => {
         const fetchedPosts = snapshot.docs.map((doc) => {
-          const feedProfile = allProfile.find(
-            (it) => it.uid === doc.data().uid
-          );
+          const feedProfile = allProfile.find((it) => it.uid === doc.data().uid);
           const {
             content,
             createdAt,
@@ -86,7 +63,7 @@ const MyFeed = () => {
             uid,
             imgPath,
             type,
-            profile: feedProfile,
+            profile: feedProfile
           };
         });
         setPosts(fetchedPosts); // posts 상태 업데이트
@@ -97,17 +74,13 @@ const MyFeed = () => {
       unsubscribe && unsubscribe();
     };
   }, [myProfile]);
-
   return (
     <Wrapper>
-      <MbHeader />
-      <MyPic myProfile={myProfile} posts={posts} />
-      <MyProfile myProfile={myProfile} />
-      <MyHighlight />
-      <MyFeedTabBar />
-      <TimeLine posts={posts} />
+      {posts.map((post) => (
+        <Post key={post.id} post={post} /> // post 프롭스로 전달
+      ))}
     </Wrapper>
   );
 };
 
-export default MyFeed;
+export default TimeLine;

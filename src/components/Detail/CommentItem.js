@@ -24,7 +24,7 @@ const CommentAndProfile = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  display: none; // 작업 후 삭제
+  //display: none; // 작업 후 삭제
 `;
 
 const CommentAndHeart = styled.div`
@@ -109,6 +109,7 @@ const EditArea = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  display: none;
 `;
 
 const EditAreaHeader = styled.div`
