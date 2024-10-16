@@ -176,9 +176,6 @@ const CommentItem = ({ reply }) => {
 
   const openEditArea = () => {
     setShowEdit(true);
-    // if (textareaRef.current) {
-    //   textareaRef.current.focus();
-    // }
   };
 
   const user = auth.currentUser;

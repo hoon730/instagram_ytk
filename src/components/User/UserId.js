@@ -144,12 +144,19 @@ const UserId = ({
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
   const [hoverId, setHoverId] = useState(false);
+  const [position, setPosition] = useState(null);
   const moreBgRef = useRef();
 
+  const idRef = useRef(null);
   const showProfile = () => {
+    if (idRef.current) {
+      const rect = idRef.current.getBoundingClientRect();
+      setPosition([parseInt(rect.left), parseInt(rect.top)]);
+    }
     setHoverId(true);
   };
   const hideProfile = () => {
+    setPosition([0, 0]);
     setHoverId(false);
   };
 
@@ -164,9 +171,16 @@ const UserId = ({
           className="user-id"
           onMouseEnter={showProfile}
           onMouseLeave={hideProfile}
+          ref={idRef}
         >
           {!hover && hoverId ? (
-            <HoverProfile target={"id"} top={"22"} type={type} uid={uid} />
+            <HoverProfile
+              target={"id"}
+              top={"22"}
+              type={type}
+              uid={uid}
+              position={position}
+            />
           ) : null}
           {userNickname}
         </IdSpan>
