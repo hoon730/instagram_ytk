@@ -8,7 +8,7 @@ import { click, scale } from "../utils/utils";
 import { auth, storage, db } from "../utils/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
-import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 import { LuCamera } from "react-icons/lu";
 import { motion } from "framer-motion";
@@ -161,8 +161,7 @@ const Setup = ({ onClick, myProfile }) => {
     if (!user) return;
 
     try {
-      const userDocRef = doc(db, "profile", user.uid);
-      await updateDoc(userDocRef, {
+      const profileData = {
         userId: editUserName,
         userName: myProfile?.userName || "이름 없음",
         introduction: intro,
@@ -176,13 +175,15 @@ const Setup = ({ onClick, myProfile }) => {
         bgPhoto: myProfile.bgPhoto,
         badge: myProfile.badge,
         uid: user.uid,
-      });
+      };
 
+      // 전체 문서를 덮어쓰려면 setDoc을 사용
+      await setDoc(doc(db, "profile", user.uid), profileData);
       await updateProfile(user, { displayName: editUserName });
       alert("프로필이 성공적으로 저장되었습니다.");
       onClick();
     } catch (e) {
-      console.error(e);
+      console.error("프로필 저장 중 오류 발생:", e);
     }
   };
 
