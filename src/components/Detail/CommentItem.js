@@ -176,9 +176,13 @@ const CommentItem = ({ reply }) => {
 
   const openEditArea = () => {
     setShowEdit(true);
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-    }
+    // if (textareaRef.current) {
+    //   textareaRef.current.focus();
+    // }
+  };
+
+  const updateComment = () => {
+    console.log(text);
   };
 
   const replyProfile = allProfile.find((it) => it.uid === reply.uid);
@@ -191,13 +195,13 @@ const CommentItem = ({ reply }) => {
             <EditAreaHeader>
               <IdSpan>{replyProfile.userId}</IdSpan>
               <RightBtns>
-                <ReplyBtn>저장</ReplyBtn>
+                <ReplyBtn onClick={updateComment}>저장</ReplyBtn>
                 <ReplyBtn onClick={() => setShowEdit(false)}>취소</ReplyBtn>
               </RightBtns>
             </EditAreaHeader>
             <TextareaBg>
               <Textarea
-                value={reply.content}
+                value={text}
                 ref={textareaRef}
                 onChange={(e) => setText(e.target.value)}
               />

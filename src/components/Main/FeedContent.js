@@ -7,6 +7,7 @@ import FeedItem from "./FeedItem";
 import { db } from "../../utils/firebase";
 import {
   collection,
+  limit,
   onSnapshot,
   orderBy,
   query,
@@ -96,7 +97,8 @@ const FeedContent = () => {
         const postsQuery = query(
           collection(db, "feed"),
           where("type", "!=", null),
-          orderBy("createdAt", "desc")
+          orderBy("createdAt", "desc"),
+          limit(20)
         );
 
         postsUnsubscribe = onSnapshot(postsQuery, async (snapshot) => {

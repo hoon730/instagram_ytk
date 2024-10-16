@@ -5,15 +5,7 @@ import Button from "../components/Common/Button";
 import styled from "styled-components";
 
 import { auth, db, storage } from "../utils/firebase";
-import {
-  addDoc,
-  collection,
-  updateDoc,
-  query,
-  limit,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const NewBg = styled(motion.div)`
@@ -205,8 +197,7 @@ const New = ({ setOpenNew }) => {
   const [file, setFile] = useState([]);
   const [preview, setPreview] = useState([]);
   const [textValueLength, setTextValueLength] = useState(0);
-  const [myProfile, setMyProfile] = useState(null);
-  const [media, setMedia] = useState([]);
+  const [pushUrl, setPushUrl] = useState([]);
 
   const maxFileSize = 10 * 1024 * 1024;
 
@@ -224,14 +215,12 @@ const New = ({ setOpenNew }) => {
         }
         newFiles.push(item);
 
-        // FileReader를 사용해 미리보기 URL 생성
         const reader = new FileReader();
         reader.readAsDataURL(item);
 
         reader.onload = (event) => {
           newPreviews.push(event.target.result);
 
-          // 모든 파일이 로드된 후 상태 업데이트
           if (newPreviews.length === files.length) {
             setPreview((prevPreview) => [...prevPreview, ...newPreviews]);
             setFile((prevFile) => [...prevFile, ...newFiles]);
@@ -240,27 +229,6 @@ const New = ({ setOpenNew }) => {
       }
     }
   };
-
-  useEffect(() => {
-    const userUid = auth.currentUser?.uid;
-    if (userUid) {
-      const getMyProfile = async (uid) => {
-        const profileQuery = query(
-          collection(db, "profile"),
-          where("uid", "==", uid),
-          limit(1)
-        );
-        const profileSnapshot = await getDocs(profileQuery);
-
-        if (!profileSnapshot.empty) {
-          const profileData = profileSnapshot.docs[0].data();
-          setMyProfile(profileData);
-        }
-      };
-
-      getMyProfile(userUid);
-    }
-  }, []);
 
   const onChange = (e) => {
     setContent(e.target.value);
@@ -274,49 +242,55 @@ const New = ({ setOpenNew }) => {
 
     try {
       setIsLoading(true);
-      const docRef = await addDoc(collection(db, "contents"), {
+      const docRef = await addDoc(collection(db, "feed"), {
         content,
         createdAt: Date.now(),
-        media: [], // media 초기값으로 빈 배열 설정
-        userId: myProfile?.userId || user?.displayName,
+        hastage: [],
+        like: [],
+        location: "",
+        tagUser: [],
         uid: user.uid,
       });
 
-      const newMedia = [];
+      const newPushUrl = []; // 파일 URL을 저장할 배열
 
-      if (file.length > 0) {
+      if (file.length > 1) {
         for (const item of file) {
-          const locationRef = ref(
-            storage,
-            `contents/${user.uid}/${docRef.id}/${item.name}`
-          );
+          const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
           const result = await uploadBytes(locationRef, item);
           const url = await getDownloadURL(result.ref);
-          const fileType = item.type;
 
-          if (fileType.startsWith("image/")) {
-            newMedia.push({
-              type: "img",
-              imgPath: url,
-            });
-          } else if (fileType.startsWith("video/")) {
-            newMedia.push({
-              type: "reels",
-              imgPath: url,
-            });
-          }
+          newPushUrl.push(url); // URL을 배열에 추가
         }
 
-        // 미디어 배열을 Firestore에 업데이트
         await updateDoc(docRef, {
-          media: newMedia,
+          imgPath: newPushUrl,
+          type: "img",
         });
+      } else if (file.length === 1) {
+        const item = file[0];
+        const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
+        const result = await uploadBytes(locationRef, item);
+        const url = await getDownloadURL(result.ref);
+        const fileType = item.type;
+
+        if (fileType.startsWith("image/")) {
+          await updateDoc(docRef, {
+            imgPath: url,
+            type: "img",
+          });
+        } else if (fileType.startsWith("video/")) {
+          await updateDoc(docRef, {
+            imgPath: url,
+            type: "reels",
+          });
+        }
       }
 
       // 상태 초기화
       setContent("");
       setFile([]);
-      setMedia([]);
+      setPushUrl([]);
       setOpenNew(false);
     } catch (e) {
       console.error(e);
@@ -328,8 +302,6 @@ const New = ({ setOpenNew }) => {
   const handleOnClick = () => {
     setOpenNew(false);
   };
-
-  useEffect(() => {}, [content]);
 
   return (
     <NewBg
@@ -355,6 +327,7 @@ const New = ({ setOpenNew }) => {
               {preview.length > 0 ? (
                 preview.map((src, idx) => {
                   const fileType = file[idx].type;
+                  console.log(fileType);
                   if (fileType.startsWith("image/")) {
                     return <ImgMedia key={idx} src={src} />;
                   } else {
@@ -369,7 +342,7 @@ const New = ({ setOpenNew }) => {
             </MediaBox>
             <StyledSpan>사진이나 동영상을 업로드 해주세요</StyledSpan>
             <SearchBtn htmlFor="file">
-              {file ? "업로드 완료" : "사진 및 동영상 찾기"}
+              {file.length > 0 ? "업로드 완료 / 추가" : "사진 및 동영상 찾기"}
             </SearchBtn>
             <SearchInput
               type="file"

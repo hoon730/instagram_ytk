@@ -18,10 +18,17 @@ import { TbUserSquare } from "react-icons/tb";
 import { px } from "framer-motion";
 
 const Wrapper = styled.div`
-  margin: 0 auto;
+  display: none;
   width: 430px;
+  margin: 0 auto;
   background-color: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
+  @media screen and (max-width: 630px) {
+    display: block;
+  }
+  @media screen and (max-width: 430px) {
+    width: 100%;
+  }
 `;
 const Header = styled.div`
   width: 100%;

@@ -137,7 +137,7 @@ const DateText = styled.div`
   }
 `;
 
-const FeedItem = ({ feedDetail, dateMB }) => {
+const FeedItem = ({ feedDetail }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [comments, setComments] = useState([]);
   const [pushComment, setPushComment] = useState("");
@@ -216,7 +216,9 @@ const FeedItem = ({ feedDetail, dateMB }) => {
             />
           </UserInfo>
           <FeedText feedDetail={feedDetail} />
-          <DateText>{`${dateMB}`}</DateText>
+          <DateText>{`${getFormattedDate(
+            new Date(feedDetail.createdAt)
+          )}`}</DateText>
           <CommentArea>
             {comments.map((it, idx) => (
               <CommentLine

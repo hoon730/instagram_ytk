@@ -1,6 +1,7 @@
 import { AiOutlineHome } from "react-icons/ai";
 import { FaRegCompass } from "react-icons/fa";
 import { BiMoviePlay } from "react-icons/bi";
+import { LuBookmark } from "react-icons/lu";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaRegSquarePlus } from "react-icons/fa6";
 
@@ -25,6 +26,12 @@ export const getFormattedDate = (targetDate) => {
   return `${year}-${month}-${date}`;
 };
 
+export const extractExtension = (value) => {
+  const firstSplit = value.split("?");
+  const secondSplit = firstSplit[0].split(".");
+  return secondSplit[secondSplit.length - 1].toLowerCase();
+};
+
 export const menuData = [
   {
     id: 0,
@@ -39,11 +46,21 @@ export const menuData = [
   },
   {
     id: 2,
+    name: "릴스",
+    iconCode: <BiMoviePlay />,
+  },
+  {
+    id: 3,
+    name: "저장됨",
+    iconCode: <LuBookmark />,
+  },
+  {
+    id: 4,
     name: "메시지",
     iconCode: <IoPaperPlaneOutline />,
   },
   {
-    id: 3,
+    id: 5,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
   },
@@ -185,3 +202,27 @@ export const scale = {
     },
   },
 };
+
+export const videoArr = [
+  "mp4",
+  "avi",
+  "mkv",
+  "mov",
+  "wmv",
+  "flv",
+  "webm",
+  "m4v",
+  "3gp",
+  "ogv",
+  "m2ts",
+  "mts",
+  "vob",
+  "rmvb",
+  "divx",
+  "f4v",
+  "asf",
+  "swf",
+  "mxf",
+  "dv",
+  "ts",
+];
