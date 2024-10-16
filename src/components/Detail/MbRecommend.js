@@ -24,6 +24,7 @@ const RecommendList = styled(motion.div)`
 const RecommendItem = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 25px;
   border: 2px solid var(--light-gray-color);
@@ -83,6 +84,12 @@ const MbRecommend = () => {
     (allUids) => !myProfile.following.includes(allUids)
   );
 
+  const followersProfile = allProfile.filter((profile) =>
+    followerRecommended.includes(profile.uid)
+  );
+
+  console.log(followersProfile);
+
   return (
     <AnimatePresence>
       <Wrapper
@@ -102,11 +109,11 @@ const MbRecommend = () => {
             }
           }}
         >
-          {userData.map((it, idx) => (
+          {followersProfile.map((profile, idx) => (
             <RecommendItem key={idx}>
-              <ProfileImg size={"75"} url={it.imgPath} hover={true} />
-              <Id>{it.userNickName}</Id>
-              <Desc>{it.desc}님이 팔로우 합니다</Desc>
+              <ProfileImg size={"75"} url={profile.profilePhoto} hover={true} />
+              <Id>{profile.userName}</Id>
+              <Desc>{profile.userId}님이 팔로우 합니다</Desc>
               <Button
                 width={"80px"}
                 height={"30px"}

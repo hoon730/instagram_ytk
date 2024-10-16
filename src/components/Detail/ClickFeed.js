@@ -71,6 +71,19 @@ const Wrapper = styled(motion.div)`
   transition: all 0.3s;
   cursor: default;
 
+  @media screen and (max-width: 1400px) {
+    ${({ $isEditing }) =>
+      $isEditing
+        ? null
+        : `position: relative;
+    height: 0;
+    padding-top: 56.25%;`}
+
+    .inner {
+      ${({ $isEditing }) => ($isEditing ? null : `width: 100%; height: 100%`)}
+    }
+  }
+
   @media screen and (max-width: 1024px) {
     position: relative;
     width: 70%;
