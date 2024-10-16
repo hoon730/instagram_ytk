@@ -7,6 +7,7 @@ import styled from "styled-components";
 import MyPostItem from "../components/MyFeed/MyPostItem";
 import MainHeader from "../components/Main/MainHeader";
 import ClickFeed from "../components/Detail/ClickFeed";
+import SearchBar from "../components/Main/SearchBar";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { PiSirenLight } from "react-icons/pi";
 
@@ -76,12 +77,24 @@ const Header = styled.div`
   @media screen and (max-width: 630px) {
     width: calc(100% - 80px);
     top: 73px;
+    ${({ page }) => page === "explore" && "padding: 0;"}
+  }
+`;
+
+const SearchBarArea = styled.div`
+  display: none;
+  @media screen and (max-width: 630px) {
+    display: block;
+    width: 100%;
   }
 `;
 
 const Keyword = styled.div`
   font-size: var(--font-28);
   font-weight: var(--font-bold);
+  @media screen and (max-width: 630px) {
+    display: none;
+  }
 `;
 
 const MoreIconArea = styled.div`
@@ -91,6 +104,9 @@ const MoreIconArea = styled.div`
   cursor: pointer;
   @media screen and (max-width: 1280px) {
     align-items: flex-end;
+  }
+  @media screen and (max-width: 630px) {
+    display: none;
   }
 `;
 
@@ -228,7 +244,7 @@ const Search = ({ page }) => {
       };
       fetchReels();
     }
-  }, [getQuery, page]);
+  }, [getQuery, page, allProfile]);
 
   return (
     <Wrapper>
@@ -245,15 +261,20 @@ const Search = ({ page }) => {
         <>
           <Margin />
           <Container>
-            <Header>
-              <Keyword>
+            <Header page={page}>
+              {page === "explore" && (
+                <SearchBarArea>
+                  <SearchBar />
+                </SearchBarArea>
+              )}
+              <Keyword page={page}>
                 {page === "search"
                   ? `#${getQuery}`
                   : page === "explore"
                   ? "탐색"
                   : "릴스"}
               </Keyword>
-              <MoreIconArea>
+              <MoreIconArea page={page}>
                 <MoreIcon onClick={handleMoreBtn}>
                   <LuMoreHorizontal size={22} />
                 </MoreIcon>

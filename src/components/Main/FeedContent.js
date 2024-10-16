@@ -15,7 +15,9 @@ import {
 import WelcomFeed from "./WelcomFeed";
 import { StateContext } from "../../App";
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  position: relative;
+`;
 
 const FeedArea = styled.div`
   width: 680px;
@@ -34,6 +36,9 @@ const FeedTabBar = styled.div`
   display: flex;
   flex-direction: column;
   border-top: 1px solid ${({ theme }) => theme.borderColor};
+  transition: transform 0.3s ease-in-out;
+  z-index: 1;
+  background: ${({ theme }) => theme.bgColor};
 `;
 
 const FeedTabBtn = styled.div`
@@ -67,6 +72,8 @@ const LoadingScreen = styled.div`
 `;
 
 const FeedContent = () => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [recommend, setRecommend] = useState(true);
   const [follow, setFollow] = useState(false);
@@ -145,7 +152,7 @@ const FeedContent = () => {
           <ActiveBorderArea>
             <ActiveBorder $tabChange={$tabChange} />
           </ActiveBorderArea>
-          <FeedTabBtn>
+          <FeedTabBtn isVisible={isVisible}>
             <TabBarBtn
               onClick={recommendActive}
               width={340}
