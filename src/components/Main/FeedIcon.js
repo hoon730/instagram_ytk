@@ -22,13 +22,21 @@ const Wrapper = styled.div`
 const Icons = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px 0;
+  padding: ${({ $type }) => ($type === "detail" ? "0px" : "20px 0px")};
   @media screen and (max-width: 1024px) {
     padding: 13px 0;
   }
 `;
 
 const LeftIcons = styled.span`
+  display: flex;
+  gap: 20px;
+  @media screen and (max-width: 1024px) {
+    gap: 18px;
+  }
+`;
+
+const RightIcons = styled.span`
   display: flex;
   gap: 20px;
   @media screen and (max-width: 1024px) {
@@ -52,6 +60,7 @@ const icon = `
 const Heart = styled(GoHeart)`
   ${icon}
   color: ${({ theme }) => theme.iconColor};
+  ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
 `;
 
 const HeartFill = styled(GoHeartFill)`
@@ -60,6 +69,7 @@ const HeartFill = styled(GoHeartFill)`
   &:hover {
     color: #cf236a;
   }
+  ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
 `;
 
 const Reply = styled(IoChatbubbleEllipsesOutline)`
@@ -70,25 +80,39 @@ const Reply = styled(IoChatbubbleEllipsesOutline)`
 const Message = styled(IoPaperPlaneOutline)`
   ${icon}
   color: ${({ theme }) => theme.iconColor};
+  ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
 `;
 
 const Bookmark = styled(GoBookmark)`
   ${icon}
   color: ${({ theme }) => theme.iconColor};
+  ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
 `;
 
 const BookmarkFill = styled(GoBookmarkFill)`
   ${icon}
   color: ${({ theme }) => theme.iconColor};
+  ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
 `;
 
 const LikeSection = styled.div`
-  font-size: var(--font-16);
+  font-size: ${({ $type }) =>
+    $type === "detail" ? "var(--font-16)" : "var(--font-14)"};
   color: ${({ theme }) => theme.fontColor};
   position: relative;
   strong {
     font-weight: bold;
     cursor: pointer;
+  }
+  .likes-section {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .hover-wrapper {
+    top: 20%;
+    left: 60%;
   }
   @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
@@ -102,7 +126,7 @@ const BgFilter = styled.div`
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 3;
   cursor: pointer;
 
   @media screen and (max-width: 1024px) {
@@ -110,7 +134,7 @@ const BgFilter = styled.div`
   }
 `;
 
-const FeedIcon = ({ feedDetail }) => {
+const FeedIcon = ({ feedDetail, onClick, type }) => {
   const [followingUser, setFollowingUser] = useState("");
   const [fillHeart, setFillHeart] = useState(false);
   const [fillBookmark, setFillBookmark] = useState(false);
@@ -173,41 +197,90 @@ const FeedIcon = ({ feedDetail }) => {
 
   return (
     <Wrapper>
-      <Icons>
-        <LeftIcons>
-          {fillHeart ? (
-            <HeartFill onClick={toggleHeart} />
-          ) : (
-            <Heart onClick={toggleHeart} />
-          )}
-          <Reply />
-          <Message />
-        </LeftIcons>
-        {fillBookmark ? (
-          <BookmarkFill onClick={toggleBookmark} />
-        ) : (
-          <Bookmark onClick={toggleBookmark} />
-        )}
-      </Icons>
-      <LikeSection>
-        {followingUser ? (
-          <>
-            {followingUser.userId}님 외{" "}
-            <strong onClick={showLikeUserWithFollow}>여러 명</strong>이
-            좋아합니다
-          </>
-        ) : (
-          <strong onClick={showLikeUserWithFollow}>
-            좋아요 {feedDetail.like.length}개
-          </strong>
-        )}
-        {showProfile ? (
-          <>
-            <ViewLikes likeUser={likeUser} setShowProfile={setShowProfile} />
-            <BgFilter onClick={() => setShowProfile(false)}></BgFilter>
-          </>
-        ) : null}
-      </LikeSection>
+      {type === "detail" ? (
+        <>
+          <Icons $type={type}>
+            <LeftIcons>
+              {fillHeart ? (
+                <HeartFill $type={type} onClick={toggleHeart} />
+              ) : (
+                <Heart $type={type} onClick={toggleHeart} />
+              )}
+              <LikeSection>
+                {followingUser ? (
+                  <>
+                    {followingUser.userId}님 외{" "}
+                    <strong onClick={showLikeUserWithFollow}>여러 명</strong>이
+                    좋아합니다
+                  </>
+                ) : (
+                  <strong onClick={showLikeUserWithFollow}>
+                    좋아요 {feedDetail.like.length}개
+                  </strong>
+                )}
+                {showProfile ? (
+                  <>
+                    <ViewLikes
+                      likeUser={likeUser}
+                      setShowProfile={setShowProfile}
+                    />
+                    <BgFilter onClick={() => setShowProfile(false)}></BgFilter>
+                  </>
+                ) : null}
+              </LikeSection>
+            </LeftIcons>
+            <RightIcons>
+              <Message $type={type} />
+              {fillBookmark ? (
+                <BookmarkFill $type={type} onClick={toggleBookmark} />
+              ) : (
+                <Bookmark $type={type} onClick={toggleBookmark} />
+              )}
+            </RightIcons>
+          </Icons>
+        </>
+      ) : (
+        <>
+          <Icons>
+            <LeftIcons>
+              {fillHeart ? (
+                <HeartFill onClick={toggleHeart} />
+              ) : (
+                <Heart onClick={toggleHeart} />
+              )}
+              <Reply onClick={onClick} />
+              <Message />
+            </LeftIcons>
+            {fillBookmark ? (
+              <BookmarkFill onClick={toggleBookmark} />
+            ) : (
+              <Bookmark onClick={toggleBookmark} />
+            )}
+          </Icons>
+          <LikeSection>
+            {followingUser ? (
+              <>
+                {followingUser.userId}님 외{" "}
+                <strong onClick={showLikeUserWithFollow}>여러 명</strong>이
+                좋아합니다
+              </>
+            ) : (
+              <strong onClick={showLikeUserWithFollow}>
+                좋아요 {feedDetail.like.length}개
+              </strong>
+            )}
+            {showProfile ? (
+              <>
+                <ViewLikes
+                  likeUser={likeUser}
+                  setShowProfile={setShowProfile}
+                />
+                <BgFilter onClick={() => setShowProfile(false)}></BgFilter>
+              </>
+            ) : null}
+          </LikeSection>
+        </>
+      )}
     </Wrapper>
   );
 };

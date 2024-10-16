@@ -100,6 +100,8 @@ const HoverProfile = ({ type, uid, top, position }) => {
   const [followResult, setFollowResult] = useState(false);
   const [feedLen, setFeedLen] = useState(0);
 
+  //console.log(position);
+
   useEffect(() => {
     if (!uid) return;
     const profileInfo = allProfile.find((it) => it.uid === uid);

@@ -10,9 +10,6 @@ import CommentInput from "../Common/CommentInput";
 import { click, getFormattedDate } from "../../utils/utils";
 
 import { IoIosCloseCircle } from "react-icons/io";
-import { IoHeartOutline } from "react-icons/io5";
-import { FaRegBookmark } from "react-icons/fa6";
-import { IoPaperPlaneOutline } from "react-icons/io5";
 
 import { auth, db, storage } from "../../utils/firebase";
 import {
@@ -36,6 +33,7 @@ import {
 } from "firebase/storage";
 import { motion } from "framer-motion";
 import { StateContext } from "../../App";
+import FeedIcon from "../Main/FeedIcon";
 
 const BgWrapper = styled(motion.div)`
   position: fixed;
@@ -311,11 +309,6 @@ const UserContents = styled.div`
       : `margin-left: 15px; position: static;`}
 `;
 
-const Content = styled.span`
-  margin-left: ${({ size }) => (size ? `${size}px` : 0)};
-  font-size: var(--font-14);
-`;
-
 const CommentList = styled.div`
   padding: 20px;
   display: flex;
@@ -332,48 +325,6 @@ const WritingComment = styled.div`
   padding: 15px 20px;
   border-top: 1px solid var(--light-gray-color);
 `;
-
-const Top = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-const Notification = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: var(--font-14);
-  gap: 8px;
-
-  svg {
-    display: flex;
-    align-items: center;
-    font-size: var(--font-20);
-  }
-`;
-const IconBtns = styled.div`
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  cursor: pointer;
-
-  svg {
-    font-size: var(--font-16);
-  }
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-  height: 35px;
-  background: var(--light-gray-color);
-  border-radius: var(--border-radius-8);
-  padding: 0 20px;
-
-  &::placeholder {
-    color: var(--gray-color);
-    font-weight: var(--font-regular);
-  }
-`;
-
-const Form = styled.form``;
 
 const Title = styled.div`
   display: flex;
@@ -453,10 +404,9 @@ const EditedTextArea = styled.textarea`
 `;
 
 const ClickFeed = ({ feedDetail, onClick }) => {
-  const [comments, setComments] = useState([]);
-  const [pushComment, setPushComment] = useState("");
   const [followingUser, setFollowingUser] = useState("");
   const [replyArr, SetReplyArr] = useState([]);
+  const [repleInfo, setRepleInfo] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedFeedDetail, setEditedFeedDetail] = useState(
     feedDetail?.content || ""
@@ -635,7 +585,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     fetchReply();
 
     return () => {
-      // 구독 해제
       if (replyUnsubscribe) {
         replyUnsubscribe();
       }
@@ -645,31 +594,40 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     };
   }, [feedDetail]);
 
-  useEffect(() => {
-    if (pushComment === "") return;
-
-    const addCmt = async () => {
-      try {
-        const docRef = await addDoc(collection(db, "reply"), {
-          content: pushComment,
+  const addCmt = async (comment) => {
+    try {
+      if (repleInfo && comment.startsWith(`@${repleInfo.userId}`)) {
+        await addDoc(collection(db, "re_reply"), {
+          content: comment.replace(`@${repleInfo.userId} `, ""),
+          createdAt: Date.now(),
+          replyId: repleInfo.id,
+          type: "rr",
+          uid: myProfile.uid,
+          like: [],
+        });
+      } else {
+        await addDoc(collection(db, "reply"), {
+          content: comment,
           createdAt: Date.now(),
           feedId: feedDetail.id,
           type: "rp",
           uid: myProfile.uid,
           like: [],
         });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setPushComment("");
       }
-    };
-
-    addCmt();
-  }, [pushComment]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setRepleInfo(null);
+    }
+  };
 
   const hideFeed = () => {
     onClick();
+  };
+
+  const addRereple = (reply) => {
+    setRepleInfo(reply);
   };
 
   return (
@@ -836,37 +794,22 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                       <CommentList className="comment_list">
                         {replyArr.length > 0
                           ? replyArr.map((it, idx) => (
-                              <CommentItem key={idx} reply={it} />
+                              <CommentItem
+                                key={idx}
+                                reply={it}
+                                addRereple={addRereple}
+                              />
                             ))
                           : null}
                       </CommentList>
                     </Container>
                     <WritingComment className="writing_comment">
-                      <Top>
-                        <Notification>
-                          <IoHeartOutline />
-                          <span>
-                            {followingUser ? (
-                              <>
-                                {followingUser.userId}님 외
-                                <b> {feedDetail.like.length}명</b>이 좋아합니다
-                              </>
-                            ) : (
-                              <b>좋아요 {feedDetail.like.length}개</b>
-                            )}
-                          </span>
-                        </Notification>
-                        <IconBtns>
-                          <IoPaperPlaneOutline />
-                          <FaRegBookmark />
-                        </IconBtns>
-                      </Top>
+                      <FeedIcon feedDetail={feedDetail} type={"detail"} />
                       <CommentInput
                         width={"100%"}
                         height={"35px"}
-                        comments={comments}
-                        setComments={setComments}
-                        setPushComment={setPushComment}
+                        addCmt={addCmt}
+                        repleInfo={repleInfo}
                       />
                     </WritingComment>
                   </Desc>

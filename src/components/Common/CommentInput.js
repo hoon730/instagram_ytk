@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -34,18 +34,20 @@ const Submit = styled.input`
   }
 `;
 
-const CommentInput = ({
-  width,
-  height,
-  comments,
-  setComments,
-  setPushComment,
-}) => {
+const CommentInput = ({ width, height, addCmt, repleInfo }) => {
   const [comment, setComment] = useState("");
+  const inputRef = useRef();
+
+  useEffect(() => {
+    if (!repleInfo) return;
+
+    setComment(`@${repleInfo.userId} `);
+    inputRef.current.focus();
+  }, [repleInfo]);
+
   const onSubmit = (e) => {
     e.preventDefault();
-    setComments([...comments, comment]);
-    setPushComment(comment);
+    addCmt(comment);
     setComment("");
   };
 
@@ -63,6 +65,7 @@ const CommentInput = ({
           placeholder="댓글 달기... "
           width={width}
           height={height}
+          ref={inputRef}
         />
         <Submit type="submit" value="게시" />
       </form>

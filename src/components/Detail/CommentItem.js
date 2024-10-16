@@ -151,7 +151,7 @@ const Textarea = styled.textarea`
   }
 `;
 
-const CommentItem = ({ reply }) => {
+const CommentItem = ({ reply, addRereple }) => {
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
   const [likes, setLikes] = useState(reply.like);
@@ -160,6 +160,7 @@ const CommentItem = ({ reply }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [text, setText] = useState(reply.content);
   const textareaRef = useRef();
+  const replyProfile = allProfile.find((it) => it.uid === reply.uid);
 
   useEffect(() => {
     setFillHeart(likes.includes(myProfile.uid));
@@ -173,6 +174,14 @@ const CommentItem = ({ reply }) => {
       setLikes([...likes, myProfile.uid]);
     }
   };
+
+  useEffect(() => {
+    if (showEdit && textareaRef.current) {
+      textareaRef.current.focus();
+      textareaRef.current.selectionStart = textareaRef.current.value.length;
+      textareaRef.current.selectionEnd = textareaRef.current.value.length;
+    }
+  }, [showEdit]);
 
   const openEditArea = () => {
     setShowEdit(true);
@@ -196,7 +205,10 @@ const CommentItem = ({ reply }) => {
     setText(reply.content);
   };
 
-  const replyProfile = allProfile.find((it) => it.uid === reply.uid);
+  const sendReplyId = () => {
+    addRereple({ id: reply.id, uid: reply.uid, userId: replyProfile.userId });
+  };
+
   return (
     <div>
       <CommentSection>
@@ -236,7 +248,7 @@ const CommentItem = ({ reply }) => {
               <ReplyDate>
                 {getFormattedDate(new Date(reply.createdAt))}
               </ReplyDate>
-              <ReplyBtn>답글 달기</ReplyBtn>
+              <ReplyBtn onClick={sendReplyId}>답글 달기</ReplyBtn>
               {reply.uid === myProfile.uid ? (
                 <>
                   <ReplyBtn onClick={openEditArea}>수정</ReplyBtn>

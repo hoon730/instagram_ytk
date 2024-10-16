@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { StateContext } from "../../App";
 import styled from "styled-components";
 import StoryItem from "./StoryItem";
@@ -6,6 +6,7 @@ import SlideButton from "../Common/SlideButton";
 import Data from "../../data.json";
 import { auth } from "../../utils/firebase";
 import { motion } from "framer-motion";
+import { mouseon } from "../../utils/utils";
 
 const users = Data.user;
 const storys = Data.story;
@@ -37,6 +38,14 @@ const StorySection = styled.div`
   overflow: hidden;
 `;
 
+// const StoryGroup = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: 20px;
+//   transform: translateX(${({ $visible }) => `${-$visible * 100 || 0}px`});
+//   transition: transform 0.5s;
+// `;
+
 const StoryGroup = styled(motion.div)`
   display: flex;
   align-items: center;
@@ -48,8 +57,6 @@ const StoryContent = () => {
   const [storyDesc, setStoryDesc] = useState(null);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
-  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
-  const ref = useRef(null); // 부모 요소 참조
 
   useEffect(() => {
     if (!myProfile) return;
@@ -57,9 +64,9 @@ const StoryContent = () => {
     const myUserId = users.find(
       (it) => it.uid === auth?.currentUser.uid
     ).userId;
-    const userIdOfMyFollowing = myProfile.following.map(
-      (it) => users.find((user) => user.uid === it).userId
-    );
+    const userIdOfMyFollowing = myProfile.following.map((it) => {
+      return users.find((user) => user.uid === it).userId;
+    });
 
     const storyDesc = storys
       .filter((it) => userIdOfMyFollowing.includes(it.userId))
@@ -80,25 +87,11 @@ const StoryContent = () => {
           date: new Date(story.storyHistory[0].createDate).getTime(),
         };
       })
-      .sort((a, b) => b.active - a.active || b.date - a.date);
+      .sort((a, b) => {
+        return b.active - a.active || b.date - a.date;
+      });
     setStoryDesc(storyDesc);
   }, [myProfile]);
-
-  // 부모 요소의 크기를 측정하여 dragConstraints 설정
-  useEffect(() => {
-    if (ref.current) {
-      const parentWidth = ref.current.clientWidth; // 부모 요소의 너비
-      const itemWidth = 90;
-      const maxVisibleItems = Math.floor(parentWidth / itemWidth); // 최대 보이는 아이템 수
-      const totalItems = storyDesc ? storyDesc.length : 0;
-
-      // 드래그 제약 조건 계산
-      setConstraints({
-        left: -(totalItems - maxVisibleItems) * itemWidth, // 왼쪽으로 드래그 가능한 최대 거리
-        right: 0, // 오른쪽은 0
-      });
-    }
-  }, [storyDesc]);
 
   const moveSlide = (num) => {
     setVisible(num + visible);
@@ -112,10 +105,11 @@ const StoryContent = () => {
         visible={visible}
         limit={storyDesc && storyDesc.length}
       />
-      <StorySection ref={ref}>
+      <StorySection>
         <StoryGroup
+          $visible={visible}
           drag="x"
-          dragConstraints={constraints}
+          dragConstraints={{ left: 0, right: 0 }}
           whileTap={{ cursor: "grabbing" }}
         >
           {storyDesc &&

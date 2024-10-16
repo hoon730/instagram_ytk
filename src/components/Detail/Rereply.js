@@ -143,6 +143,14 @@ const Rereply = ({ reply }) => {
     }
   };
 
+  useEffect(() => {
+    if (showEdit && textareaRef.current) {
+      textareaRef.current.focus();
+      textareaRef.current.selectionStart = textareaRef.current.value.length;
+      textareaRef.current.selectionEnd = textareaRef.current.value.length;
+    }
+  }, [showEdit]);
+
   const openEditArea = () => {
     setShowEdit(true);
   };
@@ -205,7 +213,6 @@ const Rereply = ({ reply }) => {
               <ReplyDate>
                 {getFormattedDate(new Date(reply.createdAt))}
               </ReplyDate>
-              <ReplyBtn>답글 달기</ReplyBtn>
               {reply.uid === myProfile.uid ? (
                 <>
                   <ReplyBtn onClick={openEditArea}>수정</ReplyBtn>
