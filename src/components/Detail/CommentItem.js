@@ -4,8 +4,8 @@ import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import CommentLine from "../Common/CommentLine";
 import Rereply from "./Rereply";
-import { db } from "../../utils/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../../utils/firebase";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import { getFormattedDate } from "../../utils/utils";
@@ -111,7 +111,6 @@ const EditArea = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  display: none;
 `;
 
 const EditAreaHeader = styled.div`
@@ -159,7 +158,7 @@ const CommentItem = ({ reply }) => {
   const [fillHeart, setFillHeart] = useState(false);
   const [showRereple, setShowRereple] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(reply.content);
   const textareaRef = useRef();
 
   useEffect(() => {
@@ -182,8 +181,22 @@ const CommentItem = ({ reply }) => {
     // }
   };
 
+  const user = auth.currentUser;
   const updateComment = () => {
-    console.log(text);
+    if (user?.uid !== reply.uid) return;
+    updateDoc(doc(db, "reply", reply.id), { content: text });
+    setShowEdit(false);
+  };
+
+  const deleteComment = () => {
+    if (user?.uid !== reply.uid) return;
+    if (!window.confirm("댓글을 삭제하시겠습니까?")) return;
+    deleteDoc(doc(db, `reply`, reply.id));
+  };
+
+  const cancelEdit = () => {
+    setShowEdit(false);
+    setText(reply.content);
   };
 
   const replyProfile = allProfile.find((it) => it.uid === reply.uid);
@@ -197,7 +210,7 @@ const CommentItem = ({ reply }) => {
               <IdSpan>{replyProfile.userId}</IdSpan>
               <RightBtns>
                 <ReplyBtn onClick={updateComment}>저장</ReplyBtn>
-                <ReplyBtn onClick={() => setShowEdit(false)}>취소</ReplyBtn>
+                <ReplyBtn onClick={cancelEdit}>취소</ReplyBtn>
               </RightBtns>
             </EditAreaHeader>
             <TextareaBg>
@@ -230,7 +243,7 @@ const CommentItem = ({ reply }) => {
               {reply.uid === myProfile.uid ? (
                 <>
                   <ReplyBtn onClick={openEditArea}>수정</ReplyBtn>
-                  <ReplyBtn>삭제</ReplyBtn>
+                  <ReplyBtn onClick={deleteComment}>삭제</ReplyBtn>
                 </>
               ) : null}
             </DateAndButton>

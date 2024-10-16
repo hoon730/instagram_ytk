@@ -18,7 +18,7 @@ import { RxMagnifyingGlass } from "react-icons/rx";
 export const getFormattedDate = (targetDate) => {
   const year = targetDate.getFullYear();
   let month = targetDate.getMonth() + 1;
-  let date = new Date(parseInt(targetDate));
+  let date = new Date(targetDate).getDate();
 
   if (month < 10) month = `0${month}`;
   if (date < 10) date = `0${date}`;
