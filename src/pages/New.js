@@ -271,7 +271,7 @@ const New = ({ setOpenNew }) => {
       const docRef = await addDoc(collection(db, "feed"), {
         content,
         createdAt: Date.now(),
-        hastage: [],
+        hashtag: [],
         like: [],
         location: "",
         tagUser: [],
@@ -407,7 +407,9 @@ const New = ({ setOpenNew }) => {
               <CancelBtn
                 type="button"
                 value={"취소하기"}
-                onClick={() => setOpenNew(false)}
+                onClick={() => {
+                  setOpenNew(false);
+                }}
               />
               {/* <Button
                 className="button"
