@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     page === "search" || page === "explore"
       ? "padding-top: 100%;"
       : page === "reels"
-      ? "padding-top: 178%"
+      ? "padding-top: 178%;"
       : "padding-top: 33%;"}
   cursor: pointer;
 `;
@@ -56,9 +56,9 @@ const MyPostItem = ({ size, url, page, onClick }) => {
             alt="postvideo"
             page={page}
           />
-        ) : url && Array.isArray(url) && url.length > 0 ? (
+        ) : (
           <Img onClick={onClick} src={url[0]} alt="postimg" />
-        ) : null}
+        )}
       </Box>
     </Wrapper>
   );

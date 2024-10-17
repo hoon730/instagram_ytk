@@ -232,6 +232,7 @@ const Search = ({ page }) => {
 
           querySnapshot.docs.forEach((doc) => {
             const data = doc.data();
+            console.log(data);
             const feedProfile = allProfile.find((it) => it.uid === data.uid);
             if (data) {
               reels.push({ ...data, profile: feedProfile, id: doc.id });
