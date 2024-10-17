@@ -89,7 +89,7 @@ const MyHighlight = () => {
       items: 5,
     },
   };
-  console.log(storys);
+
   return (
     <Wrapper>
       <HighlightBox>

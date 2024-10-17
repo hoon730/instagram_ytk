@@ -307,7 +307,6 @@ const Clickdetail = ({
     <BgWrapper
       ref={bgRef}
       onClick={(e) => {
-        console.log(bgRef.current);
         if (e.target === bgRef.current) {
           onClick();
         }

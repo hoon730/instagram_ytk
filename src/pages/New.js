@@ -202,7 +202,6 @@ const SubmitBtn = styled.input`
 `;
 
 const New = ({ setOpenNew }) => {
-  console.log(setOpenNew);
   const newBgRef = useRef();
   const mediaRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -389,7 +388,6 @@ const New = ({ setOpenNew }) => {
                 type="button"
                 value={"취소하기"}
                 onClick={() => {
-                  console.log(setOpenNew);
                   setOpenNew(false);
                 }}
               />

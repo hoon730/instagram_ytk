@@ -158,11 +158,13 @@ const MyFeedDesc = styled.div`
   }
 `;
 
-const MyPic = ({ uid, posts }) => {
+const MyPic = ({ userId, posts }) => {
   const { allProfile } = useContext(StateContext);
   const { myProfile } = useContext(StateContext);
 
-  let feedProfile = uid ? allProfile.find((it) => it.uid === uid) : myProfile;
+  const feedProfile = userId
+    ? allProfile.find((it) => it.userId === userId)
+    : myProfile;
 
   return (
     <Wrapper>
