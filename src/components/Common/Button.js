@@ -44,11 +44,9 @@ const MesseageBtn = styled.span`
 `;
 
 const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
-
   const handleOnClick = () => {
-      onClick();
+    onClick();
   };
-
 
   return (
     <ButtonItem
