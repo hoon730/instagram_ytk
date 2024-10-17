@@ -84,7 +84,7 @@ const UserName = styled.p`
 
 const PhotoSection = styled.div`
   width: 652px;
-  height: 815px;
+  height: 652px;
   margin: 0 auto;
   border-radius: 8px;
   position: relative;
@@ -186,15 +186,9 @@ const FeedItem = ({ feedDetail }) => {
       </ProfileSection>
       <PhotoSection>
         {feedDetail.type === "reels" ? (
-          <Video
-            autoPlay
-            muted
-            loop
-            src={feedDetail.imgPath}
-            onClick={onClick}
-          />
+          <Video autoPlay muted loop src={feedDetail.imgPath} />
         ) : (
-          <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
+          <Slide imgPath={feedDetail.imgPath} />
         )}
         {isClicked ? (
           <ClickFeed onClick={onClick} feedDetail={feedDetail} />

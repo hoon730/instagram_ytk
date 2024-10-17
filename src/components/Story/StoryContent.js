@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { StateContext } from "../../App";
 import styled from "styled-components";
 import StoryItem from "./StoryItem";
-import SlideButton from "../Common/SlideButton";
 import Data from "../../data.json";
 import { auth } from "../../utils/firebase";
 import { motion } from "framer-motion";
@@ -45,11 +44,10 @@ const StoryGroup = styled(motion.div)`
 
 const StoryContent = () => {
   const [visible, setVisible] = useState(0);
-  const [storyDesc, setStoryDesc] = useState(null);
+  const [storyDesc, setStoryDesc] = useState([]);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
-  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
-  const ref = useRef(null); // 부모 요소 참조
+  const ref = useRef(null);
 
   useEffect(() => {
     if (!myProfile) return;
@@ -81,60 +79,62 @@ const StoryContent = () => {
         };
       })
       .sort((a, b) => b.active - a.active || b.date - a.date);
+
     setStoryDesc(storyDesc);
   }, [myProfile]);
 
   // 부모 요소의 크기를 측정하여 dragConstraints 설정
+  const itemWidth = 80; // StoryItem의 너비
   useEffect(() => {
     if (ref.current) {
-      const parentWidth = ref.current.clientWidth; // 부모 요소의 너비
-      const itemWidth = 90;
-      const maxVisibleItems = Math.floor(parentWidth / itemWidth); // 최대 보이는 아이템 수
-      const totalItems = storyDesc ? storyDesc.length : 0;
+      const parentWidth = ref.current.clientWidth;
+      const maxVisibleItems = Math.floor(parentWidth / itemWidth);
+      const totalItems = storyDesc.length;
 
-      // 드래그 제약 조건 계산
-      setConstraints({
-        left: -(totalItems - maxVisibleItems) * itemWidth, // 왼쪽으로 드래그 가능한 최대 거리
-        right: 0, // 오른쪽은 0
-      });
+      setVisible(Math.max(0, Math.min(visible, totalItems - maxVisibleItems))); // visible 상태를 업데이트
     }
   }, [storyDesc]);
 
-  const moveSlide = (num) => {
-    setVisible(num + visible);
+  const handleDragEnd = (event, info) => {
+    const parentWidth = ref.current.clientWidth;
+    const maxVisibleItems = Math.floor(parentWidth / itemWidth);
+    const distanceMoved = info.offset.x / itemWidth; // 이동한 거리
+
+    setVisible((prev) => {
+      const newVisible = Math.round(prev - distanceMoved);
+      return Math.max(
+        0,
+        Math.min(newVisible, storyDesc.length - maxVisibleItems)
+      );
+    });
   };
 
   return (
     <Wrapper>
-      <SlideButton
-        type={"left"}
-        onClick={() => moveSlide(-1)}
-        visible={visible}
-        limit={storyDesc && storyDesc.length}
-      />
       <StorySection ref={ref}>
         <StoryGroup
-          drag="x"
-          dragConstraints={constraints}
-          whileTap={{ cursor: "grabbing" }}
+          drag="x" // x축으로 드래그 가능
+          dragConstraints={{
+            left: -(
+              (storyDesc.length -
+                Math.floor(ref.current?.clientWidth / itemWidth)) *
+              itemWidth
+            ),
+            right: 0,
+          }} // 드래그 제약 조건
+          onDragEnd={handleDragEnd} // 드래그 끝났을 때 호출되는 핸들러
+          style={{ x: -visible * itemWidth }} // 현재 visible 인덱스를 기반으로 x 위치 조정
         >
-          {storyDesc &&
-            storyDesc.map((it, idx) => (
-              <StoryItem
-                key={idx}
-                userId={it.userId}
-                imgPath={it.imgPath}
-                type={it.active > 0 ? "active" : "inactive"}
-              />
-            ))}
+          {storyDesc.map((it, idx) => (
+            <StoryItem
+              key={idx}
+              userId={it.userId}
+              imgPath={it.imgPath}
+              type={it.active > 0 ? "active" : "inactive"}
+            />
+          ))}
         </StoryGroup>
       </StorySection>
-      <SlideButton
-        type={"right"}
-        onClick={() => moveSlide(1)}
-        visible={visible}
-        limit={storyDesc && storyDesc.length}
-      />
     </Wrapper>
   );
 };

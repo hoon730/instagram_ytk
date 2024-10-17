@@ -1,30 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { videoArr } from "../../utils/utils";
 import { extractExtension } from "../../utils/utils";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
+
+  .react-multiple-carousel__arrow {
+    display: none;
+  }
 `;
 
-const Slides = styled.ul`
-  width: ${({ $slideLength }) => 100 * ($slideLength || 1)}%;
-  height: 100%;
-  display: flex;
-  transform: translateX(
-    ${({ $visible, $slideLength }) =>
-      `${-$visible * (100 / $slideLength) || 0}%`}
-  );
-  transition: transform 0.5s;
-`;
-
-const SlideItem = styled.li`
+const SlideItem = styled.div`
   width: 100%;
   height: 100%;
-  img {
-    width: inherit;
-    height: inherit;
+
+  img,
+  video {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     -webkit-user-drag: none;
   }
@@ -38,37 +35,44 @@ const SlideButtons = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transform: translateY(-50%);
+  &.prev {
+    transform: rotate(180deg);
+  }
 `;
 
 const SlideButton = styled.span`
   width: 35px;
   height: 35px;
   cursor: pointer;
+  visibility: ${({ $visible, $limit }) =>
+    $visible === 0 ? "hidden" : "visible"};
+
   &.prev {
-    transform: rotate(180deg);
-    visibility: ${({ $visible }) => ($visible === 0 ? "hidden" : "visible")};
+    rotate: calc(180deg);
+    visibility: ${({ $visible, $limit }) =>
+      $visible === $limit ? "hidden" : "visible"};
   }
+
   &.next {
     visibility: ${({ $visible, $limit }) =>
       $visible === $limit ? "hidden" : "visible"};
   }
-  & img {
+
+  img {
     width: inherit;
     height: inherit;
   }
+
   @media screen and (max-width: 1024px) {
     width: 25px;
     height: 25px;
   }
 `;
 
-const SlideButtonImg = () => {
-  return (
-    <>
-      <img src={"/images/slide-button.svg"} />
-    </>
-  );
-};
+const SlideButtonImg = () => (
+  <img src={"/images/slide-button.svg"} alt="Slide Button" />
+);
 
 const SlidePager = styled.div`
   position: absolute;
@@ -88,29 +92,69 @@ const Pager = styled.span`
   cursor: pointer;
   opacity: 0.5;
   transition: all 0.3s;
+
   &.active {
     opacity: 1;
   }
 `;
 
-const Slide = ({ imgPath, onClick }) => {
-  const [visible, setVisible] = useState(0);
-  const moveSlide = (num) => {
-    setVisible(num + visible);
-  };
-
-  const showFeed = () => {
-    onClick();
-  };
-
+const Slide = ({ imgPath }) => {
   const imageArray = Array.isArray(imgPath) ? imgPath : [imgPath];
+  const [currentSlide, setCurrentSlide] = useState(0); // Track the current slide index
+  const carouselRef = useRef(null); // Create a ref for the Carousel
+
+  const handlePrev = () => {
+    if (currentSlide > 0) {
+      setCurrentSlide((prev) => prev - 1);
+      carouselRef.current.goToSlide(currentSlide - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentSlide < imageArray.length - 1) {
+      setCurrentSlide((prev) => prev + 1);
+      carouselRef.current.goToSlide(currentSlide + 1);
+    }
+  };
+
+  const handlePagerClick = (index) => {
+    setCurrentSlide(index);
+    carouselRef.current.goToSlide(index); // Navigate to the clicked slide
+  };
+
+  // const Slides = styled(Carousel)`
+  //   & > ul {
+  //     ${({ $maxValue }) =>
+  //       $maxValue ? `width: ${$maxValue * 100}% important` : "width: 100%;"}
+  //   }
+  // `;
+
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
 
   return (
     <Wrapper>
-      <Slides
-        $visible={visible}
-        $slideLength={imageArray.length}
-        onClick={showFeed}
+      <Carousel
+        $maxValue={imageArray.length}
+        ref={carouselRef}
+        responsive={responsive}
+        arrows={false}
+        afterChange={(previousSlide, { currentSlide }) =>
+          setCurrentSlide(currentSlide)
+        }
+        className="carousel"
       >
         {imageArray.map((it, idx) => (
           <SlideItem key={idx}>
@@ -128,41 +172,42 @@ const Slide = ({ imgPath, onClick }) => {
                 }}
               />
             ) : (
-              <img src={it} />
+              <img src={it} alt={`Slide ${idx}`} />
             )}
           </SlideItem>
         ))}
-      </Slides>
-      {imageArray.length > 1 ? (
+      </Carousel>
+
+      {imageArray.length > 1 && (
         <>
           <SlideButtons>
             <SlideButton
               className="prev"
-              $visible={visible}
-              onClick={() => moveSlide(-1)}
+              $visible={currentSlide}
+              onClick={handlePrev}
             >
               <SlideButtonImg />
             </SlideButton>
             <SlideButton
               className="next"
-              $visible={visible}
+              $visible={currentSlide}
               $limit={imageArray.length - 1}
-              onClick={() => moveSlide(1)}
+              onClick={handleNext}
             >
               <SlideButtonImg />
             </SlideButton>
           </SlideButtons>
           <SlidePager>
-            {imageArray.map((it, idx) => (
+            {imageArray.map((_, idx) => (
               <Pager
                 key={idx}
-                className={idx === visible ? "active" : null}
-                onClick={() => setVisible(idx)}
-              ></Pager>
+                className={idx === currentSlide ? "active" : ""}
+                onClick={() => handlePagerClick(idx)}
+              />
             ))}
           </SlidePager>
         </>
-      ) : null}
+      )}
     </Wrapper>
   );
 };

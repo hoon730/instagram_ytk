@@ -98,7 +98,7 @@ const FeedText = ({ feedDetail, myFeed, post, all }) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper className="feed_wrapper">
       <EllipsisText $showMore={showMore}>
         {!all && isEllipsed && <MoreText onClick={moreView}>더보기</MoreText>}
         <p ref={commentRef}>

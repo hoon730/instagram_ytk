@@ -24,7 +24,7 @@ const Icons = styled.div`
   justify-content: space-between;
   padding: ${({ $type }) => ($type === "detail" ? "0px" : "20px 0px")};
   @media screen and (max-width: 1024px) {
-    padding: 13px 0;
+    padding: 5px 0;
   }
 `;
 
@@ -61,6 +61,9 @@ const Heart = styled(GoHeart)`
   ${icon}
   color: ${({ theme }) => theme.iconColor};
   ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
+  @media screen and (max-width: 1024px) {
+    ${({ $type }) => ($type === "detail" ? "width: 18px; height: 18px;" : "")}
+  }
 `;
 
 const HeartFill = styled(GoHeartFill)`
@@ -70,6 +73,9 @@ const HeartFill = styled(GoHeartFill)`
     color: #cf236a;
   }
   ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
+  @media screen and (max-width: 1024px) {
+    ${({ $type }) => ($type === "detail" ? "width: 18px; height: 18px;" : "")}
+  }
 `;
 
 const Reply = styled(IoChatbubbleEllipsesOutline)`
@@ -81,18 +87,27 @@ const Message = styled(IoPaperPlaneOutline)`
   ${icon}
   color: ${({ theme }) => theme.iconColor};
   ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
+  @media screen and (max-width: 1024px) {
+    ${({ $type }) => ($type === "detail" ? "width: 18px; height: 18px;" : "")}
+  }
 `;
 
 const Bookmark = styled(GoBookmark)`
   ${icon}
   color: ${({ theme }) => theme.iconColor};
   ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
+  @media screen and (max-width: 1024px) {
+    ${({ $type }) => ($type === "detail" ? "width: 18px; height: 18px;" : "")}
+  }
 `;
 
 const BookmarkFill = styled(GoBookmarkFill)`
   ${icon}
   color: ${({ theme }) => theme.iconColor};
   ${({ $type }) => ($type === "detail" ? "width: 20px; height: 20px;" : "")}
+  @media screen and (max-width: 1024px) {
+    ${({ $type }) => ($type === "detail" ? "width: 18px; height: 18px;" : "")}
+  }
 `;
 
 const LikeSection = styled.div`

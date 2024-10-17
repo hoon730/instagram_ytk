@@ -71,6 +71,10 @@ const Wrapper = styled(motion.div)`
   transition: all 0.3s;
   cursor: default;
 
+  .feed_wrapper {
+    margin: 5px 0;
+  }
+
   @media screen and (max-width: 1400px) {
     ${({ $isEditing }) =>
       $isEditing
@@ -99,12 +103,17 @@ const Wrapper = styled(motion.div)`
     }
     .desc {
       width: 45%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
       .comment_list {
         padding: 10px;
       }
       .writing_comment {
-        padding: 10px;
+        height: auto;
+        padding: 10px 10px 15px 10px;
+        gap: 0;
       }
       .notification {
         span {
@@ -217,11 +226,23 @@ const Contents = styled.div`
 `;
 
 const Slider = styled.div`
-  width: 60%;
+  width: 100%;
   height: 100%;
   position: relative;
   border-radius: var(--border-radius-12) 0 0 var(--border-radius-12);
   overflow: hidden;
+
+  .react-multi-carousel-list {
+    width: 100%;
+    height: 100%;
+
+    ul {
+      li {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 `;
 
 const EditingImg = styled.div`
@@ -298,6 +319,9 @@ const Userinfo = styled.div`
 
 const Location = styled.span`
   font-size: var(--font-14);
+  @media screen and (max-width: 1024px) {
+    font-size: var(--font-12);
+  }
 `;
 
 const UserContents = styled.div`
@@ -307,6 +331,16 @@ const UserContents = styled.div`
     $isEditing
       ? `width: 100%; height: calc(100% - 100px); margin-left: 0; position: relative;`
       : `margin-left: 15px; position: static;`}
+`;
+
+const ContentDate = styled.span`
+  display: inline-block;
+  font-size: var(--font-12);
+  margin-left: 15px;
+  padding-bottom: 22px;
+  @media screen and (max-width: 1024px) {
+    padding-bottom: 15px;
+  }
 `;
 
 const CommentList = styled.div`
@@ -756,7 +790,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             <UserId
                               type={"feed"}
                               userNickname={feedDetail.profile.userId}
-                              createdAt={new Date(feedDetail.createdAt)}
                               check={feedDetail.profile.badge ? "active" : ""}
                               btn={isEditing ? null : "more"}
                               onClick={onDelete}
@@ -789,6 +822,9 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             <FeedText feedDetail={feedDetail} all={true} />
                           )}
                         </UserContents>
+                        <ContentDate>
+                          {getFormattedDate(new Date(feedDetail.createdAt))}
+                        </ContentDate>
                       </UserContainer>
 
                       <CommentList className="comment_list">

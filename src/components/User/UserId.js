@@ -34,6 +34,9 @@ const IdSpan = styled.div`
   position: relative;
   color: ${({ theme }) => theme.fontColor};
   cursor: pointer;
+  @media screen and (max-width: 1024px) {
+    font-size: var(--font-14);
+  }
 `;
 
 const Check = styled.img`
@@ -72,7 +75,7 @@ const IsFollowed = styled.div`
   font-weight: var(--font-bold);
   color: ${({ theme }) => theme.subColor};
   cursor: pointer;
-  @media screen and (max-width: 770px) {
+  @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
     gap: 4px;
   }
