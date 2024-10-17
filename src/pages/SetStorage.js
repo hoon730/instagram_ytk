@@ -1,11 +1,11 @@
-// import React from "react";
-// import Data from "../data.json";
-// import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-// import { auth, db, storage } from "../utils/firebase";
-// import { addDoc, collection, updateDoc } from "firebase/firestore";
-// import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import React from "react";
+import Data from "../data.json";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db, storage } from "../utils/firebase";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-// console.log("스토리지 세팅 시작");
+console.log("스토리지 세팅 시작");
 
 // 0. 먼저 주석을 풀기전에 /setStorage를 입력해서 화면이동. 그리고 주석을 한번에 풀어서 저장하지 말고 필요한 것만 풀어서 저장하면 바로 실행 됨.
 // 그리고 반드시 다시 주석처리 해야함 안그러면 중복 데이터가 올라감.. 주의!!!

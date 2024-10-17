@@ -6,7 +6,6 @@ import New from "../../../pages/New";
 import { mbMenuData } from "../../../utils/utils";
 import ProfileImg from "../../Profile/ProfileImg";
 import { StateContext } from "../../../App";
-import { OpenContext } from "../../../App";
 
 const MenuList = styled.div`
   position: fixed;
@@ -66,8 +65,8 @@ const MbMenu = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
   const [currentNum, setCurrentNum] = useState(0);
+  const [openMbNew, setOpenMbNew] = useState(false);
 
-  const { setOpenNew, openNew } = useContext(OpenContext);
   const { myProfile } = useContext(StateContext);
 
   const handleOnClick = (path) => {
@@ -75,15 +74,11 @@ const MbMenu = () => {
   };
 
   const showNew = (name) => {
-    if (name === "만들기") onClick();
+    if (name === "만들기") setOpenMbNew(true);
   };
 
   const isActive = (num) => {
     setCurrentNum(num);
-  };
-
-  const onClick = () => {
-    setOpenNew(true);
   };
 
   return (
@@ -112,7 +107,7 @@ const MbMenu = () => {
           <MenuText className="text">{it.name}</MenuText>
         </MenuItem>
       ))}
-      {openNew ? <New setOpenNew={setOpenNew} /> : null}
+      {openMbNew ? <New setOpenMbNew={setOpenMbNew} /> : null}
     </MenuList>
   );
 };

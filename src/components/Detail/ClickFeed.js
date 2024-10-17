@@ -13,6 +13,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
+import { FaArrowLeft } from "react-icons/fa6";
 
 import { auth, db, storage } from "../../utils/firebase";
 import {
@@ -59,6 +60,28 @@ const CloseBtn = styled.button`
   svg {
     font-size: 30px;
     color: var(--bg-white-color);
+  }
+
+  @media screen and (max-width: 630px) {
+    display: none;
+  }
+`;
+
+const BackButton = styled.button`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  display: none;
+  color: ${({ theme }) => theme.bgColor};
+  z-index: 3;
+
+  svg {
+    font-size: var(--font-24);
+  }
+  @media screen and (max-width: 630px) {
+    display: block;
   }
 `;
 
@@ -145,6 +168,8 @@ const Wrapper = styled(motion.div)`
 
     .inner {
       height: ${({ $isEditing }) => ($isEditing ? "100%" : "100%")};
+      border-radius: ${({ $isEditing }) =>
+        $isEditing ? "var(--border-radius-12);" : "0"};
     }
 
     .contents {
@@ -152,6 +177,8 @@ const Wrapper = styled(motion.div)`
       align-items: center;
       border-radius: var(--border-radius-12);
       overflow: hidden;
+      border-radius: ${({ $isEditing }) =>
+        $isEditing ? "var(--border-radius-12);" : "0"};
     }
 
     .slider {
@@ -678,7 +705,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
         <p>피드를 불러오는 중입니다...</p>
       ) : (
         <>
-          <CloseBtn onClick={hideFeed}>
+          <CloseBtn className="close_btn" onClick={hideFeed}>
             <IoIosCloseCircle />
           </CloseBtn>
           <BgWrapper
@@ -710,6 +737,9 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                 ) : null}
                 <Contents $isEditing={isEditing} className="contents">
                   <Slider className="slider">
+                    <BackButton className="back_button" onClick={hideFeed}>
+                      <FaArrowLeft />
+                    </BackButton>
                     {isEditing ? (
                       <EditingImg className="editing_img">
                         <MediaWrapper>

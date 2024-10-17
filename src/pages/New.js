@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { auth, db, storage } from "../utils/firebase";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { OpenContext } from "../App";
 
 const NewBg = styled(motion.div)`
   position: fixed;
@@ -165,6 +164,24 @@ const ButtonsBox = styled.div`
   gap: 10px;
 `;
 
+const CancelBtn = styled.input`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 45px;
+  font-size: var(--font-16);
+  font-family: "Noto Sans KR", sans-serif;
+  color: var(--bg-white-color);
+  background-color: ${({ theme }) => theme.nonActiveBtnColor};
+  border-radius: var(--border-radius-8);
+  transition: background-color 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.nonActiveBtnHoverColor};
+  }
+`;
+
 const SubmitBtn = styled.input`
   display: flex;
   justify-content: center;
@@ -183,7 +200,7 @@ const SubmitBtn = styled.input`
   }
 `;
 
-const New = () => {
+const New = ({ setOpenNew }) => {
   const newBgRef = useRef();
   const mediaRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -195,7 +212,6 @@ const New = () => {
 
   const [constraints, setConstraints] = useState({ left: 0, right: 0 });
 
-  const { setOpenNew } = useContext(OpenContext);
   const maxFileSize = 10 * 1024 * 1024;
 
   const fileAdd = (e) => {
@@ -264,7 +280,8 @@ const New = () => {
 
       const newPushUrl = []; // 파일 URL을 저장할 배열
 
-      if (file.length > 1) {
+      //if (file.length > 1) {
+      if (file.length > 0) {
         for (const item of file) {
           const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
           const result = await uploadBytes(locationRef, item);
@@ -275,27 +292,31 @@ const New = () => {
 
         await updateDoc(docRef, {
           imgPath: newPushUrl,
-          type: "img",
+          type:
+            file.length === 1 && file[0].type.startsWith("video/")
+              ? "reels"
+              : "img",
         });
-      } else if (file.length === 1) {
-        const item = file[0];
-        const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
-        const result = await uploadBytes(locationRef, item);
-        const url = await getDownloadURL(result.ref);
-        const fileType = item.type;
-
-        if (fileType.startsWith("image/")) {
-          await updateDoc(docRef, {
-            imgPath: url,
-            type: "img",
-          });
-        } else if (fileType.startsWith("video/")) {
-          await updateDoc(docRef, {
-            imgPath: url,
-            type: "reels",
-          });
-        }
       }
+      // else if (file.length === 1) {
+      //   const item = file[0];
+      //   const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
+      //   const result = await uploadBytes(locationRef, item);
+      //   const url = await getDownloadURL(result.ref);
+      //   const fileType = item.type;
+
+      //   if (fileType.startsWith("image/")) {
+      //     await updateDoc(docRef, {
+      //       imgPath: url,
+      //       type: "img",
+      //     });
+      //   } else if (fileType.startsWith("video/")) {
+      //     await updateDoc(docRef, {
+      //       imgPath: url,
+      //       type: "reels",
+      //     });
+      //   }
+      // }
 
       // 상태 초기화
       setContent("");
@@ -309,10 +330,6 @@ const New = () => {
     }
   };
 
-  // const handleOnClick = () => {
-  //   setOpenNew(false);
-  // };
-
   return (
     <NewBg
       variants={click}
@@ -321,7 +338,10 @@ const New = () => {
       exit="exits"
       ref={newBgRef}
       onClick={(e) => {
-        if (e.target === newBgRef.current) setOpenNew(false);
+        if (e.target === newBgRef.current) {
+          console.log("Background clicked, closing modal.");
+          setOpenNew(false); // 모달 닫기
+        }
       }}
     >
       <Wrapper
@@ -329,6 +349,7 @@ const New = () => {
         initial="initial"
         animate="visible"
         exit="exits"
+        onClick={(e) => e.stopPropagation()}
       >
         <Inner className="inner">
           <H3>새 게시물 만들기</H3>
@@ -383,13 +404,17 @@ const New = () => {
               </TextCounter>
             </TextInputArea>
             <ButtonsBox>
-              <Button
+              <CancelBtn
+                type="button"
+                value={"취소하기"}
+                onClick={() => setOpenNew(false)}
+              />
+              {/* <Button
                 className="button"
                 type={"negative"}
                 text={"취소하기"}
                 width={"50%"}
-                // onClick={handleOnClick}
-              />
+              /> */}
               <SubmitBtn
                 type="submit"
                 value={isLoading ? "업로드중..." : "게시글 업로드하기"}

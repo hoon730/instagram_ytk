@@ -5,14 +5,14 @@ import { getFirestore } from "firebase/firestore";
 import { getApp, getApps } from "firebase/app";
 
 // 1. ytg firebase
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAQZTNSis27AhSHE1MQyYwuaAllNdHuwp0",
-//   authDomain: "ytg-instagram.firebaseapp.com",
-//   projectId: "ytg-instagram",
-//   storageBucket: "ytg-instagram.appspot.com",
-//   messagingSenderId: "938815740201",
-//   appId: "1:938815740201:web:99541068728ed2900f7f38",
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyAQZTNSis27AhSHE1MQyYwuaAllNdHuwp0",
+  authDomain: "ytg-instagram.firebaseapp.com",
+  projectId: "ytg-instagram",
+  storageBucket: "ytg-instagram.appspot.com",
+  messagingSenderId: "938815740201",
+  appId: "1:938815740201:web:99541068728ed2900f7f38",
+};
 
 // 2. 지선님꺼
 // const firebaseConfig = {
@@ -66,14 +66,24 @@ import { getApp, getApps } from "firebase/app";
 // };
 
 // 7. 동훈  ytg-instagram - 4th
-const firebaseConfig = {
-  apiKey: "AIzaSyB7-oa42RTOaDL3j0fICVWYaoAGloiGe64",
-  authDomain: "ytg-instagram-4th.firebaseapp.com",
-  projectId: "ytg-instagram-4th",
-  storageBucket: "ytg-instagram-4th.appspot.com",
-  messagingSenderId: "311866759989",
-  appId: "1:311866759989:web:a1529bce2bbe90a708ca7c",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyB7-oa42RTOaDL3j0fICVWYaoAGloiGe64",
+//   authDomain: "ytg-instagram-4th.firebaseapp.com",
+//   projectId: "ytg-instagram-4th",
+//   storageBucket: "ytg-instagram-4th.appspot.com",
+//   messagingSenderId: "311866759989",
+//   appId: "1:311866759989:web:a1529bce2bbe90a708ca7c",
+// };
+
+// 8. 동훈 ytg-instagram - 5th
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBAlsXVad-5Q_36EvshQP6FGo8BeM4Xu4Y",
+//   authDomain: "ytg-instagram-5th.firebaseapp.com",
+//   projectId: "ytg-instagram-5th",
+//   storageBucket: "ytg-instagram-5th.appspot.com",
+//   messagingSenderId: "601602727737",
+//   appId: "1:601602727737:web:17dd659de3f365040bd2e8"
+// };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
