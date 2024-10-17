@@ -3,17 +3,10 @@ import styled from "styled-components";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import StoryItem from "../Story/StoryItem";
-import AddHighlight from "../Story/AddHighlight";
 
 const Wrapper = styled.div`
   width: 100%;
   /* display: flex; */
-`;
-
-const HighlightArea = styled.div`
-  /* border: 1px solid red; */
-  /* width: 100%; */
-  /* margin: 20px 70px; */
 `;
 
 const HighlightBox = styled.div`
@@ -25,7 +18,26 @@ const HighlightBox = styled.div`
 
   @media screen and (max-width: 1000px) {
     gap: 20px;
-    margin: 20px 50px;
+    margin: 15px 50px;
+
+    .storyFirstCircle {
+      width: 68px;
+      height: 68px;
+    }
+
+    .storySecondCircle {
+      width: 60px;
+      height: 60px;
+    }
+
+    .storyThirdCircle {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  @media screen and (max-width: 630px) {
+    margin: 20px 10px;
 
     .storyFirstCircle {
       width: 68px;
@@ -44,22 +56,7 @@ const HighlightBox = styled.div`
   }
 
   @media screen and (max-width: 430px) {
-    margin: 20px 10px;
-
-    .storyFirstCircle {
-      width: 68px;
-      height: 68px;
-    }
-
-    .storySecondCircle {
-      width: 60px;
-      height: 60px;
-    }
-
-    .storyThirdCircle {
-      width: 60px;
-      height: 60px;
-    }
+    gap: 10px;
   }
 `;
 
