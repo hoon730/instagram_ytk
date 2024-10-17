@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { StateContext } from "../../App";
 import styled from "styled-components";
 import StoryItem from "./StoryItem";
+import SlideButton from "../Common/SlideButton";
 import Data from "../../data.json";
 import { auth } from "../../utils/firebase";
 import { motion } from "framer-motion";
+import { mouseon } from "../../utils/utils";
 
 const users = Data.user;
 const storys = Data.story;
@@ -36,6 +38,14 @@ const StorySection = styled.div`
   overflow: hidden;
 `;
 
+// const StoryGroup = styled.div`
+//   display: flex;
+//   align-items: center;
+//   gap: 20px;
+//   transform: translateX(${({ $visible }) => `${-$visible * 100 || 0}px`});
+//   transition: transform 0.5s;
+// `;
+
 const StoryGroup = styled(motion.div)`
   display: flex;
   align-items: center;
@@ -44,10 +54,9 @@ const StoryGroup = styled(motion.div)`
 
 const StoryContent = () => {
   const [visible, setVisible] = useState(0);
-  const [storyDesc, setStoryDesc] = useState([]);
+  const [storyDesc, setStoryDesc] = useState(null);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
-  const ref = useRef(null);
 
   useEffect(() => {
     if (!myProfile) return;
@@ -55,9 +64,9 @@ const StoryContent = () => {
     const myUserId = users.find(
       (it) => it.uid === auth?.currentUser.uid
     ).userId;
-    const userIdOfMyFollowing = myProfile.following.map(
-      (it) => users.find((user) => user.uid === it).userId
-    );
+    const userIdOfMyFollowing = myProfile.following.map((it) => {
+      return users.find((user) => user.uid === it).userId;
+    });
 
     const storyDesc = storys
       .filter((it) => userIdOfMyFollowing.includes(it.userId))
@@ -78,63 +87,48 @@ const StoryContent = () => {
           date: new Date(story.storyHistory[0].createDate).getTime(),
         };
       })
-      .sort((a, b) => b.active - a.active || b.date - a.date);
-
+      .sort((a, b) => {
+        return b.active - a.active || b.date - a.date;
+      });
     setStoryDesc(storyDesc);
   }, [myProfile]);
 
-  // 부모 요소의 크기를 측정하여 dragConstraints 설정
-  const itemWidth = 80; // StoryItem의 너비
-  useEffect(() => {
-    if (ref.current) {
-      const parentWidth = ref.current.clientWidth;
-      const maxVisibleItems = Math.floor(parentWidth / itemWidth);
-      const totalItems = storyDesc.length;
-
-      setVisible(Math.max(0, Math.min(visible, totalItems - maxVisibleItems))); // visible 상태를 업데이트
-    }
-  }, [storyDesc]);
-
-  const handleDragEnd = (event, info) => {
-    const parentWidth = ref.current.clientWidth;
-    const maxVisibleItems = Math.floor(parentWidth / itemWidth);
-    const distanceMoved = info.offset.x / itemWidth; // 이동한 거리
-
-    setVisible((prev) => {
-      const newVisible = Math.round(prev - distanceMoved);
-      return Math.max(
-        0,
-        Math.min(newVisible, storyDesc.length - maxVisibleItems)
-      );
-    });
+  const moveSlide = (num) => {
+    setVisible(num + visible);
   };
 
   return (
     <Wrapper>
-      <StorySection ref={ref}>
+      <SlideButton
+        type={"left"}
+        onClick={() => moveSlide(-1)}
+        visible={visible}
+        limit={storyDesc && storyDesc.length}
+      />
+      <StorySection>
         <StoryGroup
-          drag="x" // x축으로 드래그 가능
-          dragConstraints={{
-            left: -(
-              (storyDesc.length -
-                Math.floor(ref.current?.clientWidth / itemWidth)) *
-              itemWidth
-            ),
-            right: 0,
-          }} // 드래그 제약 조건
-          onDragEnd={handleDragEnd} // 드래그 끝났을 때 호출되는 핸들러
-          style={{ x: -visible * itemWidth }} // 현재 visible 인덱스를 기반으로 x 위치 조정
+          $visible={visible}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          whileTap={{ cursor: "grabbing" }}
         >
-          {storyDesc.map((it, idx) => (
-            <StoryItem
-              key={idx}
-              userId={it.userId}
-              imgPath={it.imgPath}
-              type={it.active > 0 ? "active" : "inactive"}
-            />
-          ))}
+          {storyDesc &&
+            storyDesc.map((it, idx) => (
+              <StoryItem
+                key={idx}
+                userId={it.userId}
+                imgPath={it.imgPath}
+                type={it.active > 0 ? "active" : "inactive"}
+              />
+            ))}
         </StoryGroup>
       </StorySection>
+      <SlideButton
+        type={"right"}
+        onClick={() => moveSlide(1)}
+        visible={visible}
+        limit={storyDesc && storyDesc.length}
+      />
     </Wrapper>
   );
 };

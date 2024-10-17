@@ -3,6 +3,7 @@ import { StateContext } from "../App";
 import { useSearchParams } from "react-router-dom";
 import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../utils/firebase";
+import { dontReady } from "../utils/utils";
 import styled from "styled-components";
 import MyPostItem from "../components/MyFeed/MyPostItem";
 import MainHeader from "../components/Main/MainHeader";
@@ -231,6 +232,7 @@ const Search = ({ page }) => {
 
           querySnapshot.docs.forEach((doc) => {
             const data = doc.data();
+            console.log(data);
             const feedProfile = allProfile.find((it) => it.uid === data.uid);
             if (data) {
               reels.push({ ...data, profile: feedProfile, id: doc.id });
@@ -278,22 +280,27 @@ const Search = ({ page }) => {
                 <MoreIcon onClick={handleMoreBtn}>
                   <LuMoreHorizontal size={22} />
                 </MoreIcon>
-                <MorePopup className={moreBtn ? "active" : ""}>
+                <MorePopup
+                  className={moreBtn ? "active" : ""}
+                  onClick={dontReady}
+                >
                   <PiSirenLight size={20} />
                   신고하기
                 </MorePopup>
               </MoreIconArea>
             </Header>
-            <ItemArea>
-              {postList.map((it, index) => (
-                <MyPostItem
-                  key={index}
-                  onClick={() => onClick(it)}
-                  page={page}
-                  url={it.imgPath}
-                />
-              ))}
-            </ItemArea>
+            {postList.length > 0 && (
+              <ItemArea>
+                {postList.map((it, index) => (
+                  <MyPostItem
+                    key={index}
+                    onClick={() => onClick(it)}
+                    page={page}
+                    url={it.imgPath}
+                  />
+                ))}
+              </ItemArea>
+            )}
             {isClicked && clickedFeed ? (
               <ClickFeed
                 onClick={() => setIsClicked(false)}

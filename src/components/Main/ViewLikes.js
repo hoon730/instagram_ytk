@@ -15,7 +15,7 @@ const ViewSection = styled(motion.div)`
   ${({ top }) => (top ? `top: ${top}px;` : "top: 22px;")}
   left: 0;
   background: ${({ theme }) => theme.bgColor};
-  z-index: 3;
+  z-index: 4;
 `;
 
 const Header = styled.div`
@@ -76,12 +76,6 @@ const UserInfo = styled.div`
   .user-check {
     width: 14px;
   }
-  .hover-wrapper {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 `;
 
 const UserName = styled.p`
@@ -101,7 +95,7 @@ const ViewLikes = ({ likeUser, setShowProfile }) => {
     setShowProfile((prev) => !prev);
   };
   return (
-    <ViewSection>
+    <ViewSection className="likes-section">
       <Header>
         좋아요
         <CloseButton onClick={close} />

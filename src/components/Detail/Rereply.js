@@ -1,8 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { StateContext } from "../../App";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import CommentLine from "../Common/CommentLine";
+import { auth, db } from "../../utils/firebase";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 import { IoHeartOutline, IoHeartSharp } from "react-icons/io5";
 import { getFormattedDate } from "../../utils/utils";
@@ -23,7 +25,6 @@ const CommentAndProfile = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  //display: none; // 작업 후 삭제
 `;
 
 const CommentAndHeart = styled.div`
@@ -56,12 +57,30 @@ const ReplyBtn = styled.button`
   font-weight: var(--font-bold);
 `;
 
+const icon = `
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+`;
+
+const Heart = styled(IoHeartOutline)`
+  ${icon}
+  color: ${({ theme }) => theme.iconColor};
+`;
+
+const HeartFill = styled(IoHeartSharp)`
+  ${icon}
+  color: var(--sub-pink-color);
+  &:hover {
+    color: #cf236a;
+  }
+`;
+
 const EditArea = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  display: none; // 작업 후 삭제
 `;
 
 const EditAreaHeader = styled.div`
@@ -102,53 +121,114 @@ const Textarea = styled.textarea`
   }
 `;
 
-const CommentItem = ({ onClick, reply }) => {
+const Rereply = ({ reply }) => {
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
-  const [text, setText] = useState("");
-  const focusingInput = () => {
-    onClick();
-  };
-  const replyProfile = allProfile.find((it) => it.uid === reply.uid);
+  const [likes, setLikes] = useState(reply.like);
+  const [fillHeart, setFillHeart] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+  const [text, setText] = useState();
+  const textareaRef = useRef();
 
+  useEffect(() => {
+    setText(reply.content);
+  }, [reply]);
+
+  useEffect(() => {
+    setFillHeart(likes.includes(myProfile.uid));
+    updateDoc(doc(db, "re_reply", reply.id), { like: likes });
+  }, [likes]);
+
+  const toggleHeart = () => {
+    if (fillHeart) {
+      setLikes(likes.filter((it) => it !== myProfile.uid));
+    } else {
+      setLikes([...likes, myProfile.uid]);
+    }
+  };
+
+  useEffect(() => {
+    if (showEdit && textareaRef.current) {
+      textareaRef.current.focus();
+      textareaRef.current.selectionStart = textareaRef.current.value.length;
+      textareaRef.current.selectionEnd = textareaRef.current.value.length;
+    }
+  }, [showEdit]);
+
+  const openEditArea = () => {
+    setShowEdit(true);
+  };
+
+  const user = auth.currentUser;
+  const updateComment = () => {
+    if (user?.uid !== reply.uid) return;
+    updateDoc(doc(db, "re_reply", reply.id), { content: text });
+    setShowEdit(false);
+  };
+
+  const deleteComment = () => {
+    if (user?.uid !== reply.uid) return;
+    if (!window.confirm("댓글을 삭제하시겠습니까?")) return;
+    deleteDoc(doc(db, `re_reply`, reply.id));
+  };
+
+  const cancelEdit = () => {
+    setShowEdit(false);
+    setText(reply.content);
+  };
+
+  const replyProfile = allProfile.find((it) => it.uid === reply.uid);
   return (
     <div>
       <CommentSection>
         <ProfileImg url={replyProfile.profilePhoto} size={40} />
-        <CommentAndProfile>
-          <CommentAndHeart>
-            <CommentLine
-              userId={replyProfile.userId}
-              uid={replyProfile.uid}
-              comment={reply.content}
-            />
-            <IoHeartOutline />
-          </CommentAndHeart>
-          <DateAndButton>
-            <ReplyDate>{getFormattedDate(new Date(reply.createdAt))}</ReplyDate>
-            <ReplyBtn onClick={focusingInput}>답글 달기</ReplyBtn>
-            <ReplyBtn>수정</ReplyBtn>
-            <ReplyBtn>삭제</ReplyBtn>
-          </DateAndButton>
-        </CommentAndProfile>
-        <EditArea>
-          <EditAreaHeader>
-            <IdSpan>{replyProfile.userId}</IdSpan>
-            <RightBtns>
-              <ReplyBtn>저장</ReplyBtn>
-              <ReplyBtn>취소</ReplyBtn>
-            </RightBtns>
-          </EditAreaHeader>
-          <TextareaBg>
-            <Textarea
-              value={reply.content}
-              onChange={(e) => setText(e.target.value)}
-            />
-          </TextareaBg>
-        </EditArea>
+        {showEdit ? (
+          <EditArea>
+            <EditAreaHeader>
+              <IdSpan>{replyProfile.userId}</IdSpan>
+              <RightBtns>
+                <ReplyBtn onClick={updateComment}>저장</ReplyBtn>
+                <ReplyBtn onClick={cancelEdit}>취소</ReplyBtn>
+              </RightBtns>
+            </EditAreaHeader>
+            <TextareaBg>
+              <Textarea
+                value={text}
+                ref={textareaRef}
+                onChange={(e) => setText(e.target.value)}
+              />
+            </TextareaBg>
+          </EditArea>
+        ) : (
+          <CommentAndProfile>
+            <CommentAndHeart>
+              <CommentLine
+                userId={replyProfile.userId}
+                uid={replyProfile.uid}
+                comment={reply.content}
+              />
+              {fillHeart ? (
+                <HeartFill onClick={toggleHeart} />
+              ) : (
+                <Heart onClick={toggleHeart} />
+              )}
+            </CommentAndHeart>
+            <DateAndButton>
+              <ReplyDate>
+                {getFormattedDate(new Date(reply.createdAt))}
+              </ReplyDate>
+              {reply.uid === myProfile.uid ? (
+                <>
+                  <ReplyBtn onClick={openEditArea}>수정</ReplyBtn>
+                  <ReplyBtn onClick={deleteComment}>삭제</ReplyBtn>
+                </>
+              ) : null}
+            </DateAndButton>
+          </CommentAndProfile>
+        )}
       </CommentSection>
     </div>
   );
 };
 
-export default CommentItem;
+export default Rereply;

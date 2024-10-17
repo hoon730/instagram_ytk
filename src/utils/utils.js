@@ -18,7 +18,7 @@ import { RxMagnifyingGlass } from "react-icons/rx";
 export const getFormattedDate = (targetDate) => {
   const year = targetDate.getFullYear();
   let month = targetDate.getMonth() + 1;
-  let date = new Date(targetDate).getDate();
+  let date = targetDate.getDate();
 
   if (month < 10) month = `0${month}`;
   if (date < 10) date = `0${date}`;
@@ -85,7 +85,6 @@ export const mbMenuData = [
     id: 2,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
-    path: "/new",
   },
   {
     id: 3,
@@ -97,7 +96,7 @@ export const mbMenuData = [
     id: 4,
     name: "마이 프로필",
     iconCode: "",
-    path: "/detail",
+    path: "/profile",
   },
 ];
 

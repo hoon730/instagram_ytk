@@ -25,7 +25,6 @@ import {
   query,
   where,
   limit,
-  getDocs,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import NotLoggedIn from "./components/NotLoggedIn";
@@ -58,7 +57,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "detail",
+        path: "profile",
         element: <Detail />,
       },
       {
@@ -136,7 +135,7 @@ function App() {
 
   useEffect(() => {
     init();
-    
+
     let allProfileUnsubscribe = null;
     const fetchAllProfile = async () => {
       const profileQuery = query(collection(db, "profile"));

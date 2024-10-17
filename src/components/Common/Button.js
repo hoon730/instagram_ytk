@@ -54,7 +54,7 @@ const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
       $height={height}
       fontSize={fontSize}
       type={type}
-      onClick={onClick ? handleOnClick : null}
+      onClick={onClick && handleOnClick}
       $followed={followed}
     >
       <MesseageBtn $followed={followed}>

@@ -13,6 +13,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { IoHeartOutline } from "react-icons/io5";
 import { FaRegBookmark } from "react-icons/fa6";
 import { IoPaperPlaneOutline } from "react-icons/io5";
+import { FaArrowLeft } from "react-icons/fa6";
 
 import { auth, db, storage } from "../../utils/firebase";
 import {
@@ -36,6 +37,7 @@ import {
 } from "firebase/storage";
 import { motion } from "framer-motion";
 import { StateContext } from "../../App";
+import FeedIcon from "../Main/FeedIcon";
 
 const BgWrapper = styled(motion.div)`
   position: fixed;
@@ -60,6 +62,29 @@ const CloseBtn = styled.button`
     font-size: 30px;
     color: var(--bg-white-color);
   }
+
+  @media screen and (max-width: 630px) {
+    display: none;
+  }
+`;
+
+const BackButton = styled.button`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  display: none;
+  color: ${({ theme }) => theme.bgColor};
+  filter: drop-shadow(0 0 4px ${({ theme }) => theme.fontColor});
+  z-index: 3;
+
+  svg {
+    font-size: var(--font-24);
+  }
+  @media screen and (max-width: 630px) {
+    display: block;
+  }
 `;
 
 const Wrapper = styled(motion.div)`
@@ -72,6 +97,10 @@ const Wrapper = styled(motion.div)`
   border-radius: var(--border-radius-12);
   transition: all 0.3s;
   cursor: default;
+
+  .feed_wrapper {
+    margin: 5px 0;
+  }
 
   @media screen and (max-width: 1400px) {
     ${({ $isEditing }) =>
@@ -101,12 +130,17 @@ const Wrapper = styled(motion.div)`
     }
     .desc {
       width: 45%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
       .comment_list {
         padding: 10px;
       }
       .writing_comment {
-        padding: 10px;
+        height: auto;
+        padding: 10px 10px 15px 10px;
+        gap: 0;
       }
       .notification {
         span {
@@ -145,6 +179,8 @@ const Wrapper = styled(motion.div)`
 
     .inner {
       height: ${({ $isEditing }) => ($isEditing ? "100%" : "100%")};
+      border-radius: ${({ $isEditing }) =>
+        $isEditing ? "var(--border-radius-12);" : "0"};
     }
 
     .contents {
@@ -152,6 +188,8 @@ const Wrapper = styled(motion.div)`
       align-items: center;
       border-radius: var(--border-radius-12);
       overflow: hidden;
+      border-radius: ${({ $isEditing }) =>
+        $isEditing ? "var(--border-radius-12);" : "0"};
     }
 
     .slider {
@@ -219,11 +257,23 @@ const Contents = styled.div`
 `;
 
 const Slider = styled.div`
-  width: 60%;
+  width: 100%;
   height: 100%;
   position: relative;
   border-radius: var(--border-radius-12) 0 0 var(--border-radius-12);
   overflow: hidden;
+
+  .react-multi-carousel-list {
+    width: 100%;
+    height: 100%;
+
+    ul {
+      li {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 `;
 
 const EditingImg = styled.div`
@@ -300,6 +350,9 @@ const Userinfo = styled.div`
 
 const Location = styled.span`
   font-size: var(--font-14);
+  @media screen and (max-width: 1024px) {
+    font-size: var(--font-12);
+  }
 `;
 
 const UserContents = styled.div`
@@ -311,9 +364,14 @@ const UserContents = styled.div`
       : `margin-left: 15px; position: static;`}
 `;
 
-const Content = styled.span`
-  margin-left: ${({ size }) => (size ? `${size}px` : 0)};
-  font-size: var(--font-14);
+const ContentDate = styled.span`
+  display: inline-block;
+  font-size: var(--font-12);
+  margin-left: 15px;
+  padding-bottom: 22px;
+  @media screen and (max-width: 1024px) {
+    padding-bottom: 15px;
+  }
 `;
 
 const CommentList = styled.div`
@@ -332,48 +390,6 @@ const WritingComment = styled.div`
   padding: 15px 20px;
   border-top: 1px solid var(--light-gray-color);
 `;
-
-const Top = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-const Notification = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: var(--font-14);
-  gap: 8px;
-
-  svg {
-    display: flex;
-    align-items: center;
-    font-size: var(--font-20);
-  }
-`;
-const IconBtns = styled.div`
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  cursor: pointer;
-
-  svg {
-    font-size: var(--font-16);
-  }
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-  height: 35px;
-  background: var(--light-gray-color);
-  border-radius: var(--border-radius-8);
-  padding: 0 20px;
-
-  &::placeholder {
-    color: var(--gray-color);
-    font-weight: var(--font-regular);
-  }
-`;
-
-const Form = styled.form``;
 
 const Title = styled.div`
   display: flex;
@@ -453,10 +469,9 @@ const EditedTextArea = styled.textarea`
 `;
 
 const ClickFeed = ({ feedDetail, onClick }) => {
-  const [comments, setComments] = useState([]);
-  const [pushComment, setPushComment] = useState("");
   const [followingUser, setFollowingUser] = useState("");
   const [replyArr, SetReplyArr] = useState([]);
+  const [repleInfo, setRepleInfo] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedFeedDetail, setEditedFeedDetail] = useState(
     feedDetail?.content || ""
@@ -635,7 +650,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     fetchReply();
 
     return () => {
-      // 구독 해제
       if (replyUnsubscribe) {
         replyUnsubscribe();
       }
@@ -645,31 +659,40 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     };
   }, [feedDetail]);
 
-  useEffect(() => {
-    if (pushComment === "") return;
-
-    const addCmt = async () => {
-      try {
-        const docRef = await addDoc(collection(db, "reply"), {
-          content: pushComment,
+  const addCmt = async (comment) => {
+    try {
+      if (repleInfo && comment.startsWith(`@${repleInfo.userId}`)) {
+        await addDoc(collection(db, "re_reply"), {
+          content: comment.replace(`@${repleInfo.userId} `, ""),
+          createdAt: Date.now(),
+          replyId: repleInfo.id,
+          type: "rr",
+          uid: myProfile.uid,
+          like: [],
+        });
+      } else {
+        await addDoc(collection(db, "reply"), {
+          content: comment,
           createdAt: Date.now(),
           feedId: feedDetail.id,
           type: "rp",
           uid: myProfile.uid,
           like: [],
         });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setPushComment("");
       }
-    };
-
-    addCmt();
-  }, [pushComment]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setRepleInfo(null);
+    }
+  };
 
   const hideFeed = () => {
     onClick();
+  };
+
+  const addRereple = (reply) => {
+    setRepleInfo(reply);
   };
 
   return (
@@ -678,7 +701,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
         <p>피드를 불러오는 중입니다...</p>
       ) : (
         <>
-          <CloseBtn onClick={hideFeed}>
+          <CloseBtn className="close_btn" onClick={hideFeed}>
             <IoIosCloseCircle />
           </CloseBtn>
           <BgWrapper
@@ -710,6 +733,9 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                 ) : null}
                 <Contents $isEditing={isEditing} className="contents">
                   <Slider className="slider">
+                    <BackButton className="back_button" onClick={hideFeed}>
+                      <FaArrowLeft />
+                    </BackButton>
                     {isEditing ? (
                       <EditingImg className="editing_img">
                         <MediaWrapper>
@@ -798,7 +824,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             <UserId
                               type={"feed"}
                               userNickname={feedDetail.profile.userId}
-                              createdAt={new Date(feedDetail.createdAt)}
                               check={feedDetail.profile.badge ? "active" : ""}
                               btn={isEditing ? null : "more"}
                               onClick={onDelete}
@@ -831,42 +856,30 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             <FeedText feedDetail={feedDetail} all={true} />
                           )}
                         </UserContents>
+                        <ContentDate>
+                          {getFormattedDate(new Date(feedDetail.createdAt))}
+                        </ContentDate>
                       </UserContainer>
 
                       <CommentList className="comment_list">
                         {replyArr.length > 0
                           ? replyArr.map((it, idx) => (
-                              <CommentItem key={idx} reply={it} />
+                              <CommentItem
+                                key={idx}
+                                reply={it}
+                                addRereple={addRereple}
+                              />
                             ))
                           : null}
                       </CommentList>
                     </Container>
                     <WritingComment className="writing_comment">
-                      <Top>
-                        <Notification>
-                          <IoHeartOutline />
-                          <span>
-                            {followingUser ? (
-                              <>
-                                {followingUser.userId}님 외
-                                <b> {feedDetail.like.length}명</b>이 좋아합니다
-                              </>
-                            ) : (
-                              <b>좋아요 {feedDetail.like.length}개</b>
-                            )}
-                          </span>
-                        </Notification>
-                        <IconBtns>
-                          <IoPaperPlaneOutline />
-                          <FaRegBookmark />
-                        </IconBtns>
-                      </Top>
+                      <FeedIcon feedDetail={feedDetail} type={"detail"} />
                       <CommentInput
                         width={"100%"}
                         height={"35px"}
-                        comments={comments}
-                        setComments={setComments}
-                        setPushComment={setPushComment}
+                        addCmt={addCmt}
+                        repleInfo={repleInfo}
                       />
                     </WritingComment>
                   </Desc>
