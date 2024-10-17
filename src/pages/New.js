@@ -1,18 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { click, scale } from "../utils/utils";
 import Button from "../components/Common/Button";
 import styled from "styled-components";
 import { auth, db, storage } from "../utils/firebase";
-import {
-  addDoc,
-  collection,
-  updateDoc,
-  query,
-  where,
-  limit,
-  getDocs,
-} from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const NewBg = styled(motion.div)`
@@ -42,25 +34,10 @@ const Wrapper = styled(motion.div)`
   padding: 30px 50px;
   background: ${({ theme }) => theme.bgColor};
   border-radius: var(--border-radius-12);
-  /* 
-  @media screen and (max-width: 1024px) {
-    position: relative;
-    height: 0;
-    padding-top: 56.25%;
-    width: 67%;
-  } */
 `;
 
 const Inner = styled.div`
   width: 100%;
-  /* @media screen and (max-width: 1024px) {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    padding: 30px 50px;
-  } */
 `;
 
 const H3 = styled.h3`
@@ -143,7 +120,6 @@ const SearchInput = styled.input`
 const TextInputArea = styled.div`
   width: 100%;
   position: relative;
-  border: 1px solid red;
 `;
 
 const TextArea = styled.textarea`
@@ -186,6 +162,24 @@ const ButtonsBox = styled.div`
   padding: 20px 0;
   display: flex;
   gap: 10px;
+`;
+
+const CancelBtn = styled.input`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 45px;
+  font-size: var(--font-16);
+  font-family: "Noto Sans KR", sans-serif;
+  color: var(--bg-white-color);
+  background-color: ${({ theme }) => theme.nonActiveBtnColor};
+  border-radius: var(--border-radius-8);
+  transition: background-color 0.3s;
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.nonActiveBtnHoverColor};
+  }
 `;
 
 const SubmitBtn = styled.input`
@@ -286,7 +280,8 @@ const New = ({ setOpenNew }) => {
 
       const newPushUrl = []; // 파일 URL을 저장할 배열
 
-      if (file.length > 1) {
+      //if (file.length > 1) {
+      if (file.length > 0) {
         for (const item of file) {
           const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
           const result = await uploadBytes(locationRef, item);
@@ -297,27 +292,31 @@ const New = ({ setOpenNew }) => {
 
         await updateDoc(docRef, {
           imgPath: newPushUrl,
-          type: "img",
+          type:
+            file.length === 1 && file[0].type.startsWith("video/")
+              ? "reels"
+              : "img",
         });
-      } else if (file.length === 1) {
-        const item = file[0];
-        const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
-        const result = await uploadBytes(locationRef, item);
-        const url = await getDownloadURL(result.ref);
-        const fileType = item.type;
-
-        if (fileType.startsWith("image/")) {
-          await updateDoc(docRef, {
-            imgPath: url,
-            type: "img",
-          });
-        } else if (fileType.startsWith("video/")) {
-          await updateDoc(docRef, {
-            imgPath: url,
-            type: "reels",
-          });
-        }
       }
+      // else if (file.length === 1) {
+      //   const item = file[0];
+      //   const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
+      //   const result = await uploadBytes(locationRef, item);
+      //   const url = await getDownloadURL(result.ref);
+      //   const fileType = item.type;
+
+      //   if (fileType.startsWith("image/")) {
+      //     await updateDoc(docRef, {
+      //       imgPath: url,
+      //       type: "img",
+      //     });
+      //   } else if (fileType.startsWith("video/")) {
+      //     await updateDoc(docRef, {
+      //       imgPath: url,
+      //       type: "reels",
+      //     });
+      //   }
+      // }
 
       // 상태 초기화
       setContent("");
@@ -331,10 +330,6 @@ const New = ({ setOpenNew }) => {
     }
   };
 
-  const handleOnClick = () => {
-    setOpenNew(false);
-  };
-
   return (
     <NewBg
       variants={click}
@@ -343,7 +338,10 @@ const New = ({ setOpenNew }) => {
       exit="exits"
       ref={newBgRef}
       onClick={(e) => {
-        if (e.target === newBgRef.current) setOpenNew(false);
+        if (e.target === newBgRef.current) {
+          console.log("Background clicked, closing modal.");
+          setOpenNew(false); // 모달 닫기
+        }
       }}
     >
       <Wrapper
@@ -351,6 +349,7 @@ const New = ({ setOpenNew }) => {
         initial="initial"
         animate="visible"
         exit="exits"
+        onClick={(e) => e.stopPropagation()}
       >
         <Inner className="inner">
           <H3>새 게시물 만들기</H3>
@@ -405,13 +404,17 @@ const New = ({ setOpenNew }) => {
               </TextCounter>
             </TextInputArea>
             <ButtonsBox>
-              <Button
+              <CancelBtn
+                type="button"
+                value={"취소하기"}
+                onClick={() => setOpenNew(false)}
+              />
+              {/* <Button
                 className="button"
                 type={"negative"}
                 text={"취소하기"}
                 width={"50%"}
-                onClick={handleOnClick}
-              />
+              /> */}
               <SubmitBtn
                 type="submit"
                 value={isLoading ? "업로드중..." : "게시글 업로드하기"}

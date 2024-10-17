@@ -64,8 +64,8 @@ const IconWrapper = styled.div`
 const MbMenu = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
-  const [openNew, setOpenNew] = useState(false);
   const [currentNum, setCurrentNum] = useState(0);
+  const [openMbNew, setOpenMbNew] = useState(false);
 
   const { myProfile } = useContext(StateContext);
 
@@ -74,15 +74,11 @@ const MbMenu = () => {
   };
 
   const showNew = (name) => {
-    if (name === "만들기") onClick();
+    if (name === "만들기") setOpenMbNew(true);
   };
 
   const isActive = (num) => {
     setCurrentNum(num);
-  };
-
-  const onClick = () => {
-    setOpenNew(true);
   };
 
   return (
@@ -111,7 +107,7 @@ const MbMenu = () => {
           <MenuText className="text">{it.name}</MenuText>
         </MenuItem>
       ))}
-      {openNew ? <New setOpenNew={setOpenNew} /> : null}
+      {openMbNew ? <New setOpenMbNew={setOpenMbNew} /> : null}
     </MenuList>
   );
 };

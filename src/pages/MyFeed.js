@@ -32,6 +32,8 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 630px) {
     width: 430px;
+    margin-bottom: 80px;
+    overflow: hidden;
   }
 
   @media screen and (max-width: 430px) {
@@ -99,7 +101,7 @@ const MyFeed = () => {
 
   return (
     <Wrapper>
-      <MbHeader />
+      <MbHeader myProfile={myProfile} />
       <MyPic myProfile={myProfile} posts={posts} />
       <MyProfile myProfile={myProfile} />
       <MyHighlight />
