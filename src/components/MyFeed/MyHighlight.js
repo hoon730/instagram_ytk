@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import StoryItem from "../Story/StoryItem";
 import AddHighlight from "../Story/AddHighlight";
 
 const Wrapper = styled.div`
   width: 100%;
-  display: flex;
+  /* display: flex; */
 `;
 
 const HighlightArea = styled.div`
@@ -30,14 +32,34 @@ const HighlightBox = styled.div`
       height: 68px;
     }
 
+    .storySecondCircle {
+      width: 60px;
+      height: 60px;
+    }
+
     .storyThirdCircle {
       width: 60px;
       height: 60px;
     }
   }
 
-  @media screen and (max-width: 630px) {
+  @media screen and (max-width: 430px) {
     margin: 20px 10px;
+
+    .storyFirstCircle {
+      width: 68px;
+      height: 68px;
+    }
+
+    .storySecondCircle {
+      width: 60px;
+      height: 60px;
+    }
+
+    .storyThirdCircle {
+      width: 60px;
+      height: 60px;
+    }
   }
 `;
 
@@ -51,19 +73,16 @@ const storys = [
 const MyHighlight = () => {
   return (
     <Wrapper>
-      <HighlightArea>
-        <HighlightBox>
-          {storys.map((it, idx) => (
-            <StoryItem
-              key={idx}
-              userId={it.userId}
-              imgPath={it.imgPath}
-              type={"inactive"}
-            />
-          ))}
-          <AddHighlight />
-        </HighlightBox>
-      </HighlightArea>
+      <HighlightBox>
+        {storys.map((it, idx) => (
+          <StoryItem
+            key={idx}
+            userId={it.userId}
+            imgPath={it.imgPath}
+            type={"inactive"}
+          />
+        ))}
+      </HighlightBox>
     </Wrapper>
   );
 };

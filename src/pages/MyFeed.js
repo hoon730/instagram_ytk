@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import MyPic from "../components/MyFeed/MyPic";
 import MyProfile from "../components/MyFeed/MyProfile";
-import NewMyHighlight from "../components/MyFeed/NewMyHighlight";
 import MyHighlight from "../components/MyFeed/MyHighlight";
 import MyFeedTabBar from "../components/MyFeed/MyFeedTabBar";
 import TimeLine from "../components/Detail/TimeLine";
@@ -44,7 +43,6 @@ const MyFeed = () => {
   const [posts, setPosts] = useState([]);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
-
 
   useEffect(() => {
     if (!myProfile || !myProfile.uid) {
@@ -104,7 +102,6 @@ const MyFeed = () => {
       <MbHeader />
       <MyPic myProfile={myProfile} posts={posts} />
       <MyProfile myProfile={myProfile} />
-      <NewMyHighlight />
       <MyHighlight />
       <MyFeedTabBar />
       <TimeLine posts={posts} />

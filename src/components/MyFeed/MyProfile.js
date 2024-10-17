@@ -84,7 +84,7 @@ const EditBtn = styled.div`
 const MyIntro = styled.div`
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.borderColor};
-  padding: 10px 70px;
+  padding: 20px 70px;
   font-size: var(--font-16);
 
   @media screen and (max-width: 900px) {
@@ -92,7 +92,7 @@ const MyIntro = styled.div`
   }
 
   @media screen and (max-width: 900px) {
-    padding: 10px 20px 0 20px;
+    padding: 10px 20px 20px 20px;
     font-size: var(--font-14);
   }
 

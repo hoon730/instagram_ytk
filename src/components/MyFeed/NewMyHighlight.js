@@ -2,16 +2,41 @@ import React from "react";
 import styled from "styled-components";
 import StoryItem from "../Story/StoryItem";
 
-const BoxArea = styled.div`
+const Wrapper = styled.div`
   border-bottom: 1px solid lightgray;
 `;
 
 const HighlightBox = styled.div`
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   width: 100%;
   display: flex;
+  align-items: center;
   padding: 20px 70px;
   gap: 50px;
+
+  @media screen and (max-width: 900px) {
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
+    gap: 20px;
+    padding: 20px 15px;
+
+    .storyFirstCircle {
+      width: 66px;
+      height: 66px;
+    }
+
+    .storySecondCircle {
+      width: 60px;
+      height: 60px;
+    }
+
+    .storyThirdCircle {
+      width: 60px;
+      height: 60px;
+    }
+  }
 `;
 
 const storys = [
@@ -24,7 +49,7 @@ const storys = [
 const NewMyHighlight = () => {
   return (
     <>
-      <BoxArea>
+      <Wrapper>
         <HighlightBox>
           {storys.map((it, idx) => (
             <StoryItem
@@ -35,7 +60,7 @@ const NewMyHighlight = () => {
             />
           ))}
         </HighlightBox>
-      </BoxArea>
+      </Wrapper>
     </>
   );
 };
