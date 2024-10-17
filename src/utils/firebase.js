@@ -15,15 +15,15 @@ import { getApp, getApps } from "firebase/app";
 // };
 
 // 2. 지선님꺼
-// const firebaseConfig = {
-//   apiKey: "AIzaSyB5f9tIwQ3_s_yTTxedSrrolATrsmoJjlQ",
-//   authDomain: "ins-loginpg.firebaseapp.com",
-//   projectId: "ins-loginpg",
-//   storageBucket: "ins-loginpg.appspot.com",
-//   messagingSenderId: "389855710537",
-//   appId: "1:389855710537:web:bca6060c85eb04213d5e98",
-//   measurementId: "G-84EN6XKL1V",
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyB5f9tIwQ3_s_yTTxedSrrolATrsmoJjlQ",
+  authDomain: "ins-loginpg.firebaseapp.com",
+  projectId: "ins-loginpg",
+  storageBucket: "ins-loginpg.appspot.com",
+  messagingSenderId: "389855710537",
+  appId: "1:389855710537:web:bca6060c85eb04213d5e98",
+  measurementId: "G-84EN6XKL1V",
+};
 
 // 3. 동훈 2nd sns-platform
 const firebaseConfig = {
