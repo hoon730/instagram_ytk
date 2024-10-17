@@ -127,8 +127,12 @@ const Rereply = ({ reply }) => {
   const [likes, setLikes] = useState(reply.like);
   const [fillHeart, setFillHeart] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [text, setText] = useState(reply.content);
+  const [text, setText] = useState();
   const textareaRef = useRef();
+
+  useEffect(() => {
+    setText(reply.content);
+  }, [reply]);
 
   useEffect(() => {
     setFillHeart(likes.includes(myProfile.uid));

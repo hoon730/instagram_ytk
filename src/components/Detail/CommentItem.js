@@ -158,9 +158,13 @@ const CommentItem = ({ reply, addRereple }) => {
   const [fillHeart, setFillHeart] = useState(false);
   const [showRereple, setShowRereple] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [text, setText] = useState(reply.content);
+  const [text, setText] = useState();
   const textareaRef = useRef();
   const replyProfile = allProfile.find((it) => it.uid === reply.uid);
+
+  useEffect(() => {
+    setText(reply.content);
+  }, [reply]);
 
   useEffect(() => {
     setFillHeart(likes.includes(myProfile.uid));
@@ -258,7 +262,8 @@ const CommentItem = ({ reply, addRereple }) => {
             </DateAndButton>
             {reply.reReply.length > 0 ? (
               <MoreComment onClick={() => setShowRereple((prev) => !prev)}>
-                <Line /> 답글 보기({reply.reReply.length}개)
+                <Line /> 답글{" "}
+                {showRereple ? "닫기" : `보기(${reply.reReply.length}개)`}
               </MoreComment>
             ) : null}
 

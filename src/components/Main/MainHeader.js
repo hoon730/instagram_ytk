@@ -78,8 +78,10 @@ const NotificationArea = styled.div`
     width: 100%;
     position: absolute;
     transition: transform 0.5s;
-    transform: ${({ heart }) =>
-      heart === "true" ? "translateX(calc(-100% + 85px))" : "translateX(85px)"};
+    transform: ${({ $heart }) =>
+      $heart === "true"
+        ? "translateX(calc(-100% + 85px))"
+        : "translateX(85px)"};
   }
 `;
 
@@ -172,8 +174,8 @@ const MenuArea = styled.div`
     box-shadow: 0 5px 6px ${({ theme }) => theme.shadowAlpha};
     margin-top: -24px;
     transition: transform 0.5s;
-    transform: ${({ menuOpen }) =>
-      menuOpen === "true"
+    transform: ${({ $menuOpen }) =>
+      $menuOpen === "true"
         ? "translateX(calc(-100% + 85px))"
         : "translateX(85px)"};
   }
@@ -306,13 +308,13 @@ const MainHeader = () => {
             <GoHeart size={26} />
           )}
         </ModeChangeIcon>
-        <NotificationArea heart={heart.toString()}>
+        <NotificationArea $heart={heart.toString()}>
           <Notification setHeart={setHeart} />
         </NotificationArea>
         <MenuIcon onClick={() => setMenuOpen(true)}>
           <IoMenuOutline size={26} />
         </MenuIcon>
-        <MenuArea menuOpen={menuOpen.toString()}>
+        <MenuArea $menuOpen={menuOpen.toString()}>
           <MenuHeader>
             <BackBtn onClick={() => setMenuOpen(false)}>
               <FaArrowLeft />

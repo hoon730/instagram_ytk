@@ -26,6 +26,7 @@ const SlideItem = styled.li`
     width: inherit;
     height: inherit;
     object-fit: cover;
+    -webkit-user-drag: none;
   }
 `;
 
