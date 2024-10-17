@@ -33,6 +33,7 @@ const CommentAndHeart = styled.div`
   gap: 15px;
   .comment-box {
     flex: 1;
+    font-size: var(--font-14);
   }
 `;
 

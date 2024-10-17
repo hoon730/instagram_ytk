@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.bgColor};
   color: ${({ theme }) => theme.fontColor};
   position: relative;
-  z-index: 1;
+  overflow: hidden;
 `;
 
 const Detail = () => {

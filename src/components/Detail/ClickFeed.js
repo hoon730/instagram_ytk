@@ -49,14 +49,14 @@ const BgWrapper = styled(motion.div)`
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 3;
+  z-index: 4;
 `;
 
 const CloseBtn = styled.button`
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 4;
+  z-index: 5;
 
   svg {
     font-size: 30px;
@@ -318,17 +318,16 @@ const Desc = styled.div`
 
 const Container = styled.div`
   width: 100%;
+  height: ${({ $isEditing }) => ($isEditing ? "100%" : "calc(100% - 115px)")};
   ${({ $isEditing }) =>
     $isEditing
-      ? `display: block; height: 100%;`
-      : `height: 100%;
-  display: flex;
+      ? `display: block;;`
+      : `display: flex;
   flex-direction: column;`}
 `;
 
 const UserContainer = styled.div`
   width: 100%;
-  height: ${({ $isEditing }) => ($isEditing ? "100%" : "auto")};
   padding: 20px 30px 0px;
   border-bottom: ${({ $isEditing, theme }) =>
     $isEditing ? "none" : `1px solid ${theme.borderColor}`};
@@ -365,7 +364,7 @@ const UserContents = styled.div`
 `;
 
 const ContentDate = styled.span`
-  display: inline-block;
+  display: ${({ $isEditing }) => ($isEditing ? "none" : "inline-block")};
   font-size: var(--font-12);
   margin-left: 15px;
   padding-bottom: 22px;
@@ -375,19 +374,20 @@ const ContentDate = styled.span`
 `;
 
 const CommentList = styled.div`
+  display: ${({ $isEditing }) => ($isEditing ? "none" : "flex")};
   padding: 20px;
-  display: flex;
   flex-direction: column;
   gap: 15px;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const WritingComment = styled.div`
-  height: 100px;
-  display: flex;
+  display: ${({ $isEditing }) => ($isEditing ? "none" : "flex")};
+  height: ${({ $isEditing }) => ($isEditing ? "auto" : "115px")};
   flex-direction: column;
   gap: 15px;
-  padding: 15px 20px;
+  padding: 20px;
   border-top: 1px solid var(--light-gray-color);
 `;
 
@@ -856,12 +856,15 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             <FeedText feedDetail={feedDetail} all={true} />
                           )}
                         </UserContents>
-                        <ContentDate>
+                        <ContentDate $isEditing={isEditing}>
                           {getFormattedDate(new Date(feedDetail.createdAt))}
                         </ContentDate>
                       </UserContainer>
 
-                      <CommentList className="comment_list">
+                      <CommentList
+                        className="comment_list"
+                        $isEditing={isEditing}
+                      >
                         {replyArr.length > 0
                           ? replyArr.map((it, idx) => (
                               <CommentItem
@@ -873,7 +876,10 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                           : null}
                       </CommentList>
                     </Container>
-                    <WritingComment className="writing_comment">
+                    <WritingComment
+                      className="writing_comment"
+                      $isEditing={isEditing}
+                    >
                       <FeedIcon feedDetail={feedDetail} type={"detail"} />
                       <CommentInput
                         width={"100%"}

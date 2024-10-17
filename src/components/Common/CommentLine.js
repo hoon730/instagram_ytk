@@ -17,6 +17,7 @@ const CommentDesc = styled.span`
   word-wrap: break-word;
   word-break: break-word;
   overflow-wrap: break-word;
+  font-size: var(--font-14);
 `;
 
 const CommentLine = ({ userId, uid, comment }) => {
