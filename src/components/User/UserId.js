@@ -35,6 +35,9 @@ const IdSpan = styled.div`
   position: relative;
   color: ${({ theme }) => theme.fontColor};
   cursor: pointer;
+  @media screen and (max-width: 1024px) {
+    font-size: var(--font-14);
+  }
 `;
 
 const Check = styled.img`
@@ -73,7 +76,7 @@ const IsFollowed = styled.div`
   font-weight: var(--font-bold);
   color: ${({ theme }) => theme.subColor};
   cursor: pointer;
-  @media screen and (max-width: 770px) {
+  @media screen and (max-width: 1024px) {
     font-size: var(--font-12);
     gap: 4px;
   }
@@ -145,13 +148,20 @@ const UserId = ({
   const [openMore, setOpenMore] = useState(false);
   const [switchHeart, setSwitchHeart] = useState(false);
   const [hoverId, setHoverId] = useState(false);
+  const [position, setPosition] = useState(null);
   const moreBgRef = useRef();
   const navigate = useNavigate();
 
+  const idRef = useRef(null);
   const showProfile = () => {
+    if (idRef.current) {
+      const rect = idRef.current.getBoundingClientRect();
+      setPosition([parseInt(rect.left), parseInt(rect.top)]);
+    }
     setHoverId(true);
   };
   const hideProfile = () => {
+    setPosition([0, 0]);
     setHoverId(false);
   };
 
@@ -174,9 +184,16 @@ const UserId = ({
               })}`,
             })
           }
+          ref={idRef}
         >
           {!hover && hoverId ? (
-            <HoverProfile target={"id"} top={"22"} type={type} uid={uid} />
+            <HoverProfile
+              target={"id"}
+              top={"22"}
+              type={type}
+              uid={uid}
+              position={position}
+            />
           ) : null}
           {userNickname}
         </IdSpan>

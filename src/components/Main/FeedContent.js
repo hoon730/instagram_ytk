@@ -31,19 +31,19 @@ const FeedArea = styled.div`
 `;
 
 const FeedTabBar = styled.div`
-  width: ${({ isSticky }) => (isSticky ? "680px" : "100%")};
+  width: ${({ $isSticky }) => ($isSticky ? "680px" : "100%")};
   display: flex;
   flex-direction: column;
   border-top: 1px solid ${({ theme }) => theme.borderColor};
-  border-bottom: ${({ isSticky, theme }) =>
-    isSticky ? `1px solid ${theme.borderColor}` : "none"};
+  border-bottom: ${({ $isSticky, theme }) =>
+    $isSticky ? `1px solid ${theme.borderColor}` : "none"};
   background: ${({ theme }) => theme.bgColor};
   z-index: 1;
-  position: ${({ isSticky }) => (isSticky ? "fixed" : "static")};
-  top: ${({ isSticky }) => (isSticky ? "85px" : "auto")};
+  position: ${({ $isSticky }) => ($isSticky ? "fixed" : "static")};
+  top: ${({ $isSticky }) => ($isSticky ? "85px" : "auto")};
   @media screen and (max-width: 630px) {
-    top: ${({ isSticky }) => (isSticky ? "74px" : "auto")};
-    width: ${({ isSticky }) => (isSticky ? "430px" : "100%")};
+    top: ${({ $isSticky }) => ($isSticky ? "74px" : "auto")};
+    width: ${({ $isSticky }) => ($isSticky ? "430px" : "100%")};
   }
   @media screen and (max-width: 430px) {
     width: 100%;
@@ -75,9 +75,9 @@ const ActiveBorder = styled.div`
 `;
 
 const PostArea = styled.div`
-  margin-top: ${({ isSticky }) => (isSticky ? "60px" : "0")};
+  margin-top: ${({ $isSticky }) => ($isSticky ? "60px" : "0")};
   @media screen and (max-width: 630px) {
-    margin-top: ${({ isSticky }) => (isSticky ? "50px" : "0")};
+    margin-top: ${({ $isSticky }) => ($isSticky ? "50px" : "0")};
   }
 `;
 
@@ -184,7 +184,7 @@ const FeedContent = () => {
   return (
     <Wrapper>
       <FeedArea>
-        <FeedTabBar isSticky={isSticky}>
+        <FeedTabBar $isSticky={isSticky}>
           <ActiveBorderArea>
             <ActiveBorder $tabChange={$tabChange} />
           </ActiveBorderArea>
@@ -208,7 +208,7 @@ const FeedContent = () => {
         {isLoading ? (
           <LoadingScreen />
         ) : (
-          <PostArea isSticky={isSticky}>
+          <PostArea $isSticky={isSticky}>
             {postsWithProfiles && postsWithProfiles.length > 0 ? (
               postsWithProfiles.map((post) => (
                 <FeedItem key={post.id} feedDetail={post} />
