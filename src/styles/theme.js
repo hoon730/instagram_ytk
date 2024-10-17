@@ -22,7 +22,7 @@ export const darkTheme = {
   buttonHoverColor: "#CF236A", //darkPink
   nonActiveBtnColor: "#7E7E7E", // dark-gray
   nonActiveBtnHoverColor: "#666666", //light-black
-  iconBgColor: "#7E7E7E", // dark-gray
+  iconBgColor: "#444444", // deep-dark-gray
   iconColor: "#FFFFFF", // White
   shadowAlpha: "rgba(126, 126, 126, 0.1)",
   loadingLogoBack: "block",

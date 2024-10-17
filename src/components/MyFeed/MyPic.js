@@ -61,7 +61,7 @@ const ProfileImgBox = styled.div`
     .storySecondCircle {
       width: 150px;
       height: 150px;
-      border: 7px solid var(--bg-white-color);
+      border: transparent;
     }
 
     .storyThirdCircle {
@@ -87,7 +87,8 @@ const ProfileImgBox = styled.div`
     .storySecondCircle {
       width: 120px;
       height: 120px;
-      border: 7px solid var(--bg-white-color);
+      border: transparent;
+      /* border: 7px solid var(--bg-white-color); */
       /* background: rgba(255, 255, 255, 0); */
     }
 
@@ -128,6 +129,7 @@ const MyFeedDesc = styled.div`
   padding: 20px 0px 10px;
   margin-left: 250px;
   margin-right: 70px;
+  /* border: 1px solid red; */
 
   @media screen and (max-width: 900px) {
     margin-left: 190px;
@@ -139,7 +141,7 @@ const MyFeedDesc = styled.div`
   }
 
   @media screen and (max-width: 780px) {
-    margin-left: 150px;
+    margin-left: 170px;
     margin-right: 30px;
 
     .post_follow {
@@ -148,10 +150,11 @@ const MyFeedDesc = styled.div`
   }
 
   @media screen and (max-width: 630px) {
-    margin-left: 120px;
-    margin-right: 0;
-    padding: 0 15px 0 20px;
+    margin-left: 110px;
+    margin-right: 20px;
+    padding: 0 20px;
     height: 90px;
+
     .post_follow {
       justify-content: space-between;
     }
