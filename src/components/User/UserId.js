@@ -180,7 +180,7 @@ const UserId = ({
             navigate({
               pathname: "/profile",
               search: `?${createSearchParams({
-                uid: uid,
+                userId: userNickname,
               })}`,
             })
           }

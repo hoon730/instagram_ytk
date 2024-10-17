@@ -84,12 +84,16 @@ const MyHighlight = () => {
       breakpoint: { max: 900, min: 780 },
       items: 6,
     },
-    mobile: {
+    tablet2: {
       breakpoint: { max: 780, min: 0 },
       items: 5,
     },
+    mobile: {
+      breakpoint: { max: 430, min: 0 },
+      items: 4,
+    },
   };
-  console.log(storys);
+
   return (
     <Wrapper>
       <HighlightBox>

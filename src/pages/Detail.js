@@ -14,11 +14,11 @@ const Wrapper = styled.div`
 
 const Detail = () => {
   const [serachPrams] = useSearchParams();
-  const uid = serachPrams.get("uid");
+  const userId = serachPrams.get("userId");
   return (
     <Wrapper>
       <MbHeader />
-      <MyFeed uid={uid} />
+      <MyFeed userId={userId} />
     </Wrapper>
   );
 };
