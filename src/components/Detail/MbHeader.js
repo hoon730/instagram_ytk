@@ -74,7 +74,7 @@ const MenuArea = styled.div`
   @media screen and (max-width: 630px) {
     display: block;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: absolute;
     background: ${({ theme }) => theme.bgColor};
     border: 1px solid ${({ theme }) => theme.borderColor};
@@ -82,7 +82,7 @@ const MenuArea = styled.div`
     margin-top: -24px;
     transition: transform 0.5s;
     transform: ${({ $menuOpen }) =>
-      $menuOpen === "true" ? "translateX(0)" : "translateX(100vw)"};
+      $menuOpen === "true" ? "translateX(0)" : "translateX(100%)"};
     z-index: 3;
   }
 `;
@@ -143,6 +143,11 @@ const MbHeader = () => {
   const { changeDark } = useContext(ThemeContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const { myProfile } = useContext(StateContext);
+  const threadUrl = "https://www.threads.net/";
+
+  const moveToThread = () => {
+    window.open(threadUrl);
+  };
 
   return (
     <>
@@ -154,7 +159,7 @@ const MbHeader = () => {
           </IdBtn>
         </IdBox>
         <HeaderBtn>
-          <Threads>
+          <Threads onClick={moveToThread}>
             <BsThreads />
           </Threads>
           <Menu onClick={() => setMenuOpen(true)}>

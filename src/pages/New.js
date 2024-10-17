@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { auth, db, storage } from "../utils/firebase";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { PiVideoCameraLight } from "react-icons/pi";
 
 const NewBg = styled(motion.div)`
   position: fixed;
@@ -201,6 +202,7 @@ const SubmitBtn = styled.input`
 `;
 
 const New = ({ setOpenNew }) => {
+  console.log(setOpenNew);
   const newBgRef = useRef();
   const mediaRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -278,7 +280,7 @@ const New = ({ setOpenNew }) => {
         uid: user.uid,
       });
 
-      const newPushUrl = []; // 파일 URL을 저장할 배열
+      const newPushUrl = [];
 
       //if (file.length > 1) {
       if (file.length > 0) {
@@ -298,27 +300,7 @@ const New = ({ setOpenNew }) => {
               : "img",
         });
       }
-      // else if (file.length === 1) {
-      //   const item = file[0];
-      //   const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
-      //   const result = await uploadBytes(locationRef, item);
-      //   const url = await getDownloadURL(result.ref);
-      //   const fileType = item.type;
 
-      //   if (fileType.startsWith("image/")) {
-      //     await updateDoc(docRef, {
-      //       imgPath: url,
-      //       type: "img",
-      //     });
-      //   } else if (fileType.startsWith("video/")) {
-      //     await updateDoc(docRef, {
-      //       imgPath: url,
-      //       type: "reels",
-      //     });
-      //   }
-      // }
-
-      // 상태 초기화
       setContent("");
       setFile([]);
       setPushUrl([]);
@@ -339,8 +321,7 @@ const New = ({ setOpenNew }) => {
       ref={newBgRef}
       onClick={(e) => {
         if (e.target === newBgRef.current) {
-          console.log("Background clicked, closing modal.");
-          setOpenNew(false); // 모달 닫기
+          setOpenNew(false);
         }
       }}
     >
@@ -407,14 +388,12 @@ const New = ({ setOpenNew }) => {
               <CancelBtn
                 type="button"
                 value={"취소하기"}
-                onClick={() => setOpenNew(false)}
+                onClick={() => {
+                  console.log(setOpenNew);
+                  setOpenNew(false);
+                }}
               />
-              {/* <Button
-                className="button"
-                type={"negative"}
-                text={"취소하기"}
-                width={"50%"}
-              /> */}
+
               <SubmitBtn
                 type="submit"
                 value={isLoading ? "업로드중..." : "게시글 업로드하기"}

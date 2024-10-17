@@ -34,7 +34,6 @@ const Wrapper = styled.div`
   @media screen and (max-width: 630px) {
     width: 430px;
     margin-bottom: 80px;
-    overflow: hidden;
   }
 
   @media screen and (max-width: 430px) {
@@ -46,7 +45,6 @@ const MyFeed = () => {
   const [posts, setPosts] = useState([]);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
-
 
   useEffect(() => {
     if (!myProfile || !myProfile.uid) {
@@ -103,7 +101,6 @@ const MyFeed = () => {
 
   return (
     <Wrapper>
-      <MbHeader myProfile={myProfile}/>
       <MyPic myProfile={myProfile} posts={posts} />
       <MyProfile myProfile={myProfile} />
       {/* <NewMyHighlight /> */}

@@ -55,11 +55,9 @@ const MbRecommend = () => {
     followerRecommended.includes(profile.uid)
   );
 
-  const finalFollowers = followersProfile.map(
+  const finalFollowers = followersProfile.filter(
     (profile) => profile.uid !== myProfile.uid
   );
-
-  console.log(finalFollowers);
 
   return (
     <AnimatePresence>

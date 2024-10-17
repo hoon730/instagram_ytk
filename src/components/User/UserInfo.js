@@ -25,32 +25,19 @@ const Optional = styled.p`
   cursor: pointer;
 `;
 
-const UserInfo = ({
-  userName,
-  userNickname,
-  userId,
-  location,
-  type,
-  createDate,
-  followed,
-}) => {
+const UserInfo = ({ profile }) => {
   return (
     <Wrapper>
-      <ProfileImg
-        size={"45"}
-        type={"active"}
-        url={"/images/userImgs/user123456/profile-photo.jpg"}
-      />
+      <ProfileImg size={"40"} type={"active"} url={profile.profilePhoto} />
       <Userdesc>
         <UserId
           type={"feed"}
-          userNickname={"Hoon"}
-          createDate={"24-09-30"}
+          userNickname={profile.userId}
+          createDate={new Date(profile.createdAt)}
           follwed={"팔로우"}
+          hover={true}
         />
-        <Optional type={type}>
-          {userName ? userName : location ? location : null}
-        </Optional>
+        <Optional>{profile.userName && profile.userName}</Optional>
       </Userdesc>
     </Wrapper>
   );
