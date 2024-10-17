@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { ThemeContext } from "../../App";
 import styled from "styled-components";
 import { mobileHeaderMenu } from "../../utils/utils";
+import { StateContext } from "../../App";
 
 import { IoChevronDown } from "react-icons/io5";
 import { BsThreads } from "react-icons/bs";
@@ -12,10 +13,15 @@ import { LuSunMedium } from "react-icons/lu";
 
 const Header = styled.div`
   display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   padding: 16px;
   justify-content: space-between;
   background: ${({ theme }) => theme.bgColor};
+  border-bottom: 1px solid ${({ theme }) => theme.borderColor};
+  z-index: 3;
 
   @media screen and (max-width: 630px) {
     display: flex;
@@ -67,7 +73,7 @@ const MenuArea = styled.div`
   display: none;
   @media screen and (max-width: 630px) {
     display: block;
-    width: calc(100% + 4px);
+    width: 100%;
     height: 100vh;
     position: absolute;
     background: ${({ theme }) => theme.bgColor};
@@ -75,12 +81,10 @@ const MenuArea = styled.div`
     box-shadow: 0 5px 6px ${({ theme }) => theme.shadowAlpha};
     margin-top: -24px;
     transition: transform 0.5s;
-    transform: ${({ menuOpen }) =>
-      menuOpen === "true"
-        ? "translateX(calc(-100% + 128px))"
-        : "translateX(128px)"};
+    transform: ${({ $menuOpen }) =>
+      $menuOpen === "true" ? "translateX(0)" : "translateX(100vw)"};
+    z-index: 3;
   }
-  z-index: 3;
 `;
 
 const MenuHeader = styled.div`
@@ -134,48 +138,51 @@ const MenuItem = styled.li`
   }
 `;
 
-const MbHeader = ({ myProfile }) => {
+const MbHeader = () => {
   const { darkMode } = useContext(ThemeContext);
   const { changeDark } = useContext(ThemeContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { myProfile } = useContext(StateContext);
 
   return (
-    <Header>
-      <IdBox>
-        <Id>{myProfile?.userId}</Id>
-        <IdBtn>
-          <IoChevronDown />
-        </IdBtn>
-      </IdBox>
-      <HeaderBtn>
-        <Threads>
-          <BsThreads />
-        </Threads>
-        <Menu onClick={() => setMenuOpen(true)}>
-          <LuMenu />
-        </Menu>
-        <MenuArea menuOpen={menuOpen.toString()}>
-          <MenuHeader>
-            <BackBtn onClick={() => setMenuOpen(false)}>
-              <FaArrowLeft />
-            </BackBtn>
-            메뉴
-          </MenuHeader>
-          <MenuItemArea>
-            <MenuItem onClick={changeDark}>
-              {darkMode ? <FaMoon /> : <LuSunMedium />}
-              {darkMode ? "라이트 모드로 전환" : "다크 모드로 전환"}
+    <>
+      <Header>
+        <IdBox>
+          <Id>{myProfile?.userId}</Id>
+          <IdBtn>
+            <IoChevronDown />
+          </IdBtn>
+        </IdBox>
+        <HeaderBtn>
+          <Threads>
+            <BsThreads />
+          </Threads>
+          <Menu onClick={() => setMenuOpen(true)}>
+            <LuMenu />
+          </Menu>
+        </HeaderBtn>
+      </Header>
+      <MenuArea $menuOpen={menuOpen.toString()}>
+        <MenuHeader>
+          <BackBtn onClick={() => setMenuOpen(false)}>
+            <FaArrowLeft />
+          </BackBtn>
+          메뉴
+        </MenuHeader>
+        <MenuItemArea>
+          <MenuItem onClick={changeDark}>
+            {darkMode ? <FaMoon /> : <LuSunMedium />}
+            {darkMode ? "라이트 모드로 전환" : "다크 모드로 전환"}
+          </MenuItem>
+          {mobileHeaderMenu.map((it) => (
+            <MenuItem key={it.id} className={it.className}>
+              {it.iconCode}
+              {it.name}
             </MenuItem>
-            {mobileHeaderMenu.map((it) => (
-              <MenuItem key={it.id} className={it.className}>
-                {it.iconCode}
-                {it.name}
-              </MenuItem>
-            ))}
-          </MenuItemArea>
-        </MenuArea>
-      </HeaderBtn>
-    </Header>
+          ))}
+        </MenuItemArea>
+      </MenuArea>
+    </>
   );
 };
 
