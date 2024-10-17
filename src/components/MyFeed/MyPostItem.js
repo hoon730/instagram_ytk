@@ -14,6 +14,7 @@ const Wrapper = styled.div`
       : page === "reels"
       ? "padding-top: 178%"
       : "padding-top: 33%;"}
+  cursor: pointer;
 `;
 
 const Box = styled.div`
@@ -44,7 +45,10 @@ const MyPostItem = ({ size, url, page, onClick }) => {
   return (
     <Wrapper page={page}>
       <Box>
-        {videoArr.includes(extractExtension(url[0])) ? (
+        {url &&
+        Array.isArray(url) &&
+        url.length > 0 &&
+        videoArr.includes(extractExtension(url[0])) ? (
           <Video
             onClick={onClick}
             src={url[0]}
@@ -52,9 +56,9 @@ const MyPostItem = ({ size, url, page, onClick }) => {
             alt="postvideo"
             page={page}
           />
-        ) : (
+        ) : url && Array.isArray(url) && url.length > 0 ? (
           <Img onClick={onClick} src={url[0]} alt="postimg" />
-        )}
+        ) : null}
       </Box>
     </Wrapper>
   );

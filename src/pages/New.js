@@ -121,7 +121,6 @@ const SearchInput = styled.input`
 const TextInputArea = styled.div`
   width: 100%;
   position: relative;
-  border: 1px solid red;
 `;
 
 const TextArea = styled.textarea`
@@ -256,7 +255,7 @@ const New = () => {
       const docRef = await addDoc(collection(db, "feed"), {
         content,
         createdAt: Date.now(),
-        hastage: [],
+        hashtag: [],
         like: [],
         location: "",
         tagUser: [],
