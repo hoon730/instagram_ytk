@@ -10,6 +10,8 @@ import { LuMenu } from "react-icons/lu";
 import { FaMoon } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa6";
 import { LuSunMedium } from "react-icons/lu";
+import { auth } from "../../utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Header = styled.div`
   display: none;
@@ -144,9 +146,19 @@ const MbHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { myProfile } = useContext(StateContext);
   const threadUrl = "https://www.threads.net/";
+  const navigate = useNavigate();
 
   const moveToThread = () => {
     window.open(threadUrl);
+  };
+
+  const logOut = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    const ask = confirm("로그아웃 하시겠습니까?");
+    if (ask) {
+      await auth.signOut();
+      navigate("/login");
+    }
   };
 
   return (
@@ -180,7 +192,15 @@ const MbHeader = () => {
             {darkMode ? "라이트 모드로 전환" : "다크 모드로 전환"}
           </MenuItem>
           {mobileHeaderMenu.map((it) => (
-            <MenuItem key={it.id} className={it.className}>
+            <MenuItem
+              onClick={() => {
+                if (it.name === "로그아웃") {
+                  logOut();
+                }
+              }}
+              key={it.id}
+              className={it.className}
+            >
               {it.iconCode}
               {it.name}
             </MenuItem>
