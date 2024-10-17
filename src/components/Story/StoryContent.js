@@ -49,28 +49,43 @@ const StoryContent = () => {
   useEffect(() => {
     if (!myProfile || !auth?.currentUser) return;
 
-    const myUserId = users.find(
-      (it) => it.uid === auth?.currentUser?.uid
-    )?.userId;
+    const myUser = users.find((it) => it.uid === auth?.currentUser?.uid);
 
-    if (!myUserId) return;
+    if (!myUser) {
+      console.error("현재 사용자에 대한 정보를 찾을 수 없습니다.");
+      return;
+    }
+
+    const myUserId = myUser.userId;
 
     const userIdOfMyFollowing = myProfile.following
-      .map((it) => users.find((user) => user.uid === it)?.userId)
+      .map((it) => {
+        const user = users.find((user) => user.uid === it);
+        return user ? user.userId : null;
+      })
       .filter(Boolean);
 
     const storyDesc = storys
       .filter((it) => userIdOfMyFollowing.includes(it.userId))
       .map((story) => {
-        const storyUserUid = users.find(
-          (it) => it.userId === story.userId
-        )?.uid;
+        const storyUser = users.find((it) => it.userId === story.userId);
+        if (!storyUser) {
+          console.error("스토리 사용자에 대한 정보를 찾을 수 없습니다.");
+          return null;
+        }
+
         const storyUserProfile = allProfile.find(
-          (it) => it.uid === storyUserUid
+          (it) => it.uid === storyUser.uid
         );
+
+        if (!storyUserProfile) {
+          console.error("사용자 프로필을 찾을 수 없습니다.");
+          return null;
+        }
+
         return {
-          userId: storyUserProfile?.userId,
-          imgPath: storyUserProfile?.profilePhoto,
+          userId: storyUserProfile.userId,
+          imgPath: storyUserProfile.profilePhoto,
           storys: story.storyHistory[0] || [],
           active: story.storyHistory[0]
             ? story.storyHistory[0].isView.includes(myUserId)
@@ -80,6 +95,7 @@ const StoryContent = () => {
           date: new Date(story.storyHistory[0].createDate).getTime(),
         };
       })
+      .filter(Boolean)
       .sort((a, b) => b.active - a.active || b.date - a.date);
 
     setStoryDesc(storyDesc);

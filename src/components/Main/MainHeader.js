@@ -292,8 +292,8 @@ const MainHeader = () => {
           <UserProfile>
             <ProfileImg
               url={
-                myProfile.profilePhoto
-                  ? myProfile.profilePhoto
+                myProfile?.profilePhoto
+                  ? myProfile?.profilePhoto
                   : "/images/user_img.jpg"
               }
               size={"45"}

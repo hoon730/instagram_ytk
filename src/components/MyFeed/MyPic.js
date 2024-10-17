@@ -174,7 +174,7 @@ const MyPic = ({ userId, posts }) => {
       <MyPicBox>
         <ProfileBg
           src={
-            feedProfile.bgPhoto
+            feedProfile?.bgPhoto
               ? feedProfile.bgPhoto
               : "/images/mb_Profile_bg.jpg"
           }
@@ -184,7 +184,7 @@ const MyPic = ({ userId, posts }) => {
             type={"active"}
             size={170}
             url={
-              feedProfile.profilePhoto
+              feedProfile?.profilePhoto
                 ? feedProfile.profilePhoto
                 : "/images/user_img.jpg"
             }
