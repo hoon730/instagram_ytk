@@ -291,7 +291,11 @@ const MainHeader = () => {
         <Profile onClick={() => navigate("/profile")}>
           <UserProfile>
             <ProfileImg
-              url={myProfile ? myProfile.profilePhoto : null}
+              url={
+                myProfile.profilePhoto
+                  ? myProfile.profilePhoto
+                  : "/images/user_img.jpg"
+              }
               size={"45"}
               hover={"noHover"}
             />

@@ -47,26 +47,30 @@ const StoryContent = () => {
   const ref = useRef(null);
 
   useEffect(() => {
-    if (!myProfile) return;
+    if (!myProfile || !auth?.currentUser) return;
 
     const myUserId = users.find(
-      (it) => it.uid === auth?.currentUser.uid
-    ).userId;
+      (it) => it.uid === auth?.currentUser?.uid
+    )?.userId;
 
-    const userIdOfMyFollowing = myProfile.following.map(
-      (it) => users.find((user) => user.uid === it).userId
-    );
+    if (!myUserId) return;
+
+    const userIdOfMyFollowing = myProfile.following
+      .map((it) => users.find((user) => user.uid === it)?.userId)
+      .filter(Boolean);
 
     const storyDesc = storys
       .filter((it) => userIdOfMyFollowing.includes(it.userId))
       .map((story) => {
-        const storyUserUid = users.find((it) => it.userId === story.userId).uid;
+        const storyUserUid = users.find(
+          (it) => it.userId === story.userId
+        )?.uid;
         const storyUserProfile = allProfile.find(
           (it) => it.uid === storyUserUid
         );
         return {
-          userId: storyUserProfile.userId,
-          imgPath: storyUserProfile.profilePhoto,
+          userId: storyUserProfile?.userId,
+          imgPath: storyUserProfile?.profilePhoto,
           storys: story.storyHistory[0] || [],
           active: story.storyHistory[0]
             ? story.storyHistory[0].isView.includes(myUserId)
@@ -80,7 +84,6 @@ const StoryContent = () => {
 
     setStoryDesc(storyDesc);
   }, [myProfile]);
-
   const itemWidth = 80;
   const itemGap = 20;
 
