@@ -113,7 +113,6 @@ const router = createBrowserRouter([
 
 export const ThemeContext = React.createContext();
 export const StateContext = React.createContext();
-export const OpenContext = React.createContext();
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -122,7 +121,6 @@ function App() {
     await setIsLoading(false);
   };
   const [darkMode, setDarkMode] = useState(false);
-  const [openNew, setOpenNew] = useState(false);
   const [allProfile, setAllProfile] = useState(null);
   const [myProfile, setMyProfile] = useState(null);
 
@@ -192,9 +190,7 @@ function App() {
             </Wrapper>
           ) : (
             <StateContext.Provider value={{ allProfile, myProfile }}>
-              <OpenContext.Provider value={{ setOpenNew, openNew }}>
-                <RouterProvider router={router} />
-              </OpenContext.Provider>
+              <RouterProvider router={router} />
             </StateContext.Provider>
           )}
         </ThemeContext.Provider>
