@@ -20,7 +20,7 @@ import { videoArr } from "../../utils/utils";
 
 const Wrapper = styled(motion.div)`
   width: 380px;
-  padding: 20px;
+  padding: 15px;
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: var(--border-radius-12);
   box-shadow: 0 0 20px ${({ theme }) => theme.shadowAlpha};
@@ -45,7 +45,7 @@ const Userdesc = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
 `;
 
 const Optional = styled.p`
@@ -72,18 +72,20 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 5px;
 `;
 
 const Video = styled.video`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 5px;
 `;
 
 const Btns = styled.div`
   display: flex;
   gap: ${({ $followed }) => ($followed === "followed" ? "4px" : "0")};
-  padding-top: 10px;
+  padding-top: 15px;
 `;
 
 const extractExtension = (value) => {
@@ -163,6 +165,7 @@ const HoverProfile = ({ type, uid, top, position }) => {
       </Userinfo>
       <div>
         <PostAndFollow
+          padding={"15px"}
           posting={feedLen}
           follower={hoverProfile && hoverProfile.follower.length}
           following={hoverProfile && hoverProfile.following.length}

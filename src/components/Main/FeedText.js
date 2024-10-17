@@ -7,7 +7,7 @@ const Wrapper = styled.div`
 `;
 
 const EllipsisText = styled.div`
-  font-size: var(--font-16);
+  font-size: var(--font-14);
   color: ${({ theme }) => theme.fontColor};
 
   ${({ $showMore }) =>
