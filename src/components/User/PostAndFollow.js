@@ -45,6 +45,12 @@ const PostAndFollow = ({
   const [onpenFollower, setOpenFollower] = useState(false);
   const [onpenFollowing, setOpenFollowing] = useState(false);
 
+  const [clickBtn, setClickBtn] = useState("");
+
+  const getWhichText = (text) => {
+    setClickBtn(text);
+  };
+
   const handleOnFollow = () => {
     setOpenFollower((prev) => !prev);
   };
@@ -59,18 +65,28 @@ const PostAndFollow = ({
         <span>{posting}</span>
         <span>게시물</span>
       </NumberingBox>
-      <NumberingBox onClick={handleOnFollow}>
+      <NumberingBox
+        onClick={() => {
+          getWhichText("팔로워");
+          handleOnFollow();
+        }}
+      >
         <span>{follower}</span>
         <span>팔로워</span>
       </NumberingBox>
-      <NumberingBox onClick={handleOnFollowing}>
+      <NumberingBox
+        onClick={() => {
+          getWhichText("팔로잉");
+          handleOnFollow();
+        }}
+      >
         <span>{following}</span>
         <span>팔로잉</span>
       </NumberingBox>
       {onpenFollower ? (
-        <Follower setOpenFollower={setOpenFollower} />
+        <Follower setOpenFollower={setOpenFollower} clickBtn={clickBtn} />
       ) : onpenFollowing ? (
-        <Follower setOpenFollowing={setOpenFollowing} />
+        <Follower setOpenFollowing={setOpenFollowing} clickBtn={clickBtn} />
       ) : null}
     </Wrapper>
   );

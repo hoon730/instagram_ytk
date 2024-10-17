@@ -44,11 +44,9 @@ const MesseageBtn = styled.span`
 `;
 
 const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
-
   const handleOnClick = () => {
-      onClick();
+    onClick();
   };
-
 
   return (
     <ButtonItem
@@ -56,7 +54,7 @@ const Button = ({ width, height, text, fontSize, type, onClick, followed }) => {
       $height={height}
       fontSize={fontSize}
       type={type}
-      onClick={handleOnClick}
+      onClick={onClick && handleOnClick}
       $followed={followed}
     >
       <MesseageBtn $followed={followed}>

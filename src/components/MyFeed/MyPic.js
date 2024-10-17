@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import PostAndFollow from "../User/PostAndFollow";
+import { StateContext } from "../../App";
 
 const Wrapper = styled.div``;
 
@@ -157,25 +158,30 @@ const MyFeedDesc = styled.div`
   }
 `;
 
-const MyPic = ({ myProfile, posts }) => {
+const MyPic = ({ uid, posts }) => {
+  const { allProfile } = useContext(StateContext);
+  const { myProfile } = useContext(StateContext);
+
+  let feedProfile = uid ? allProfile.find((it) => it.uid === uid) : myProfile;
+
   return (
     <Wrapper>
       <MyPicBox>
-        <ProfileBg src={myProfile?.bgPhoto} />
+        <ProfileBg src={feedProfile?.bgPhoto} />
         <ProfileImgBox>
           <ProfileImg
             type={"active"}
             size={170}
-            url={myProfile?.profilePhoto}
+            url={feedProfile?.profilePhoto}
             hover={true}
           />
         </ProfileImgBox>
         <MyFeedDesc>
           <PostAndFollow
             posting={posts?.length}
-            follower={myProfile?.follower.length}
-            following={myProfile?.following.length}
-            myProfile={myProfile}
+            follower={feedProfile?.follower.length}
+            following={feedProfile?.following.length}
+            myProfile={feedProfile}
           />
         </MyFeedDesc>
       </MyPicBox>
