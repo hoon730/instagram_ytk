@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { mobileHeaderMenu } from "../../utils/utils";
 import { StateContext } from "../../App";
 
-import { IoChevronDown } from "react-icons/io5";
 import { BsThreads } from "react-icons/bs";
 import { LuMenu } from "react-icons/lu";
 import { FaMoon } from "react-icons/fa";
@@ -74,7 +73,7 @@ const MenuArea = styled.div`
   @media screen and (max-width: 630px) {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     position: absolute;
     background: ${({ theme }) => theme.bgColor};
     border: 1px solid ${({ theme }) => theme.borderColor};
@@ -154,9 +153,6 @@ const MbHeader = () => {
       <Header>
         <IdBox>
           <Id>{myProfile?.userId}</Id>
-          <IdBtn>
-            <IoChevronDown />
-          </IdBtn>
         </IdBox>
         <HeaderBtn>
           <Threads onClick={moveToThread}>

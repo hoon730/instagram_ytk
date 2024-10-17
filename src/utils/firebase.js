@@ -82,7 +82,7 @@ const firebaseConfig = {
 //   projectId: "ytg-instagram-5th",
 //   storageBucket: "ytg-instagram-5th.appspot.com",
 //   messagingSenderId: "601602727737",
-//   appId: "1:601602727737:web:17dd659de3f365040bd2e8"
+//   appId: "1:601602727737:web:17dd659de3f365040bd2e8",
 // };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

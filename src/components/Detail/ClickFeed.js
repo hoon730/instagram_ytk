@@ -378,7 +378,6 @@ const CommentList = styled.div`
   padding: 20px;
   flex-direction: column;
   gap: 15px;
-  overflow-y: scroll;
   overflow-x: hidden;
 `;
 
