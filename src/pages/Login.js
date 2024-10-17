@@ -293,7 +293,7 @@ const Login = () => {
             />
             <Label>비밀번호</Label>
             {password && (
-              <PasswordBtn tabIndex="-1" type="button" onClick={togglePassword}>
+              <PasswordBtn type="button" onClick={togglePassword}>
                 {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
               </PasswordBtn>
             )}
