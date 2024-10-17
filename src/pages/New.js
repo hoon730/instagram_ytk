@@ -273,7 +273,7 @@ const New = ({ setOpenNew }) => {
       const docRef = await addDoc(collection(db, "feed"), {
         content,
         createdAt: Date.now(),
-        hastage: [],
+        hashtag: [],
         like: [],
         location: "",
         tagUser: [],

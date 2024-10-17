@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import MyPic from "../components/MyFeed/MyPic";
 import MyProfile from "../components/MyFeed/MyProfile";
-import NewMyHighlight from "../components/MyFeed/NewMyHighlight";
 import MyHighlight from "../components/MyFeed/MyHighlight";
 import MyFeedTabBar from "../components/MyFeed/MyFeedTabBar";
 import TimeLine from "../components/Detail/TimeLine";
@@ -103,9 +102,9 @@ const MyFeed = ({ uid }) => {
 
   return (
     <Wrapper>
-      <MyPic uid={uid} posts={posts} />
-      <MyProfile uid={uid} />
-      {/* <NewMyHighlight /> */}
+      <MbHeader myProfile={myProfile} />
+      <MyPic myProfile={myProfile} posts={posts} />
+      <MyProfile myProfile={myProfile} />
       <MyHighlight />
       <MyFeedTabBar />
       <TimeLine posts={posts} />

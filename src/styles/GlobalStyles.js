@@ -70,7 +70,7 @@ const GlobalStyles = createGlobalStyle`
   :root {
     --main-color: linear-gradient(-75deg, #F9CE34, #E5317C, #6228D7);
     --sub-purple-color: #6228D7;
-    --sub-pink-color: #EE2A7B;
+    --sub-pink-color: #E5317C;
     --warning-color: #FF5C2B;
     --bg-black-color: #1F0D44;
     --bg-white-color: #FFFFFF;
