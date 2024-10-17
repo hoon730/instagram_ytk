@@ -505,7 +505,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
   const [editedFeedDetail, setEditedFeedDetail] = useState(
     feedDetail?.content || ""
   );
-  
+
   const [preview, setPreview] = useState([]);
   const [file, setFile] = useState([]);
 
@@ -841,16 +841,14 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                               }
                             }}
                           >
-                            {
-                              preview.length > 0 &&
-                                preview.map((item, idx) => (
-                                  <PreviewImage
-                                    key={idx}
-                                    src={item}
-                                    alt={`미리보기 ${idx + 1}`}
-                                  />
-                                ))
-                            }
+                            {preview.length > 0 &&
+                              preview.map((item, idx) => (
+                                <PreviewImage
+                                  key={idx}
+                                  src={item}
+                                  alt={`미리보기 ${idx + 1}`}
+                                />
+                              ))}
                           </MediaBox>
                         </MediaWrapper>
                         <SetContentButton

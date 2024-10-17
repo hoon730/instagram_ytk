@@ -74,11 +74,10 @@ const MenuArea = styled.div`
     display: block;
     width: 100%;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     background: ${({ theme }) => theme.bgColor};
     border: 1px solid ${({ theme }) => theme.borderColor};
     box-shadow: 0 5px 6px ${({ theme }) => theme.shadowAlpha};
-    margin-top: -24px;
     transition: transform 0.5s;
     transform: ${({ $menuOpen }) =>
       $menuOpen === "true" ? "translateX(0)" : "translateX(100%)"};
