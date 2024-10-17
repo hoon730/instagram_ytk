@@ -10,10 +10,8 @@ import CommentInput from "../Common/CommentInput";
 import { click, getFormattedDate } from "../../utils/utils";
 
 import { IoIosCloseCircle } from "react-icons/io";
-import { IoHeartOutline } from "react-icons/io5";
-import { FaRegBookmark } from "react-icons/fa6";
-import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 
 import { auth, db, storage } from "../../utils/firebase";
 import {
@@ -262,6 +260,7 @@ const Slider = styled.div`
   position: relative;
   border-radius: var(--border-radius-12) 0 0 var(--border-radius-12);
   overflow: hidden;
+  position: relative;
 
   .react-multi-carousel-list {
     width: 100%;
@@ -287,24 +286,27 @@ const EditingImg = styled.div`
 
 const MediaWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-const OriginBox = styled.div`
-  width: 90%;
-  height: 90%;
+const OriginBox = styled(motion.div)`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: grab;
 `;
 
-const MediaBox = styled.div`
-  width: 90%;
-  height: 90%;
+const MediaBox = styled(motion.div)`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: grab;
 `;
 
 const Video = styled.video`
@@ -336,6 +338,7 @@ const Container = styled.div`
 
 const UserContainer = styled.div`
   width: 100%;
+  height: ${({ $isEditing }) => ($isEditing ? "100%" : "auto")};
   padding: 20px 30px 0px;
   border-bottom: ${({ $isEditing, theme }) =>
     $isEditing ? "none" : `1px solid ${theme.borderColor}`};
@@ -437,6 +440,15 @@ const PreviewImage = styled.img`
   border-radius: 10px;
 `;
 
+const DeleteBtn = styled.button`
+  filter: drop-shadow(0 0 5px ${({ theme }) => theme.fontColor});
+  svg {
+    font-size: var(--font-18);
+    font-weight: var(--font-bold);
+    color: ${({ theme }) => theme.bgColor};
+  }
+`;
+
 const Icon = styled.img`
   width: 100%;
   height: 100%;
@@ -493,7 +505,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
   const [editedFeedDetail, setEditedFeedDetail] = useState(
     feedDetail?.content || ""
   );
-
+  
   const [preview, setPreview] = useState([]);
   const [file, setFile] = useState([]);
 
@@ -731,6 +743,15 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     updateDoc(doc(db, "feed", feedDetail.id), updatedData);
   };
 
+  const [WrapperWidth, setWrapperWidth] = useState(0);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (wrapperRef.current) {
+      setWrapperWidth(wrapperRef.current.offsetWidth);
+    }
+  }, [wrapperRef.current]);
+
   return (
     <>
       {!myProfile && !feedDetail ? (
@@ -775,7 +796,20 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                     {isEditing ? (
                       <EditingImg className="editing_img">
                         <MediaWrapper>
-                          <OriginBox>
+                          <OriginBox
+                            className="media_box"
+                            drag="x"
+                            dragConstraints={{
+                              left: -WrapperWidth / 2,
+                              right: 0,
+                            }}
+                            whileTap={{ cursor: "grabbing" }}
+                            onDragEnd={(event, info) => {
+                              if (info.point.x < -WrapperWidth / 2) {
+                              } else if (info.point.x > 0) {
+                              }
+                            }}
+                          >
                             {feedDetail &&
                               feedDetail.imgPath.map((it, idx) => (
                                 <OriginPhoto key={idx}>
@@ -783,28 +817,40 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                                     src={it}
                                     alt={`오리지널 사진 미리보기 ${idx + 1}`}
                                   />
-                                  <span
+                                  <DeleteBtn
                                     className="delBtn"
                                     data-idx={idx}
                                     onClick={delOrginal}
                                   >
-                                    X
-                                  </span>
+                                    <IoClose />
+                                  </DeleteBtn>
                                 </OriginPhoto>
                               ))}
                           </OriginBox>
-                          <MediaBox className="media_box">
-                            {preview.length > 0 ? (
-                              preview.map((item, idx) => (
-                                <PreviewImage
-                                  key={idx}
-                                  src={item}
-                                  alt={`미리보기 ${idx + 1}`}
-                                />
-                              ))
-                            ) : (
-                              <Icon src="/images/newPostIcon.svg" />
-                            )}
+                          <MediaBox
+                            className="media_box"
+                            drag="x"
+                            dragConstraints={{
+                              left: -WrapperWidth / 2,
+                              right: 0,
+                            }}
+                            whileTap={{ cursor: "grabbing" }}
+                            onDragEnd={(event, info) => {
+                              if (info.point.x < -WrapperWidth / 2) {
+                              } else if (info.point.x > 0) {
+                              }
+                            }}
+                          >
+                            {
+                              preview.length > 0 &&
+                                preview.map((item, idx) => (
+                                  <PreviewImage
+                                    key={idx}
+                                    src={item}
+                                    alt={`미리보기 ${idx + 1}`}
+                                  />
+                                ))
+                            }
                           </MediaBox>
                         </MediaWrapper>
                         <SetContentButton
