@@ -35,11 +35,11 @@ const Wrapper = styled(motion.form)`
   padding: 30px;
   background: ${({ theme }) => theme.bgColor};
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 1200px) {
     width: 500px;
   }
 
-  @media screen and (max-width: 630px) {
+  @media screen and (max-width: 730px) {
     width: 430px;
     font-size: var(--font-14);
   }
