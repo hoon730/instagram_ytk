@@ -407,7 +407,9 @@ const New = ({ setOpenNew }) => {
               <CancelBtn
                 type="button"
                 value={"취소하기"}
-                onClick={() => setOpenNew(false)}
+                onClick={() => {
+                  setOpenNew(false);
+                }}
               />
               {/* <Button
                 className="button"
