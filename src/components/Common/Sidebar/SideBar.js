@@ -147,23 +147,19 @@ const ToolList = styled.div`
 const SideBar = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
-  const [openNew, setOpenNew] = useState(false);
   const [currentNum, setCurrentNum] = useState(0);
+  const [openNew, setOpenNew] = useState(false);
 
   const handleOnClick = (path) => {
     if (path) navigate(`${path}`);
   };
 
   const showNew = (name) => {
-    if (name === "만들기") onClick();
+    if (name === "만들기") setOpenNew(true);
   };
 
   const isActive = (num) => {
     setCurrentNum(num);
-  };
-
-  const onClick = () => {
-    setOpenNew(true);
   };
 
   return (
@@ -212,7 +208,7 @@ const SideBar = () => {
               <MenuText className="text">{it.name}</MenuText>
             </MenuItem>
           ))}
-          {openNew ? <New setOpenNew={setOpenNew} /> : null}
+          {openNew ? <New setOpenNew={setOpenNew} openNew={openNew} /> : null}
         </MenuList>
       </Wrapper>
       <ToolList className="toollist">

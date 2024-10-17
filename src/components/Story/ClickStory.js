@@ -20,6 +20,7 @@ const StoryHeadFoot = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 2;
 `;
 
 const StoryMedia = styled.img``;
@@ -32,9 +33,9 @@ const ClickStory = ({ url, onClick }) => {
     <Wrapper>
       <StoryHeadFoot>
         <StoryHeader />
-        <StoryMedia src={url} alt="storymedia"></StoryMedia>
         <StoryFooterDm />
       </StoryHeadFoot>
+      <StoryMedia src={url} alt="storymedia"></StoryMedia>
     </Wrapper>
   );
 };

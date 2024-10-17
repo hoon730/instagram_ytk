@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import SearchItem from "./SearchItem";
+import UserInfo from "../User/UserInfo";
 import { RxMagnifyingGlass } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoCloseOutline } from "react-icons/io5";
+import { StateContext } from "../../App";
 
 const BgFilter = styled.div`
   position: fixed;
@@ -20,17 +21,19 @@ const BgFilter = styled.div`
 `;
 
 const Wrapper = styled.div`
-  display: ${({ display }) => (display ? "block" : "none")};
+  display: ${({ $display }) => ($display ? "block" : "none")};
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 400px;
+  height: 400px;
   padding: 15px;
   background: var(--bg-white-color);
   border-radius: var(--border-radius-12);
   box-shadow: var(--box-shadow);
   z-index: 3;
+  overflow-y: scroll;
 
   @media screen and (max-width: 430px) {
     width: 82%;
@@ -72,6 +75,7 @@ const SearchInputBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 const ItemArea = styled.div`
@@ -104,43 +108,34 @@ const SearchInput = styled.input`
   color: #2b2b2b;
 `;
 
-const itemArray = [
-  {
-    userNickName: "lotte_ria",
-    userName: "코드분쇄기",
-    followed: "followed",
-    url: "/images/userImgs/user123456/followed_1.jpg",
-  },
-  {
-    userNickName: "burxxxking",
-    userName: "decent",
-    followed: "followed",
-    url: "/images/userImgs/user123456/followed_2.jpg",
-  },
-  {
-    userNickName: "bas_bg",
-    userName: "marcel",
-    url: "/images/userImgs/user123456/followed_3.jpg",
-  },
-  {
-    userNickName: "westside",
-    userName: "두동강",
-    followed: "followed",
-    url: "/images/userImgs/user123456/followed_4.jpg",
-  },
-  {
-    userNickName: "inner_v",
-    userName: "peace",
-    url: "/images/userImgs/user123456/followed_5.jpg",
-  },
-];
-
 const SearchList = styled.div``;
 
-const Follower = ({ setOpenFollower, setOpenFollowing }) => {
+const Follower = ({ setOpenFollower, clickBtn }) => {
   const [isClose, setIsClose] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [getUserNickName, setGetUserNickName] = useState("");
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
+
+  const allProfileUids = allProfile?.map((profile) => profile.uid);
+  const following = allProfileUids?.filter((allUids) =>
+    myProfile.following.includes(allUids)
+  );
+
+  const follower = allProfileUids?.filter((allUids) =>
+    myProfile.follower.includes(allUids)
+  );
+
+  const getFollowerProfile = allProfile.filter((profile) =>
+    follower.includes(profile.uid)
+  );
+
+  const getFollowingProfile = allProfile.filter((profile) =>
+    following.includes(profile.uid)
+  );
+
+  //console.log(getFollowerProfile);
+  //console.log(getFollowingProfile);
 
   const onChange = (e) => {
     setGetUserNickName(e.target.value);
@@ -150,26 +145,61 @@ const Follower = ({ setOpenFollower, setOpenFollowing }) => {
   };
 
   const showUserNickName = () => {
-    return getUserNickName === ""
-      ? itemArray
-      : itemArray.filter((it) =>
+    console.log(getUserNickName);
+    console.log(clickBtn);
+    if (getUserNickName === "") {
+      if (clickBtn === "팔로우") {
+        console.log(11);
+        return getFollowerProfile;
+      } else {
+        console.log(22);
+        return getFollowingProfile;
+      }
+    } else {
+      if (clickBtn === "팔로우") {
+        console.log(33);
+        return getFollowerProfile.filter((it) =>
           it.userNickName
             .toLocaleLowerCase()
             .includes(getUserNickName.toLocaleLowerCase())
         );
+      } else {
+        console.log(44);
+        return getFollowingProfile.filter((it) =>
+          it.userNickName
+            .toLocaleLowerCase()
+            .includes(getUserNickName.toLocaleLowerCase())
+        );
+      }
+    }
+    // return getUserNickName === ""
+    //   ? clickBtn === "팔로우"
+    //     ? getFollowerProfile
+    //     : getFollowingProfile
+    //   : clickBtn === "팔로우"
+    //   ? getFollowerProfile.filter((it) =>
+    //       it.userNickName
+    //         .toLocaleLowerCase()
+    //         .includes(getUserNickName.toLocaleLowerCase())
+    //     )
+    //   : getFollowingProfile.filter((it) =>
+    //       it.userNickName
+    //         .toLocaleLowerCase()
+    //         .includes(getUserNickName.toLocaleLowerCase())
+    //     );
   };
+  showUserNickName();
+  //console.log();
 
   const inputReset = () => {
     setGetUserNickName("");
     setIsActive(false);
   };
 
-  console.log()
-
   return (
-    <Wrapper display={isClose}>
+    <Wrapper $display={isClose}>
       <Title className="title">
-        <H3>팔로워</H3>
+        <H3>{clickBtn}</H3>
         <CloseBtn onClick={() => setIsClose(false)}>
           <IoCloseOutline />
         </CloseBtn>
@@ -192,9 +222,9 @@ const Follower = ({ setOpenFollower, setOpenFollowing }) => {
         </ItemArea>
       </SearchInputBox>
       <SearchList>
-        {showUserNickName().map((it, idx) => (
-          <SearchItem key={idx} {...it} />
-        ))}
+        {getFollowerProfile.map((profile, idx) => {
+          <UserInfo key={idx} profile={profile} />;
+        })}
       </SearchList>
     </Wrapper>
   );

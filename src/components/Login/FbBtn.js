@@ -8,9 +8,9 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 const FBLogin = styled.div`
   display: flex;
   width: 100%;
-  padding: 15px 0;
-  /* justify-content: start;
-  align-items: start; */
+  padding: 10px 0;
+  justify-content: center;
+  align-items: center;
   color: var(--sub-purple-color);
   font-size: 14px;
 `;
