@@ -172,12 +172,22 @@ const MyPic = ({ userId, posts }) => {
   return (
     <Wrapper>
       <MyPicBox>
-        <ProfileBg src={feedProfile?.bgPhoto} />
+        <ProfileBg
+          src={
+            feedProfile?.bgPhoto
+              ? feedProfile.bgPhoto
+              : "/images/mb_Profile_bg.jpg"
+          }
+        />
         <ProfileImgBox>
           <ProfileImg
             type={"active"}
             size={170}
-            url={feedProfile?.profilePhoto}
+            url={
+              feedProfile?.profilePhoto
+                ? feedProfile.profilePhoto
+                : "/images/user_img.jpg"
+            }
             hover={true}
           />
         </ProfileImgBox>
