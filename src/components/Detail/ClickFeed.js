@@ -75,7 +75,7 @@ const BackButton = styled.button`
   height: 30px;
   display: none;
   color: ${({ theme }) => theme.bgColor};
-  filter: drop-shadow(0 0 3px ${({ theme }) => theme.fontColor});
+  filter: drop-shadow(0 0 4px ${({ theme }) => theme.fontColor});
   z-index: 3;
 
   svg {

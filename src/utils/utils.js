@@ -96,7 +96,7 @@ export const mbMenuData = [
     id: 4,
     name: "마이 프로필",
     iconCode: "",
-    path: "/detail",
+    path: "/profile",
   },
 ];
 

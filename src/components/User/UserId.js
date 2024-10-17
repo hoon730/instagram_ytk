@@ -6,6 +6,7 @@ import { getFormattedDate } from "../../utils/utils";
 import { LuMoreHorizontal } from "react-icons/lu";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeartSharp } from "react-icons/io5";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.span`
   width: ${({ type }) => (type === "notification" ? "" : "100%")};
@@ -145,6 +146,7 @@ const UserId = ({
   const [switchHeart, setSwitchHeart] = useState(false);
   const [hoverId, setHoverId] = useState(false);
   const moreBgRef = useRef();
+  const navigate = useNavigate();
 
   const showProfile = () => {
     setHoverId(true);
@@ -164,6 +166,14 @@ const UserId = ({
           className="user-id"
           onMouseEnter={showProfile}
           onMouseLeave={hideProfile}
+          onClick={() =>
+            navigate({
+              pathname: "/profile",
+              search: `?${createSearchParams({
+                uid: uid,
+              })}`,
+            })
+          }
         >
           {!hover && hoverId ? (
             <HoverProfile target={"id"} top={"22"} type={type} uid={uid} />

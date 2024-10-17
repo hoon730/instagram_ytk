@@ -21,7 +21,7 @@ const BgFilter = styled.div`
 `;
 
 const Wrapper = styled.div`
-  display: ${({ display }) => (display ? "block" : "none")};
+  display: ${({ $display }) => ($display ? "block" : "none")};
   position: fixed;
   top: 50%;
   left: 50%;
@@ -134,8 +134,8 @@ const Follower = ({ setOpenFollower, clickBtn }) => {
     following.includes(profile.uid)
   );
 
-  console.log(getFollowerProfile);
-  console.log(getFollowingProfile);
+  //console.log(getFollowerProfile);
+  //console.log(getFollowingProfile);
 
   const onChange = (e) => {
     setGetUserNickName(e.target.value);
@@ -145,22 +145,51 @@ const Follower = ({ setOpenFollower, clickBtn }) => {
   };
 
   const showUserNickName = () => {
-    return getUserNickName === ""
-      ? clickBtn === "팔로우"
-        ? getFollowerProfile
-        : getFollowingProfile
-      : clickBtn === "팔로우"
-      ? getFollowerProfile.filter((it) =>
-          it.userNickName
-            .toLocaleLowerCase()
-            .includes(getUserNickName.toLocaleLowerCase())
-        )
-      : getFollowingProfile.filter((it) =>
+    console.log(getUserNickName);
+    console.log(clickBtn);
+    if (getUserNickName === "") {
+      if (clickBtn === "팔로우") {
+        console.log(11);
+        return getFollowerProfile;
+      } else {
+        console.log(22);
+        return getFollowingProfile;
+      }
+    } else {
+      if (clickBtn === "팔로우") {
+        console.log(33);
+        return getFollowerProfile.filter((it) =>
           it.userNickName
             .toLocaleLowerCase()
             .includes(getUserNickName.toLocaleLowerCase())
         );
+      } else {
+        console.log(44);
+        return getFollowingProfile.filter((it) =>
+          it.userNickName
+            .toLocaleLowerCase()
+            .includes(getUserNickName.toLocaleLowerCase())
+        );
+      }
+    }
+    // return getUserNickName === ""
+    //   ? clickBtn === "팔로우"
+    //     ? getFollowerProfile
+    //     : getFollowingProfile
+    //   : clickBtn === "팔로우"
+    //   ? getFollowerProfile.filter((it) =>
+    //       it.userNickName
+    //         .toLocaleLowerCase()
+    //         .includes(getUserNickName.toLocaleLowerCase())
+    //     )
+    //   : getFollowingProfile.filter((it) =>
+    //       it.userNickName
+    //         .toLocaleLowerCase()
+    //         .includes(getUserNickName.toLocaleLowerCase())
+    //     );
   };
+  showUserNickName();
+  //console.log();
 
   const inputReset = () => {
     setGetUserNickName("");
@@ -168,7 +197,7 @@ const Follower = ({ setOpenFollower, clickBtn }) => {
   };
 
   return (
-    <Wrapper display={isClose}>
+    <Wrapper $display={isClose}>
       <Title className="title">
         <H3>{clickBtn}</H3>
         <CloseBtn onClick={() => setIsClose(false)}>
@@ -193,7 +222,7 @@ const Follower = ({ setOpenFollower, clickBtn }) => {
         </ItemArea>
       </SearchInputBox>
       <SearchList>
-        {showUserNickName().map((profile, idx) => {
+        {getFollowerProfile.map((profile, idx) => {
           <UserInfo key={idx} profile={profile} />;
         })}
       </SearchList>

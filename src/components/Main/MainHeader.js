@@ -277,7 +277,7 @@ const MainHeader = () => {
           />
           {heart ? <Notification /> : null}
         </NotificationArea>
-        <Profile onClick={() => navigate("/detail")}>
+        <Profile onClick={() => navigate("/profile")}>
           <UserProfile>
             <ProfileImg
               url={myProfile ? myProfile.profilePhoto : null}
