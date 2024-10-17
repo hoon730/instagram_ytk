@@ -167,14 +167,16 @@ const FeedIcon = ({ feedDetail, onClick, type }) => {
   }, [likes]);
 
   useEffect(() => {
-    const likeFollowing = feedDetail.like.find((it) =>
+    const likesArray = feedDetail.like || [];
+
+    const likeFollowing = likesArray.find((it) =>
       myProfile.following.includes(it)
     );
 
     const profileData = allProfile.find((it) => it.uid === likeFollowing);
     setFollowingUser(profileData);
   }, [feedDetail]);
-
+  
   const toggleHeart = () => {
     if (fillHeart) {
       setLikes(likes.filter((it) => it !== myProfile.uid));
