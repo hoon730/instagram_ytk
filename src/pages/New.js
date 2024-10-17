@@ -61,7 +61,7 @@ const MediaBox = styled.div`
   width: 100%;
   margin-bottom: 15px;
   display: flex;
-  justify-content: ${({ length }) => (length > 3 ? "flex-start" : "center")};
+  justify-content: ${({ $length }) => ($length > 3 ? "flex-start" : "center")};
   overflow: hidden;
 `;
 
@@ -72,7 +72,7 @@ const Icon = styled.img`
 const MediaArea = styled(motion.div)`
   width: 100%;
   display: flex;
-  justify-content: ${({ length }) => (length > 3 ? "flex-start" : "center")};
+  justify-content: ${({ $length }) => ($length > 3 ? "flex-start" : "center")};
   gap: 10px;
 `;
 
@@ -82,6 +82,7 @@ const ImgMedia = styled.img`
   background: #eee;
   object-fit: cover;
   border-radius: var(--border-radius-8);
+  -webkit-user-drag: none;
 `;
 const VidMedia = styled.video`
   width: 150px;
@@ -334,14 +335,14 @@ const New = ({ setOpenNew }) => {
         <Inner className="inner">
           <H3>새 게시물 만들기</H3>
           <Form onSubmit={onSubmit}>
-            <MediaBox length={preview.length}>
+            <MediaBox $length={preview.length}>
               {preview.length > 0 ? (
                 <MediaArea
                   ref={mediaRef}
                   drag="x"
                   dragConstraints={constraints}
                   dragPropagation
-                  length={preview.length}
+                  $length={preview.length}
                 >
                   {preview.map((src, idx) => {
                     const fileType = file[idx].type;

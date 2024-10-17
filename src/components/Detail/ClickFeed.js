@@ -291,6 +291,14 @@ const MediaWrapper = styled.div`
   justify-content: center;
 `;
 
+const OriginBox = styled.div`
+  width: 90%;
+  height: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const MediaBox = styled.div`
   width: 90%;
   height: 90%;
@@ -468,6 +476,16 @@ const EditedTextArea = styled.textarea`
   }
 `;
 
+const OriginPhoto = styled.div`
+  position: relative;
+  .delBtn {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+`;
+
 const ClickFeed = ({ feedDetail, onClick }) => {
   const [followingUser, setFollowingUser] = useState("");
   const [replyArr, SetReplyArr] = useState([]);
@@ -587,6 +605,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     } catch (e) {
       console.error(e);
     } finally {
+      setPreview([]);
       setIsEditing(false);
     }
   };
@@ -695,6 +714,24 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     setRepleInfo(reply);
   };
 
+  const delOrginal = (e) => {
+    if (
+      !window.confirm(
+        "해당 사진이 삭제되면 복구할 수 없습니다. 지금 삭제하시겠습니까?"
+      )
+    ) {
+      return;
+    }
+    const resultImgPath = feedDetail.imgPath.filter(
+      (it, idx) => idx !== parseInt(e.target.dataset.idx)
+    );
+
+    const updatedData = {
+      imgPath: resultImgPath,
+    };
+    updateDoc(doc(db, "feed", feedDetail.id), updatedData);
+  };
+
   return (
     <>
       {!myProfile && !feedDetail ? (
@@ -739,6 +776,24 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                     {isEditing ? (
                       <EditingImg className="editing_img">
                         <MediaWrapper>
+                          <OriginBox>
+                            {feedDetail &&
+                              feedDetail.imgPath.map((it, idx) => (
+                                <OriginPhoto key={idx}>
+                                  <PreviewImage
+                                    src={it}
+                                    alt={`오리지널 사진 미리보기 ${idx + 1}`}
+                                  />
+                                  <span
+                                    className="delBtn"
+                                    data-idx={idx}
+                                    onClick={delOrginal}
+                                  >
+                                    X
+                                  </span>
+                                </OriginPhoto>
+                              ))}
+                          </OriginBox>
                           <MediaBox className="media_box">
                             {preview.length > 0 ? (
                               preview.map((item, idx) => (
