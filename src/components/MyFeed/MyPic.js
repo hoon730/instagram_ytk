@@ -28,7 +28,7 @@ const ProfileBg = styled.img`
 
 const ProfileImgBox = styled.div`
   position: absolute;
-  top: 180px;
+  top: 170px;
   left: 70px;
   border-radius: 50%;
 
@@ -46,7 +46,7 @@ const ProfileImgBox = styled.div`
   @media screen and (max-width: 900px) {
     width: 150px;
     height: 150px;
-    top: 190px;
+    top: 185px;
     left: 50px;
     display: flex;
     justify-content: center;
