@@ -53,8 +53,8 @@ const Main = () => {
         <MainHeaderMargin />
         <MainContent>
           <FeedSection>
-            {/* <StoryContent />
-            <FeedContent /> */}
+            <StoryContent />
+            <FeedContent />
           </FeedSection>
           <HotHashtag />
           <HotHashtagMargin />
