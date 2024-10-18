@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import LogoImg from "../components/Login/LogoImg.js";
 import LoginBtn from "../components/Login/LoginBtn.js";
-import { AiOutlineEye, AiOutlineEyeInvisible, AiFillEye } from "react-icons/ai";
-import { FaXmark, FaCheck } from "react-icons/fa6";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { FaXmark } from "react-icons/fa6";
 import FbBtn from "../components/Login/FbBtn.js";
 import { auth, db } from "../utils/firebase.js";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -51,20 +51,18 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
-  width: 100%;
   gap: 15px;
 `;
 
 const InputBox = styled.div`
   position: relative;
   width: 100%;
-  width: 100%;
   display: flex;
   border: 1px solid #bfbfbf;
   border-radius: 5px;
   padding: 15px 20px;
   justify-content: space-between;
-  align-items:center;
+  align-items: center;
   &:focus-within {
     border-color: ${colors.sub2};
   }
@@ -107,7 +105,6 @@ const Label = styled.label`
   @media (max-width: 370px) {
     font-size: 13px;
   }
-
 `;
 
 const PasswordBtn = styled.button`
@@ -175,8 +172,6 @@ const Login = () => {
     const {
       target: { name, value },
     } = e;
-
-    if (name === "identity") setIdentity(value);
     if (name === "identity") setIdentity(value);
     else if (name === "password") setPassword(value);
   };
@@ -207,17 +202,18 @@ const Login = () => {
         }
 
         if (userDoc) {
-          emailToLogin = userDoc.email; // Get email from Firestore data
+          emailToLogin = userDoc.email;
         } else {
-          setEmailError(<span>
-            <FaXmark style={{ marginRight: '5px' }} />
-            일치하는 유저가 없습니다.
-          </span>);
+          setEmailError(
+            <span>
+              <FaXmark style={{ marginRight: "5px" }} />
+              일치하는 유저가 없습니다.
+            </span>
+          );
           return;
         }
       }
 
-      // Attempt sign-in with email and password
       await signInWithEmailAndPassword(auth, emailToLogin, password);
       console.log("Login successful, navigating...");
       navigate("/");
@@ -225,25 +221,30 @@ const Login = () => {
       console.error(e);
       if (e instanceof FirebaseError) {
         if (e.message == "Firebase: Error (auth/invalid-email).") {
-          setEmailError(<span>
-            <FaXmark style={{ marginRight: '5px' }} />
-            이메일 형식이 잘못되었습니다.
-          </span>);
-        } else if (e.message == "Firebase: Error (auth/invalid-credential).") {
-          setError(         
+          setEmailError(
             <span>
-              <FaXmark style={{ marginRight: '5px' }} />
+              <FaXmark style={{ marginRight: "5px" }} />
+              이메일 형식이 잘못되었습니다.
+            </span>
+          );
+        } else if (e.message == "Firebase: Error (auth/invalid-credential).") {
+          setError(
+            <span>
+              <FaXmark style={{ marginRight: "5px" }} />
               비밀번호를 다시 확인해 주세요.
-            </span>);
+            </span>
+          );
         } else if (
           e.message ==
           "Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests)."
         ) {
           setError(
-              <span>
-                <FaXmark style={{ marginRight: '5px' }} />
-                다수의 로그인 시도로 인해 계정이 잠겼습니다. 잠시뒤 다시 시도해주세요.
-              </span>);
+            <span>
+              <FaXmark style={{ marginRight: "5px" }} />
+              다수의 로그인 시도로 인해 계정이 잠겼습니다. 잠시뒤 다시
+              시도해주세요.
+            </span>
+          );
         } else {
           setError(e.message);
         }

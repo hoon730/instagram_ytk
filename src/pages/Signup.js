@@ -218,13 +218,14 @@ const AccountLink = styled.a`
 const Signup = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [userIdError, setUserIdError] = useState(""); 
+  const [userIdError, setUserIdError] = useState("");
   const [isUserIdValid, setIsUserIdValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [hasNumber, setHasNumber] = useState(false);
   const [hasAlphabet, setHasAlphabet] = useState(false);
   const [isMinLength, setIsMinLength] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [pwSubmitValid, setPwSubmitValid] = useState(false);
   // const [passwordError, setPasswordError] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -265,21 +266,26 @@ const Signup = () => {
     }
   }, []);
 
+  const validatePassword = (value) => {
+    setHasNumber(/\d/.test(value));
+    setHasAlphabet(/[a-zA-Z]/.test(value));
+    setIsMinLength(value.length >= 6);
+    setIsPasswordValid(
+      /\d/.test(value) && /[a-zA-Z]/.test(value) && value.length >= 6
+    );
+  };
+
   const onChange = (e) => {
     setEmailError("");
-    const {
-      target: { name, value },
-    } = e;
+    setPwSubmitValid(false);
+    const { name, value } = e.target;
 
     if (name === "id") {
       setId(value);
-      checkUserId(value); // Check userId validity on input change
+      checkUserId(value);
     } else if (name === "password") {
       setPassword(value);
-      setHasNumber(/\d/.test(value));
-      setHasAlphabet(/[a-zA-Z]/.test(value));
-      setIsMinLength(value.length >= 6);
-      setIsPasswordValid(/\d/.test(value) && /[a-zA-Z]/.test(value));
+      validatePassword(value);
     } else if (name === "name") setName(value);
     else if (name === "email") setEmail(value);
     else if (name === "tel") setTel(value);
@@ -341,6 +347,7 @@ const Signup = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setPwSubmitValid(true);
     if (
       !isUserIdValid ||
       !isPasswordValid ||
@@ -448,24 +455,17 @@ const Signup = () => {
 
   const handleClickOutside = (event) => {
     if (
-      dropdownStates.country.isOpen &&
       countryDropdownRef.current &&
-      countryDropdownRef.current.previousElementSibling &&
-      !countryDropdownRef.current.contains(event.target) &&
-      !countryDropdownRef.current.previousElementSibling.contains(event.target)
+      !countryDropdownRef.current.contains(event.target)
     ) {
       setDropdownStates((prev) => ({
         ...prev,
         country: { ...prev.country, isOpen: false },
       }));
     }
-
     if (
-      dropdownStates.domain.isOpen &&
       domainDropdownRef.current &&
-      domainDropdownRef.current.previousElementSibling &&
-      !domainDropdownRef.current.contains(event.target) &&
-      !domainDropdownRef.current.previousElementSibling.contains(event.target)
+      !domainDropdownRef.current.contains(event.target)
     ) {
       setDropdownStates((prev) => ({
         ...prev,
@@ -524,17 +524,40 @@ const Signup = () => {
           {password && (
             <PasswordValidation>
               <Alphabet
-                style={{ color: hasAlphabet ? "green" : colors.darkGray }}
+                style={{
+                  color:
+                    pwSubmitValid && !hasAlphabet
+                      ? "#e0000e"
+                      : hasAlphabet
+                      ? "green"
+                      : colors.darkGray,
+                }}
               >
                 <FaCheck />
                 영자포함
               </Alphabet>
-              <Number style={{ color: hasNumber ? "green" : colors.darkGray }}>
+              <Number
+                style={{
+                  color:
+                    pwSubmitValid && !hasNumber
+                      ? "#e0000e"
+                      : hasNumber
+                      ? "green"
+                      : colors.darkGray,
+                }}
+              >
                 <FaCheck />
                 숫자포함
               </Number>
               <LetterLength
-                style={{ color: isMinLength ? "green" : colors.darkGray }}
+                style={{
+                  color:
+                    pwSubmitValid && !isMinLength
+                      ? "#e0000e"
+                      : isMinLength
+                      ? "green"
+                      : colors.darkGray,
+                }}
               >
                 <FaCheck />
                 6글자이상

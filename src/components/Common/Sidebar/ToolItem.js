@@ -31,7 +31,7 @@ const ToolBox = styled.div`
     svg {
       color: ${({ theme }) => theme.iconColor};
       &:last-child {
-        color: #f2ebb0;
+        color: #f7ee94;
       }
     }
   }

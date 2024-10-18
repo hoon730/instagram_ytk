@@ -73,12 +73,8 @@ const CustomSelect = React.forwardRef(
     ref
   ) => {
     return (
-      <SelectContainer>
-        <SelectedOption
-          ref={ref}
-          className="dropdown-toggle"
-          onClick={toggleDropdown}
-        >
+      <SelectContainer ref={ref}>
+        <SelectedOption className="dropdown-toggle" onClick={toggleDropdown}>
           {selectedOption.code} <IoIosArrowDown />
         </SelectedOption>
         {isDropdownOpen && (
