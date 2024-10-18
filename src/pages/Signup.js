@@ -1,29 +1,7 @@
-// v1. facebook 메시지
-// v2. 전화번호&사용자(id) 한꺼번에 저장-계정 복수생성=복잡해져서 포기. 전화번호||이메일 등록으로 변경=전화번호가 등록이 안됨. 이메일 필수.
-// 3. 소문자숫자밑줄마침표만 아이디 등록할 때 허용. 아이디 추천 기능. <FaCheck /> <FaXmark /> <IoReload />
-// v4. uid 임의로 변환-불가능
-// v5. 리아님이 말씀하신대로 데이타베이스에 올라가는 거 수정.
-// v6. Firebase: Error (auth/invalid-credential).파이어베이스 에러들 한글로 바꾸기. 로그인포맷, 같은이메일 존재
-// v7. 눈모양 버튼 앤터 칠 떄 boolean 안바뀌도록
-// v8. 로그인 id, 전번, 이메일과 비밀번호로 가능하게끔
-// v9. 반응형. 370, 780
-// 10. custum select로 통일
-// 11. 로그인 전번간편로그인 기능, 전번 제대로 들어가는지 확인
-// . 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
-
-// v5. 리아님이 말씀하신대로 데이타베이스에 올라가는 거 수정.
-// v6. Firebase: Error (auth/invalid-credential).파이어베이스 에러들 한글로 바꾸기. 로그인포맷, 같은이메일 존재
-// v7. 눈모양 버튼 앤터 칠 떄 boolean 안바뀌도록
-// v8. 로그인 id, 전번, 이메일과 비밀번호로 가능하게끔
-// v9. 반응형. 370, 780
-// 10. custum select로 통일
-// 11. 로그인 전번간편로그인 기능, 전번 제대로 들어가는지 확인
-// . 부분적으로만 페이지상에서 렌더 되도록 쪼개기(코드 더 깔끔하게 다듬기)
-
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth,db } from "../utils/firebase";
+import { auth, db } from "../utils/firebase";
 import { FirebaseError } from "firebase/app";
 import styled from "styled-components";
 import LogoImg from "../components/Login/LogoImg";
@@ -40,6 +18,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import CustomSelect from "../components/Login/CustomSelect";
 
 const colors = {
   sub2: "#6228D7",
@@ -57,6 +36,17 @@ const countries = [
   { name: "Canada", code: "+1" },
   { name: "United Kingdom", code: "+44" },
   { name: "Germany", code: "+49" },
+];
+
+const domains = [
+  { name: "@gmail.com", code: "@gmail.com" },
+  { name: "@yahoo.com", code: "@yahoo.com" },
+  { name: "@naver.com", code: "@naver.com" },
+  { name: "@kakao.com", code: "@kakao.com" },
+  { name: "@hanmail.net", code: "@hanmail.net" },
+  { name: "@daum.net", code: "@daum.net" },
+  { name: "@hotmail.com", code: "@hotmail.com" },
+  { name: "직접 입력", code: "직접 입력" },
 ];
 
 const Wrapper = styled.div`
@@ -148,6 +138,11 @@ const Label = styled.label`
   }
 `;
 
+const VertLine = styled.div`
+  border-left: 1px solid ${colors.gray};
+  height: 18px;
+`;
+
 const Error = styled.p`
   color: #e00000;
   margin-top: -5px;
@@ -166,56 +161,26 @@ const PasswordBtn = styled.button`
   /* z-index: 1; */
   cursor: pointer;
 `;
-const DomainSelect = styled.select`
-  height: 24px;
-  border: none;
-  border-left: 1px solid ${colors.gray};
-  padding: 0 0 0 10px;
-  color: ${colors.darkGray};
-  font-size: 16px;
-  outline: none;
-  @media (max-width: 370px) {
-    font-size: 13px;
-  }
-`;
-// Styled Components
-const CountrySelect = styled.div`
-  position: relative;
-  width: fit-content;
-`;
-const SelectedCountry = styled.div`
+
+const PasswordValidation = styled.div`
   display: flex;
   color: ${colors.darkGray};
   gap: 5px;
-  padding-right: 10px;
-  border-right: 1px solid #ccc;
-  cursor: pointer;
+  font-size: 12px;
 `;
-const CountryDropdown = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  position: absolute;
-  top: 20px;
-  width: fit-content;
-  background-color: white;
-  box-shadow: 0px 0px 5px ${colors.gray};
-  z-index: 10;
-  max-height: 200px;
-  overflow-y: auto;
+const Alphabet = styled.div`
+  display: flex;
+  gap: 2px;
 `;
-const CountryOption = styled.li`
-  /* color: ${colors.darkGray}; */
-  background-color: ${(props) =>
-    props.isHovered ? colors.darkGray : "transparent"};
-  color: ${(props) => (props.isHovered ? "#fff" : colors.darkGray)};
-  padding: 10px;
-  cursor: pointer;
-  &:hover {
-    color: ${colors.bgLight};
-    background-color: ${colors.darkGray};
-  }
+const Number = styled.div`
+  display: flex;
+  gap: 2px;
 `;
+const LetterLength = styled.div`
+  display: flex;
+  gap: 2px;
+`;
+
 const SwitchEmailNPhone = styled.p`
   display: flex;
   width: fit-content;
@@ -238,34 +203,52 @@ const AccountLogin = styled.div`
   gap: 15px;
   width: 100%;
   font-size: 14px;
+  @media (max-width: 370px) {
+    gap: 8px;
+  }
 `;
 const AccountQ = styled.p`
   color: ${colors.darkGray};
 `;
 const AccountLink = styled.a`
-font-weight: 600;
+  font-weight: 600;
   color: ${colors.darkGray};
   cursor: pointer;
 `;
 const Signup = () => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [userIdError, setUserIdError] = useState(""); // State for userId error
+  const [userIdError, setUserIdError] = useState("");
   const [isUserIdValid, setIsUserIdValid] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [hasNumber, setHasNumber] = useState(false);
+  const [hasAlphabet, setHasAlphabet] = useState(false);
+  const [isMinLength, setIsMinLength] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [pwSubmitValid, setPwSubmitValid] = useState(false);
+  // const [passwordError, setPasswordError] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [domain, setDomain] = useState("@gmail.com");
   const [telOption, setTelOption] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  const [dropdownStates, setDropdownStates] = useState({
+    country: {
+      selected: countries[0],
+      isOpen: false,
+      hovered: null,
+    },
+    domain: {
+      selected: domains[0],
+      isOpen: false,
+      hovered: null,
+    },
+  });
   const [tel, setTel] = useState("");
-  const [error, setError] = useState("");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [hoveredCountry, setHoveredCountry] = useState(null);
-
-  const dropdownRef = useRef(null);
+  const countryDropdownRef = useRef(null);
+  const domainDropdownRef = useRef(null);
+  // const [error, setError] = useState("");
 
   const navigate = useNavigate();
   const userIdRef = useRef(null);
@@ -275,7 +258,7 @@ const Signup = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [dropdownStates]);
 
   useEffect(() => {
     if (userIdRef.current) {
@@ -283,18 +266,27 @@ const Signup = () => {
     }
   }, []);
 
+  const validatePassword = (value) => {
+    setHasNumber(/\d/.test(value));
+    setHasAlphabet(/[a-zA-Z]/.test(value));
+    setIsMinLength(value.length >= 6);
+    setIsPasswordValid(
+      /\d/.test(value) && /[a-zA-Z]/.test(value) && value.length >= 6
+    );
+  };
+
   const onChange = (e) => {
     setEmailError("");
-    setPasswordError("");
-    const {
-      target: { name, value },
-    } = e;
+    setPwSubmitValid(false);
+    const { name, value } = e.target;
 
     if (name === "id") {
       setId(value);
       checkUserId(value); // Check userId validity on input change
-    } else if (name === "password") setPassword(value);
-    else if (name === "name") setName(value);
+    } else if (name === "password") {
+      setPassword(value);
+      validatePassword(value);
+    } else if (name === "name") setName(value);
     else if (name === "email") setEmail(value);
     else if (name === "tel") setTel(value);
   };
@@ -308,8 +300,9 @@ const Signup = () => {
     if (!isValidUserId) {
       setUserIdError(
         <span>
-          <FaXmark style={{ marginRight: '5px' }} />
-          사용자 이름에는 알파벳 소문자, 숫자, 마침표, 밑줄만 사용할 수 있습니다.
+          <FaXmark style={{ marginRight: "5px" }} />
+          사용자 이름에는 알파벳 소문자, 숫자, 마침표, 밑줄만 사용할 수
+          있습니다.
         </span>
       );
       setIsUserIdValid(false);
@@ -322,42 +315,42 @@ const Signup = () => {
     const querySnapshot = await getDocs(userQuery);
     if (!querySnapshot.empty) {
       setUserIdError(
-      <span>
-        <FaXmark style={{ marginRight: '5px' }} />
-        이 사용자 이름은 이미 사용 중입니다.
-      </span>);
+        <span>
+          <FaXmark style={{ marginRight: "5px" }} />이 사용자 이름은 이미 사용
+          중입니다.
+        </span>
+      );
       setIsUserIdValid(false);
     } else {
       setUserIdError(
-      <span style={{ color: 'green' }}>
-        <FaCheck style={{ marginRight: '5px' }} />
-        사용 가능한 사용자 이름입니다.
-      </span>
+        <span style={{ color: "green" }}>
+          <FaCheck style={{ marginRight: "5px" }} />
+          사용 가능한 사용자 이름입니다.
+        </span>
       );
       setIsUserIdValid(true);
     }
   };
 
-  const onDomainChange = (e) => {
-    if (e.value !== "custom") setDomain(e.target.value);
-    else if (e.value === "custom") setDomain("");
+  const onSelect = (type, option) => {
+    setDropdownStates((prev) => ({
+      ...prev,
+      [type]: { ...prev[type], selected: option, isOpen: false },
+    }));
+    if (type === "country") setSelectedCountry(option);
+    if (type === "domain")
+      setDomain(option.code !== "직접 입력" ? option.code : "");
   };
-
-
-  const onCountrySelect = (country) => {
-    setSelectedCountry(country); 
-    setIsDropdownOpen(false); 
-  };
-
-
   // const getFullEmail = () => {
   //   return email + domain;
   // };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setPwSubmitValid(true);
     if (
       !isUserIdValid ||
+      !isPasswordValid ||
       id === "" ||
       password === "" ||
       name === "" ||
@@ -404,31 +397,29 @@ const Signup = () => {
     } catch (e) {
       console.log(e);
       if (e instanceof FirebaseError) {
-        if (
-          e.message ==
-          "Firebase: Password should be at least 6 characters (auth/weak-password)."
-        ) {
-          setPasswordError(
-          <span>
-            <FaXmark style={{ marginRight: '5px' }} />
-            비밀번호는 6자 이상으로 설정해주세요.
-          </span>);
-        } else if (e.message == "Firebase: Error (auth/invalid-email).") {
+        // if (
+        //   e.message ==
+        //   "Firebase: Password should be at least 6 characters (auth/weak-password)."
+        // ) {}
+        if (e.message == "Firebase: Error (auth/invalid-email).") {
           setEmailError(
-          <span>
-            <FaXmark style={{ marginRight: '5px' }} />
-            이메일 형식이 잘못되었습니다.
-          </span>);
+            <span>
+              <FaXmark style={{ marginRight: "5px" }} />
+              이메일 형식이 잘못되었습니다.
+            </span>
+          );
         } else if (
           e.message == "Firebase: Error (auth/email-already-in-use)."
         ) {
-          setEmailError(          
-          <span>
-            <FaXmark style={{ marginRight: '5px' }} />
-            이미 사용중인 이메일입니다.
-          </span>);
+          setEmailError(
+            <span>
+              <FaXmark style={{ marginRight: "5px" }} />
+              이미 사용중인 이메일입니다.
+            </span>
+          );
         } else {
-          setError(e.message);
+          console.log(e.message);
+          // setError(e.message);
         }
       }
       /* } finally { */
@@ -444,23 +435,50 @@ const Signup = () => {
     setTelOption((prev) => !prev);
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prevState) => {
-      if (!prevState) {
-        setHoveredCountry(selectedCountry);
-      }
-      return !prevState;
-    });
+  const toggleDropdown = (type) => {
+    setDropdownStates((prev) => ({
+      ...prev,
+      [type]: {
+        ...prev[type],
+        isOpen: !prev[type].isOpen,
+        hovered: !prev[type].isOpen ? null : prev[type].hovered,
+      },
+    }));
+  };
+
+  const handleHover = (type, option) => {
+    setDropdownStates((prev) => ({
+      ...prev,
+      [type]: { ...prev[type], hovered: option },
+    }));
   };
 
   const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setIsDropdownOpen(false);
+    if (
+      dropdownStates.country.isOpen &&
+      countryDropdownRef.current &&
+      countryDropdownRef.current.previousElementSibling &&
+      !countryDropdownRef.current.contains(event.target) &&
+      !countryDropdownRef.current.previousElementSibling.contains(event.target)
+    ) {
+      setDropdownStates((prev) => ({
+        ...prev,
+        country: { ...prev.country, isOpen: false },
+      }));
     }
-  };
 
-  const handleCountryHover = (country) => {
-    setHoveredCountry(country);
+    if (
+      dropdownStates.domain.isOpen &&
+      domainDropdownRef.current &&
+      domainDropdownRef.current.previousElementSibling &&
+      !domainDropdownRef.current.contains(event.target) &&
+      !domainDropdownRef.current.previousElementSibling.contains(event.target)
+    ) {
+      setDropdownStates((prev) => ({
+        ...prev,
+        domain: { ...prev.domain, isOpen: false },
+      }));
+    }
   };
 
   const loginLink = () => {
@@ -505,13 +523,55 @@ const Signup = () => {
             />
             <Label>비밀번호</Label>
             {password && (
-              // <PasswordBtn tabIndex="-1" type="button" onClick={togglePassword}>
               <PasswordBtn type="button" onClick={togglePassword}>
-              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-            </PasswordBtn>
+                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+              </PasswordBtn>
             )}
           </InputBox>
-          {passwordError && <Error>{passwordError}</Error>}
+          {password && (
+            <PasswordValidation>
+              <Alphabet
+                style={{
+                  color:
+                    pwSubmitValid && !hasAlphabet
+                      ? "#e0000e"
+                      : hasAlphabet
+                      ? "green"
+                      : colors.darkGray,
+                }}
+              >
+                <FaCheck />
+                영자포함
+              </Alphabet>
+              <Number
+                style={{
+                  color:
+                    pwSubmitValid && !hasNumber
+                      ? "#e0000e"
+                      : hasNumber
+                      ? "green"
+                      : colors.darkGray,
+                }}
+              >
+                <FaCheck />
+                숫자포함
+              </Number>
+              <LetterLength
+                style={{
+                  color:
+                    pwSubmitValid && !isMinLength
+                      ? "#e0000e"
+                      : isMinLength
+                      ? "green"
+                      : colors.darkGray,
+                }}
+              >
+                <FaCheck />
+                6글자이상
+              </LetterLength>
+            </PasswordValidation>
+          )}
+          {/* {passwordError && <Error>{passwordError}</Error>} */}
           <InputBox>
             <LoginInput
               onChange={onChange}
@@ -534,43 +594,37 @@ const Signup = () => {
               width="65%"
             />
             <Label>이메일</Label>
-            <DomainSelect value={domain} onChange={onDomainChange}>
-              <option value="@gmail.com">@gmail.com</option>
-              <option value="@naver.com">@naver.com</option>
-              <option value="@daum.net">@daum.net</option>
-              <option value="custom">직접 입력</option>
-            </DomainSelect>
+            <VertLine />
+            <CustomSelect
+              options={domains}
+              selectedOption={dropdownStates.domain.selected}
+              onOptionSelect={(option) => onSelect("domain", option)}
+              isDropdownOpen={dropdownStates.domain.isOpen}
+              toggleDropdown={() => toggleDropdown("domain")}
+              handleOptionHover={(option) => handleHover("domain", option)}
+              hoveredOption={dropdownStates.domain.hovered}
+              ref={domainDropdownRef}
+            />
           </InputBox>
           {emailError && <Error>{emailError}</Error>}
-          {error !== "" ? <Error>{error}</Error> : null}
+          {/* {error !== "" ? <Error>{error}</Error> : null} */}
           <SwitchEmailNPhone onClick={toggleEmailNPhone}>
             전화번호 등록하기
             {telOption ? <IoIosArrowUp /> : <IoIosArrowDown />}
           </SwitchEmailNPhone>
           {telOption ? (
             <InputBox>
-                          <CountrySelect ref={dropdownRef}>
-                <SelectedCountry onClick={toggleDropdown}>
-                  {selectedCountry.code}
-                  <IoIosArrowDown />
-                </SelectedCountry>
-                {isDropdownOpen && (
-                  <CountryDropdown>
-                    {countries.map((country, index) => (
-                      <CountryOption
-                        key={index}
-                        onClick={() => onCountrySelect(country)}
-                        onMouseEnter={() => handleCountryHover(country)}
-                        isHovered={
-                          hoveredCountry && country.name === hoveredCountry.name
-                        }
-                      >
-                        {country.name}
-                      </CountryOption>
-                    ))}
-                  </CountryDropdown>
-                )}
-              </CountrySelect>
+              <CustomSelect
+                options={countries}
+                selectedOption={dropdownStates.country.selected}
+                onOptionSelect={(option) => onSelect("country", option)}
+                isDropdownOpen={dropdownStates.country.isOpen}
+                toggleDropdown={() => toggleDropdown("country")}
+                handleOptionHover={(option) => handleHover("country", option)}
+                hoveredOption={dropdownStates.country.hovered}
+                ref={countryDropdownRef}
+              />
+              <VertLine />
               <LoginInput
                 onChange={onChange}
                 type="tel"
@@ -593,7 +647,7 @@ const Signup = () => {
             <AccountQ>계정이 이미 있으신가요?</AccountQ>
             <AccountLink onClick={loginLink}>로그인 하러가기</AccountLink>
           </AccountLogin>
-            <FbBtn />
+          <FbBtn />
         </LoginBlock>
       </Block>
     </Wrapper>

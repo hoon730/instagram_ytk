@@ -16,18 +16,24 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../utils/firebase";
+import { videoArr } from "../../utils/utils";
 
 const Wrapper = styled(motion.div)`
   width: 380px;
-  padding: 20px;
+  padding: 15px;
   border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: var(--border-radius-12);
   box-shadow: 0 0 20px ${({ theme }) => theme.shadowAlpha};
-  position: absolute;
-  ${({ top }) => (top ? `top: ${top}px;` : "top: 22px;")}
-  left: 0;
   background: ${({ theme }) => theme.bgColor};
-  z-index: 3;
+  z-index: 5;
+  //position: absolute;
+  //${({ top }) => (top ? `top: ${top}px;` : "top: 22px;")}
+  //left: 0;
+  position: fixed;
+  ${({ $position }) =>
+    $position
+      ? `left: ${$position[0]}px; top: ${$position[1] + 22}px`
+      : "left:0px; top:0px;"}
 `;
 
 const Userinfo = styled.div`
@@ -39,7 +45,7 @@ const Userdesc = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
 `;
 
 const Optional = styled.p`
@@ -66,18 +72,20 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 5px;
 `;
 
 const Video = styled.video`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 5px;
 `;
 
 const Btns = styled.div`
   display: flex;
   gap: ${({ $followed }) => ($followed === "followed" ? "4px" : "0")};
-  padding-top: 10px;
+  padding-top: 15px;
 `;
 
 const extractExtension = (value) => {
@@ -86,36 +94,13 @@ const extractExtension = (value) => {
   return secondSplit[secondSplit.length - 1].toLowerCase();
 };
 
-const HoverProfile = ({ type, uid, top }) => {
+const HoverProfile = ({ type, uid, top, position }) => {
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
   const [hoverProfile, setHoverProfile] = useState(null);
   const [hoverFeed, setHoverFeed] = useState(null);
   const [followResult, setFollowResult] = useState(false);
   const [feedLen, setFeedLen] = useState(0);
-  const videoArr = [
-    "mp4",
-    "avi",
-    "mkv",
-    "mov",
-    "wmv",
-    "flv",
-    "webm",
-    "m4v",
-    "3gp",
-    "ogv",
-    "m2ts",
-    "mts",
-    "vob",
-    "rmvb",
-    "divx",
-    "f4v",
-    "asf",
-    "swf",
-    "mxf",
-    "dv",
-    "ts",
-  ];
 
   useEffect(() => {
     if (!uid) return;
@@ -158,6 +143,7 @@ const HoverProfile = ({ type, uid, top }) => {
       animate="visible"
       exit="exits"
       top={top}
+      $position={position}
     >
       <Userinfo>
         <ProfileImg
@@ -179,6 +165,7 @@ const HoverProfile = ({ type, uid, top }) => {
       </Userinfo>
       <div>
         <PostAndFollow
+          padding={"15px"}
           posting={feedLen}
           follower={hoverProfile && hoverProfile.follower.length}
           following={hoverProfile && hoverProfile.following.length}

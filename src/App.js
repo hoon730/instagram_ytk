@@ -28,6 +28,7 @@ import {
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import NotLoggedIn from "./components/NotLoggedIn";
+import FindPw from "./pages/FindPw";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -56,7 +57,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "detail",
+        path: "profile",
         element: <Detail />,
       },
       {
@@ -102,6 +103,14 @@ const router = createBrowserRouter([
     element: (
       <NotLoggedIn>
         <Signup />
+      </NotLoggedIn>
+    ),
+  },
+  {
+    path: "/findPw",
+    element: (
+      <NotLoggedIn>
+        <FindPw />
       </NotLoggedIn>
     ),
   },

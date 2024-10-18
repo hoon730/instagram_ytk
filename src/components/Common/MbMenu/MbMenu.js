@@ -65,7 +65,7 @@ const MbMenu = () => {
   const navigate = useNavigate();
   const { darkMode } = useContext(ThemeContext);
   const [currentNum, setCurrentNum] = useState(0);
-  const [openMbNew, setOpenMbNew] = useState(false);
+  const [openNew, setOpenNew] = useState(false);
 
   const { myProfile } = useContext(StateContext);
 
@@ -74,7 +74,7 @@ const MbMenu = () => {
   };
 
   const showNew = (name) => {
-    if (name === "만들기") setOpenMbNew(true);
+    if (name === "만들기") setOpenNew(true);
   };
 
   const isActive = (num) => {
@@ -107,7 +107,7 @@ const MbMenu = () => {
           <MenuText className="text">{it.name}</MenuText>
         </MenuItem>
       ))}
-      {openMbNew ? <New setOpenMbNew={setOpenMbNew} /> : null}
+      {openNew ? <New setOpenNew={setOpenNew} /> : null}
     </MenuList>
   );
 };

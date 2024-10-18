@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import Button from "../Common/Button";
@@ -45,6 +45,7 @@ const Desc = styled.p`
 const MbRecommend = () => {
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
+  const [constraints, setConstraints] = useState({ left: 0, right: 0 });
 
   const allProfileUids = allProfile?.map((profile) => profile.uid);
   const followerRecommended = allProfileUids?.filter(
@@ -55,11 +56,9 @@ const MbRecommend = () => {
     followerRecommended.includes(profile.uid)
   );
 
-  const finalFollowers = followersProfile.map(
+  const finalFollowers = followersProfile.filter(
     (profile) => profile.uid !== myProfile.uid
   );
-
-  console.log(finalFollowers);
 
   return (
     <AnimatePresence>
@@ -70,16 +69,7 @@ const MbRecommend = () => {
         exit="exits"
       >
         <Title>회원님을 위한 추천</Title>
-        <RecommendList
-          drag="x"
-          dragConstraints={{ left: -300, right: 0 }}
-          whileTap={{ cursor: "grabbing" }}
-          onDragEnd={(event, info) => {
-            if (info.point.x < -300) {
-            } else if (info.point.x > 0) {
-            }
-          }}
-        >
+        <RecommendList drag="x" dragConstraints={constraints} dragPropagation>
           {finalFollowers.length > 0 ? (
             finalFollowers.map((profile, idx) => (
               <RecommendItem key={idx}>

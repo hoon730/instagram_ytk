@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import ProfileImg from "../Profile/ProfileImg";
 import PostAndFollow from "../User/PostAndFollow";
+import { StateContext } from "../../App";
 
 const Wrapper = styled.div``;
 
@@ -60,7 +61,7 @@ const ProfileImgBox = styled.div`
     .storySecondCircle {
       width: 150px;
       height: 150px;
-      border: 7px solid var(--bg-white-color);
+      border: transparent;
     }
 
     .storyThirdCircle {
@@ -86,7 +87,8 @@ const ProfileImgBox = styled.div`
     .storySecondCircle {
       width: 120px;
       height: 120px;
-      border: 7px solid var(--bg-white-color);
+      border: transparent;
+      /* border: 7px solid var(--bg-white-color); */
       /* background: rgba(255, 255, 255, 0); */
     }
 
@@ -127,6 +129,7 @@ const MyFeedDesc = styled.div`
   padding: 20px 0px 10px;
   margin-left: 250px;
   margin-right: 70px;
+  /* border: 1px solid red; */
 
   @media screen and (max-width: 900px) {
     margin-left: 190px;
@@ -138,7 +141,7 @@ const MyFeedDesc = styled.div`
   }
 
   @media screen and (max-width: 780px) {
-    margin-left: 150px;
+    margin-left: 170px;
     margin-right: 30px;
 
     .post_follow {
@@ -147,35 +150,53 @@ const MyFeedDesc = styled.div`
   }
 
   @media screen and (max-width: 630px) {
-    margin-left: 120px;
-    margin-right: 0;
-    padding: 0 15px 0 20px;
+    margin-left: 110px;
+    margin-right: 20px;
+    padding: 0 20px;
     height: 90px;
+
     .post_follow {
       justify-content: space-between;
     }
   }
 `;
 
-const MyPic = ({ myProfile, posts }) => {
+const MyPic = ({ userId, posts }) => {
+  const { allProfile } = useContext(StateContext);
+  const { myProfile } = useContext(StateContext);
+
+  const feedProfile = userId
+    ? allProfile.find((it) => it.userId === userId)
+    : myProfile;
+
   return (
     <Wrapper>
       <MyPicBox>
-        <ProfileBg src={myProfile?.bgPhoto} />
+        <ProfileBg
+          src={
+            feedProfile?.bgPhoto
+              ? feedProfile.bgPhoto
+              : "/images/mb_Profile_bg.jpg"
+          }
+        />
         <ProfileImgBox>
           <ProfileImg
             type={"active"}
             size={170}
-            url={myProfile?.profilePhoto}
+            url={
+              feedProfile?.profilePhoto
+                ? feedProfile.profilePhoto
+                : "/images/user_img.jpg"
+            }
             hover={true}
           />
         </ProfileImgBox>
         <MyFeedDesc>
           <PostAndFollow
             posting={posts?.length}
-            follower={myProfile?.follower.length}
-            following={myProfile?.following.length}
-            myProfile={myProfile}
+            follower={feedProfile?.follower.length}
+            following={feedProfile?.following.length}
+            myProfile={feedProfile}
           />
         </MyFeedDesc>
       </MyPicBox>

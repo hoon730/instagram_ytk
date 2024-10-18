@@ -84,7 +84,7 @@ const UserName = styled.p`
 
 const PhotoSection = styled.div`
   width: 652px;
-  height: 815px;
+  height: 652px;
   margin: 0 auto;
   border-radius: 8px;
   position: relative;
@@ -141,7 +141,6 @@ const DateText = styled.div`
 const FeedItem = ({ feedDetail }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [comments, setComments] = useState([]);
-  const [pushComment, setPushComment] = useState("");
   const { myProfile } = useContext(StateContext);
   const followResult = myProfile.following.find((it) => it === feedDetail.uid);
 
@@ -149,28 +148,18 @@ const FeedItem = ({ feedDetail }) => {
     setIsClicked((current) => !current);
   };
 
-  useEffect(() => {
-    if (pushComment === "") return;
+  const addCmt = (comment) => {
+    const docRef = addDoc(collection(db, "reply"), {
+      content: comment,
+      createdAt: Date.now(),
+      feedId: feedDetail.id,
+      type: "rp",
+      uid: myProfile.uid,
+      like: [],
+    });
 
-    const addCmt = async () => {
-      try {
-        const docRef = await addDoc(collection(db, "reply"), {
-          content: pushComment,
-          createdAt: Date.now(),
-          feedId: feedDetail.id,
-          type: "rp",
-          uid: myProfile.uid,
-          like: [],
-        });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setPushComment("");
-      }
-    };
-
-    addCmt();
-  }, [pushComment]);
+    setComments([...comments, comment]);
+  };
 
   return (
     <Wrapper>
@@ -197,22 +186,16 @@ const FeedItem = ({ feedDetail }) => {
       </ProfileSection>
       <PhotoSection>
         {feedDetail.type === "reels" ? (
-          <Video
-            autoPlay
-            muted
-            loop
-            src={feedDetail.imgPath}
-            onClick={onClick}
-          />
+          <Video autoPlay muted loop src={feedDetail.imgPath} />
         ) : (
-          <Slide imgPath={feedDetail.imgPath} onClick={onClick} />
+          <Slide imgPath={feedDetail.imgPath} />
         )}
         {isClicked ? (
           <ClickFeed onClick={onClick} feedDetail={feedDetail} />
         ) : null}
       </PhotoSection>
       <FeedDescArea>
-        <FeedIcon feedDetail={feedDetail} myProfile={myProfile} />
+        <FeedIcon feedDetail={feedDetail} onClick={onClick} />
         <FeedDesc>
           <UserInfo>
             <UserId
@@ -237,13 +220,7 @@ const FeedItem = ({ feedDetail }) => {
             ))}
           </CommentArea>
 
-          <CommentInput
-            width={"100%"}
-            height={"50px"}
-            comments={comments}
-            setComments={setComments}
-            setPushComment={setPushComment}
-          />
+          <CommentInput width={"100%"} height={"50px"} addCmt={addCmt} />
         </FeedDesc>
       </FeedDescArea>
     </Wrapper>

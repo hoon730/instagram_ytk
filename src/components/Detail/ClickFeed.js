@@ -10,10 +10,8 @@ import CommentInput from "../Common/CommentInput";
 import { click, getFormattedDate } from "../../utils/utils";
 
 import { IoIosCloseCircle } from "react-icons/io";
-import { IoHeartOutline } from "react-icons/io5";
-import { FaRegBookmark } from "react-icons/fa6";
-import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 
 import { auth, db, storage } from "../../utils/firebase";
 import {
@@ -37,6 +35,7 @@ import {
 } from "firebase/storage";
 import { motion } from "framer-motion";
 import { StateContext } from "../../App";
+import FeedIcon from "../Main/FeedIcon";
 
 const BgWrapper = styled(motion.div)`
   position: fixed;
@@ -48,14 +47,14 @@ const BgWrapper = styled(motion.div)`
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 3;
+  z-index: 4;
 `;
 
 const CloseBtn = styled.button`
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 4;
+  z-index: 5;
 
   svg {
     font-size: 30px;
@@ -75,6 +74,7 @@ const BackButton = styled.button`
   height: 30px;
   display: none;
   color: ${({ theme }) => theme.bgColor};
+  filter: drop-shadow(0 0 4px ${({ theme }) => theme.fontColor});
   z-index: 3;
 
   svg {
@@ -95,6 +95,10 @@ const Wrapper = styled(motion.div)`
   border-radius: var(--border-radius-12);
   transition: all 0.3s;
   cursor: default;
+
+  .feed_wrapper {
+    margin: 5px 0;
+  }
 
   @media screen and (max-width: 1400px) {
     ${({ $isEditing }) =>
@@ -124,12 +128,17 @@ const Wrapper = styled(motion.div)`
     }
     .desc {
       width: 45%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 
       .comment_list {
         padding: 10px;
       }
       .writing_comment {
-        padding: 10px;
+        height: auto;
+        padding: 10px 10px 15px 10px;
+        gap: 0;
       }
       .notification {
         span {
@@ -246,11 +255,24 @@ const Contents = styled.div`
 `;
 
 const Slider = styled.div`
-  width: 60%;
+  width: 100%;
   height: 100%;
   position: relative;
   border-radius: var(--border-radius-12) 0 0 var(--border-radius-12);
   overflow: hidden;
+  position: relative;
+
+  .react-multi-carousel-list {
+    width: 100%;
+    height: 100%;
+
+    ul {
+      li {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
 `;
 
 const EditingImg = styled.div`
@@ -264,16 +286,27 @@ const EditingImg = styled.div`
 
 const MediaWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
-const MediaBox = styled.div`
-  width: 90%;
-  height: 90%;
+const OriginBox = styled(motion.div)`
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: grab;
+`;
+
+const MediaBox = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
 `;
 
 const Video = styled.video`
@@ -295,11 +328,11 @@ const Desc = styled.div`
 
 const Container = styled.div`
   width: 100%;
+  height: ${({ $isEditing }) => ($isEditing ? "100%" : "calc(100% - 115px)")};
   ${({ $isEditing }) =>
     $isEditing
-      ? `display: block; height: 100%;`
-      : `height: 100%;
-  display: flex;
+      ? `display: block;;`
+      : `display: flex;
   flex-direction: column;`}
 `;
 
@@ -327,6 +360,9 @@ const Userinfo = styled.div`
 
 const Location = styled.span`
   font-size: var(--font-14);
+  @media screen and (max-width: 1024px) {
+    font-size: var(--font-12);
+  }
 `;
 
 const UserContents = styled.div`
@@ -338,69 +374,32 @@ const UserContents = styled.div`
       : `margin-left: 15px; position: static;`}
 `;
 
-const Content = styled.span`
-  margin-left: ${({ size }) => (size ? `${size}px` : 0)};
-  font-size: var(--font-14);
+const ContentDate = styled.span`
+  display: ${({ $isEditing }) => ($isEditing ? "none" : "inline-block")};
+  font-size: var(--font-12);
+  margin-left: 15px;
+  padding-bottom: 22px;
+  @media screen and (max-width: 1024px) {
+    padding-bottom: 15px;
+  }
 `;
 
 const CommentList = styled.div`
+  display: ${({ $isEditing }) => ($isEditing ? "none" : "flex")};
   padding: 20px;
-  display: flex;
   flex-direction: column;
   gap: 15px;
-  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 const WritingComment = styled.div`
-  height: 100px;
-  display: flex;
+  display: ${({ $isEditing }) => ($isEditing ? "none" : "flex")};
+  height: ${({ $isEditing }) => ($isEditing ? "auto" : "115px")};
   flex-direction: column;
   gap: 15px;
-  padding: 15px 20px;
+  padding: 20px;
   border-top: 1px solid var(--light-gray-color);
 `;
-
-const Top = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-const Notification = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: var(--font-14);
-  gap: 8px;
-
-  svg {
-    display: flex;
-    align-items: center;
-    font-size: var(--font-20);
-  }
-`;
-const IconBtns = styled.div`
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  cursor: pointer;
-
-  svg {
-    font-size: var(--font-16);
-  }
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-  height: 35px;
-  background: var(--light-gray-color);
-  border-radius: var(--border-radius-8);
-  padding: 0 20px;
-
-  &::placeholder {
-    color: var(--gray-color);
-    font-weight: var(--font-regular);
-  }
-`;
-
-const Form = styled.form``;
 
 const Title = styled.div`
   display: flex;
@@ -441,6 +440,15 @@ const PreviewImage = styled.img`
   border-radius: 10px;
 `;
 
+const DeleteBtn = styled.button`
+  filter: drop-shadow(0 0 5px ${({ theme }) => theme.fontColor});
+  svg {
+    font-size: var(--font-18);
+    font-weight: var(--font-bold);
+    color: ${({ theme }) => theme.bgColor};
+  }
+`;
+
 const Icon = styled.img`
   width: 100%;
   height: 100%;
@@ -479,11 +487,20 @@ const EditedTextArea = styled.textarea`
   }
 `;
 
+const OriginPhoto = styled.div`
+  position: relative;
+  .delBtn {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+`;
+
 const ClickFeed = ({ feedDetail, onClick }) => {
-  const [comments, setComments] = useState([]);
-  const [pushComment, setPushComment] = useState("");
   const [followingUser, setFollowingUser] = useState("");
   const [replyArr, SetReplyArr] = useState([]);
+  const [repleInfo, setRepleInfo] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editedFeedDetail, setEditedFeedDetail] = useState(
     feedDetail?.content || ""
@@ -599,6 +616,7 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     } catch (e) {
       console.error(e);
     } finally {
+      setPreview([]);
       setIsEditing(false);
     }
   };
@@ -662,7 +680,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     fetchReply();
 
     return () => {
-      // 구독 해제
       if (replyUnsubscribe) {
         replyUnsubscribe();
       }
@@ -672,32 +689,68 @@ const ClickFeed = ({ feedDetail, onClick }) => {
     };
   }, [feedDetail]);
 
-  useEffect(() => {
-    if (pushComment === "") return;
-
-    const addCmt = async () => {
-      try {
-        const docRef = await addDoc(collection(db, "reply"), {
-          content: pushComment,
+  const addCmt = async (comment) => {
+    try {
+      if (repleInfo && comment.startsWith(`@${repleInfo.userId}`)) {
+        await addDoc(collection(db, "re_reply"), {
+          content: comment.replace(`@${repleInfo.userId} `, ""),
+          createdAt: Date.now(),
+          replyId: repleInfo.id,
+          type: "rr",
+          uid: myProfile.uid,
+          like: [],
+        });
+      } else {
+        await addDoc(collection(db, "reply"), {
+          content: comment,
           createdAt: Date.now(),
           feedId: feedDetail.id,
           type: "rp",
           uid: myProfile.uid,
           like: [],
         });
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setPushComment("");
       }
-    };
-
-    addCmt();
-  }, [pushComment]);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setRepleInfo(null);
+    }
+  };
 
   const hideFeed = () => {
     onClick();
   };
+
+  const addRereple = (reply) => {
+    setRepleInfo(reply);
+  };
+
+  const delOrginal = (e) => {
+    if (
+      !window.confirm(
+        "해당 사진이 삭제되면 복구할 수 없습니다. 지금 삭제하시겠습니까?"
+      )
+    ) {
+      return;
+    }
+    const resultImgPath = feedDetail.imgPath.filter(
+      (it, idx) => idx !== parseInt(e.target.dataset.idx)
+    );
+
+    const updatedData = {
+      imgPath: resultImgPath,
+    };
+    updateDoc(doc(db, "feed", feedDetail.id), updatedData);
+  };
+
+  const [WrapperWidth, setWrapperWidth] = useState(0);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    if (wrapperRef.current) {
+      setWrapperWidth(wrapperRef.current.offsetWidth);
+    }
+  }, [wrapperRef.current]);
 
   return (
     <>
@@ -743,18 +796,59 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                     {isEditing ? (
                       <EditingImg className="editing_img">
                         <MediaWrapper>
-                          <MediaBox className="media_box">
-                            {preview.length > 0 ? (
+                          <OriginBox
+                            className="media_box"
+                            drag="x"
+                            dragConstraints={{
+                              left: -WrapperWidth / 2,
+                              right: 0,
+                            }}
+                            whileTap={{ cursor: "grabbing" }}
+                            onDragEnd={(event, info) => {
+                              if (info.point.x < -WrapperWidth / 2) {
+                              } else if (info.point.x > 0) {
+                              }
+                            }}
+                          >
+                            {feedDetail &&
+                              feedDetail.imgPath.map((it, idx) => (
+                                <OriginPhoto key={idx}>
+                                  <PreviewImage
+                                    src={it}
+                                    alt={`오리지널 사진 미리보기 ${idx + 1}`}
+                                  />
+                                  <DeleteBtn
+                                    className="delBtn"
+                                    data-idx={idx}
+                                    onClick={delOrginal}
+                                  >
+                                    <IoClose />
+                                  </DeleteBtn>
+                                </OriginPhoto>
+                              ))}
+                          </OriginBox>
+                          <MediaBox
+                            className="media_box"
+                            drag="x"
+                            dragConstraints={{
+                              left: -WrapperWidth / 2,
+                              right: 0,
+                            }}
+                            whileTap={{ cursor: "grabbing" }}
+                            onDragEnd={(event, info) => {
+                              if (info.point.x < -WrapperWidth / 2) {
+                              } else if (info.point.x > 0) {
+                              }
+                            }}
+                          >
+                            {preview.length > 0 &&
                               preview.map((item, idx) => (
                                 <PreviewImage
                                   key={idx}
                                   src={item}
                                   alt={`미리보기 ${idx + 1}`}
                                 />
-                              ))
-                            ) : (
-                              <Icon src="/images/newPostIcon.svg" />
-                            )}
+                              ))}
                           </MediaBox>
                         </MediaWrapper>
                         <SetContentButton
@@ -828,7 +922,6 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             <UserId
                               type={"feed"}
                               userNickname={feedDetail.profile.userId}
-                              createdAt={new Date(feedDetail.createdAt)}
                               check={feedDetail.profile.badge ? "active" : ""}
                               btn={isEditing ? null : "more"}
                               onClick={onDelete}
@@ -861,42 +954,36 @@ const ClickFeed = ({ feedDetail, onClick }) => {
                             <FeedText feedDetail={feedDetail} all={true} />
                           )}
                         </UserContents>
+                        <ContentDate $isEditing={isEditing}>
+                          {getFormattedDate(new Date(feedDetail.createdAt))}
+                        </ContentDate>
                       </UserContainer>
 
-                      <CommentList className="comment_list">
+                      <CommentList
+                        className="comment_list"
+                        $isEditing={isEditing}
+                      >
                         {replyArr.length > 0
                           ? replyArr.map((it, idx) => (
-                              <CommentItem key={idx} reply={it} />
+                              <CommentItem
+                                key={idx}
+                                reply={it}
+                                addRereple={addRereple}
+                              />
                             ))
                           : null}
                       </CommentList>
                     </Container>
-                    <WritingComment className="writing_comment">
-                      <Top>
-                        <Notification>
-                          <IoHeartOutline />
-                          <span>
-                            {followingUser ? (
-                              <>
-                                {followingUser.userId}님 외
-                                <b> {feedDetail.like.length}명</b>이 좋아합니다
-                              </>
-                            ) : (
-                              <b>좋아요 {feedDetail.like.length}개</b>
-                            )}
-                          </span>
-                        </Notification>
-                        <IconBtns>
-                          <IoPaperPlaneOutline />
-                          <FaRegBookmark />
-                        </IconBtns>
-                      </Top>
+                    <WritingComment
+                      className="writing_comment"
+                      $isEditing={isEditing}
+                    >
+                      <FeedIcon feedDetail={feedDetail} type={"detail"} />
                       <CommentInput
                         width={"100%"}
                         height={"35px"}
-                        comments={comments}
-                        setComments={setComments}
-                        setPushComment={setPushComment}
+                        addCmt={addCmt}
+                        repleInfo={repleInfo}
                       />
                     </WritingComment>
                   </Desc>

@@ -208,7 +208,7 @@ const SideBar = () => {
               <MenuText className="text">{it.name}</MenuText>
             </MenuItem>
           ))}
-          {openNew ? <New setOpenNew={setOpenNew}/> : null}
+          {openNew ? <New setOpenNew={setOpenNew} openNew={openNew} /> : null}
         </MenuList>
       </Wrapper>
       <ToolList className="toollist">

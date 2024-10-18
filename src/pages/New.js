@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { auth, db, storage } from "../utils/firebase";
 import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { PiVideoCameraLight } from "react-icons/pi";
 
 const NewBg = styled(motion.div)`
   position: fixed;
@@ -60,7 +61,7 @@ const MediaBox = styled.div`
   width: 100%;
   margin-bottom: 15px;
   display: flex;
-  justify-content: ${({ length }) => (length > 3 ? "flex-start" : "center")};
+  justify-content: ${({ $length }) => ($length > 3 ? "flex-start" : "center")};
   overflow: hidden;
 `;
 
@@ -71,7 +72,7 @@ const Icon = styled.img`
 const MediaArea = styled(motion.div)`
   width: 100%;
   display: flex;
-  justify-content: ${({ length }) => (length > 3 ? "flex-start" : "center")};
+  justify-content: ${({ $length }) => ($length > 3 ? "flex-start" : "center")};
   gap: 10px;
 `;
 
@@ -81,6 +82,7 @@ const ImgMedia = styled.img`
   background: #eee;
   object-fit: cover;
   border-radius: var(--border-radius-8);
+  -webkit-user-drag: none;
 `;
 const VidMedia = styled.video`
   width: 150px;
@@ -278,7 +280,7 @@ const New = ({ setOpenNew }) => {
         uid: user.uid,
       });
 
-      const newPushUrl = []; // 파일 URL을 저장할 배열
+      const newPushUrl = [];
 
       //if (file.length > 1) {
       if (file.length > 0) {
@@ -298,27 +300,7 @@ const New = ({ setOpenNew }) => {
               : "img",
         });
       }
-      // else if (file.length === 1) {
-      //   const item = file[0];
-      //   const locationRef = ref(storage, `feed/${user.uid}/${item.name}`);
-      //   const result = await uploadBytes(locationRef, item);
-      //   const url = await getDownloadURL(result.ref);
-      //   const fileType = item.type;
 
-      //   if (fileType.startsWith("image/")) {
-      //     await updateDoc(docRef, {
-      //       imgPath: url,
-      //       type: "img",
-      //     });
-      //   } else if (fileType.startsWith("video/")) {
-      //     await updateDoc(docRef, {
-      //       imgPath: url,
-      //       type: "reels",
-      //     });
-      //   }
-      // }
-
-      // 상태 초기화
       setContent("");
       setFile([]);
       setPushUrl([]);
@@ -339,8 +321,7 @@ const New = ({ setOpenNew }) => {
       ref={newBgRef}
       onClick={(e) => {
         if (e.target === newBgRef.current) {
-          console.log("Background clicked, closing modal.");
-          setOpenNew(false); // 모달 닫기
+          setOpenNew(false);
         }
       }}
     >
@@ -354,14 +335,14 @@ const New = ({ setOpenNew }) => {
         <Inner className="inner">
           <H3>새 게시물 만들기</H3>
           <Form onSubmit={onSubmit}>
-            <MediaBox length={preview.length}>
+            <MediaBox $length={preview.length}>
               {preview.length > 0 ? (
                 <MediaArea
                   ref={mediaRef}
                   drag="x"
                   dragConstraints={constraints}
                   dragPropagation
-                  length={preview.length}
+                  $length={preview.length}
                 >
                   {preview.map((src, idx) => {
                     const fileType = file[idx].type;
@@ -411,12 +392,7 @@ const New = ({ setOpenNew }) => {
                   setOpenNew(false);
                 }}
               />
-              {/* <Button
-                className="button"
-                type={"negative"}
-                text={"취소하기"}
-                width={"50%"}
-              /> */}
+
               <SubmitBtn
                 type="submit"
                 value={isLoading ? "업로드중..." : "게시글 업로드하기"}

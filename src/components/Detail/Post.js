@@ -63,8 +63,6 @@ const Post = ({ post }) => {
     setIsClicked((current) => !current);
   };
 
-  console.log(post);
-
   return (
     <>
       <Wrapper onClick={showFeed}>

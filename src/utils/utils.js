@@ -85,7 +85,6 @@ export const mbMenuData = [
     id: 2,
     name: "만들기",
     iconCode: <FaRegSquarePlus />,
-    path: "/new",
   },
   {
     id: 3,
@@ -97,7 +96,7 @@ export const mbMenuData = [
     id: 4,
     name: "마이 프로필",
     iconCode: "",
-    path: "/detail",
+    path: "/profile",
   },
 ];
 

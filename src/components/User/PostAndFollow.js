@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Follower from "../Detail/Follower";
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,36 +41,20 @@ const PostAndFollow = ({
   padding,
   myProfile,
 }) => {
-  const [onpenFollower, setOpenFollower] = useState(false);
-  const [onpenFollowing, setOpenFollowing] = useState(false);
-
-  const handleOnFollow = () => {
-    setOpenFollower((prev) => !prev);
-  };
-
-  const handleOnFollowing = () => {
-    setOpenFollowing((prev) => !prev);
-  };
-
   return (
     <Wrapper padding={padding} className="post_follow">
       <NumberingBox>
         <span>{posting}</span>
         <span>게시물</span>
       </NumberingBox>
-      <NumberingBox onClick={handleOnFollow}>
+      <NumberingBox>
         <span>{follower}</span>
         <span>팔로워</span>
       </NumberingBox>
-      <NumberingBox onClick={handleOnFollowing}>
+      <NumberingBox>
         <span>{following}</span>
         <span>팔로잉</span>
       </NumberingBox>
-      {onpenFollower ? (
-        <Follower setOpenFollower={setOpenFollower} />
-      ) : onpenFollowing ? (
-        <Follower setOpenFollowing={setOpenFollowing} />
-      ) : null}
     </Wrapper>
   );
 };

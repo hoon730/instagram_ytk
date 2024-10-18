@@ -33,7 +33,6 @@ const Wrapper = styled.div`
   @media screen and (max-width: 630px) {
     width: 430px;
     margin-bottom: 80px;
-    overflow: hidden;
   }
 
   @media screen and (max-width: 430px) {
@@ -41,7 +40,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MyFeed = () => {
+const MyFeed = ({ userId }) => {
   const [posts, setPosts] = useState([]);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
@@ -51,11 +50,15 @@ const MyFeed = () => {
       return;
     }
 
+    const feedUid = userId
+      ? allProfile.find((it) => it.userId === userId).uid
+      : myProfile.uid;
+
     let unsubscribe;
     const fetchPosts = async () => {
       const postQuery = query(
         collection(db, "feed"),
-        where("uid", "==", myProfile.uid),
+        where("uid", "==", feedUid),
         orderBy("createdAt", "desc"),
         limit(25)
       );
@@ -94,16 +97,17 @@ const MyFeed = () => {
       });
     };
     fetchPosts();
+
     return () => {
       unsubscribe && unsubscribe();
     };
-  }, [myProfile]);
+  }, []);
 
   return (
     <Wrapper>
-      <MbHeader myProfile={myProfile} />
-      <MyPic myProfile={myProfile} posts={posts} />
-      <MyProfile myProfile={myProfile} />
+      <MbHeader />
+      <MyPic posts={posts} userId={userId} />
+      <MyProfile userId={userId} />
       <MyHighlight />
       <MyFeedTabBar />
       <TimeLine posts={posts} />
