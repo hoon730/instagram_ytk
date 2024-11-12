@@ -62,8 +62,7 @@ const Wrapper = styled.div`
         flex: 2;
       }
       textarea {
-        padding-top: 8px;
-        padding-left: 15px;
+        padding: 8px 10px 8px 15px;
         flex: 17;
         height: 70px;
         border: 2px solid ${({ theme }) => theme.borderColor};
@@ -73,8 +72,8 @@ const Wrapper = styled.div`
         font-size: var(--font-size-14);
         resize: none;
         /* resize: vertical; */
-        /* overflow-y: scroll; */
-        overflow-y: auto;
+        overflow-y: scroll;
+        /* overflow-y: auto; */
         box-sizing: border-box;
 
         &::placeholder {

@@ -265,6 +265,15 @@ const MainHeader = () => {
     }
   }, []);
 
+  const logOut = async () => {
+    // eslint-disable-next-line no-restricted-globals
+    const ask = confirm("로그아웃 하시겠습니까?");
+    if (ask) {
+      await auth.signOut();
+      navigate("/login");
+    }
+  };
+
   return (
     <Wrapper>
       <SearchBarArea>
@@ -282,7 +291,11 @@ const MainHeader = () => {
         <Profile onClick={() => navigate("/profile")}>
           <UserProfile>
             <ProfileImg
-              url={myProfile ? myProfile.profilePhoto : null}
+              url={
+                myProfile?.profilePhoto
+                  ? myProfile?.profilePhoto
+                  : "/images/user_img.jpg"
+              }
               size={"45"}
               hover={"noHover"}
             />
@@ -327,7 +340,15 @@ const MainHeader = () => {
               {darkMode ? "라이트 모드로 전환" : "다크 모드로 전환"}
             </MenuItem>
             {mobileHeaderMenu.map((it) => (
-              <MenuItem key={it.id} className={it.className}>
+              <MenuItem
+                onClick={() => {
+                  if (it.name === "로그아웃") {
+                    logOut();
+                  }
+                }}
+                key={it.id}
+                className={it.className}
+              >
                 {it.iconCode}
                 {it.name}
               </MenuItem>

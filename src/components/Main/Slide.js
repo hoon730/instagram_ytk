@@ -12,6 +12,9 @@ const Wrapper = styled.div`
   .react-multiple-carousel__arrow {
     display: none;
   }
+  .react-multi-carousel-track {
+    height: 100%;
+  }
 `;
 
 const SlideItem = styled.div`

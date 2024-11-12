@@ -10,24 +10,21 @@ const users = Data.user;
 const storys = Data.story;
 
 const Wrapper = styled.div`
-  width: 68%;
-  min-width: 680px;
+  width: 680px;
   height: 140px;
   margin: 0 auto;
   padding: 8px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
 
-  @media screen and (max-width: 1024px) {
-    min-width: 370px;
-    gap: 19px;
+  @media screen and (max-width: 770px) {
+    width: 430px;
   }
 
   @media screen and (max-width: 430px) {
-    min-width: 350px;
-    gap: 5px;
+    width: 100%;
   }
 `;
 
@@ -50,22 +47,42 @@ const StoryContent = () => {
   const ref = useRef(null);
 
   useEffect(() => {
-    if (!myProfile) return;
+    if (!myProfile || !auth?.currentUser) return;
 
-    const myUserId = users.find(
-      (it) => it.uid === auth?.currentUser.uid
-    ).userId;
-    const userIdOfMyFollowing = myProfile.following.map(
-      (it) => users.find((user) => user.uid === it).userId
-    );
+    const myUser = users.find((it) => it.uid === auth?.currentUser?.uid);
+
+    if (!myUser) {
+      console.error("현재 사용자에 대한 정보를 찾을 수 없습니다.");
+      return;
+    }
+
+    const myUserId = myUser.userId;
+
+    const userIdOfMyFollowing = myProfile.following
+      .map((it) => {
+        const user = users.find((user) => user.uid === it);
+        return user ? user.userId : null;
+      })
+      .filter(Boolean);
 
     const storyDesc = storys
       .filter((it) => userIdOfMyFollowing.includes(it.userId))
       .map((story) => {
-        const storyUserUid = users.find((it) => it.userId === story.userId).uid;
+        const storyUser = users.find((it) => it.userId === story.userId);
+        if (!storyUser) {
+          console.error("스토리 사용자에 대한 정보를 찾을 수 없습니다.");
+          return null;
+        }
+
         const storyUserProfile = allProfile.find(
-          (it) => it.uid === storyUserUid
+          (it) => it.uid === storyUser.uid
         );
+
+        if (!storyUserProfile) {
+          console.error("사용자 프로필을 찾을 수 없습니다.");
+          return null;
+        }
+
         return {
           userId: storyUserProfile.userId,
           imgPath: storyUserProfile.profilePhoto,
@@ -78,27 +95,28 @@ const StoryContent = () => {
           date: new Date(story.storyHistory[0].createDate).getTime(),
         };
       })
+      .filter(Boolean)
       .sort((a, b) => b.active - a.active || b.date - a.date);
 
     setStoryDesc(storyDesc);
   }, [myProfile]);
+  const itemWidth = 80;
+  const itemGap = 20;
 
-  // 부모 요소의 크기를 측정하여 dragConstraints 설정
-  const itemWidth = 80; // StoryItem의 너비
   useEffect(() => {
     if (ref.current) {
       const parentWidth = ref.current.clientWidth;
-      const maxVisibleItems = Math.floor(parentWidth / itemWidth);
+      const maxVisibleItems = Math.floor(parentWidth / (itemWidth + itemGap));
       const totalItems = storyDesc.length;
 
-      setVisible(Math.max(0, Math.min(visible, totalItems - maxVisibleItems))); // visible 상태를 업데이트
+      setVisible(Math.max(0, Math.min(visible, totalItems - maxVisibleItems)));
     }
   }, [storyDesc]);
 
   const handleDragEnd = (event, info) => {
     const parentWidth = ref.current.clientWidth;
-    const maxVisibleItems = Math.floor(parentWidth / itemWidth);
-    const distanceMoved = info.offset.x / itemWidth; // 이동한 거리
+    const maxVisibleItems = Math.floor(parentWidth / (itemWidth + itemGap));
+    const distanceMoved = info.offset.x / (itemWidth + itemGap);
 
     setVisible((prev) => {
       const newVisible = Math.round(prev - distanceMoved);
@@ -113,17 +131,18 @@ const StoryContent = () => {
     <Wrapper>
       <StorySection ref={ref}>
         <StoryGroup
-          drag="x" // x축으로 드래그 가능
+          drag="x"
           dragConstraints={{
             left: -(
               (storyDesc.length -
-                Math.floor(ref.current?.clientWidth / itemWidth)) *
-              itemWidth
+                Math.floor(ref.current?.clientWidth / (itemWidth + itemGap))) *
+              (itemWidth + itemGap)
             ),
             right: 0,
-          }} // 드래그 제약 조건
-          onDragEnd={handleDragEnd} // 드래그 끝났을 때 호출되는 핸들러
-          style={{ x: -visible * itemWidth }} // 현재 visible 인덱스를 기반으로 x 위치 조정
+          }}
+          onDragEnd={handleDragEnd}
+          animate={{ x: -visible * (itemWidth + itemGap) }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
           {storyDesc.map((it, idx) => (
             <StoryItem

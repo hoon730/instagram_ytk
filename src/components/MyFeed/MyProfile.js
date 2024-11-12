@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { FaGear } from "react-icons/fa6";
 import Setup from "../../pages/Setup";
 import MbButtons from "./MbButtons";
+import { StateContext } from "../../App";
 
 const Wrapper = styled.div``;
 
@@ -103,8 +104,14 @@ const MyIntro = styled.div`
   }
 `;
 
-const MyProfile = ({ myProfile }) => {
+const MyProfile = ({ userId }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { myProfile } = useContext(StateContext);
+  const { allProfile } = useContext(StateContext);
+
+  const feedProfile = userId
+    ? allProfile.find((it) => it.userId === userId)
+    : myProfile;
 
   const onClick = () => {
     setIsOpen((current) => !current);
@@ -115,16 +122,18 @@ const MyProfile = ({ myProfile }) => {
       <MyProfileBox>
         <NameBox>
           <MyName>
-            <p>{myProfile?.userId}</p>
-            <span>{myProfile?.userName}</span>
+            <p>{feedProfile?.userId}</p>
+            <span>{feedProfile?.userName}</span>
           </MyName>
           <EditBtn onClick={onClick}>
-            {isOpen ? <Setup onClick={onClick} myProfile={myProfile} /> : null}
+            {isOpen ? (
+              <Setup onClick={onClick} myProfile={feedProfile} />
+            ) : null}
             <FaGear />
           </EditBtn>
         </NameBox>
-        <MyIntro>{myProfile?.introduction}</MyIntro>
-        <MbButtons myProfile={myProfile} />
+        <MyIntro>{feedProfile?.introduction}</MyIntro>
+        <MbButtons myProfile={feedProfile} />
       </MyProfileBox>
     </Wrapper>
   );

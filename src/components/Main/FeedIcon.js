@@ -24,12 +24,13 @@ const Icons = styled.div`
   justify-content: space-between;
   padding: ${({ $type }) => ($type === "detail" ? "0px" : "20px 0px")};
   @media screen and (max-width: 1024px) {
-    padding: 5px 0;
+    padding-bottom: 10px;
   }
 `;
 
 const LeftIcons = styled.span`
   display: flex;
+  align-items: center;
   gap: 20px;
   @media screen and (max-width: 1024px) {
     gap: 18px;
@@ -38,6 +39,7 @@ const LeftIcons = styled.span`
 
 const RightIcons = styled.span`
   display: flex;
+  align-items: center;
   gap: 20px;
   @media screen and (max-width: 1024px) {
     gap: 18px;
@@ -165,14 +167,16 @@ const FeedIcon = ({ feedDetail, onClick, type }) => {
   }, [likes]);
 
   useEffect(() => {
-    const likeFollowing = feedDetail.like.find((it) =>
+    const likesArray = feedDetail.like || [];
+
+    const likeFollowing = likesArray.find((it) =>
       myProfile.following.includes(it)
     );
 
     const profileData = allProfile.find((it) => it.uid === likeFollowing);
     setFollowingUser(profileData);
   }, [feedDetail]);
-
+  
   const toggleHeart = () => {
     if (fillHeart) {
       setLikes(likes.filter((it) => it !== myProfile.uid));

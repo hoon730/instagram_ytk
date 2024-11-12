@@ -151,7 +151,7 @@ const SearchResult = ({ text }) => {
               </MainSearchItem>
             ))
           : showUserNickName().map((it, idx) => (
-              <MainSearchItem key={idx} onClick={() => navigate("/detail")}>
+              <MainSearchItem key={idx} onClick={() => navigate("/profile")}>
                 <SearchItem type={"mainSearch"} {...it} />
               </MainSearchItem>
             ))}

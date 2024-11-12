@@ -5,14 +5,14 @@ import { getFirestore } from "firebase/firestore";
 import { getApp, getApps } from "firebase/app";
 
 // 1. ytg firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyAQZTNSis27AhSHE1MQyYwuaAllNdHuwp0",
-  authDomain: "ytg-instagram.firebaseapp.com",
-  projectId: "ytg-instagram",
-  storageBucket: "ytg-instagram.appspot.com",
-  messagingSenderId: "938815740201",
-  appId: "1:938815740201:web:99541068728ed2900f7f38",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAQZTNSis27AhSHE1MQyYwuaAllNdHuwp0",
+//   authDomain: "ytg-instagram.firebaseapp.com",
+//   projectId: "ytg-instagram",
+//   storageBucket: "ytg-instagram.appspot.com",
+//   messagingSenderId: "938815740201",
+//   appId: "1:938815740201:web:99541068728ed2900f7f38",
+// };
 
 // 2. 지선님꺼
 // const firebaseConfig = {
@@ -32,7 +32,7 @@ const firebaseConfig = {
 //   projectId: "sns-platform-5c897",
 //   storageBucket: "sns-platform-5c897.appspot.com",
 //   messagingSenderId: "458748192605",
-//   appId: "1:458748192605:web:f06aa3365f3c309a9c6ab4"
+//   appId: "1:458748192605:web:f06aa3365f3c309a9c6ab4",
 // };
 
 // 4. 동훈  ytg-instagram - 2nd
@@ -46,14 +46,14 @@ const firebaseConfig = {
 // };
 
 // 5. 동훈  ytg-instagram - 3rd
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDUxtRALmwMwQZrN9DvS0CPUhm71_DEMgo",
-//   authDomain: "ytg-instagram-3rd.firebaseapp.com",
-//   projectId: "ytg-instagram-3rd",
-//   storageBucket: "ytg-instagram-3rd.appspot.com",
-//   messagingSenderId: "718613168797",
-//   appId: "1:718613168797:web:39a51c85254a1c1cf24a74"
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyDUxtRALmwMwQZrN9DvS0CPUhm71_DEMgo",
+  authDomain: "ytg-instagram-3rd.firebaseapp.com",
+  projectId: "ytg-instagram-3rd",
+  storageBucket: "ytg-instagram-3rd.appspot.com",
+  messagingSenderId: "718613168797",
+  appId: "1:718613168797:web:39a51c85254a1c1cf24a74",
+};
 
 // 6. 리아
 // const firebaseConfig = {
@@ -82,7 +82,7 @@ const firebaseConfig = {
 //   projectId: "ytg-instagram-5th",
 //   storageBucket: "ytg-instagram-5th.appspot.com",
 //   messagingSenderId: "601602727737",
-//   appId: "1:601602727737:web:17dd659de3f365040bd2e8"
+//   appId: "1:601602727737:web:17dd659de3f365040bd2e8",
 // };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

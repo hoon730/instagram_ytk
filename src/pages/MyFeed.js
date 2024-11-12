@@ -40,7 +40,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MyFeed = ({ uid }) => {
+const MyFeed = ({ userId }) => {
   const [posts, setPosts] = useState([]);
   const { myProfile } = useContext(StateContext);
   const { allProfile } = useContext(StateContext);
@@ -50,7 +50,9 @@ const MyFeed = ({ uid }) => {
       return;
     }
 
-    let feedUid = uid ? uid : myProfile.uid;
+    const feedUid = userId
+      ? allProfile.find((it) => it.userId === userId).uid
+      : myProfile.uid;
 
     let unsubscribe;
     const fetchPosts = async () => {
@@ -95,6 +97,7 @@ const MyFeed = ({ uid }) => {
       });
     };
     fetchPosts();
+
     return () => {
       unsubscribe && unsubscribe();
     };
@@ -102,9 +105,9 @@ const MyFeed = ({ uid }) => {
 
   return (
     <Wrapper>
-      <MbHeader myProfile={myProfile} />
-      <MyPic myProfile={myProfile} posts={posts} />
-      <MyProfile myProfile={myProfile} />
+      <MbHeader />
+      <MyPic posts={posts} userId={userId} />
+      <MyProfile userId={userId} />
       <MyHighlight />
       <MyFeedTabBar />
       <TimeLine posts={posts} />

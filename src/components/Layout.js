@@ -8,6 +8,8 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   background: ${({ theme }) => theme.bgColor};
+  position: relative;
+  z-index: 1;
 `;
 
 const Margin = styled.div`
@@ -38,7 +40,7 @@ const Layout = () => {
     <Wrapper>
       <SideBar />
       <Margin />
-      <MbMenu/>
+      <MbMenu />
       <Container>
         <Outlet />
       </Container>

@@ -79,7 +79,8 @@ const Menu = styled.span`
 
 const ProfileBg = styled.img`
   width: 430px;
-  height: 150px;
+  height: 160px;
+  margin-top: 50px;
 `;
 
 const UserDetail = styled.div`
@@ -156,7 +157,6 @@ const MbTabBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 16px;
-  /* border: 1px solid red; */
 `;
 
 const tabWidth = 143;
