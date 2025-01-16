@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 // import Data from "../data.json";
 // import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 // import { auth, db, storage } from "../utils/firebase";

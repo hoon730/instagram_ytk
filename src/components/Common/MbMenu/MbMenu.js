@@ -63,7 +63,6 @@ const IconWrapper = styled.div`
 
 const MbMenu = () => {
   const navigate = useNavigate();
-  const { darkMode } = useContext(ThemeContext);
   const [currentNum, setCurrentNum] = useState(0);
   const [openNew, setOpenNew] = useState(false);
 

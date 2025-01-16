@@ -449,11 +449,6 @@ const DeleteBtn = styled.button`
   }
 `;
 
-const Icon = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
 const SetContentInputButton = styled.input`
   display: none;
 `;

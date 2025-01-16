@@ -4,6 +4,8 @@ import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 import { getApp, getApps } from "firebase/app";
 
+import { onAuthStateChanged } from "firebase/auth";
+
 // 1. ytg firebase
 // const firebaseConfig = {
 //   apiKey: "AIzaSyAQZTNSis27AhSHE1MQyYwuaAllNdHuwp0",
@@ -85,7 +87,25 @@ const firebaseConfig = {
   appId: "1:601602727737:web:17dd659de3f365040bd2e8",
 };
 
+// 동훈 MyFirstProject
+// const firebaseConfig = {
+//   apiKey: "AIzaSyClQEX7DXPXC78xfmTDX9Y9bpLjLmP_uuQ",
+//   authDomain: "plasma-raceway-447908-s7.firebaseapp.com",
+//   projectId: "plasma-raceway-447908-s7",
+//   storageBucket: "plasma-raceway-447908-s7.firebasestorage.app",
+//   messagingSenderId: "848102131613",
+//   appId: "1:848102131613:web:276fc38ed1f9c2d0561174",
+// };
+
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 export const db = getFirestore(app);
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("User is logged in:", user);
+  } else {
+    console.log("No user is logged in.");
+  }
+});
